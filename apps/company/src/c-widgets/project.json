@@ -1,0 +1,13 @@
+{
+  "name": "company-c-widgets",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/company/src/c-widgets/src",
+  "projectType": "library",
+  "tags": ["type:company-widgets"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}

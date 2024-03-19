@@ -1,0 +1,13 @@
+{
+  "name": "freelancer-a-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/freelancer/src/a-app/src",
+  "projectType": "library",
+  "tags": ["type:freelancer-app"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}

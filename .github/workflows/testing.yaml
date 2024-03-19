@@ -1,0 +1,269 @@
+name: Testing
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+env:
+  INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  paths-filter:
+    runs-on: ubuntu-latest
+    outputs:
+      company-changed: ${{ steps.filter.outputs.company }}
+      freelancer-changed: ${{ steps.filter.outputs.freelancer }}
+      landing-changed: ${{ steps.filter.outputs.landing }}
+
+      packages-apps-changed: ${{ steps.filter.outputs.apps }}
+      packages-pages-changed: ${{ steps.filter.outputs.pages }}
+      packages-widgets-changed: ${{ steps.filter.outputs.widgets }}
+      packages-features-changed: ${{ steps.filter.outputs.features }}
+      packages-entities-changed: ${{ steps.filter.outputs.entities }}
+      packages-shared-changed: ${{ steps.filter.outputs.shared }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v2
+        id: filter
+
+        with:
+          list-files: shell
+          filters: |
+            company:
+              - 'apps/company/**'
+            freelancer:
+              - 'apps/freelancer/**'
+            landing:
+              - 'apps/landing/**'
+            apps:
+              - 'packages/a-app/**'
+            pages:
+              - 'packages/b-pages/**'
+            widgets:
+              - 'packages/c-widgets/**'
+            features:
+              - 'packages/d-features/**'
+            entities:
+              - 'packages/e-entities/**'
+            shared:
+              - 'packages/f-shared/**'
+
+  tests-company:
+    needs: paths-filter
+    if: ${{ needs.paths-filter.outputs.company-changed == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Catch deps
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+      - name: install dependencies
+        run: |
+          yarn install
+          npx cypress install
+          
+      - name: run lint company
+        run: yarn lint:company
+      - name: run tests company
+        run: yarn test:company
+      - name: run build company
+        run: yarn build:company
+
+  tests-freelancer:
+    needs: paths-filter
+    if: ${{ needs.paths-filter.outputs.freelancer-changed == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Catch deps
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+
+      # - name: Catch cypress deps
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: ~/.cache/Cypress
+      #     key: ${{ runner.os }}-cypress-${{ hashFiles('**/yarn.lock') }}
+
+      - name: install dependencies
+        run: |
+          yarn install
+          npx cypress install
+
+      - name: run lint freelancer
+        run: yarn lint:freelancer
+      - name: run tests freelancer
+        run: yarn test:freelancer
+      - name: run build freelancer
+        run: yarn build:freelancer
+
+  tests-landing:
+    needs: paths-filter
+    if: ${{ needs.paths-filter.outputs.landing-changed == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Catch deps
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+
+      - name: install dependencies
+        run: |
+          yarn install
+          npx cypress install
+
+      - name: Create env file
+        run: |
+          {
+            echo '  NEXT_PUBLIC_BOT_TOKEN=${{ secrets.TEST_NEXT_PUBLIC_BOT_TOKEN }}'
+            echo '  NEXT_PUBLIC_TG_CHANNEL_ID=${{ vars.TEST_NEXT_PUBLIC_TG_CHANNEL_ID }}'
+            echo '  NEXT_PUBLIC_PERSONAL_URL=${{ vars.TEST_NEXT_PUBLIC_PERSONAL_URL }}'
+          } >> apps/landing/.env
+
+      - name: run lint landing
+        run: yarn lint:landing
+      - name: run tests landing
+        run: yarn test:landing
+      - name: run build landing
+        run: yarn build:landing
+
+  tests-packages-app:
+    needs: paths-filter
+    if: ${{ needs.paths-filter.outputs.packages-apps-changed == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Catch deps
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+      - name: install dependencies
+        run: |
+          yarn install
+          
+      - name: run lint app
+        run: yarn lint:app
+      - name: run tests app
+        run: yarn test:app
+
+  tests-packages-pages:
+    needs: paths-filter
+    if: ${{ needs.paths-filter.outputs.packages-pages-changed == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Catch deps
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+      - name: install dependencies
+        run: |
+          yarn install
+          
+      - name: run lint pages
+        run: yarn lint:pages
+      - name: run tests pages
+        run: yarn test:pages
+
+  tests-packages-widgets:
+    needs: paths-filter
+    if: ${{ needs.paths-filter.outputs.packages-widgets-changed == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Catch deps
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+      - name: install dependencies
+        run: |
+          yarn install
+          
+      - name: run lint widgets
+        run: yarn lint:widgets
+      - name: run tests widgets
+        run: yarn test:widgets
+
+  tests-packages-features:
+    needs: paths-filter
+    if: ${{ needs.paths-filter.outputs.packages-features-changed == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Catch deps
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+      - name: install dependencies
+        run: |
+          yarn install
+          
+      - name: run lint features
+        run: yarn lint:features
+      - name: run tests features
+        run: yarn test:features
+
+  tests-packages-entities:
+    needs: paths-filter
+    if: ${{ needs.paths-filter.outputs.packages-entities-changed == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Catch deps
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+      - name: install dependencies
+        run: |
+          yarn install
+          
+      - name: run lint entities
+        run: yarn lint:entities
+      - name: run tests entities
+        run: yarn test:entities
+
+  tests-packages-shared:
+    needs: paths-filter
+    if: ${{ needs.paths-filter.outputs.packages-shared-changed == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Catch deps
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+      - name: install dependencies
+        run: |
+          yarn install
+          
+      - name: run lint shared
+        run: yarn lint:shared
+      - name: run tests shared
+        run: yarn test:shared

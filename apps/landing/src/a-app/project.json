@@ -1,0 +1,14 @@
+{
+  "name": "landing-a-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/landing/src/a-app/src",
+  "projectType": "library",
+  "tags": ["type:landing-app"],
+  
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}

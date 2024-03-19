@@ -1,0 +1,13 @@
+{
+  "name": "company-f-shared",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/company/src/f-shared/src",
+  "projectType": "library",
+  "tags": ["type:company-shared"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}

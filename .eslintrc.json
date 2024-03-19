@@ -1,0 +1,212 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nx", "no-relative-import-paths"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "allowCircularSelfDependency": true,
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "layout:app",
+                "onlyDependOnLibsWithTags": [ "layout:app","layout:pages","layout:widgets","layout:features","layout:entities","scope:shared"]
+              },
+              {
+                "sourceTag": "layout:pages",
+                "onlyDependOnLibsWithTags": [ "layout:pages","layout:widgets","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "layout:widgets",
+                "onlyDependOnLibsWithTags": [ "layout:widgets","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "layout:features",
+                "onlyDependOnLibsWithTags": [ "layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "layout:entities",
+                "onlyDependOnLibsWithTags": [ "layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "layout:shared",
+                "onlyDependOnLibsWithTags": [ "layout:shared"]
+              },
+
+              {
+                "sourceTag": "scope:company",
+                "onlyDependOnLibsWithTags": [
+                  "scope:company",
+
+                  "type:company-app",
+                  "type:company-pages",
+                  "type:company-widgets",
+                  "type:company-features",
+                  "type:company-entities",
+                  "type:company-shared",
+
+                  "layout:app",
+                  "layout:pages",
+                  "layout:widgets",
+                  "layout:features",
+                  "layout:entities",
+                  "layout:shared"
+                ]
+              },
+              {
+                "sourceTag": "type:company-app",
+                "onlyDependOnLibsWithTags": [ "type:company-app","type:company-pages","type:company-widgets","type:company-features","type:company-entities", "type:company-shared","layout:app","layout:pages","layout:widgets","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:company-pages",
+                "onlyDependOnLibsWithTags": [ "type:company-pages","type:company-widgets","type:company-features","type:company-entities",  "type:company-shared","layout:pages","layout:widgets","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:company-widgets",
+                "onlyDependOnLibsWithTags": [ "type:company-widgets","type:company-features","type:company-shared","type:company-entities","layout:widgets","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:company-features",
+                "onlyDependOnLibsWithTags": [ "type:company-features","type:company-entities","type:company-shared","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:company-entities",
+                "onlyDependOnLibsWithTags": [ "type:company-entities","type:company-shared","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:company-shared",
+                "onlyDependOnLibsWithTags": [ "type:company-shared","layout:shared"]
+              },
+
+
+              {
+                "sourceTag": "scope:freelancer",
+                "onlyDependOnLibsWithTags": [
+                  "scope:freelancer",
+
+                  "type:freelancer-app",
+                  "type:freelancer-pages",
+                  "type:freelancer-widgets",
+                  "type:freelancer-features",
+                  "type:freelancer-entities",
+                  "type:freelancer-shared",
+
+                  "layout:app",
+                  "layout:pages",
+                  "layout:widgets",
+                  "layout:features",
+                  "layout:entities",
+                  "layout:shared"
+                ]
+              },
+
+              {
+                "sourceTag": "type:freelancer-app",
+                "onlyDependOnLibsWithTags": [ "type:freelancer-app","type:freelancer-pages","type:freelancer-widgets","type:freelancer-features","type:freelancer-entities", "type:freelancer-shared","layout:app","layout:pages","layout:widgets","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:freelancer-pages",
+                "onlyDependOnLibsWithTags": [ "type:freelancer-pages","type:freelancer-widgets","type:freelancer-features","type:freelancer-entities",  "type:freelancer-shared","layout:pages","layout:widgets","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:freelancer-widgets",
+                "onlyDependOnLibsWithTags": [ "type:freelancer-widgets","type:freelancer-features","type:freelancer-shared","type:freelancer-entities","layout:widgets","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:freelancer-features",
+                "onlyDependOnLibsWithTags": [ "type:freelancer-features","type:freelancer-entities","type:freelancer-shared","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:freelancer-entities",
+                "onlyDependOnLibsWithTags": [ "type:freelancer-entities","type:freelancer-shared","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:freelancer-shared",
+                "onlyDependOnLibsWithTags": [ "type:freelancer-shared","layout:shared"]
+              },
+
+
+              {
+                "sourceTag": "scope:landing",
+                "onlyDependOnLibsWithTags": [
+                  "scope:freelancer",
+
+                  "type:landing-app",
+                  "type:landing-pages",
+                  "type:landing-widgets",
+                  "type:landing-features",
+                  "type:landing-entities",
+                  "type:landing-shared",
+
+                  "layout:app",
+                  "layout:pages",
+                  "layout:widgets",
+                  "layout:features",
+                  "layout:entities",
+                  "layout:shared"
+                ]
+              },
+              {
+                "sourceTag": "type:landing-app",
+                "onlyDependOnLibsWithTags": [ "type:landing-app","type:landing-pages","type:landing-widgets","type:landing-features","type:landing-entities", "type:landing-shared","layout:app","layout:pages","layout:widgets","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:landing-pages",
+                "onlyDependOnLibsWithTags": [ "type:landing-pages","type:landing-widgets","type:landing-features","type:landing-entities",  "type:landing-shared","layout:pages","layout:widgets","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:landing-widgets",
+                "onlyDependOnLibsWithTags": [ "type:landing-widgets","type:landing-features","type:landing-shared","type:landing-entities","layout:widgets","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:landing-features",
+                "onlyDependOnLibsWithTags": [ "type:landing-features","type:landing-entities","type:landing-shared","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:landing-entities",
+                "onlyDependOnLibsWithTags": [ "type:landing-entities","type:landing-shared","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:landing-shared",
+                "onlyDependOnLibsWithTags": [ "type:landing-shared","layout:shared"]
+              }
+
+            ]
+          }
+        ]
+//        "import/no-restricted-paths": [
+//          "error",
+//          {
+//            "basePath": "./",
+//            "zones": [
+//              {
+//                "target": ["apps/company/**"],
+//                "from": ["apps/company/**"],
+//                "except": ["app/freelancer/**"]
+//              }
+//            ]
+//          }
+//        ],
+//        "no-relative-import-paths/no-relative-import-paths": [
+//          "error",
+//          { "allowSameFolder": true }
+//        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nx/typescript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nx/javascript"],
+      "rules": {}
+    }
+  ]
+}

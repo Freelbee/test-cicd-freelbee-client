@@ -1,0 +1,20 @@
+{
+  "name": "c-widgets",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/c-widgets/src",
+  "projectType": "library",
+  "tags": ["layout:widgets"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/c-widgets/jest.config.ts"
+      }
+    }
+  }
+}

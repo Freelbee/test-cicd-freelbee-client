@@ -1,0 +1,20 @@
+{
+  "name": "a-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/a-app/src",
+  "projectType": "library",
+  "tags": ["layout:app"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/a-app/jest.config.ts"
+      }
+    }
+  }
+}

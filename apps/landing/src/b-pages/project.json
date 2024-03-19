@@ -1,0 +1,13 @@
+{
+  "name": "landing-b-pages",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/landing/src/b-pages/src",
+  "projectType": "library",
+  "tags": ["type:landing-pages"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}

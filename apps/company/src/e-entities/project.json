@@ -1,0 +1,13 @@
+{
+  "name": "company-e-entities",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/company/src/e-entities/src",
+  "projectType": "library",
+  "tags": [ "type:company-entities"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}

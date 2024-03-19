@@ -1,0 +1,193 @@
+name: Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: choice
+        description: Select deployment environment
+        required: true
+        options:
+          - test
+          - prod
+          - demo
+      project:
+        type: choice
+        description: Select app you want to be deployed
+        default: 'all'
+        options:
+          - landing
+          - freelancer
+          - company
+          - all
+      old-images:
+        type: choice
+        description: Select what to do with the images from the second after deployment
+        default: 'keep'
+        options:
+          - remove
+          - keep
+
+jobs:
+  check-branch-and-env:
+    runs-on: ubuntu-latest
+    outputs:
+      error: ${{ steps.check-branch-and-env.outputs.error }}
+    steps:
+      - name: Check branch and env
+        id: check-branch-and-env
+        run: |
+          if [[ ${{ github.ref }} != 'refs/heads/main' && ${{ inputs.environment }} == 'prod' ]]; then
+            echo "error=true" >> $GITHUB_ENV
+            echo "### WARNING!" >> $GITHUB_STEP_SUMMARY
+            echo "You are deploying to production from a branch that is not main. Please make sure you know what you are doing." >> $GITHUB_STEP_SUMMARY
+            exit 1
+          else
+            echo "error=false" >> $GITHUB_ENV
+          fi
+      - name: Show prjoect input
+        run: |
+          echo "### PROJECTS DEPLOY INFO" >> $GITHUB_STEP_SUMMARY
+          echo "Project: ${{ github.event.inputs.project }}" >> $GITHUB_STEP_SUMMARY
+
+  build-and-push:
+    needs: check-branch-and-env
+    if: ${{ needs.check-branch-and-env.outputs.error != 'true' }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - project: landing
+            if: ${{ github.event.inputs.project == 'landing' || github.event.inputs.project == 'all' }}
+          - project: freelancer
+            if: ${{ github.event.inputs.project == 'freelancer' || github.event.inputs.project == 'all' }}
+          - project: company
+            if: ${{ github.event.inputs.project == 'company' || github.event.inputs.project == 'all' }}
+      fail-fast: false
+    permissions:
+      contents: read
+      packages: write
+    env:
+#      IMAGE_NAME: ghcr.io/freelbee/nx-client/${{ matrix.project }}:${{ github.run_number }}
+
+      # static secrets and vars app
+      NEXT_PUBLIC_BOT_TOKEN: "${{ secrets.NEXT_PUBLIC_BOT_TOKEN }}"
+      NEXT_PUBLIC_EMAIL: "${{ vars.NEXT_PUBLIC_EMAIL }}"
+      NEXT_PUBLIC_MODE: "${{ inputs.environment }}"
+
+      # dynamic secrets and vars app
+      NEXT_PUBLIC_TG_CHANNEL_ID: "${{ inputs.environment }}_NEXT_PUBLIC_TG_CHANNEL_ID"
+      NEXT_PUBLIC_PERSONAL_URL: "${{ inputs.environment }}_NEXT_PUBLIC_PERSONAL_URL"
+
+    steps:
+      - name: Prepare image tag
+        run: |
+          SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+          REF_NAME_SANITIZED=$(echo ${{ github.ref_name }} | sed 's/[^a-zA-Z0-9._-]/-/g' | sed 's/^-//')
+          if [[ -z "$REF_NAME_SANITIZED" || "$REF_NAME_SANITIZED" == "-" ]]; then
+            REF_NAME_SANITIZED="default"
+          fi
+          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
+          echo "REF_NAME_SANITIZED=$REF_NAME_SANITIZED" >> $GITHUB_ENV
+          IMAGE_TAG="$REF_NAME_SANITIZED-$SHORT_SHA"
+          echo "IMAGE_NAME=ghcr.io/freelbee/nx-client/${{ matrix.project }}-${{ github.run_number }}:$IMAGE_TAG" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Set envs for landing
+        if: ${{ github.event.inputs.project == 'landing' || github.event.inputs.project == matrix.project }}
+        run: |
+          echo "NEXT_PUBLIC_TG_CHANNEL_ID=${{ vars[env.NEXT_PUBLIC_TG_CHANNEL_ID] }}" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_PERSONAL_URL=${{ vars[env.NEXT_PUBLIC_PERSONAL_URL] }}" >> $GITHUB_ENV
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Catch deps
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+      - name: Install dependencies
+        if: ${{ github.event.inputs.project == 'all' || github.event.inputs.project == matrix.project }}
+        run: yarn install
+
+      - name: Build NX project
+        if: ${{ github.event.inputs.project == 'all' || github.event.inputs.project == matrix.project }}
+        run: npx nx build ${{ matrix.project }}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push Docker image to GitHub Container Registry
+        if: ${{ github.event.inputs.project == 'all' || github.event.inputs.project == matrix.project }}
+        run: |
+          docker build -t ${{ env.IMAGE_NAME }} -f ./apps/${{ matrix.project }}/Dockerfile .
+          docker push ${{ env.IMAGE_NAME }}
+
+  deploy:
+    needs: build-and-push
+    if: ${{ needs.check-branch-and-env.outputs.error != 'true' }}
+    runs-on: ubuntu-latest
+    env:
+      SSH_HOST_ENV: "${{ inputs.environment }}_SSH_HOST"
+      SSH_USERNAME_ENV: "${{ inputs.environment }}_SSH_USERNAME"
+      SSH_PRIVATE_KEY_ENV: "${{ inputs.environment }}_SSH_PRIVATE_KEY"
+      SSH_PASSPHRASE_ENV: "${{ inputs.environment }}_SSH_PASSPHRASE"
+    steps:
+      - name: Prepare image tag
+        run: |
+          SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+          REF_NAME_SANITIZED=$(echo ${{ github.ref_name }} | sed 's/[^a-zA-Z0-9._-]/-/g' | sed 's/^-//')
+          if [[ -z "$REF_NAME_SANITIZED" || "$REF_NAME_SANITIZED" == "-" ]]; then
+            REF_NAME_SANITIZED="default"
+          fi
+          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
+          echo "REF_NAME_SANITIZED=$REF_NAME_SANITIZED" >> $GITHUB_ENV
+          IMAGE_TAG="$REF_NAME_SANITIZED-$SHORT_SHA"
+
+          echo "IMAGE_NAME=${{ github.run_number }}:$IMAGE_TAG" >> $GITHUB_ENV
+      - name: Setup environment variables
+        run: |
+          echo "DEPLOY_PROJECTS=${{ github.event.inputs.project }}" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Transfer Docker image to remote server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets[env.SSH_HOST_ENV] }}
+          username: ${{ secrets[env.SSH_USERNAME_ENV] }}
+          key: ${{ secrets[env.SSH_PRIVATE_KEY_ENV] }}
+          passphrase: ${{ secrets[env.SSH_PASSPHRASE_ENV] }}
+          source: "generate-docker-compose.sh,remove-old-images.sh"
+          target: /mnt/freelbee/client
+
+      - name: Set up SSH connection
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets[env.SSH_HOST_ENV] }}
+          username: ${{ secrets[env.SSH_USERNAME_ENV] }}
+          key: ${{ secrets[env.SSH_PRIVATE_KEY_ENV] }}
+          passphrase: ${{ secrets[env.SSH_PASSPHRASE_ENV] }}
+          script: |
+            echo "Deploying ${ENVIRONMENT} environment"
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            cd /mnt/freelbee/client
+            chmod +x generate-docker-compose.sh
+            chmod +x remove-old-images.sh
+            bash generate-docker-compose.sh ${{ env.DEPLOY_PROJECTS }} ${{ env.IMAGE_TAG }}
+            chmod +x deploy.sh
+            NUMBER_OF_SAVED_IMAGES=2
+            bash deploy.sh ${{ env.DEPLOY_PROJECTS }} ${{ env.IMAGE_TAG }} $NUMBER_OF_SAVED_IMAGES ${{ inputs.old-images }}

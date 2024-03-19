@@ -1,0 +1,20 @@
+{
+  "name": "d-features",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/d-features/src",
+  "projectType": "library",
+  "tags": ["layout:features"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/d-features/jest.config.ts"
+      }
+    }
+  }
+}

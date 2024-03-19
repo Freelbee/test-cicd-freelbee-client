@@ -1,0 +1,67 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@company/app": ["apps/company/src/a-app/src/index.ts"],
+      "@company/entities": ["apps/company/src/e-entities/src/index.ts"],
+      "@company/features": ["apps/company/src/d-features/src/index.ts"],
+      "@company/pages": ["apps/company/src/b-pages/src/index.ts"],
+      "@company/shared": ["apps/company/src/f-shared/src/index.ts"],
+      "@company/public": ["apps/company/public"],
+      "@company/widgets": ["apps/company/src/c-widgets/src/index.ts"],
+      
+      "@freelancer/app": ["apps/freelancer/src/a-app/src/index.ts"],
+      "@freelancer/entities": ["apps/freelancer/src/e-entities/src/index.ts"],
+      "@freelancer/features": ["apps/freelancer/src/d-features/src/index.ts"],
+      "@freelancer/pages": ["apps/freelancer/src/b-pages/src/index.ts"],
+      "@freelancer/shared": ["apps/freelancer/src/f-shared/src/index.ts"],
+
+      "@landing/app": ["apps/landing/src/a-app/src/index.ts"],
+      "@landing/pages": ["apps/landing/src/b-pages/src/index.ts"],
+      "@landing/widgets": ["apps/landing/src/c-widgets/src/index.ts"],
+      "@landing/features": ["apps/landing/src/d-features/src/index.ts"],
+      "@landing/entities": ["apps/landing/src/e-entities/src/index.ts"],
+      "@landing/shared": ["apps/landing/src/f-shared/src/index.ts"],
+      "@landing/shared/config": ["apps/landing/src/f-shared/src/config/index.ts"],
+      "@landing/assets/*": [
+        "apps/landing/src/f-shared/src/assets/*"
+      ],
+      "@landing/mocks/*": [
+        "apps/landing/src/f-shared/src/tests/__mocks__/*"
+      ],
+
+
+      "@freelbee/app": ["packages/a-app/src/index.ts"],
+      "@freelbee/pages": ["packages/b-pages/src/index.ts"],
+      "@freelbee/widgets": ["packages/c-widgets/src/index.ts"],
+
+
+      "@freelbee/features": ["packages/d-features/src/index.ts"],
+      "@freelbee/features/common": ["packages/d-features/src/common/index.ts"],
+
+      "@freelbee/entities": ["packages/e-entities/src/index.ts"],
+
+      "@freelbee/shared": ["packages/f-shared/src/index.ts"],
+      "@freelbee/shared/ui-kit": ["packages/f-shared/src/ui-kit/index.ts"],
+      "@freelbee/shared/hooks": ["packages/f-shared/src/hooks/index.ts"],
+      "@freelbee/shared/helpers": ["packages/f-shared/src/helpers/index.ts"],
+
+
+      "@freelbee/assets/*": ["packages/f-shared/src/assets/*"],
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

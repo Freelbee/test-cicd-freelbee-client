@@ -1,0 +1,13 @@
+{
+  "name": "freelancer-d-features",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/freelancer/src/d-features/src",
+  "projectType": "library",
+  "tags": ["type:freelancer-features"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}

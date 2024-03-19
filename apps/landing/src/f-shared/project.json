@@ -1,0 +1,13 @@
+{
+  "name": "landing-f-shared",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/landing/src/f-shared/src",
+  "projectType": "library",
+  "tags": ["type:landing-shared"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}

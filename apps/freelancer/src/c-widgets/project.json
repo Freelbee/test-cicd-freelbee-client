@@ -1,0 +1,13 @@
+{
+  "name": "freelancer-c-widgets",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/freelancer/src/c-widgets/src",
+  "projectType": "library",
+  "tags": ["type:freelancer-widgets"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}

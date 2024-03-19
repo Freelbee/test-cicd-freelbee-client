@@ -1,0 +1,12 @@
+node_modules
+dist
+.next
+.nx
+.github
+.vscode
+.idea
+freelancer
+freelancer-e2e
+company
+company-e2e
+landing-e2e

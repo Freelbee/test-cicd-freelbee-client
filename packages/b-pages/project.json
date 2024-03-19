@@ -1,0 +1,20 @@
+{
+  "name": "b-pages",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/b-pages/src",
+  "projectType": "library",
+  "tags": ["layout:pages"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/b-pages/jest.config.ts"
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "e-entities",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/e-entities/src",
+  "projectType": "library",
+  "tags": ["layout:entities"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/e-entities/jest.config.ts"
+      }
+    }
+  }
+}

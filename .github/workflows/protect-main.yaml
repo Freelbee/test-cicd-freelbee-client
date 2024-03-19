@@ -1,0 +1,15 @@
+name: Protect main branch
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  reject-merge-from-unsuitable-branch:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Fail if branch name does not start with 'relase' or 'hotfix'
+      run: |
+        if [[ ! "${{ github.head_ref }}" =~ ^(hotfix/|release) ]]; then
+        echo "Error: Branch name must start with 'release' or 'hotfix/'"
+        exit 1
+        fi

@@ -1,0 +1,28 @@
+name: Create PR to develop with hotfix
+env:
+  INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+permissions:
+  contents: write
+  pull-requests: write 
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+      - 'release**'
+jobs:
+  after-fix-merge:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.merged == true}}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        ref: develop
+
+    - name: Create PR to develop
+      if: ${{ startsWith(github.head_ref, 'hotfix')}}
+      run: gh pr create -B develop -H ${{ github.head_ref }} --title 'Merge ${{ github.head_ref }} into develop' --body 'Created by Github action'
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

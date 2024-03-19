@@ -1,0 +1,101 @@
+.global-loader {
+    position: fixed;
+    z-index: 10000;
+    overflow: hidden;
+    inset: 0;
+    background: #F7F7FC;
+    color: #1C1C1C;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: transform .7s, opacity .7s;
+    transition-delay: 0.7s;
+}
+
+.global-loader svg path {
+    stroke-dasharray: 100px;
+    stroke-dashoffset: 100px;
+}
+
+.global-loader svg path:nth-child(1){
+    animation: draw 1s linear forwards;
+    stroke: #3d6be2;
+}
+
+.global-loader svg path:nth-child(2){
+    animation: draw 1s linear 0.5s forwards;
+    stroke: #04103D;
+}
+
+.global-loader svg path:nth-child(3){
+    animation: draw 1s linear 1s forwards;
+    stroke: #3DE297;
+}
+
+.global-loader__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 24px;
+}
+
+@keyframes moveGradient {
+    from {
+      background-position: 0% 0%;
+    }
+    to {
+      background-position: -200% 0%;
+    }
+}  
+
+@keyframes showBar {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}  
+
+.global-loader__progressbar {
+    transform: translateY(-30px);
+    opacity: 0;
+    animation: showBar .5s ease 2s forwards;
+}
+
+.global-loader__progress {
+    height: 6px;
+    width: 150px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, rgba(126,240,188,1) 0%, rgba(61,107,226,1) 50%, rgba(126,240,188,1) 100%);
+    background-size: 200%;
+    animation: moveGradient 2s linear infinite;
+}
+
+.global-loader__hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+@keyframes draw {
+    from {
+      stroke-dashoffset: 100px;
+    }
+    to {
+       stroke-dashoffset: 0px;
+    }
+  };
+  
+@keyframes hide {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(-100%);
+    }
+};
+
