@@ -20,7 +20,7 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "jest.config.ts"  
-  ],
+, "src/language/interface/MessageWithLanguages.ts"  ],
     "exclude": [
       "jest.setup.ts"
     ],

@@ -14,7 +14,7 @@ export const ActionButton = () => {
             iconPosition={IconPosition.RIGHT}
             styleType={ButtonStyleEnum.GREEN}
         >
-            Try Now
+            Solve by one click
         </Button>
     );
 };

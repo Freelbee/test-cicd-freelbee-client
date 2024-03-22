@@ -1,5 +1,5 @@
-import { LanguageType } from "@freelbee/entities";
 import { RuleMessage } from "../interface/RuleMessage";
+import { LanguageType } from "@freelbee/shared/language";
 
 export class ValidatorResult<T>
 {

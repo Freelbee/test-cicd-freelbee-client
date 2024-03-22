@@ -30,7 +30,7 @@
     "../../dist/apps/landing/.next/types/**/*.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts"
-, "jest.config.ts"  ],
+, "jest.config.ts", "../../packages/f-shared/src/tests/__mocks__/next/AppRouterMock.tsx"  ],
   "exclude": [
     "node_modules",
     "jest.config.ts",

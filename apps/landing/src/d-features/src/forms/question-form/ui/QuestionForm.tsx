@@ -2,29 +2,60 @@
 
 import { FormEventHandler, useState } from "react";
 import { toast } from 'react-toastify';
+import { usePathname } from "next/navigation";
 import styled from "styled-components";
 
+import {ReactComponent as MailIcon} from '@freelbee/assets/icons/mail/mail.svg';
+
 import ApplicationFormValidator from "../util/ApplicationFormValidator";
-
-import 'react-toastify/dist/ReactToastify.css';
-import { ValidatorResult } from "@freelbee/features";
 import { SectionId, sectionSeoText } from "@landing/entities";
-import { Breakpoint, ButtonStyleEnum } from "@freelbee/shared/ui-kit";
-import {
-  Button
-} from "@freelbee/features/common";
-import { Input, TextArea} from "@freelbee/features/common";
-import { LanguageType } from "@freelbee/entities";
+import { LeadMessageBuilder } from "@freelbee/features";
+import { useSendRegisteredLeadMutation } from "@landing/features";
+import { Button, Input, TextArea } from "@freelbee/features/common";
+import { Breakpoint, ButtonStyleEnum, Color } from "@freelbee/shared/ui-kit";
+import { LanguageType } from "@freelbee/shared/language";
+import { ValidatorResult } from "@freelbee/features";
 
-import {FormData} from '../interface/FormData';
+interface FormData {
+    email: string;
+    message: string;
+}
 
-export const QuestionForm = () => {
+export function QuestionForm () {
+
     const [formData, setFormData] = useState<FormData>({email: '', message: ''});
 
     const validator = new ApplicationFormValidator();
     const [validationResult, setValidationResult] = useState(new ValidatorResult<FormData>());
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
+    const [sendLeadToCRM] = useSendRegisteredLeadMutation();
+    const pathName = usePathname();
+
+    const sendTelegramNotification = async (formData: FormData) => {
+        const tgMessage = new LeadMessageBuilder(`New message from landing!`)
+            .email(formData.email)
+            .message(formData.message)
+            .source(sectionSeoText[SectionId.QUESTIONS_FORM])
+            .build();
+
+        return fetch("/api/tg_bot", {
+            method: "POST",
+            body: JSON.stringify(tgMessage)
+        });
+    };
+
+    const sendLead = async (formData: FormData) => {
+        if(process.env.NEXT_PUBLIC_MODE === 'prod') {
+            sendLeadToCRM({
+                Email: formData.email,
+                Last_Name: '--',
+                Lead_Source: "https://freelbee.com" + pathName,
+                field: formData.message
+            });                
+        }
+    };
 
     const sendApplication: FormEventHandler = async (e) => {
         e.preventDefault();
@@ -37,10 +68,10 @@ export const QuestionForm = () => {
         try {
             setIsLoading(true);
             setIsSuccess(false);
-            const res = await fetch("/api/tg_bot", {
-                method: "POST",
-                body: JSON.stringify({...formData, target: sectionSeoText[SectionId.QUESTIONS_FORM]})
-            });
+
+            sendLead(formData);
+            const res = await sendTelegramNotification(formData);
+            
             if(res.ok) {
                 setIsSuccess(true);
             } else {
@@ -55,28 +86,30 @@ export const QuestionForm = () => {
 
     return (
         <Form onSubmit={sendApplication}>
-            <Input
-                data-testid='question-form-email'
+            <Input 
+                icon={<MailIcon stroke={Color.GRAY_600} />}
                 isError={validationResult.hasError('email')}
                 errorMessage={validationResult.getMessageByLanguage('email', LanguageType.EN)}
-                placeholder='mail@mail.com'
+                placeholder='mail@company.com' 
                 label='E-mail to contact you'
-                value={formData.email}
-                setValue={(val) => setFormData((prev) => ({...prev, email: val}))} />
+                value={formData.email} 
+                setValue={(val) => setFormData((prev) => ({...prev, email: val}))} 
+                data-testid='question-form-email'/>
             <TextArea
-                data-testid='question-form-text'
                 isError={validationResult.hasError('message')}
                 errorMessage={validationResult.getMessageByLanguage('message', LanguageType.EN)}
-                placeholder='Ask whatever you want'
+                placeholder='Ask whatever you want' 
                 label='Your question'
-                value={formData.email}
+                data-testid='question-form-text'
+                value={formData.email} 
                 onChange={(e) => setFormData((prev) => ({...prev, message: e.target.value}))} />
-            <Button
-                data-testid='question-form-submit'
+            <Button 
                 wideOnBreakPoint={Breakpoint.xMobile}
                 styleType={ButtonStyleEnum.GREEN}
                 isLoading={isLoading}
-                isSuccess={isSuccess}>
+                isSuccess={isSuccess}
+                data-testid='question-form-submit'
+                data-crmid='question-form-button'>
                 Talk to us
             </Button>
         </Form>

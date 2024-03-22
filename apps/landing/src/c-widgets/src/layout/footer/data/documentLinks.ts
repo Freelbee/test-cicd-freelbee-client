@@ -1,22 +1,22 @@
 export const DOC_LINKS = [
     {
         text: 'Privacy policy',
-        url: '/privacy-policy'
+        url: '/documents/privacy-policy.pdf'
     },
     {
         text: 'Business User Agreement',
-        url: '/user-agreement-business'
+        url: '/documents/user-agreement-business.pdf'
     },
     {
         text: 'Freelancer User Agreement',
-        url: '/user-agreement-freelancer'
+        url: '/documents/user-agreement-freelancer.pdf'
     },
     {
         text: 'General Terms',
-        url: '/general-terms'
+        url: '/documents/general-terms.pdf'
     },
     {
         text: 'KYC&AML Policy',
-        url: '/aml-kyc-policy'
+        url: '/documents/aml-kyc-policy.pdf'
     },
 ];

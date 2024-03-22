@@ -44,7 +44,7 @@ const CardContainer = styled.div`
     span {
         position: relative;
         z-index: 2;
-        background-color: ${Color.GRAY_200};
+        background-color: ${Color.WHITE};
         border-radius: 0.4em;
         padding: 0.2em;
     }

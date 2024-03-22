@@ -12,10 +12,7 @@ export const CountriesSection = () => (
                     160+ supported countries
                 </Title1>
                 <Text font='body' as='p'>
-                  Hiring contractors from other countries is a great option to cut costs. Yet, it entails additional time managing contractor relationships and occasional compliance risks.
-                </Text>
-                <Text font='body' as='p'>
-                  Freelbee absorbs the contractor management challenges. Endless contracting, invoicing and payment processing are simplified to several clicks.
+                Hiring international contractors with Freelbee simplifies management, reduces costs and compliance risks by streamlining contracting invoicing and payments just in a few clicks.
                 </Text>
             </SectionTitle>
             <Map />

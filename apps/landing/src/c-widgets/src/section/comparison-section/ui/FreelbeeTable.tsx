@@ -23,8 +23,8 @@ export const FreelbeeTable = () => {
                         <td>{renderItems(freelbeeTable['Budget-friendly'])}</td>
                     </tr>
                     <tr>
-                        <th>{CellTitle['One-step solution']}</th>
-                        <td>{renderItems(freelbeeTable['One-step solution'])}</td>
+                        <th>{CellTitle['One-stop solution']}</th>
+                        <td>{renderItems(freelbeeTable['One-stop solution'])}</td>
                     </tr>
                     <tr>
                         <th>{CellTitle['No borders']}</th>

@@ -26,7 +26,7 @@ export enum LinkStyle {
 
 const LINK_COLOR: Record<LinkStyle, Color> = {
     [LinkStyle.BLUE]: Color.BLUE,
-    [LinkStyle.GRAY]: Color.GRAY_600,
+    [LinkStyle.GRAY]: Color.GRAY_800,
     [LinkStyle.WHITE]: Color.GRAY_500
 };
 

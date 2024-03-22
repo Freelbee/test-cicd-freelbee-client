@@ -3,9 +3,9 @@ import { RuleMessage } from "../interface/RuleMessage";
 
 export class RequiredRule implements IRule
 {
-    public check (value : unknown) : boolean
+    public check (value : string) : boolean
     {
-        return !!value;
+        return !!(value.trim());
     }
 
     public message () : RuleMessage

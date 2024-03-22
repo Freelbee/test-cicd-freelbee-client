@@ -19,8 +19,8 @@ export const CardsBlock = () => (
                 <Text
                     as='p'
                     font='body'
-                    color={Color.GRAY_600}>
-                    Cut down operational costs to&nbsp;open up&nbsp;new business opportunities
+                    color={Color.GRAY_800}>
+                    Reduce operational expenses to unlock new business prospects.
                 </Text>
             </UpperText>
 
@@ -31,8 +31,8 @@ export const CardsBlock = () => (
             <Text
                 as='p'
                 font='body'
-                color={Color.GRAY_600}>
-                Cut down operational costs to&nbsp;open up&nbsp;new business opportunities
+                color={Color.GRAY_800}>
+                Reduce operational expenses to unlock new business prospects.
             </Text>
         </Card>
         <Card>
@@ -43,8 +43,8 @@ export const CardsBlock = () => (
                 <Text
                     as='p'
                     font='body'
-                    color={Color.GRAY_600}>
-                    Optimise your time and streamline contractor payments and paperwork
+                    color={Color.GRAY_800}>
+                    Streamline contractor payments and paperwork to free up your time
                 </Text>
             </UpperText>
 
@@ -55,8 +55,8 @@ export const CardsBlock = () => (
             <Text
                 as='p'
                 font='body'
-                color={Color.GRAY_600}>
-                Optimise your time and streamline contractor payments and paperwork
+                color={Color.GRAY_800}>
+                Streamline contractor payments and paperwork to free up your time
             </Text>
         </Card>
         <Card>
@@ -67,8 +67,8 @@ export const CardsBlock = () => (
                 <Text
                     as='p'
                     font='body'
-                    color={Color.GRAY_600}>
-                    Ditch the routine&nbsp;&mdash; draw up&nbsp;documents and make payments with one click
+                    color={Color.GRAY_800}>
+                    Take control of project timelines by significantly reducing payment bottlenecks
                 </Text>
             </UpperText>
 
@@ -79,8 +79,8 @@ export const CardsBlock = () => (
             <Text
                 as='p'
                 font='body'
-                color={Color.GRAY_600}>
-                Ditch the routine&nbsp;&mdash; draw up&nbsp;documents and make payments with one click
+                color={Color.GRAY_800}>
+                Take control of project timelines by significantly reducing payment bottlenecks
             </Text>
         </Card>
 
@@ -91,14 +91,14 @@ const Cards = styled.div`
   display: flex;
   justify-content: center;
   gap: 20px;
-
+  
   @media (max-width: 1280px) {
     gap: 10px;
     flex-direction: column;
     width: 100%;
     align-items: center;
   }
-
+  
 `;
 
 const Card = styled.div`
@@ -110,13 +110,12 @@ const Card = styled.div`
   padding: 32px;
   max-width: 380px;
   width: 100%;
-  height: 100%;
   background: ${Color.WHITE};
-
+  
   @media (max-width: 1280px) and (min-width: 600px) {
     gap: 64px;
     width: 100%;
-    max-width: 720px;
+    max-width: 720px;    
     grid-template-columns: 1fr 316px;
     grid-template-rows: unset;
   }

@@ -5,7 +5,7 @@ import { SectionTitle } from "@landing/shared";
 export const Title = () => (
     <SectionTitle>
         <Title1 as='h2' $align='center'>
-            Leave all contractor payment challenges behind
+            Overcome these contractor payment challenges
         </Title1>
     </SectionTitle>
 );

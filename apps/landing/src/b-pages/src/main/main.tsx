@@ -4,27 +4,28 @@ import { ApplicationModal, BenefitsSection, CompareSection, ComparisonTableSecti
 import { Suspense } from "react";
 
 export const Main = () => {
-  // rtkQueryErrorLogger();
   return (
     <main>
       <Suspense fallback={<></>}>
           <ApplicationModal />
       </Suspense>
-      <StartSection />
-      <CountersSection />
-      <CurrenciesAndMethodsSection />
-      <MeetSection />
-      <WhoNeedsSection />
-      <BenefitsSection />
-      <StepsSection />
-      <IndustriesSection />
-      <CountriesSection />
-      <CompareSection />
-      <InsideSection />
-      <ComparisonTableSection />
-      <SecuritySection />
-      <DevicesSection />
-      <FAQSection />
+     
+     <StartSection />
+     <CountersSection />
+     <CurrenciesAndMethodsSection />
+     
+     <BenefitsSection />
+     <IndustriesSection />
+     <WhoNeedsSection />
+     <MeetSection />
+     <StepsSection />
+     <CountriesSection />
+     <InsideSection />
+     <ComparisonTableSection />
+     <SecuritySection />
+     <CompareSection />
+     <DevicesSection />
+     <FAQSection /> 
   </main>
   );
 };

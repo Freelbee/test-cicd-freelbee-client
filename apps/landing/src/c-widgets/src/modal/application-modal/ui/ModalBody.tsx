@@ -24,13 +24,12 @@ const Container = styled.div`
     padding: 32px;
     width: ${vw(700, Breakpoint.Large)};
     min-width: 450px;
-    max-width: 800px;
+    max-width: 540px;
     margin: auto;
 
     ${mediaBreakpointDown(Breakpoint.xMobile)} {
         width: 100%;
         min-width: unset;
-        max-width: unset;
         padding: 24px;
         padding-top: 36px;
     }

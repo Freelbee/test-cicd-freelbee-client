@@ -5,20 +5,20 @@ import { styled } from "styled-components";
 import { CURRENCIES } from "../data/currenciesData";
 import { Icon } from "../interface/Icon";
 import { LoopSlider } from "@landing/entities";
+import Image from "next/image";
 
 export const CurrenciesSlider = () => {
 
     const renderCurrency = ({alt, Icon}: Icon) => (
         <IconContainer key={alt}>
-            <Icon/>
+            <Image src={Icon} alt={alt} width={60} height={60}/>
         </IconContainer>
     );
 
     return (
-        <LoopSlider<Icon> items={CURRENCIES} renderSlide={renderCurrency} speed={35}/>
+        <LoopSlider<Icon> items={CURRENCIES} renderSlide={renderCurrency} speed={65}/>
     );
 };
-
 export const IconContainer = styled.div`
     flex-shrink: 0;
     width: 60px;

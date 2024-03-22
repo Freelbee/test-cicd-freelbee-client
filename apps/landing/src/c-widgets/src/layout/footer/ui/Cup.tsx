@@ -2,12 +2,13 @@
 
 import { Breakpoint, mediaBreakpointDown, vw } from '@freelbee/shared/ui-kit';
 import styled from 'styled-components';
-import { ReactComponent as CupIcon} from '@landing/assets/images/main/cup.svg';
+import cupIcon from '@landing/assets/images/cup.svg';
+import Image from 'next/image';
 
 export const Cup = () => {
   return (
     <CupIconContainer>
-        <CupIcon />
+        <Image src={cupIcon} fill alt='Decorative icon'/>                      
     </CupIconContainer>
   )
 }
@@ -15,17 +16,26 @@ export const Cup = () => {
 
 const CupIconContainer = styled.div`
   position: absolute;
-  bottom: -3px;
+  bottom: 0;
   right: 0px;
-  max-width: 74px;
-  width: ${vw(74, Breakpoint.Large)};
+  max-width: 84px;
+  max-height: 87px;
+  width: ${vw(84, Breakpoint.Large)};
+  height: ${vw(87, Breakpoint.Large)};
+  
+  img {
+    object-fit: contain;
+  }
 
   ${mediaBreakpointDown(Breakpoint.Large)} {
     right: 16px;
+    width: ${vw(84, Breakpoint.Medium)};
+    height: ${vw(87, Breakpoint.Medium)};
   }
 
   ${mediaBreakpointDown(Breakpoint.xMobile)} {
     right: 10px;
-    width: ${vw(64, Breakpoint.xMobile)};
+    width: ${vw(94, Breakpoint.xMobile)};
+    height: ${vw(97, Breakpoint.xMobile)};
   }
 `;

@@ -23,22 +23,22 @@ export const Tab = ({title, children, id, background = Color.GRAY_200}: Props) =
     const toggleOpen = () => setOpened(prev => !prev);
 
     return (
-        <TabContainer $bgColor={background}>
-            <TabHead
+        <TabContainer $bgColor={background} itemScope itemProp="mainEntity" itemType="https://schema.org/Question">
+            <TabHead 
                 onClick={toggleOpen}
-                id={id}
-                ref={tabRef}
+                id={id} 
+                ref={tabRef} 
                 $isOpened={opened}>
-                <Heading3 $styles={tabTitleText}>
-                    {title}
+                <Heading3 $styles={tabTitleText} itemProp="name">
+                    {title}   
                 </Heading3>
-                <button
+                <button 
                     aria-label={opened ? 'close tab' : 'open tab'}>
-                     <Icon />
+                    <Icon />
                 </button>
-
+                
             </TabHead>
-            <TabContent animate={{
+            <TabContent itemScope itemProp="acceptedAnswer" itemType="https://schema.org/Answer" animate={{
                 height: opened ? 'auto' : '0px',
             }}
             initial={false}>

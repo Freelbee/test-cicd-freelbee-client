@@ -6,8 +6,8 @@ import { ReactComponent as Icon1} from '../assets/paper.svg';
 export const CARDS_DATA = [
     {
         Icon: Icon1,
-        title: "Piles of contracts, NDAs and overwhelming paperwork",
-        text: "As your contractor base grows, you might be overwhelmed with choosing the right payment method for each contractor, tracking payments and paid tasks,effectively negotiating contracts, and managing intellectual property rights."
+        title: "Overwhelming paperwork: piles of contracts, NDAs, invoices, etc.",
+        text: "As your contractor base grows, you might be overwhelmed with choosing the right payment method for each contractor, tracking payments and paid tasks, effectively negotiating contracts, and managing intellectual property rights."
     },
     {
         Icon: Icon2,
@@ -16,12 +16,12 @@ export const CARDS_DATA = [
     },
     {
         Icon: Icon3,
-        title: 'International money transfer charges',
-        text: 'Minimise civil and tax risks when working with freelancers and ensure safe transactions'
+        title: 'Security risks of transactions',
+        text: 'While working with freelancers you face civil and tax risks and you have to guarantee the satefy of all transactions.'
     },
     {
         Icon: Icon4,
         title: "Frequent or small payments lead to significant bank costs",
-        text: "Consider dealing with the challenges mentioned earlier, and now picture having to do it manually several times a month day. This limitation becomes significant when aiming to scale your agency."
+        text: "The majority of international payments options are not suitable for bulk payments of small amounts. There is a high risk you will be charged for each transaction which leads to substantial financial costs."
     }
 ];

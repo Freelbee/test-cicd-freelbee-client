@@ -1,77 +1,85 @@
 'use client';
 
-import localFont from 'next/font/local';
 import { css} from 'styled-components';
 import { Breakpoint } from "../../enums/enums";
 import {mediaBreakpointDown} from "../../functions/functions";
+import { Poppins } from 'next/font/google';
 
-const golosText = localFont({
-  src: [
-    {
-      path: './fonts/GolosText-VariableFont_wght.ttf',
-    },
-  ],
+export const mainFont = Poppins({
+    subsets: ['latin'],
+    display: 'swap',
+    weight: ['400', '500', '600']
 });
+
 
 export const typography = {
     default: css`
-      ${golosText.style};
+      ${mainFont.style};
       font-weight: 400;
     `,
-    golosMedium: css`
-        ${golosText.style};
+    medium: css`
+        ${mainFont.style};
         font-weight: 500;
     `,
     demiBold: css`
-        ${golosText.style};
+        ${mainFont.style};
         font-weight: 600;
-    `,
-    bold: css`
-        ${golosText.style};
-        font-weight: 700;
     `,
 
     title1: css`
-        ${golosText.style};
-        font-weight: 600;
+    ${mainFont.style};
+    font-weight: 600;
+    font-size: 42px;
+    line-height: 1.3;
+
+    ${mediaBreakpointDown(Breakpoint.FHD)} {
         font-size: 40px;
-        line-height: 1.3;
+    }
 
-        ${mediaBreakpointDown(Breakpoint.xMedium)} {
-            font-size: 39px;
-        }
+    ${mediaBreakpointDown(Breakpoint.xMedium)} {
+        font-size: 39px;
+    }
 
-        ${mediaBreakpointDown(Breakpoint.xTablet)} {
-            font-size: 38px;
-        }
+    ${mediaBreakpointDown(Breakpoint.xTablet)} {
+        font-size: 38px;
+    }
 
-        ${mediaBreakpointDown(Breakpoint.xMobile)} {
-            font-size: 37px;
-        }
-    `,
-    title2: css`
-        ${golosText.style};
-        font-weight: 600;
+    ${mediaBreakpointDown(Breakpoint.xMobile)} {
         font-size: 32px;
-        line-height: 1.3;
+    }
+    `,
 
-        ${mediaBreakpointDown(Breakpoint.xMedium)} {
-            font-size: 31px;
-        }
+    title2: css`
+    ${mainFont.style};
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 1.3;
 
-        ${mediaBreakpointDown(Breakpoint.xTablet)} {
-            font-size: 30px;
-        }
+    ${mediaBreakpointDown(Breakpoint.FHD)} {
+        font-size: 32px;
+    }
 
-        ${mediaBreakpointDown(Breakpoint.xMobile)} {
-            font-size: 29px;
-        }
+    ${mediaBreakpointDown(Breakpoint.xMedium)} {
+        font-size: 31px;
+    }
+
+    ${mediaBreakpointDown(Breakpoint.xTablet)} {
+        font-size: 30px;
+    }
+
+    ${mediaBreakpointDown(Breakpoint.xMobile)} {
+        font-size: 28px;
+    }
     `,
     heading1: css`
-        ${golosText.style};
+        ${mainFont.style};
         font-weight: 600;
-        font-size: 24px;
+        font-size: 26px;
         line-height: 1.3;
+
+        ${mediaBreakpointDown(Breakpoint.FHD)} {
+            font-size: 24px;
+        }
 
         ${mediaBreakpointDown(Breakpoint.xMedium)} {
             font-size: 23px;
@@ -86,9 +94,13 @@ export const typography = {
         }
     `,
     heading2: css`
-        font-family: 'GolosText-DemiBold', sans-serif;
-        font-size: 20px;
+        ${mainFont.style};
+        font-size: 22px;
         line-height: 1.4;
+
+        ${mediaBreakpointDown(Breakpoint.FHD)} {
+            font-size: 20px;
+        }
 
         ${mediaBreakpointDown(Breakpoint.xMedium)} {
             font-size: 19px;
@@ -98,15 +110,19 @@ export const typography = {
             font-size: 18px;
         }
 
-        ${mediaBreakpointDown(Breakpoint.Tablet)} {
+        ${mediaBreakpointDown(Breakpoint.xMobile)} {
             font-size: 17px;
         }
     `,
     heading3: css`
-        ${golosText.style};
+        ${mainFont.style};
         font-weight: 500;
-        font-size: 17px;
+        font-size: 19px;
         line-height: 1.4;
+
+        ${mediaBreakpointDown(Breakpoint.FHD)} {
+            font-size: 17px;
+        }
 
         ${mediaBreakpointDown(Breakpoint.xMedium)} {
             font-size: 16px;
@@ -116,30 +132,19 @@ export const typography = {
             font-size: 15px;
         }
 
-        ${mediaBreakpointDown(Breakpoint.Tablet)} {
+        ${mediaBreakpointDown(Breakpoint.xMobile)} {
             font-size: 14px;
         }
     `,
-    documentation: css`
-        ${golosText.style};
-        font-weight: 400;
-        font-size: 13px;
-        line-height: 1.4;
-
-        ${mediaBreakpointDown(1280)} {
-            line-height: 1.3;
-        }
-
-        ${mediaBreakpointDown(768)} {
-            font-size: 12px;
-            line-height: 1.2;
-        }
-    `,
     bodyMedium: css`
-        ${golosText.style};
+        ${mainFont.style};
         font-weight: 500;
-        font-size: 16px;
+        font-size: 17px;
         line-height: 1.4;
+
+        ${mediaBreakpointDown(Breakpoint.FHD)} {
+            font-size: 16px;
+        }
 
         ${mediaBreakpointDown(Breakpoint.xMedium)} {
             font-size: 15px;
@@ -149,15 +154,19 @@ export const typography = {
             font-size: 14px;
         }
 
-        ${mediaBreakpointDown(Breakpoint.Tablet)} {
+        ${mediaBreakpointDown(Breakpoint.xMobile)} {
             font-size: 13px;
         }
     `,
     body: css`
-        ${golosText.style};
+        ${mainFont.style};
         font-weight: 400;
-        font-size: 16px;
+        font-size: 17px;
         line-height: 1.4;
+
+        ${mediaBreakpointDown(Breakpoint.FHD)} {
+            font-size: 16px;
+        }
 
         ${mediaBreakpointDown(Breakpoint.xMedium)} {
             font-size: 15px;
@@ -167,15 +176,37 @@ export const typography = {
             font-size: 14px;
         }
 
-        ${mediaBreakpointDown(Breakpoint.Tablet)} {
+        ${mediaBreakpointDown(Breakpoint.xMobile)} {
             font-size: 13px;
         }
     `,
     bodySmall: css`
-        ${golosText.style};
+        ${mainFont.style};
         font-weight: 400;
-        font-size: 15px;
+        font-size: 16px;
         line-height: 1.4;
+
+        ${mediaBreakpointDown(Breakpoint.FHD)} {
+            font-size: 15px;
+        }
+
+        ${mediaBreakpointDown(Breakpoint.xMedium)} {
+            font-size: 13px;
+        }
+
+        ${mediaBreakpointDown(Breakpoint.xMobile)} {
+            font-size: 12px;
+        }
+    `,
+    bodySmallBorder: css`
+        ${mainFont.style};
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.4;
+
+        ${mediaBreakpointDown(Breakpoint.FHD)} {
+            font-size: 14px;
+        }
 
         ${mediaBreakpointDown(Breakpoint.xMedium)} {
             font-size: 13px;
@@ -186,10 +217,14 @@ export const typography = {
         }
     `,
     captions: css`
-        ${golosText.style};
+        ${mainFont.style};
         font-weight: 400;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 1.3;
+
+        ${mediaBreakpointDown(Breakpoint.FHD)} {
+            font-size: 12px;
+        }
 
         ${mediaBreakpointDown(Breakpoint.xMedium)} {
             font-size: 11px;

@@ -2,79 +2,109 @@
 
 import styled from 'styled-components';
 
-import { ReactComponent as LogoIcon} from "@landing/assets/icons/logo/freelbee-logo.svg";
-import { ReactComponent as LocationIcon} from '@freelbee/assets/icons/location/location.svg';
-import { ReactComponent as MailIcon} from '@freelbee/assets/icons/mail/mail.svg';
+import logoIcon from "@landing/assets/icons/logo/freelbee-logo.svg";
+import rateImg from '@landing/assets/images/rate.svg';
+import {ReactComponent as LocationIcon} from '@freelbee/assets/icons/location/location.svg';
+import {ReactComponent as MailIcon} from '@freelbee/assets/icons/mail/mail.svg';
+import {ReactComponent as PhoneIcon} from '@freelbee/assets/icons/phone/call.svg';
 
-import { Breakpoint, mediaBreakpointDown, mediaBreakpointUp, vw, Heading3, Text, Color } from '@freelbee/shared/ui-kit';
+import { Breakpoint, mediaBreakpointDown, mediaBreakpointUp, vw, Heading3, Color, typography } from '@freelbee/shared/ui-kit';
 import { LinkButton, LinkStyle } from '@freelbee/features/common';
 import { DOC_LINKS } from './data/documentLinks';
 import { NAV_LINKS } from './data/navigationLinks';
 import { FooterBottom } from './ui/FooterBottom';
 import { Cup } from './ui/Cup';
 import { SectionId } from '@landing/entities';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 export const Footer = () => {
+  const pathname = usePathname();
+
+    const getNavUrlRelativeToMain = (url: string) => {
+        if(url.startsWith('_') && pathname !== '/') {
+            return `/#${url}`;
+        } else {
+            return `#${url}`;
+        }
+    };
+    
     return (
         <>
             <Container id={SectionId.CONTACTS}>
                 <Content>
-                    <FooterLogo><LogoIcon/></FooterLogo>
+                <FooterLogo><Image 
+                        src={logoIcon} 
+                        alt='Freelbee logo'
+                        fill /></FooterLogo>
 
                     <LinksBlock>
                         <Heading3>Legal</Heading3>
                         {DOC_LINKS.map(link => (
-                            <LinkButton
+                            <LinkButton 
                                 key={link.text}
                                 font='body'
-                                as='Link'
+                                as='Link' 
                                 target='_blank'
                                 linkStyle={LinkStyle.GRAY}
                                 href={link.url}>
                                 {link.text}
                             </LinkButton>
-                        ))}
+                        ))}             
                     </LinksBlock>
 
                     <NavBlock>
                         <Heading3>Navigation</Heading3>
                         {NAV_LINKS.map(link => (
-                            <LinkButton
+                            <LinkButton 
                                 key={link.text}
                                 font='body'
-                                as='Link'
+                                as='Link' 
                                 linkStyle={LinkStyle.GRAY}
-                                href={'#' + link.url}>
+                                href={getNavUrlRelativeToMain(link.url)}>
                                 {link.text}
                             </LinkButton>
-                        ))}
+                        ))}                 
                     </NavBlock>
-
+                  
                     <LinksBlock>
                         <Heading3>Contact us</Heading3>
-                        <Text
-                            font='body'
-                            as='div'
-                            color={Color.GRAY_600}>
-                            <LinkWithIcon>
-                                <MailIcon />
-                                <a href={`mailto: ${process.env.NEXT_PUBLIC_EMAIL}`}>
-                                    {process.env.NEXT_PUBLIC_EMAIL}
-                                </a>
-                            </LinkWithIcon>
-
-                        </Text>
-                        <Text
-                            font='body'
-                            as='div'
-                            color={Color.GRAY_600}>
-                            <LinkWithIcon>
-                                <LocationIcon/>
-                                <span>Office No. 1101-225 King of Tides</span>
-                                <span>Ships Limited - Jebel Ali Al Wali, Dubai, UAE. </span>
-                            </LinkWithIcon>
-                        </Text>
+              
+                        <LinkWithIcon>
+                            <MailIcon />
+                            <a href={`mailto: ${process.env.NEXT_PUBLIC_EMAIL}`}>
+                                {process.env.NEXT_PUBLIC_EMAIL}
+                            </a>                              
+                        </LinkWithIcon>
+        
+                        <LinkWithIcon>
+                            <PhoneIcon />
+                            <a href={`tel: ${process.env.NEXT_PUBLIC_PHONE}`}>
+                                {process.env.NEXT_PUBLIC_PHONE}
+                            </a>                              
+                        </LinkWithIcon>
+              
+                        <LinkWithIcon>
+                            <LocationIcon/>
+                            <span>Office No. 1101-225 King of Tides</span>
+                            <span>Ships Limited - Jebel Ali Al Wali, Dubai, UAE. </span>                  
+                        </LinkWithIcon>
                     </LinksBlock>
+
+                    <RateWrapper 
+                        aria-label='View company reviews on the g2 website'
+                        href='https://www.g2.com/products/freelbee/reviews' 
+                        target='_blank'>
+                        <Image src={rateImg} width={120} height={61} alt='Company rating' /> 
+                        <div itemProp="itemReviewed" itemScope itemType="https://schema.org/Organization">
+                            <meta itemProp="name" content="Freelbee - contractor payment platform"/>
+                            <div itemProp="aggregateRating" itemScope itemType="http://schema.org/AggregateRating">
+                                <meta itemProp="bestRating" content="5"/>
+                                <meta itemProp="ratingValue" content="4.9"/>
+                                <span itemProp="ratingCount">3</span> reviews
+                            </div>
+                        </div>
+                    </RateWrapper>
 
                     <Cup />
 
@@ -85,10 +115,25 @@ export const Footer = () => {
     );
 }
 
-const Container = styled.div`
+const Container = styled.footer`
   background: ${Color.GRAY_300};
   display: flex;
   justify-content: center;
+`;
+
+const RateWrapper = styled.a`
+  width: 116px;
+  height: 58px;
+
+  div:last-child {
+    visibility: hidden;
+  }
+
+  ${mediaBreakpointUp(Breakpoint.Medium)} {
+    position: absolute;
+    top: 120px;
+    left: ${vw(76, Breakpoint.Large)};
+  }
 `;
 
 const LinksBlock = styled.div`
@@ -98,6 +143,8 @@ const LinksBlock = styled.div`
 `;
 
 const LinkWithIcon = styled.div`
+  ${typography.body};
+  color: ${Color.GRAY_800};
   display: grid;
   grid-template-columns: 20px auto;
   align-items: flex-start;
@@ -107,7 +154,7 @@ const LinkWithIcon = styled.div`
     width: 18px;
     height: 18px;
     margin-top: 2px;
-    stroke: ${Color.GRAY_600};
+    stroke: ${Color.GRAY_800};
   }
 
   span:last-child {
@@ -154,7 +201,7 @@ const Content = styled.div`
   }
 
   ${mediaBreakpointDown(Breakpoint.xMobile)} {
-      gap: 16px;
+      /* gap: 16px; */
       grid-template-columns: 1fr;
       padding-right: ${vw(20, Breakpoint.xMobile)};
       padding-left: ${vw(20, Breakpoint.xMobile)};
@@ -163,16 +210,17 @@ const Content = styled.div`
 
 const FooterLogo = styled.div`
   flex-shrink: 0;
+  position: relative;
   width: ${vw(100, Breakpoint.Medium)};
+  height: 36px;
   max-width: 150px;
+  min-width: 120px;
 
-  svg {
-    width: 100%;
-    height: 100%;
-  }
+
   ${mediaBreakpointDown(Breakpoint.Medium)} {
     grid-column: 1/4;
     width: 120px;
+    height: 30px;
   }
 
   ${mediaBreakpointDown(Breakpoint.xMobile)} {

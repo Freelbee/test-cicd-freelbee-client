@@ -41,11 +41,11 @@ export const FullTable = () => {
                     </tr>
 
                     <tr>
-                        <th>{CellTitle['One-step solution']}</th>
-                        <td>{renderItems(freelbeeTable['One-step solution'])}</td>
-                        <td>{renderItems(bankTransfer['One-step solution'])}</td>
-                        <td>{renderItems(moneyTransfer['One-step solution'])}</td>
-                        <td>{renderItems(contractorsManagement['One-step solution'])}</td>
+                        <th>{CellTitle['One-stop solution']}</th>
+                        <td>{renderItems(freelbeeTable['One-stop solution'])}</td>
+                        <td>{renderItems(bankTransfer['One-stop solution'])}</td>
+                        <td>{renderItems(moneyTransfer['One-stop solution'])}</td>
+                        <td>{renderItems(contractorsManagement['One-stop solution'])}</td>
                     </tr>
 
                     <tr>

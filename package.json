@@ -1,8 +1,9 @@
 {
   "private": true,
-  "workspaces": ["apps/*"],
+  "workspaces": [
+    "apps/*"
+  ],
   "name": "@freelbee/source",
-  
   "license": "MIT",
   "scripts": {
     "build:company": "nx build company",
@@ -47,6 +48,7 @@
     "eslint-plugin-no-relative-import-paths": "^1.5.3",
     "framer-motion": "^10.18.0",
     "google-libphonenumber": "^3.2.34",
+    "jest-fetch-mock": "^3.0.3",
     "libphonenumber-js": "^1.10.53",
     "next": "^14.0.4",
     "react": "18.2.0",
@@ -55,6 +57,7 @@
     "react-phone-number-input": "^3.3.9",
     "react-redux": "^9.0.4",
     "react-toastify": "^10.0.2",
+    "redux-logger": "^3.0.6",
     "styled-components": "^6.1.8",
     "swiper": "^11.0.5",
     "telegraf": "^4.15.3",

@@ -2,31 +2,79 @@
 
 import { FormEventHandler, useState } from "react";
 import { toast } from 'react-toastify';
-import { useSearchParams } from "next/navigation";
-import styled from "styled-components";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import styled, { css } from "styled-components";
 
 import 'react-toastify/dist/ReactToastify.css';
 import { SectionId, sectionSeoText } from "@landing/entities";
+import { LeadMessageBuilder } from "@freelbee/features";
 import { ValidatorResult } from "@freelbee/features";
 import { Input, PhoneNumberInput, TextArea } from "@freelbee/features/common";
-import { Breakpoint, ButtonStyleEnum, mediaBreakpointDown } from '@freelbee/shared/ui-kit';
+import { Breakpoint, ButtonStyleEnum, Color, mediaBreakpointDown } from '@freelbee/shared/ui-kit';
 import {
   Button
 } from "@freelbee/features/common";
-import { LanguageType } from "@freelbee/entities";
+import { LanguageType } from "@freelbee/shared/language";
+
+import { ReactComponent as CompanyIcon } from '@freelbee/assets/icons/location/building.svg';
+import{ ReactComponent as MailIcon } from '@freelbee/assets/icons/mail/mail.svg';
+import { ReactComponent as UserIcon }  from '@freelbee/assets/icons/user/person.svg';
 
 import ApplicationFormValidator from "./util/ApplicationFormValidator";
 
 import {FormData} from './interface/FormData';
+import { useSendRegisteredLeadMutation } from "../../zoho-crm/query/zohoAPI";
 
-export const ApplicationForm = () => {
-    const [formData, setFormData] = useState<FormData>({email: '', phone: '', message: ''});
+const DEFAULT = {
+    email: '', 
+    phone: '', 
+    message: '', 
+    name: '', 
+    company: ''
+};
+
+export const ApplicationModalForm = () => {
+
+    const [formData, setFormData] = useState<FormData>(DEFAULT);
     const searchParams = useSearchParams();
+    const router = useRouter();
+    const pathName = usePathname();
 
     const validator = new ApplicationFormValidator();
     const [validationResult, setValidationResult] = useState(new ValidatorResult<FormData>());
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSuccess, setIsSuccess] = useState<boolean>(false);
+
+    const [sendLeadToCRM] = useSendRegisteredLeadMutation();
+
+    const sendTelegramNotification = async (formData: FormData) => {
+        const tgMessage = new LeadMessageBuilder(`New message from landing!`)
+            .name(formData.name)
+            .phone(formData.phone)
+            .email(formData.email)
+            .message(formData.message)
+            .company(formData.company)
+            .source(getTargetText())
+            .build();
+
+        return fetch("/api/tg_bot", {
+            method: "POST",
+            body: JSON.stringify(tgMessage)
+        });
+    };
+
+    const sendLead = async (formData: FormData) => {
+        if(process.env.NEXT_PUBLIC_MODE === 'prod') {
+            sendLeadToCRM({
+                Email: formData.email,
+                Last_Name: formData.name,
+                Company: formData.company,
+                Phone: formData.phone,
+                Lead_Source: "https://freelbee.com" + pathName,
+                field: formData.message
+            });             
+        }
+    };
 
     const getTargetText = (): string => {
         const modalParam = searchParams.get('modal'); // Expected value = ModalQueryValue.APPLICATION + SectionId (modal=application_devices)
@@ -38,8 +86,6 @@ export const ApplicationForm = () => {
         return sectionSeoText[sectionId as SectionId] ?? '';
     };
 
-    console.log('Test hotfix')
-
     const sendApplication: FormEventHandler = async (e) => {
         e.preventDefault();
         const validationResult = validator.validate(formData);
@@ -48,15 +94,18 @@ export const ApplicationForm = () => {
         if(!validationResult.isSuccess()) {
             return;
         }
+
         try {
             setIsLoading(true);
             setIsSuccess(false);
-            const res = await fetch("/api/tg_bot", {
-                method: "POST",
-                body: JSON.stringify({...formData, target: getTargetText()})
-            });
+
+            sendLead(formData);
+            const res = await sendTelegramNotification(formData);
+
             if(res.ok) {
                 setIsSuccess(true);
+
+                router.push('/thanks-for-booking');
             } else {
                 toast("Something went wrong. Please try again later", {type: 'error'});
             }
@@ -67,41 +116,58 @@ export const ApplicationForm = () => {
         }
     };
 
-
     return (
-        <Form onSubmit={sendApplication} >
-            <Input
-                data-testid={'landing-form-email'}
-                isRequired
+        <Form onSubmit={sendApplication} data-crmid='application-form-email'>
+            <Input 
+                data-testid='landing-form-name'
+                icon={<UserIcon stroke={Color.GRAY_600} />}
+                isError={validationResult.hasError('name')}
+                errorMessage={validationResult.getMessageByLanguage('name', LanguageType.EN)}
+                placeholder='John Silver' 
+                label='Full Name'
+                value={formData.name} 
+                setValue={(val) => setFormData((prev) => ({...prev, name: val}))} />
+            <Input 
+                icon={<CompanyIcon stroke={Color.GRAY_600} />}
+                isError={validationResult.hasError('company')}
+                errorMessage={validationResult.getMessageByLanguage('company', LanguageType.EN)}
+                placeholder='FREELBEE' 
+                label='Company name'
+                data-testid='landing-form-company'
+                value={formData.company} 
+                setValue={(val) => setFormData((prev) => ({...prev, company: val}))} />
+            <Input 
                 isError={validationResult.hasError('email')}
                 errorMessage={validationResult.getMessageByLanguage('email', LanguageType.EN)}
-                placeholder='mail@mail.com'
-                label='E-mail'
-                value={formData.email}
+                placeholder='mail@company.com' 
+                label='Company E-mail'
+                data-testid='landing-form-email'
+                icon={<MailIcon stroke={Color.GRAY_600} />}
+                value={formData.email} 
                 setValue={(val) => setFormData((prev) => ({...prev, email: val}))} />
-            <PhoneNumberInput
-                data-testid={'landing-form-phone'}
-                label="Phone number"
-                isRequired
-                value={formData.phone}
-                setValue={(val) => setFormData((prev) => ({...prev, phone: val}))}
+            <PhoneNumberInput 
+                label="Phone"
+                data-testid='landing-form-phone'
+                value={formData.phone} 
+                setValue={(val) => setFormData((prev) => ({...prev, phone: val}))}            
             />
             <TextArea
-              data-testid={'landing-form-message'}
-                isRequired
+                data-testid='landing-form-message'
                 isError={validationResult.hasError('message')}
                 errorMessage={validationResult.getMessageByLanguage('message', LanguageType.EN)}
-                placeholder='Ask whatever you want'
-                label='Your question'
-                value={formData.email}
+                placeholder='Ask whatever you want!' 
+                label='Any question?'
+                value={formData.email} 
                 onChange={(e) => setFormData((prev) => ({...prev, message: e.target.value}))} />
-            <Button
-                data-testid={'landing-form-submit'}
+            <Button 
                 styleType={ButtonStyleEnum.BLACK}
+                styles={buttonStyle}
                 isWide
                 isLoading={isLoading}
-                isSuccess={isSuccess}>
-                Contact us
+                isSuccess={isSuccess}
+                data-crmid='application-form-button'
+                data-testid='landing-form-submit'>
+                Sent
             </Button>
         </Form>
     );
@@ -109,16 +175,15 @@ export const ApplicationForm = () => {
 
 const Form = styled.form`
     display: grid;
-    gap: 32px;
-    margin-bottom: 32px;
-
-    ${mediaBreakpointDown(Breakpoint.Medium)} {
-        gap: 24px;
-        margin-bottom: 24px;
-    }
+    gap: 16px;
+    margin-bottom: 16px;
 
     ${mediaBreakpointDown(Breakpoint.xMobile)} {
-        gap: 16px;
-        margin-bottom: 16px;
+        gap:8px;
+        margin-bottom: 8px;
     }
+`;
+
+const buttonStyle = css`
+    margin-top: 16px;
 `;

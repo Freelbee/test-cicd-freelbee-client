@@ -58,6 +58,9 @@
       "@freelbee/shared/ui-kit": ["packages/f-shared/src/ui-kit/index.ts"],
       "@freelbee/shared/hooks": ["packages/f-shared/src/hooks/index.ts"],
       "@freelbee/shared/helpers": ["packages/f-shared/src/helpers/index.ts"],
+      "@freelbee/shared/error": ["packages/f-shared/src/error/index.ts"],
+      "@freelbee/shared/mocks": ["packages/f-shared/src/tests/__mocks__/index.ts"],
+      "@freelbee/shared/language": ["packages/f-shared/src/language/index.ts"],
 
 
       "@freelbee/assets/*": ["packages/f-shared/src/assets/*"],

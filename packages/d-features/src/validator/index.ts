@@ -28,5 +28,6 @@ export * from './rules/PhoneRuleLazy';
 export * from './rules/RequiredRule';
 export * from './rules/RequiredRuleWidthSpecialChars';
 export * from './rules/Task/WorksNameRule';
+export * from './rules/CompanyEmailRule';
 
 

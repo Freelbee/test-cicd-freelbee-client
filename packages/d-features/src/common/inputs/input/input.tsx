@@ -25,10 +25,26 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     tipsColor?: Color;
 }
 
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+    placeholder: string,
+    value: string,
+    maxLength?: number,
+    isError?: boolean,
+    isValid?: boolean,
+    isRequired?: boolean,
+    errorMessage?: ReactNode,
+    tipsText?: ReactNode,
+    label?: string,
+    noMessageSpace?: boolean,
+    setValue: (value: string) => void;
+    onClear?: (args?: unknown) => void;
+    tipsColor?: Color;
+    icon?: JSX.Element
+}
+
 export const Input = (props: Props) => {
 
     const {
-        placeholder,
         value,
         setValue,
         maxLength,
@@ -44,6 +60,7 @@ export const Input = (props: Props) => {
         noMessageSpace,
         tipsColor,
         onClear,
+        icon,
         ...rest
     } = props;
 
@@ -60,7 +77,7 @@ export const Input = (props: Props) => {
 
     return (
         <InputWrapper>
-            <InputContainer
+            <InputContainer 
                 $isDisabled={!!disabled}>
 
                 {(label || maxLength) &&
@@ -71,8 +88,9 @@ export const Input = (props: Props) => {
                         {value.length} / {maxLength}
                     </Text>}
                 </InputHeader>}
-
+                
                 <InputRow>
+                    {icon && <IconWrapper>{icon}</IconWrapper>}
                     <InputField
                         id={id}
                         $isError={isError}
@@ -83,11 +101,11 @@ export const Input = (props: Props) => {
                         name={name}
                         onKeyDown={(e) => type === 'number' && blockInvalidChar(e)}
                         value={value || ''}
-                        placeholder={placeholder}
                         onChange={handleChange}
                         $withButton={!!onClear}
+                        $withIcon={!!icon}
                         {...rest}
-                    />
+                    />                
 
                     {onClear && <CloseButton clickHandler={onClear} size={CloseBtnSize.XS} style={{
                         position: 'absolute',
@@ -108,7 +126,7 @@ export const Input = (props: Props) => {
             <AnimatePresence>
                 {isError && errorMessage &&
                 <ErrorOutput absolutePosition={noMessageSpace} message={errorMessage} />}
-            </AnimatePresence>
+            </AnimatePresence>            
         </InputWrapper>
     );
 };
@@ -130,6 +148,18 @@ const InputRow = styled.div`
   position: relative;
 `;
 
+const IconWrapper = styled.span`
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    left: 14px;
+    top: 15px;
+    svg {
+        width: 18px;
+        height: 18px;
+    }
+`;
+
 const InputContainer = styled.div<{$isDisabled: boolean}>`
   pointer-events: ${({$isDisabled}) => $isDisabled ? 'none' : 'all'};
   opacity: ${({$isDisabled}) => $isDisabled ? 0.8 : 1};
@@ -137,7 +167,9 @@ const InputContainer = styled.div<{$isDisabled: boolean}>`
   row-gap: 8px;
 `;
 
-const InputField = styled.input<{$isError?: boolean, $isValid?: boolean, $withButton: boolean}>`
+const InputField = styled.input<{$isError?: boolean, $isValid?: boolean, $withButton: boolean, $withIcon: boolean}>`
   ${baseInputStyles};
-  padding: ${({$withButton}) => $withButton ? '14px 36px 14px 14px' : '14px' };
+  padding: 14px;
+  padding-left: ${({$withIcon}) => $withIcon ? '38px' : '14px' };
+  padding-right: ${({$withButton}) => $withButton ? '36px' : '14px' };
 `;

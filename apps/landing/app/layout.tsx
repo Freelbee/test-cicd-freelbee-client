@@ -1,9 +1,12 @@
 import { ToastContainer } from 'react-toastify';
 import type { Metadata } from 'next';
 
+import 'react-toastify/dist/ReactToastify.min.css';
 import { Loader } from './_loader';
-import { GlobalStyle, GoogleTag, LinkedInScript, StyledComponentsRegistry } from '@landing/app';
-import { Header, Footer, CookiesModal } from '@landing/widgets';
+import { CookiesModal, Footer, Header } from '@landing/widgets';
+import { GlobalStyle, GooglePixel, GoogleTag, LinkedInScript, StyledComponentsRegistry, ZohoScript } from '@landing/app';
+import {StoreProvider} from '@landing/app';
+
 
 export const metadata: Metadata = {
     title: 'Global Payments, HR, IT to Freelancers and Distributed Teams | Freelbee',
@@ -24,6 +27,7 @@ export const metadata: Metadata = {
             }
         ]
     },
+
     other: {
         "google-site-verification": "TJIWzkk5-ka7sMxJLF4pL-VZtCiNT4LaTwlaWqYyA78"
     }
@@ -35,27 +39,33 @@ export default function RootLayout ({
     children: React.ReactNode
 }) {
 
-
     return (
         <html lang="en">
-        <body>
-        <GoogleTag />
-        <LinkedInScript />
-        
-        <Loader />
-        <StyledComponentsRegistry>
-          <GlobalStyle />
-          <Header />
+            <body>
+                <GoogleTag />
+                <GooglePixel />
+                <LinkedInScript />
+                <ZohoScript />
 
-          {children}
+                <div id="#portal"></div>
+                <Loader />
+                <StyledComponentsRegistry>
+                    <GlobalStyle/>
+                    <Header/>
 
-          <ToastContainer position="bottom-right" />
-          <Footer />
+                    <StoreProvider>
+                        <main>
+                            {children}                        
+                        </main>                        
+                    </StoreProvider>
 
-          <CookiesModal />
-        </StyledComponentsRegistry>
-        <div id="#portal"></div>
-        </body>
+
+                    <ToastContainer position='bottom-right' />
+                    <Footer/>
+             
+                    <CookiesModal /> 
+                </StyledComponentsRegistry>
+            </body>
         </html>
     );
 }

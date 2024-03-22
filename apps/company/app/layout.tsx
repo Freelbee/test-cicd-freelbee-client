@@ -1,5 +1,4 @@
-import { StyledComponentsRegistry } from './registry';
-import StoreProvider from './StoreProvider';
+import { StoreProvider, StyledComponentsRegistry } from '@company/app';
 
 export default function RootLayout({
   children,
