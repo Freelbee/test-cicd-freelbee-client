@@ -2,6 +2,9 @@
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { composePlugins, withNx } = require('@nx/next');
+// const withBundleAnalyzer = require('@next/bundle-analyzer')({
+//   enabled: process.env.ANALYZE === 'true',
+// })
 // const { NxWebpackPlugin } = require('@nrwl/webpack');
 
 
@@ -18,30 +21,30 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }) => {
+  // webpack: (config, { buildId, dev, isServer, defaultLoaders, nextRuntime, webpack }) => {
 
-    // TODO: find solution for svgr better than this because this looks like a fucking sheet
-    config.module.rules.forEach((/** @type {{ test: { test: (arg0: string) => any; }; oneOf: { use: string | any[]; }[]; }} */ rule) => {
-      if (rule?.test?.test && rule.test.test(".svg")) {
-        // Обработка правил с oneOf
-        if (rule.oneOf) {
-          rule.oneOf.forEach((/** @type {{ use: string | any[]; }} */ oneOfRule) => {
-            if (oneOfRule.use && oneOfRule.use.length > 1) {
-              const newUse = { ...oneOfRule.use[1] };
-              newUse.options = {
-                ...newUse.options,
-                limit: undefined, // Remove limit to enable svgr
-                name: "[name].[hash:7].[ext]"
-              };
-              oneOfRule.use = [oneOfRule.use[0], newUse];
-            }
-          });
-        }
-      }
-    });
-    return config;
+  //   // TODO: find solution for svgr better than this because this looks like a fucking sheet
+  //   config.module.rules.forEach((/** @type {{ test: { test: (arg0: string) => any; }; oneOf: { use: string | any[]; }[]; }} */ rule) => {
+  //     if (rule?.test?.test && rule.test.test(".svg")) {
+  //       // Обработка правил с oneOf
+  //       if (rule.oneOf) {
+  //         rule.oneOf.forEach((/** @type {{ use: string | any[]; }} */ oneOfRule) => {
+  //           if (oneOfRule.use && oneOfRule.use.length > 1) {
+  //             const newUse = { ...oneOfRule.use[1] };
+  //             newUse.options = {
+  //               ...newUse.options,
+  //               limit: undefined, // Remove limit to enable svgr
+  //               name: "[name].[hash:7].[ext]"
+  //             };
+  //             oneOfRule.use = [oneOfRule.use[0], newUse];
+  //           }
+  //         });
+  //       }
+  //     }
+  //   });
+  //   return config;
 
-  },
+  // },
 
 };
 
@@ -51,7 +54,9 @@ const plugins = [
   withNx,
 ];
 
-
+// if (process.env.ANALYZE === 'true') {
+//   plugins.push(withBundleAnalyzer);
+// }
 module.exports = composePlugins(...plugins)(nextConfig);
 
 // module.exports = async (/** @type {string} */ phase, /** @type {any} */ context) => {

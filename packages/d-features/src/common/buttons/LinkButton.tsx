@@ -163,7 +163,7 @@ const ButtonBody = styled.button<{
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
 
   transition: color 0.5s, text-decoration 0.5s;
 

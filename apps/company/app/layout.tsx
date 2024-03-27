@@ -1,4 +1,5 @@
-import { StoreProvider, StyledComponentsRegistry } from '@company/app';
+import { GlobalStyle, StoreProvider, StyledComponentsRegistry } from '@company/app';
+import { PersonalLayout } from '@company/widgets';
 
 export default function RootLayout({
   children,
@@ -9,7 +10,14 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <StoreProvider>
-          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+          <StyledComponentsRegistry>
+          <GlobalStyle />
+
+            <PersonalLayout>
+              {children}              
+            </PersonalLayout>
+
+          </StyledComponentsRegistry>
         </StoreProvider>
       </body>
     </html>
