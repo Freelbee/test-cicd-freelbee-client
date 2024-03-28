@@ -49,7 +49,7 @@ const Container = styled.div`
   }
 
   ${mediaBreakpointDown(Breakpoint.xMobile)} {
-    padding: 24px 10px 0px 10px;
+    padding: 94px 10px 0px 10px;
   }
 `;
 

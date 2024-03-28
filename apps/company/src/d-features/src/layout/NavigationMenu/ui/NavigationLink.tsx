@@ -36,6 +36,7 @@ const LinkToPage = styled.div<{$active: boolean}>`
   border-bottom-right-radius: ${BORDER_RADIUS.S};
   border-bottom-left-radius: ${BORDER_RADIUS.XXS};
   border-top-left-radius: ${BORDER_RADIUS.XXS};
+  transition: background 0.5s;
 
   svg {
     width: 20px;
@@ -44,11 +45,11 @@ const LinkToPage = styled.div<{$active: boolean}>`
   }
 
   &:hover {
-    background: #f1f4f4;
+    background: ${Color.GRAY_200};
   }
   
   ${({$active})=> $active && (`
-  background: #f1f4f4;
+  background: ${Color.GRAY_200};
 
   &:before {
     content: "";

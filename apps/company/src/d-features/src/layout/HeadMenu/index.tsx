@@ -54,4 +54,12 @@ const Container = styled.div`
   ${mediaBreakpointDown(Breakpoint.Tablet)} {
     padding: 15px 16px;
   }
+
+  ${mediaBreakpointDown(Breakpoint.xMobile)} {
+    border-radius: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
 `;

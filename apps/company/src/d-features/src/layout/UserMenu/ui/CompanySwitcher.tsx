@@ -2,14 +2,13 @@
 
 import { DOMHelper } from '@freelbee/shared/helpers';
 import { Color, Text } from '@freelbee/shared/ui-kit';
-import {ForwardedRef, forwardRef, useState} from 'react';
+import {ForwardedRef, HTMLAttributes, forwardRef} from 'react';
 import styled, { css } from 'styled-components';
 import { ReactComponent as AddIcon} from '@freelbee/assets/icons/cross-icons/plus.svg';
 import { IconButton } from '@freelbee/features/common';
 import { CompanyItem } from './CompanyItem';
-import { motion } from 'framer-motion';
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLDivElement> {
     // To-DO интерфейс компании
     companies: Array<{
       id: number,
@@ -20,32 +19,24 @@ interface Props {
       id: number,
       name: string,
       status: string,
-    }
+    },
+    isOpen: boolean;
+    toggleOpen: () => void;
 }
 
-// const appearence = {
-//   initial: { opacity: 0, scaleY: 0 },
-//   animate: { opacity: 1, scaleY: 1 },
-//   exit: { opacity: 0, scaleY: 0},
-//   transition: { bounce: 0 },
-// }
-
-export const CompanySwitcher = forwardRef(function Switcher({companies, selectedCompany}: Props, ref?: ForwardedRef<HTMLDivElement>) {
-
-    const [isOpen, setIsOpen] = useState(false);
+export const CompanySwitcher = forwardRef(function Switcher({companies, selectedCompany, isOpen, toggleOpen, ...rest}: Props, ref?: ForwardedRef<HTMLDivElement>) {
 
     const handleCompanySelect = (id: number) => {
         // To-Do
     };
-
-    const toggleOpen = () => setIsOpen(prev => !prev);
 
     return (
         <Container 
             onKeyDown={(e) => DOMHelper.handleEnterKeydown(e, toggleOpen)}
             tabIndex={0}
             onClick={toggleOpen} 
-            ref={ref}>
+            ref={ref}
+            {...rest}>
             
             <CompanyListContainer isOpen={isOpen}>
                 <CompanyList role='listbox'>
@@ -84,21 +75,22 @@ const addButtonStyled = css`
   }
 `
 
-const Container = styled(motion.div)`
+const Container = styled.div`
   display: flex;
   align-items: center;
   z-index: 1;
   background: ${Color.GRAY_200};
   border-radius: 10px;
-  padding: 16px;
-  padding-right: 20px;
-  transform-origin: top;
+  transition: height 0.5s;
+  overflow: hidden;
 `;
 
 const CompanyListContainer = styled.div<{isOpen: boolean}>`
   width: 100%;
   overflow: hidden;
   min-width: 100%;
+  padding: 16px;
+  padding-right: 20px;
 `;
 
 const AddSection = styled.div`

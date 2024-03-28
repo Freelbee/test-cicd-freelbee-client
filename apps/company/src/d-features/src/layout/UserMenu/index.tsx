@@ -112,9 +112,16 @@ export function UserMenu () {
                   </AccountUserNames>
 
                   <AnimatePresence>
-                  {companiesIsOpen && 
-                    <CompanySwitcher companies={user.companies} selectedCompany={user.currentCompany} />
-                  }
+                  
+                  <CompanySwitcher
+                    style={{
+                      height: companiesIsOpen ? '250px' : '0px'
+                    }} 
+                    isOpen={companiesIsOpen}
+                    toggleOpen={() => setCompaniesIsOpen(prev => !prev)}
+                    companies={user.companies} 
+                    selectedCompany={user.currentCompany} />
+                
                   </AnimatePresence>
                   
                   <CopyUser user={user} />
