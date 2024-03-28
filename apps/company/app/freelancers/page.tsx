@@ -1,11 +1,7 @@
-import { PageContainer, PageTitle } from "@company/entities";
-import { CompanyFreelancers } from "@company/widgets";
+import { FreelancersPage } from "@company/pages";
 
 export default function Index() {
   return (
-    <PageContainer>
-      <PageTitle text='Freelancers' />
-      <CompanyFreelancers />
-    </PageContainer>
+    <FreelancersPage />
   );
 }

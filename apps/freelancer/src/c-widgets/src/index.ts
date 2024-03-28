@@ -1,1 +1,1 @@
-
+export * from './companies/index';

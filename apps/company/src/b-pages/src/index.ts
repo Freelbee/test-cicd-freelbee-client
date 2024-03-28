@@ -1,1 +1,1 @@
-export * from "./tasks/tasks"
+export * from './freelancers/FreelancersPage';
