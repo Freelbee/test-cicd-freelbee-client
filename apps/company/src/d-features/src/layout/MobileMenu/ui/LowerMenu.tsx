@@ -73,6 +73,7 @@ export function LowerMenu (
                     onTouchStart={(e)=>onTouchStart(e)}
                     onTouchMove={(e)=>onTouchMove(e)}
                     onTouchEnd={onTouchEnd}
+                    $isOpen={isOpen}
                 >
                     {additionalComponent}
                             <LowerPanelLinks>
@@ -97,23 +98,23 @@ const LowerPanel = styled.nav<{$isOpen: boolean}>`
   position: fixed;
   width: 100%;
   height: 100%;
-  transform: ${({ $isOpen }) => $isOpen ? 'translateY(0)' : 'translateY(120%)'};
+  visibility: ${({ $isOpen }) => $isOpen ? 'visible' : 'hidden'};
   opacity: ${({ $isOpen }) => $isOpen ? 1 : 0};
   left: 0;
   top: 0;
-  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.5s, visibility 0.5s;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
 
   ${({$isOpen}) => $isOpen && css`
     animation: ${animation} .5s;
-    animation-delay: .3s;
+    animation-delay: .1s;
     animation-fill-mode: forwards;
   `}
 `;
 
-const LowerPanelContainer = styled(motion.div)`
+const LowerPanelContainer = styled.div<{$isOpen?: boolean}>`
   min-height: 240px;
   display: flex;
   position: relative;
@@ -123,6 +124,8 @@ const LowerPanelContainer = styled(motion.div)`
   align-items: flex-start;
   height: auto;
   width: 100%;
+  transform: ${({ $isOpen }) => $isOpen ? 'translateY(0)' : 'translateY(100%)'};
+  transition: transform 0.5s;
 
   &:before{
     position: absolute;
