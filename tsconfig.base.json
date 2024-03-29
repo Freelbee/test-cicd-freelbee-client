@@ -28,6 +28,7 @@
       "@freelancer/features": ["apps/freelancer/src/d-features/src/index.ts"],
       "@freelancer/pages": ["apps/freelancer/src/b-pages/src/index.ts"],
       "@freelancer/shared": ["apps/freelancer/src/f-shared/src/index.ts"],
+      "@freelancer/widgets": ["apps/freelancer/src/c-widgets/src/index.ts"],
 
       "@landing/app": ["apps/landing/src/a-app/src/index.ts"],
       "@landing/pages": ["apps/landing/src/b-pages/src/index.ts"],

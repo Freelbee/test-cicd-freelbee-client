@@ -67,7 +67,14 @@ export enum Color {
 
 export enum Z_INDEX {
   'header' = 9,
+  'navigationMenu' = 8,
   'modal' = 10,
   'popupErrors' = 11,
   'globalLoader' = 1000,
+}
+
+export enum BORDER_RADIUS {
+  'XXS' = '2px',
+  'S' = '8px',
+  'M' = '14px',
 }

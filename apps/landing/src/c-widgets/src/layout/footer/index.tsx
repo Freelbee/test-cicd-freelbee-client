@@ -2,7 +2,7 @@
 
 import styled from 'styled-components';
 
-import logoIcon from "@landing/assets/icons/logo/freelbee-logo.svg";
+import logoIcon from "@freelbee/assets/icons/logo/freelbee-logo.svg";
 import rateImg from '@landing/assets/images/rate.svg';
 import {ReactComponent as LocationIcon} from '@freelbee/assets/icons/location/location.svg';
 import {ReactComponent as MailIcon} from '@freelbee/assets/icons/mail/mail.svg';
