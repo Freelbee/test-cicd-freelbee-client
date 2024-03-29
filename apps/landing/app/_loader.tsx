@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-import {ReactComponent as Logo} from '@landing/assets/icons/logo/freelbee-icon-monocolor.svg';
+import {ReactComponent as Logo} from '@freelbee/assets/icons/logo/freelbee-icon-monocolor.svg';
 
 import './globalLoader.css';
 

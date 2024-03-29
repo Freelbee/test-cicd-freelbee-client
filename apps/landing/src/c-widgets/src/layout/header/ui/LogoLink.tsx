@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { ReactComponent as LogoIcon} from '@landing/assets/icons/logo/freelbee-logo.svg';
+import { ReactComponent as LogoIcon} from '@freelbee/assets/icons/logo/freelbee-logo.svg';
 import styled, { css } from "styled-components";
 import { Breakpoint, mediaBreakpointDown, vw } from "@freelbee/shared/ui-kit";
 

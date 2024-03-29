@@ -6,3 +6,5 @@ export * from './freelancer/dto/CompanyFreelancerDto';
 export * from './layout/PageContainer';
 export * from './layout/PageTitle';
 export * from './layout/TableHead';
+export * from './user/ui/UserAvatar';
+export * from './user/ui/UserBadge';

@@ -1,4 +1,5 @@
-import { StoreProvider, StyledComponentsRegistry } from '@freelancer/app';
+import { GlobalStyle, StoreProvider, StyledComponentsRegistry } from '@freelancer/app';
+import { PersonalLayout } from '@freelancer/widgets';
 
 export default function RootLayout({
   children,
@@ -8,8 +9,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <StoreProvider>
-          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>          
+      <StoreProvider>
+          <StyledComponentsRegistry>
+          <GlobalStyle />
+
+            <PersonalLayout>
+              {children}              
+            </PersonalLayout>
+
+          </StyledComponentsRegistry>
         </StoreProvider>
       </body>
     </html>
