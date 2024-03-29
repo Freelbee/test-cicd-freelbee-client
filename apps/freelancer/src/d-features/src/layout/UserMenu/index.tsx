@@ -4,21 +4,18 @@ import {useRef, useState} from 'react';
 import styled from 'styled-components';
 
 import { ReactComponent as ArrowIcon} from '@freelbee/assets/icons/arrow-icons/arrow_down.svg';
-import { ReactComponent as OpenIcon} from '@freelbee/assets/icons/cross-icons/plus.svg';
 import { useOnClickOutside } from '@freelbee/shared/hooks';
 import { DOMHelper } from '@freelbee/shared/helpers';
 import { Breakpoint, Color, mediaBreakpointDown, mediaBreakpointUp } from '@freelbee/shared/ui-kit';
 import { ProfileVerificationLink } from './ui/ProfileVerificationLink';
-import { CompanySwitcher } from './ui/CompanySwitcher';
 import { CopyUser } from './ui/CopyUser';
 import { TechInfo } from './ui/TechInfo';
 import { AccountActions } from './ui/AccountActions';
-import { UserBadge } from '@company/entities';
+import { UserBadge } from '@freelancer/entities';
 
 export function UserMenu () {
 
     const [profileMenuIsOpen, setProfileMenuIsOpen] = useState(false);
-    const [companiesIsOpen, setCompaniesIsOpen] = useState(false);
     const modalRef = useRef(null);
     const buttonRef = useRef(null);
 
@@ -28,34 +25,7 @@ export function UserMenu () {
       firstname: 'Testov',
       lastname: 'Test',
       email: 'test@mail.com',
-      status: 'approved',
-      currentCompany: {
-        id: 1,
-        name: 'Company1',
-        status: 'approved',
-      },
-      companies: [
-        {
-          id: 1,
-          name: 'Company1',
-          status: 'approved',
-        },
-        {
-          id: 2,
-          name: 'Company2',
-          status: 'approved',
-        },
-        {
-          id: 3,
-          name: 'Company3',
-          status: 'not approved',
-        },
-        {
-          id: 4,
-          name: 'Company4',
-          status: 'waiting',
-        }
-      ]
+      status: 'not approved'
     }
 
     useOnClickOutside(modalRef, () => {
@@ -72,9 +42,9 @@ export function UserMenu () {
           ref={modalRef}
           onKeyDown={(e) => DOMHelper.handleEnterKeydown(e, toggleMenu)}
           onClick={(e) => DOMHelper.isNotChildOfElem(e) && toggleMenu()}>
+
           <UserBadge 
             onClick={toggleMenu}
-            avatarContent={user.firstname[0]}
             status={user.status}
             name={`${user.firstname} ${user.lastname}`}
             subInfo={user.status === 'not approved' && <ProfileVerificationLink />} />
@@ -87,35 +57,12 @@ export function UserMenu () {
 
               <AccountUserData>
 
-                  <AccountUserNames>
-
                   <UserBadge 
                     onClick={toggleMenu}
-                    avatarContent={user.firstname[0]}
                     status={user.status}
                     name={`${user.firstname} ${user.lastname}`}
                     subInfo={user.status === 'not approved' && <ProfileVerificationLink />} />
-
-                    <CompaniesButton 
-                      onClick={() => {
-                        setCompaniesIsOpen(prev => !prev)
-                      }}
-                      $opened={companiesIsOpen}
-                      aria-label={companiesIsOpen ? 'close companies menu' : 'open companies menu'}>
-                      <OpenIcon />
-                    </CompaniesButton>
                       
-                  </AccountUserNames>
-
-                  <CompanySwitcher
-                    style={{
-                      height: companiesIsOpen ? '250px' : '0px'
-                    }} 
-                    isOpen={companiesIsOpen}
-                    toggleOpen={() => setCompaniesIsOpen(prev => !prev)}
-                    companies={user.companies} 
-                    selectedCompany={user.currentCompany} />
-                  
                   <CopyUser user={user} />
               </AccountUserData>
 
@@ -134,24 +81,6 @@ const PersonalMenuAccount = styled.div`
   grid-gap: 8px;
   grid-template-columns: max-content max-content max-content;
   align-items: center;
-`;
-
-const CompaniesButton = styled.button<{$opened: boolean}>`
-  display: block;
-  cursor: pointer;
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  align-self: center;
-  margin-left: auto;
-  transition: transform 0.5s;
-  transform: ${({$opened}) => $opened ? 'rotate(45deg)' : 'rotate(0deg)'};
-
-  svg {
-    fill: ${Color.GRAY_700};
-    width: 16px;
-    height: 16px;
-  }
 `;
 
 const OpenMenu = styled.div<{ $isOpened: boolean }>`
@@ -206,9 +135,4 @@ const AccountUserData = styled.div`
   display: grid;
   grid-gap: 16px;
   align-items: center;
-`;
-
-const AccountUserNames = styled.span`
-  display: flex;
-  gap: 8px;
 `;

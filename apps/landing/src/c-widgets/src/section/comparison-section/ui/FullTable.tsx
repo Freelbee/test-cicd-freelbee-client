@@ -3,7 +3,7 @@
 import { Suspense } from 'react';
 import styled from 'styled-components';
 
-import { ReactComponent as Logo} from '@landing/assets/icons/logo/freelbee-logo.svg';
+import { ReactComponent as Logo} from '@freelbee/assets/icons/logo/freelbee-logo.svg';
 
 import { Breakpoint, Color, mediaBreakpointDown, typography } from '@freelbee/shared/ui-kit';
 

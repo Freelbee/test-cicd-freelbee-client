@@ -1,5 +1,6 @@
 import { ReactComponent as VerificationIcon} from "@freelbee/assets/icons/user/verification.svg";
 import { ReactComponent as WaitingIcon} from "@freelbee/assets/icons/user/waiting.svg";
+import { ReactComponent as UserIcon} from "@freelbee/assets/icons/user/person.svg";
 import { BORDER_RADIUS, Color } from "@freelbee/shared/ui-kit";
 import { HTMLAttributes } from "react";
 import styled from "styled-components";
@@ -7,11 +8,12 @@ import styled from "styled-components";
 interface Props extends HTMLAttributes<HTMLDivElement> {
     // To-DO interface
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    user: any;
+    status: any;
+    avatarContent?: string;
 }
 
 
-export const AccountAvatar = ({user, ...rest}: Props) => {
+export const UserAvatar = ({status, avatarContent, ...rest}: Props) => {
 
     const getStatusIcon = (status: string) => {
         switch (status) {
@@ -26,9 +28,9 @@ export const AccountAvatar = ({user, ...rest}: Props) => {
   return (
     <NameWrapper {...rest}>
         <Avatar>
-            {user.firstname[0]}
+            {avatarContent ?? <UserIcon />}
         </Avatar>         
-        {getStatusIcon(user.status)}             
+        {getStatusIcon(status)}             
     </NameWrapper>
   )
 }
@@ -59,4 +61,11 @@ const Avatar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  svg {
+      position: static;
+      width: 18px;
+      height: 18px;
+      stroke: ${Color.GRAY_600};
+    }
 `;

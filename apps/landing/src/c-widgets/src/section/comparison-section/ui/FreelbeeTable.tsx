@@ -2,7 +2,7 @@
 
 import styled from 'styled-components';
 
-import { ReactComponent as Logo} from '@landing/assets/icons/logo/freelbee-logo.svg';
+import { ReactComponent as Logo} from '@freelbee/assets/icons/logo/freelbee-logo.svg';
 
 import { Breakpoint, Color, mediaBreakpointDown, mediaBreakpointUp, typography } from '@freelbee/shared/ui-kit';
 
