@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { ReactComponent as LogoutIcon} from '@freelbee/assets/icons/menu-icons/exit.svg';
 import {  Color, Text, typography } from '@freelbee/shared/ui-kit';
 import { useRouter } from 'next/navigation';
-import { Token_Enum } from '@company/shared';
+import { Token_Enum } from '@freelancer/shared';
 
 export const AccountActions = () => {
 

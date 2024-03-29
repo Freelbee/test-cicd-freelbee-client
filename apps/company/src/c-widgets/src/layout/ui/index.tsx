@@ -1,8 +1,7 @@
 'use client'
 
-import { HeadMenu, LayoutContext, NavigationMenu } from "@company/features"
+import { HeadMenu, LayoutContext, MobileMenu, NavigationMenu } from "@company/features"
 import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit"
-import { MobileMenu } from "apps/company/src/d-features/src/layout/MobileMenu"
 import { PropsWithChildren, useState } from "react"
 import styled from "styled-components"
 
