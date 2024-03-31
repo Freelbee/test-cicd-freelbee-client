@@ -1,3 +1,4 @@
+'use client'
 import { ZohoLeadInfo } from "@freelbee/entities";
 import { API, Endpoint_Enum } from "@freelancer/shared";
 

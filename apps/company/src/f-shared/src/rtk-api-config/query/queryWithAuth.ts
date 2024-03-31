@@ -1,5 +1,3 @@
-'use client';
-
 import { Mutex } from 'async-mutex';
 import {
   BaseQueryApi,

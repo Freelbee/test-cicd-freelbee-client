@@ -1,5 +1,5 @@
+
 import { LinkButton, LinkStyle } from '@freelbee/features/common'
-import React from 'react'
 
 export const ProfileVerificationLink = () => {
   return (

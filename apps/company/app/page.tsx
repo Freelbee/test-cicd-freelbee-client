@@ -1,5 +1,7 @@
+import { TasksPage } from "@company/pages";
+
 export default function Index() {
   return (
-    <div>Main Page</div>
+    <TasksPage />
   );
 }

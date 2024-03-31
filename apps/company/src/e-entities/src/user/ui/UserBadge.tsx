@@ -42,7 +42,6 @@ const clampNameStyles = css`
 `;
 
 const AccountName = styled.div`
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,4 +51,5 @@ const AccountName = styled.div`
 const Container = styled.div`
   display: flex;
   gap: 8px;
+  cursor: pointer;
 `;

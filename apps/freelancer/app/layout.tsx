@@ -1,5 +1,7 @@
 import { GlobalStyle, StoreProvider, StyledComponentsRegistry } from '@freelancer/app';
 import { PersonalLayout } from '@freelancer/widgets';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 export default function RootLayout({
   children,
@@ -9,16 +11,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-      <StoreProvider>
+   
           <StyledComponentsRegistry>
           <GlobalStyle />
-
+          <StoreProvider>
             <PersonalLayout>
-              {children}              
+              {children}   
+              <ToastContainer position='bottom-right' />                
             </PersonalLayout>
-
+          </StoreProvider>
           </StyledComponentsRegistry>
-        </StoreProvider>
+       
       </body>
     </html>
   );

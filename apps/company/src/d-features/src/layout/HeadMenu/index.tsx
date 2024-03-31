@@ -1,6 +1,6 @@
 'use client'
 
-import { BORDER_RADIUS, Breakpoint, Color, mediaBreakpointDown, mediaBreakpointUp } from "@freelbee/shared/ui-kit";
+import { BORDER_RADIUS, Breakpoint, Color, Z_INDEX, mediaBreakpointDown, mediaBreakpointUp } from "@freelbee/shared/ui-kit";
 import styled from "styled-components";
 import {ReactComponent as BurgerIcon} from '@freelbee/assets/icons/menu-icons/burger.svg';
 import { useContext } from "react";
@@ -58,6 +58,8 @@ const Container = styled.div`
   ${mediaBreakpointDown(Breakpoint.xMobile)} {
     border-radius: 0;
     position: fixed;
+    z-index: ${Z_INDEX.header};
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     top: 0;
     left: 0;
     right: 0;

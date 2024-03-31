@@ -1,3 +1,5 @@
+'use client';
+
 import { LinkButton, LinkStyle } from "@freelbee/features/common";
 import { Color, Text } from "@freelbee/shared/ui-kit";
 

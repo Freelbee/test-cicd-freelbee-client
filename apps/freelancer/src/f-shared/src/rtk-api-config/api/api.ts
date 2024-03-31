@@ -1,5 +1,3 @@
-'use client';
-
 import { FetchBaseQueryError, createApi } from '@reduxjs/toolkit/query/react';
 import { SerializedError } from '@reduxjs/toolkit';
 import { baseQueryWithAuth } from '@freelancer/shared';

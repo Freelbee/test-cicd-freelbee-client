@@ -1,4 +1,6 @@
-import { zohoAPI } from "@company/features";
+'use client'
+
+import { zohoAPI } from "@company/entities";
 import { API } from "@company/shared";
 import { combineReducers, configureStore, isRejectedWithValue,Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
@@ -30,7 +32,7 @@ if(process.env.NODE_ENV === `development`) {
 export const rootReducer = combineReducers({
     [zohoAPI.reducerPath]: zohoAPI.reducer,
 });
-
+ 
 export const setupStore = () => configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middlewares)

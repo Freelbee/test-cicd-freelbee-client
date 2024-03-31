@@ -1,1 +1,3 @@
-export * from "./tasks/tasks"
+export * from "./companies/CompaniesPage";
+export * from "./settings/SettingsPage";
+export * from "./tasks/TasksPage";

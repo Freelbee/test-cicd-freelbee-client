@@ -1,7 +1,8 @@
-import { zohoAPI } from "@landing/features";
+
 import { API } from "@landing/shared";
 import { combineReducers, configureStore, isRejectedWithValue,Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import { zohoAPI } from "../zoho-crm";
 
 const rtkQueryErrorLogger: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
     if (isRejectedWithValue(action)) {
