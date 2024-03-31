@@ -39,16 +39,18 @@ const Container = styled.div`
 
   ${mediaBreakpointDown(Breakpoint.Medium)} {
     padding: 24px 41px 0px 41px;
-    gap: 24px;
+    row-gap: 24px;
+    column-gap: 0px;
+    grid-template-columns: 1fr;
   }
 
   ${mediaBreakpointDown(Breakpoint.Tablet)} {
     padding: 24px 16px 0px 16px;
-    gap: 16px;
+    row-gap: 16px;
   }
 
   ${mediaBreakpointDown(Breakpoint.xMobile)} {
-    padding: 94px 10px 0px 10px;
+    padding: 94px 10px 60px 10px;
   }
 `;
 

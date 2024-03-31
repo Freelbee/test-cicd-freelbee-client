@@ -1,6 +1,6 @@
 'use client';
 
-import { Breakpoint, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
+import { BORDER_RADIUS, Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
 import { HTMLAttributes, ReactNode } from "react";
 import styled from "styled-components";
 
@@ -11,12 +11,14 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 
 export const PageContainer = ({children, ...rest}: Props) => {
   return (
-    <Container {...rest}>PageContainer</Container>
+    <Container {...rest}>{children}</Container>
   )
 }
 
 const Container = styled.div`
     padding: 32px;
+    background-color: ${Color.WHITE};
+    border-radius: ${BORDER_RADIUS.L};
 
     ${mediaBreakpointDown(Breakpoint.Medium)} {
         padding: 24px;

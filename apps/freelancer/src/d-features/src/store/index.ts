@@ -1,4 +1,5 @@
-import { zohoAPI } from "@freelancer/features";
+
+import { zohoAPI } from "@freelancer/entities";
 import { API } from "@freelancer/shared";
 import { combineReducers, configureStore, isRejectedWithValue,Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";

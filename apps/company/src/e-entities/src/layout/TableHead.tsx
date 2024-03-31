@@ -9,14 +9,14 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
     styles: RuleSet<object>
 };
 
-export const TableHead = ({children, ...rest}: Props) => {
+export const TableHead = ({children, styles, ...rest}: Props) => {
   return (
-    <Container {...rest}>{children}</Container>
+    <Container {...rest} $styles={styles}>{children}</Container>
   )
 }
 
-const Container = styled.div`
-    padding: 10px 16px;
+const Container = styled.div<{$styles?: RuleSet<object>}>`
+    padding: 20px 26px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     background-color: ${Color.GRAY_200};
@@ -24,4 +24,6 @@ const Container = styled.div`
     ${mediaBreakpointDown(Breakpoint.xMobile)} {
         display: none;
     }
+
+    ${({$styles}) => $styles};
 `;

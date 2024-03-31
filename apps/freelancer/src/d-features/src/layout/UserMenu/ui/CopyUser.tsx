@@ -15,8 +15,12 @@ export const CopyUser = ({user}: Props) => {
 
     const copyToClipboard = () => {
         if(!user) return;
-        window.navigator.clipboard.writeText(`user id: ${user.id};\nemail: ${user.email};\ncompany id: ${user.currentCompany.id};`);
-        toast('Your ID has been copied to the clipboard!')
+        window.navigator.clipboard.writeText(`user id: ${user?.id};\nemail: ${user?.email};\ncompany id: ${user?.currentCompany?.id};`);
+        toast('Your ID has been copied to the clipboard!', {
+          theme: 'dark',
+          type: 'success',
+          position: 'top-right'
+        })
     };
 
   return (

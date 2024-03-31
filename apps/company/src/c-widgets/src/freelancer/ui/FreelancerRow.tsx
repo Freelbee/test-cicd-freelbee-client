@@ -1,9 +1,9 @@
 'use client';
 
-import { CompanyFreelancerDto } from "@company/entities";
+import { CompanyFreelancerDto, UserBadge } from "@company/entities";
 import { LinkButton } from "@freelbee/features/common";
-import { Breakpoint, Color, Text, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
-import styled from "styled-components";
+import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
+import styled, { css } from "styled-components";
 
 interface Props {
     freelancer: CompanyFreelancerDto;
@@ -12,9 +12,14 @@ interface Props {
 export const FreelancerRow = ({freelancer}: Props) => {
   return (
     <Container>
-        <Text font='bodyMedium'>{freelancer.firstName + ' ' + freelancer.lastName}</Text>
-        <LinkButton as='a' href={`mailto: ${freelancer.email}`}>{freelancer.email}</LinkButton>
-        <LinkButton as='a' href={`tel: ${freelancer.phone}`}>{freelancer.phone}</LinkButton>
+        <UserBadge 
+            name={freelancer.firstName ? freelancer.firstName + ' ' + freelancer.lastName : 'Invited'}
+            avatarContent={ freelancer.firstName && freelancer.firstName[0] + freelancer.lastName[0]}
+            status={freelancer.status}        
+            style={{cursor: 'default'}}
+        />
+        <LinkButton styles={css`max-width: fit-content;`} as='a' href={`mailto: ${freelancer.email}`}>{freelancer.email}</LinkButton>
+        <LinkButton styles={css`max-width: fit-content;`} as='a' href={`tel: ${freelancer.phone}`}>{freelancer.phone}</LinkButton>
     </Container>
   )
 }

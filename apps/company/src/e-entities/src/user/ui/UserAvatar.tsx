@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactComponent as VerificationIcon} from "@freelbee/assets/icons/user/verification.svg";
 import { ReactComponent as WaitingIcon} from "@freelbee/assets/icons/user/waiting.svg";
 import { ReactComponent as UserIcon} from "@freelbee/assets/icons/user/person.svg";
@@ -28,7 +30,7 @@ export const UserAvatar = ({status, avatarContent, ...rest}: Props) => {
   return (
     <NameWrapper {...rest}>
         <Avatar>
-            {avatarContent ?? <UserIcon />}
+            {avatarContent || <UserIcon />}
         </Avatar>         
         {getStatusIcon(status)}             
     </NameWrapper>
@@ -49,7 +51,6 @@ const NameWrapper = styled.div`
 `
 
 const Avatar = styled.div`
-  cursor: pointer;
   width: 40px;
   height: 40px;
   background-color: ${Color.GRAY_300};

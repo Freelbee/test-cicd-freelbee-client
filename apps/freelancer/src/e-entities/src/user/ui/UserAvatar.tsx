@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactComponent as VerificationIcon} from "@freelbee/assets/icons/user/verification.svg";
 import { ReactComponent as WaitingIcon} from "@freelbee/assets/icons/user/waiting.svg";
 import { ReactComponent as UserIcon} from "@freelbee/assets/icons/user/person.svg";

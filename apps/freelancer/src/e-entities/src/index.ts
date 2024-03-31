@@ -1,3 +1,4 @@
+export * from './zoho-crm/index';
 export * from './company/api/companyApi';
 export * from './company/dtos/FreelancerCompanyDto';
 
