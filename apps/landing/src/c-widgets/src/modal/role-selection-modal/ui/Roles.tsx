@@ -10,10 +10,12 @@ export const Roles = () => {
     return (
         <Container>
             <RoleCard 
+                data-testid='company-login'
                 url={process.env.NEXT_PUBLIC_COMPANY_URL ?? '/'} 
                 icon={companyImage} 
                 name={"Company"} />
             <RoleCard 
+                data-testid='freelancer-login'
                 color={Color.BLUE}
                 url={process.env.NEXT_PUBLIC_FREELANCER_URL ?? '/'} 
                 icon={freelancerImage} 

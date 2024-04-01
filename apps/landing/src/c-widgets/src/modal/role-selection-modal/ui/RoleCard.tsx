@@ -2,18 +2,19 @@
 
 import { Color, Text } from "@freelbee/shared/ui-kit";
 import Image from "next/image";
+import { HTMLAttributes } from "react";
 import styled from "styled-components";
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLAnchorElement>{
     icon: string;
     name: string;
     url: string;
     color?: Color;
 }
 
-export const RoleCard = ({icon, name, url, color = Color.EMERALD}: Props) => {
+export const RoleCard = ({icon, name, url, color = Color.EMERALD, ...rest}: Props) => {
   return (
-    <Container $roleColor={color} href={url} target='_blank'>
+    <Container {...rest} $roleColor={color} href={url} target='_blank'>
         <Image src={icon} width={95} height={104} alt="Role image" />
         <Text font='body' color={Color.GRAY_700}>{name}</Text>
     </Container>
