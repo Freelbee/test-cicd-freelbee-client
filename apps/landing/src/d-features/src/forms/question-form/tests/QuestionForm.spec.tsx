@@ -33,7 +33,7 @@ describe('Question form tests', () => {
     fireEvent.click(submitBtn);
 
     // then
-    expect(getAllByText('The field is filled in incorrectly!')).toHaveLength(1);
+    expect(getAllByText('The field is filled in incorrectly')).toHaveLength(1);
   });
 
   it('should not send empry spaces', () => {

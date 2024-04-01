@@ -35,7 +35,7 @@ describe('Application form tests', () => {
     fireEvent.click(submitBtn);
 
     // then
-    expect(getAllByText('The field is filled in incorrectly!')).toHaveLength(1);
+    expect(getAllByText('The field is filled in incorrectly')).toHaveLength(1);
     expect(queryByText('The field cannot be empty')).toBeNull();
   });
 

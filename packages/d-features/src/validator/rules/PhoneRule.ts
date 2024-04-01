@@ -3,7 +3,6 @@ import { IRule } from '../interface/IRule';
 import { RuleMessage } from '../interface/RuleMessage';
 const phoneUtil = checkPhone.PhoneNumberUtil.getInstance();
 
-
 export class PhoneRule implements IRule
 {
     public check (value : {country: string, number: string}) : boolean
