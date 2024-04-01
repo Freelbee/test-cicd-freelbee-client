@@ -14,7 +14,7 @@ export class EmailRule implements IRule
     public message () : RuleMessage
     {
         return {
-            en: `The field is filled in incorrectly!`,
+            en: `The field is filled in incorrectly`,
         };
     }
 }

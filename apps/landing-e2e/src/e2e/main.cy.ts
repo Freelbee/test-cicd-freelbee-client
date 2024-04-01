@@ -8,11 +8,19 @@ describe('landing-e2e', () => {
     cy.get('h1').should('have.length', 1);
   });
 
-  it('should redirect to the personal account login page', () => {
+  it('should open login modal window', () => {
     cy.getDataTest('header-menu-button').click();
     cy.getDataTest('login-mobile-button').should('be.visible').click();
 
-    cy.url().should('equal', Cypress.env().NEXT_PUBLIC_PERSONAL_URL)
+    cy.url().should('contain', '/?modal=login');
+
+    cy.getDataTest('company-login')
+    .should('be.visible')
+    .and('have.attr', 'href', Cypress.env().NEXT_PUBLIC_COMPANY_URL);
+
+    cy.getDataTest('freelancer-login')
+    .should('be.visible')
+    .and('have.attr', 'href', Cypress.env().NEXT_PUBLIC_FREELANCER_URL);
   });
 
   it('should open application modal with searchParams on button click', () => {

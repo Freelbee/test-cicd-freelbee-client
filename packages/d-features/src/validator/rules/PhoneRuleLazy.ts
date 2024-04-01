@@ -4,7 +4,7 @@ import { IRule } from '../interface/IRule';
 export class PhoneRuleLazy implements IRule {
     private getErrorMessage (): RuleMessage {
         return {
-            en: `The field is filled in incorrectly!`,
+            en: `The field is filled in incorrectly`,
         };
     }
 

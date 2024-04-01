@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useEffect, useRef} from 'react';
+import React, {Suspense, useEffect, useRef} from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { motion, useCycle } from 'framer-motion';
@@ -11,6 +11,7 @@ import { useDimensions, useMatchMedia, useOnClickOutside } from "@freelbee/share
 import { NAV_LINKS } from './data/links';
 import { LoginButton } from './ui/LoginButton';
 import { LogoLink } from './ui/LogoLink';
+import { RoleSelectionModal } from '../../modal';
 
 
 const SWITCH_TO_BURGER_BREAKPOINT = 1080;
@@ -138,6 +139,10 @@ export const Header = () => {
                         onClick={() => toggleOpen()}>
                     </BurgerButton>
                 </Content>
+
+                <Suspense fallback={<></>}>
+                    <RoleSelectionModal />
+                </Suspense>
             </Container>
         </>
     );
