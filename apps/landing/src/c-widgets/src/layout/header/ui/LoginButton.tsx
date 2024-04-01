@@ -4,24 +4,23 @@ import styled from "styled-components";
 
 import { ReactComponent as UserIcon} from '@freelbee/assets/icons/user/user.svg';
 import { Breakpoint, Color, Text, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
-import { useEffect } from 'react';
+import { useQueryParamsNavigation } from "@freelbee/shared/hooks";
+import { ModalQueryValue } from "@landing/entities";
 
-export const LoginButton = ({...rest}: React.HTMLAttributes<HTMLAnchorElement> ) => {
+export const LoginButton = ({...rest}: React.HTMLAttributes<HTMLButtonElement> ) => {
 
-  useEffect(() => {
-
-  }, []);
+    const [, navigateWithParam] = useQueryParamsNavigation();
 
   return(<Button
       {...rest}
-      href={process.env.NEXT_PUBLIC_PERSONAL_URL}>
+      onClick={() => navigateWithParam('modal', ModalQueryValue.LOGIN)}>
       <UserIcon />
       <Text font='body'>Log in</Text>
     </Button>
   );
 
 }
-const Button = styled.a`
+const Button = styled.button`
     cursor: pointer;
     border-radius: 14px;
     border: 1px solid ${Color.GRAY_900};
