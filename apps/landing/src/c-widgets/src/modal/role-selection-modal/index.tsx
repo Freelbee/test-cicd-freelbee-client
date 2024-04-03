@@ -10,9 +10,14 @@ import styled from "styled-components";
 export const RoleSelectionModal = () => {
     const [searchParams, navigateWithParam] = useQueryParamsNavigation();
 
+    const getOpened = () => {
+        return !!(searchParams.get('modal')?.includes(ModalQueryValue.LOGIN) ||
+        searchParams.get('modal')?.includes(ModalQueryValue.START));
+    };
+
     return (
         <ModalWindow
-            isOpen={!!searchParams.get('modal')?.includes(ModalQueryValue.LOGIN)}
+            isOpen={getOpened()}
             onClose={() => navigateWithParam('modal', '')}>
                 <Container>
                     <Header>
@@ -22,7 +27,7 @@ export const RoleSelectionModal = () => {
                         clickHandler={() => navigateWithParam('modal', '')} />
                     </Header>
                     
-                    <Roles />
+                    <Roles modal={searchParams.get('modal') as ModalQueryValue} />
                 </Container>
         </ModalWindow>
     );

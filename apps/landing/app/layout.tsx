@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     title: 'Global Payments, HR, IT to Freelancers and Distributed Teams | Freelbee',
     description: 'Streamline remote team management Freelbee: seamless HR, payroll, and compliance in one efficient platform for global workforces',
     metadataBase: new URL("https://freelbee.com/"),
+    robots: 'noindex, nofollow',
     openGraph: {
         title: 'Global Payments, HR, IT to Freelancers and Distributed Teams | Freelbee',
         description: `Streamline remote team management Freelbee: seamless HR, payroll, and compliance in one efficient platform for global workforces`,
