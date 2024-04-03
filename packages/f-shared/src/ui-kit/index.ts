@@ -11,6 +11,8 @@ export * from "./texts/text";
 
 
 export * from "./style-base/buttons/buttonStyles";
+export * from "./style-base/buttons/squareButtonStyles";
+export * from "./style-base/buttons/styleEnum";
 
 
 
