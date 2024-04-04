@@ -1,7 +1,7 @@
-import { SettingsPage } from "@company/pages";
+import { MainPage } from "@company/pages";
 
 export default function Index() {
   return (
-    <SettingsPage />
+    <MainPage />
   );
 }

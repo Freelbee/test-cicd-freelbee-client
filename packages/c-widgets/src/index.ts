@@ -1,1 +1,1 @@
-export * from './lib/c-widgets';
+export * from './user/settings/index';

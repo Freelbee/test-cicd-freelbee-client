@@ -30,7 +30,7 @@
     "../../dist/apps/company/.next/types/**/*.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts"
-  ],
+, "../../packages/c-widgets/src/user/settings/userDetails/AvatarWidget.tsx"  ],
   "exclude": [
     "node_modules",
     "jest.config.ts",

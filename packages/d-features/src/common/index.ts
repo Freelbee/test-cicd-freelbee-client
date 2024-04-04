@@ -10,4 +10,7 @@ export * from "./buttons/Button";
 export * from "./buttons/CloseButton";
 export * from "./buttons/IconButton";
 export * from "./buttons/LinkButton";
+export * from "./select/TabsSelect/TabsSelect";
+export * from "./links/NavigationLink";
+export * from "./links/interface/NavLink";
 export * from "./buttons/SquareButton";
