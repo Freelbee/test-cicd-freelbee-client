@@ -1,21 +1,20 @@
 'use client';
 
 import Link from "next/link";
-import { NavLink } from "../interface/NavLink";
 import styled from "styled-components";
 import { BORDER_RADIUS, Color, typography } from "@freelbee/shared/ui-kit";
-import { usePathname } from "next/navigation";
+import { NavLink } from "./interface/NavLink";
 
-export const NavigationLink = ({link, title, Icon}: NavLink) => {
+interface Props extends NavLink {
+  isActive: boolean;
+}
 
-    const pathName = usePathname();
-
-    const isRouteActive = (link: string) => pathName.endsWith(link);
+export const NavigationLink = ({link, title, Icon, isActive}: Props) => {
 
   return (
     <Link href={link}>
-        <LinkToPage $active={isRouteActive(link)}>
-            <Icon stroke={isRouteActive(link) ? Color.GRAY_800 : Color.GRAY_600} />
+        <LinkToPage $active={isActive}>
+            <Icon stroke={isActive ? Color.GRAY_800 : Color.GRAY_600} />
             {title}
         </LinkToPage>
     </Link>

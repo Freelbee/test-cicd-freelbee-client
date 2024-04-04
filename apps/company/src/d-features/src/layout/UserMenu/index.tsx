@@ -22,7 +22,7 @@ export function UserMenu () {
     const modalRef = useRef(null);
     const buttonRef = useRef(null);
 
-    // MOCK
+    // To-Do
     const user = {
       id: 1,
       firstname: 'Testov',

@@ -10,12 +10,12 @@ export const links: Array<NavLink> = [
         Icon: TasksIcon
     },
     {
-        link: `companies`,
+        link: `/companies`,
         title: 'Companies',
         Icon: CompanyIcon
     },
     {
-        link: `settings`,
+        link: `/settings`,
         title: 'Settings',
         Icon: SettingsIcon
     },
