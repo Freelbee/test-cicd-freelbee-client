@@ -1,6 +1,5 @@
 export * from "./modal/modalWindow";
 
-
 export * from "./inputs/input/input";
 export * from "./inputs/passwordInput/passwordInput";
 export * from "./inputs/phoneNumberInput/phoneNumberInput";
@@ -14,3 +13,4 @@ export * from "./buttons/LinkButton";
 export * from "./select/TabsSelect/TabsSelect";
 export * from "./links/NavigationLink";
 export * from "./links/interface/NavLink";
+export * from "./buttons/SquareButton";
