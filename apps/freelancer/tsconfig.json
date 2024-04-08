@@ -30,7 +30,7 @@
     "../../dist/apps/freelancer/.next/types/**/*.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts"
-  ],
+, "../../packages/d-features/src/country/ui/CountrySelect.tsx"  ],
   "exclude": [
     "node_modules",
     "jest.config.ts",

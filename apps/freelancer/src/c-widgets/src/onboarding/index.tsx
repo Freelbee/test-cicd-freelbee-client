@@ -40,9 +40,12 @@ export const OnboardingModal = () => {
         name: "",
         surname: "",
         phone: "",
-        country: "",
+        dateOfBirth: "",
+        country: null,
         city: "",
-        postalCode: ""
+        postalCode: "",
+        street: "",
+        houseNumber: ""
     });
     const [step, setStep] = useState<Onboarding_Step>(Onboarding_Step.ADDRESS);
     const [open, setOpen] = useState<boolean>(() => user.status != 'approved');

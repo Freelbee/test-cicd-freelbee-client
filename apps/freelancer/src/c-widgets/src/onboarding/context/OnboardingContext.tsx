@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext } from "react";
+import { Dispatch, SetStateAction, createContext } from "react";
 import { Onboarding_Step } from "../interface/OnboardingStep";
 import { FormData } from "../interface/FormData";
 
@@ -10,7 +10,7 @@ export interface IOnboardingContext {
     step: Onboarding_Step,
     setStep: (step: Onboarding_Step) => void,
     formData: FormData,
-    setFormData: (data: FormData) => void;
+    setFormData: Dispatch<SetStateAction<FormData>>;
 }
 
 export const OnboardingContext = createContext<IOnboardingContext>({
@@ -19,10 +19,13 @@ export const OnboardingContext = createContext<IOnboardingContext>({
     formData: {
         name: "",
         surname: "",
+        dateOfBirth: "",
         phone: "",
-        country: "",
+        country: null,
         city: "",
-        postalCode: ""
+        postalCode: "",
+        street: "",
+        houseNumber: ""
     },
     setFormData: () => { },
     open: false,

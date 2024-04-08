@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import {ReactComponent as MoreIcon} from '@freelbee/assets/icons/menu-icons/more.svg';
 import { visibleMenuItems } from '../data/links';
 import { LowerMenu } from './LowerMenu';
-import { Breakpoint, Color, mediaBreakpointUp} from '@freelbee/shared/ui-kit';
+import { Breakpoint, Color, Z_INDEX, mediaBreakpointUp} from '@freelbee/shared/ui-kit';
 import { usePathname } from 'next/navigation';
 import { LowerPanelButton } from './LowerPanelButton';
 
@@ -53,7 +53,7 @@ const LowerPanel = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   left: 0;
   bottom: ${({$isOpen}) => $isOpen ? '-100%' : 0};
-  z-index: 11;
+  z-index: ${Z_INDEX.modal - 1};
   background: ${Color.WHITE};
   width: 100%;
   padding: 10px 20px 8px 20px;

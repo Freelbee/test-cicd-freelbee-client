@@ -27,14 +27,15 @@ export * from "./inputs/textArea/textArea";
 export * from "./inputs/checkbox/checkbox";
 export * from "./inputs/date/DateInput";
 export * from './select/TabsSelect/TabsSelect'
-export * from './select/SelectWithInput/SelectWithInput'
+export * from './select/SelectWithSearch/SelectWithSearch'
 
 export * from "./buttons/Button";
 export * from "./buttons/CloseButton";
 export * from "./buttons/IconButton";
 export * from "./buttons/LinkButton";
 export * from "./select/TabsSelect/TabsSelect";
-export * from "./select/SelectWithInput/SelectWithInput";
+export * from "./select/SelectWithSearch/SelectWithSearch";
 export * from "./links/NavigationLink";
 export * from "./links/interface/NavLink";
 export * from "./buttons/SquareButton";
+export * from "./messages/InfoWithIcon";

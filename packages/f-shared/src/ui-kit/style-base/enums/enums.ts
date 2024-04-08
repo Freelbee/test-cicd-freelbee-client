@@ -40,7 +40,7 @@ export enum Color {
   CHECKING = '#FF6B00',
   PROCESSING = '#D89B00',
   PAID = '#30D42C',
-  BLUE = '#3D6BE2',
+  BLUE = '#0D76E9',
   PLAN = '#6A25AE',
 
   //Backgroud:

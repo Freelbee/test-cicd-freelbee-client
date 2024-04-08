@@ -47,7 +47,7 @@ export function PasswordInput (props: Props) {
     return (
         <InputWrapper>
             <InputContainer $isDisabled={!!rest.disabled}>
-                {label && <Label forInput={id} isRequired={isRequired} text={label}/>}
+                {label && <Label forInput={id} isRequired={isRequired} label={label}/>}
 
                 <InputRow>
                     <Input

@@ -1,6 +1,6 @@
 'use client';
 
-import { useId } from 'react';
+import { ReactNode, useId } from 'react';
 import PhoneInput from 'react-phone-number-input';
 import styled from 'styled-components';
 
@@ -11,21 +11,26 @@ import {Label} from "../self-utils/label";
 import {typography, Color} from '@freelbee/shared/ui-kit'
 
 import 'react-phone-number-input/style.css';
+import { AnimatePresence } from 'framer-motion';
+import { ErrorOutput } from '../self-utils/errorOutput';
 
 interface Props {
     label?: string;
-    isRequired?: boolean,
     value: string;
     setValue: (value: string) => void;
     defaultCountry?: CountryCode;
+    isError?: boolean,
+    isValid?: boolean,
+    isRequired?: boolean,
+    errorMessage?: ReactNode,
 }
 
-export const PhoneNumberInput = ({value, setValue, defaultCountry = 'US', isRequired, label, ...rest}: Props) => {
+export const PhoneNumberInput = ({value, setValue, defaultCountry = 'US', isRequired, label, isError, isValid, errorMessage, ...rest}: Props) => {
 
     const id = useId();
 
-    return (<Container>
-        {label && <Label forInput={id} isRequired={isRequired} text={label}/>}
+    return (<Container $isError={isError} $isValid={isValid}>
+        {label && <Label forInput={id} isRequired={isRequired} label={label}/>}
         <PhoneInput
             id={id}
             defaultCountry={defaultCountry}
@@ -34,6 +39,10 @@ export const PhoneNumberInput = ({value, setValue, defaultCountry = 'US', isRequ
             onChange={setValue}
             {...rest}
         />
+            <AnimatePresence>
+                {isError && errorMessage &&
+                <ErrorOutput message={errorMessage} />}
+            </AnimatePresence>    
     </Container>);
 };
 
