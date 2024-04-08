@@ -1,6 +1,6 @@
 'use client';
 
-import styled from 'styled-components';
+import styled, { RuleSet } from 'styled-components';
 
 import { ReactComponent as CloseIcon} from '@freelbee/assets/icons/cross-icons/close-icon.svg';
 import { Color } from '@freelbee/shared/ui-kit';
@@ -13,6 +13,7 @@ interface Props {
     disabled?: boolean;
     clickHandler: (args: unknown) => void;
     label?: string;
+    styles?: RuleSet<object>;
 }
 
 export enum CloseBtnSize {
@@ -29,8 +30,10 @@ export const CloseButton = ({
     disabled = false,
     style = {},
     clickHandler,
-    label = 'Close'}: Props) => (
+    label = 'Close',
+    styles}: Props) => (
     <Button
+        $styles={styles}
         type='button'
         onClick={clickHandler}
         $size={size}
@@ -43,7 +46,7 @@ export const CloseButton = ({
     </Button>
 );
 
-const Button = styled.button<{$color: Color, $hoverColor: Color, $size: CloseBtnSize}>`
+const Button = styled.button<{$color: Color, $hoverColor: Color, $size: CloseBtnSize, $styles?: RuleSet<object>}>`
     width: ${({ $size }) => $size};
     height: ${({ $size }) => $size};
     cursor: pointer;
@@ -73,4 +76,5 @@ const Button = styled.button<{$color: Color, $hoverColor: Color, $size: CloseBtn
             outline: none;
         }
     }
+    ${({$styles}) => $styles};
 `;
