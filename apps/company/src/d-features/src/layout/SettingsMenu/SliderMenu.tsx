@@ -1,12 +1,12 @@
 'use client';
 
 import { Color, typography } from '@freelbee/shared/ui-kit';
-import TabsSelect from 'packages/d-features/src/common/select/TabsSelect/TabsSelect';
 import Link from 'next/link';
 import { links } from './data/links';
 import styled, { RuleSet } from 'styled-components';
 import { HTMLAttributes } from 'react';
-import { NavLink } from '@freelbee/features/common';
+import { NavLink } from "@freelbee/shared/ui-kit";
+import TabsSelect from 'packages/f-shared/src/ui-kit/select/TabsSelect/TabsSelect';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
     styles?: RuleSet<object>

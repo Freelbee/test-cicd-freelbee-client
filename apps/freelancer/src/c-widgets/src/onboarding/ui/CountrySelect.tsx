@@ -1,6 +1,6 @@
 'use client';
 
-import SelectWithInput from "packages/d-features/src/common/select/SelectWithInput/SelectWithInput";
+import {SelectWithInput} from "@freelbee/shared/ui-kit";
 
 export interface Country {
     name: string;

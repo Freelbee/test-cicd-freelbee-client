@@ -1,6 +1,6 @@
 'use client';
 
-import { CloseBtnSize, CloseButton, ModalWindow } from "@freelbee/features/common"
+import { CloseBtnSize, CloseButton, ModalWindow } from "@freelbee/shared/ui-kit";
 import { useQueryParamsNavigation } from "@freelbee/shared/hooks";
 import { ModalQueryValue } from "@landing/entities";
 import { Roles } from "./ui/Roles";

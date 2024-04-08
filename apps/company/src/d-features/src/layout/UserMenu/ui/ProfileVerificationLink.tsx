@@ -1,5 +1,5 @@
 
-import { LinkButton, LinkStyle } from '@freelbee/features/common'
+import { LinkButton, LinkStyle } from "@freelbee/shared/ui-kit";
 
 export const ProfileVerificationLink = () => {
   return (

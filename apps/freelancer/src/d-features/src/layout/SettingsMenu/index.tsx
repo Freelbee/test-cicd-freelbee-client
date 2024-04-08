@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { links } from './data/links';
 import { Breakpoint,mediaBreakpointDown} from '@freelbee/shared/ui-kit';
 import { usePathname } from 'next/navigation';
-import { NavigationLink } from '@freelbee/features/common';
+import { NavigationLink } from "@freelbee/shared/ui-kit";
 
 export function SettingsMenu () {
   const pathName = usePathname();

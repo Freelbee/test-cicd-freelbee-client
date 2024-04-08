@@ -6,9 +6,7 @@ import styled from "styled-components";
 import personImage from "@landing/assets/images/thanks-for-booking/freelman.svg";
 
 import { SectionTitle } from "@landing/shared";
-import { Breakpoint, ButtonStyleEnum, Text, Title1, mediaBreakpointDown, vw } from "@freelbee/shared/ui-kit";
-import { Button } from "@freelbee/features/common";
-
+import { Breakpoint, ButtonStyleEnum, Text, Title1, mediaBreakpointDown, vw, Button } from "@freelbee/shared/ui-kit";
 
 export const TextWithAction = () => (
     <Container>

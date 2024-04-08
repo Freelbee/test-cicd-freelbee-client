@@ -1,10 +1,9 @@
 'use client';
 
-import { ButtonStyleEnum } from "@freelbee/shared/ui-kit";
+import { ButtonStyleEnum, Button } from "@freelbee/shared/ui-kit";
 import {useQueryParamsNavigation } from "@freelbee/shared/hooks";
 import { ModalQueryValue, SectionId } from "@landing/entities";
 import styled from "styled-components";
-import { Button } from '@freelbee/features/common';
 
 
 export const ActionButton = () => {

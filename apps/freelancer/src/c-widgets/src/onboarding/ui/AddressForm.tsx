@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Input } from "@freelbee/features/common";
+import { Button, Input } from "@freelbee/shared/ui-kit";
 import { FormEventHandler, useContext, useState } from "react";
 import styled from "styled-components";
 import { OnboardingContext } from "../context/OnboardingContext";

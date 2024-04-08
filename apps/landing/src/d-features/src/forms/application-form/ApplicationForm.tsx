@@ -9,11 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { SectionId, sectionSeoText } from "@landing/entities";
 import { LeadMessageBuilder } from "@freelbee/features";
 import { ValidatorResult } from "@freelbee/features";
-import { Input, PhoneNumberInput, TextArea } from "@freelbee/features/common";
+import { Input, PhoneNumberInput, TextArea, Button } from "@freelbee/shared/ui-kit";
 import { Breakpoint, ButtonStyleEnum, Color, mediaBreakpointDown } from '@freelbee/shared/ui-kit';
-import {
-  Button
-} from "@freelbee/features/common";
 import { LanguageType } from "@freelbee/shared/language";
 
 import { ReactComponent as CompanyIcon } from '@freelbee/assets/icons/location/building.svg';

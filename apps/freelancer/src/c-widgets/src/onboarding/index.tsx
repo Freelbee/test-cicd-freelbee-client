@@ -1,6 +1,6 @@
 'use client';
 
-import { CloseBtnSize, CloseButton, ModalWindow } from "@freelbee/features/common"
+import { CloseBtnSize, CloseButton, ModalWindow } from "@freelbee/shared/ui-kit";
 import { BORDER_RADIUS, Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
 import styled, { css } from "styled-components";
 import { AddressForm } from "./ui/AddressForm";

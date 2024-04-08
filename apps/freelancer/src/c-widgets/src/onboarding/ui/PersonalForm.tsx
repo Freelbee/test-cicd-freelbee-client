@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, DateInput, Input, PhoneNumberInput } from "@freelbee/features/common";
+import { Button, DateInput, Input, PhoneNumberInput } from "@freelbee/shared/ui-kit";
 import { ButtonStyleEnum } from "@freelbee/shared/ui-kit";
 import { FormEventHandler, useContext } from "react";
 import styled from "styled-components";

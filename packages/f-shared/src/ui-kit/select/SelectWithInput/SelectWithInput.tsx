@@ -17,7 +17,7 @@ interface SelectWithInputProps<T> extends InputLabelProps {
     getStringValue?: (item: T) => string,
 }
 
-export default function SelectWithInput<T> (props: SelectWithInputProps<T>) {
+export function SelectWithInput<T> (props: SelectWithInputProps<T>) {
 
     const {
         getStringValue = () => '',

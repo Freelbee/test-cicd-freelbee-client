@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { NotFoundImage } from './NotFoundImage';
 import { SectionTitle } from '@landing/shared';
 import { Breakpoint, ButtonStyleEnum, Text, Title1, mediaBreakpointDown, mediaBreakpointUp, vw } from '@freelbee/shared/ui-kit';
-import { Button } from '@freelbee/features/common';
+import { Button } from "@freelbee/shared/ui-kit";
 
 export const NotFoundContent = () => (
     <SectionRow>

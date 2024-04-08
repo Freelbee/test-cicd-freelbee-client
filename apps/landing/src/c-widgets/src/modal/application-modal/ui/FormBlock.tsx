@@ -2,7 +2,7 @@
 import { SectionTitle } from '@landing/shared';
 import { ModalBody } from './ModalBody';
 import { Color, Title2, Text } from '@freelbee/shared/ui-kit';
-import { LinkButton, LinkStyle } from '@freelbee/features/common';
+import { LinkButton, LinkStyle } from "@freelbee/shared/ui-kit";
 import { ApplicationModalForm } from '@landing/features';
 
 export const FormBlock = () => (

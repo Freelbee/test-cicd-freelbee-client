@@ -1,7 +1,7 @@
 'use client';
 
 import {ReactComponent as LoginIcon} from '@freelbee/assets/icons/user/login.svg';
-import { SquareButton } from '@freelbee/features/common';
+import { SquareButton } from "@freelbee/shared/ui-kit";
 import { useQueryParamsNavigation } from '@freelbee/shared/hooks';
 import { Breakpoint, SquareButtonStyle } from '@freelbee/shared/ui-kit';
 import { ModalQueryValue } from '@landing/entities';
