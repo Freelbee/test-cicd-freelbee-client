@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import { ButtonStyleEnum, Heading1, Text, Breakpoint, Color, mediaBreakpointDown, vw,Z_INDEX } from '@freelbee/shared/ui-kit';
-import {Button, CloseButton} from '@freelbee/features/common';
+import {Button, CloseButton} from "@freelbee/shared/ui-kit";
 import { CookieHelper } from '@freelbee/shared/helpers';
 
 export const CookiesModal = () => {

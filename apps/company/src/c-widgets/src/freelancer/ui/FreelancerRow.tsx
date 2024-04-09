@@ -1,7 +1,7 @@
 'use client';
 
 import { CompanyFreelancerDto, UserBadge } from "@company/entities";
-import { LinkButton } from "@freelbee/features/common";
+import { LinkButton } from "@freelbee/shared/ui-kit";
 import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
 import styled, { css } from "styled-components";
 

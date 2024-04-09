@@ -1,7 +1,7 @@
 'use client';
 
 import { User } from "@freelbee/entities";
-import { Input } from "@freelbee/features/common";
+import { Input } from "@freelbee/shared/ui-kit";
 import { Breakpoint, Color, Text, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
 import { FormEventHandler } from "react";
 import {ReactComponent as CopyIcon} from '@freelbee/assets/icons/copy/copy.svg';

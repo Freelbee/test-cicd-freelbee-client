@@ -4,9 +4,7 @@ import { Url } from 'next/dist/shared/lib/router/router';
 import Link, { LinkProps } from 'next/link';
 import styled, { RuleSet } from 'styled-components';
 
-import { IconPosition } from '@freelbee/shared/ui-kit';
-
-
+import { IconPosition, LinkStyle } from '@freelbee/shared/ui-kit';
 
 import {
   Breakpoint,
@@ -16,13 +14,6 @@ import {
   typography,
 
 } from '@freelbee/shared/ui-kit';
-
-
-export enum LinkStyle {
-  BLUE = 'blue',
-  GRAY = 'gray',
-  WHITE = 'white',
-}
 
 const LINK_COLOR: Record<LinkStyle, Color> = {
     [LinkStyle.BLUE]: Color.BLUE,

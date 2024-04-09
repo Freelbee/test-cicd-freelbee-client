@@ -10,7 +10,7 @@ import { ReactComponent as MobileIcon} from '../assets/mobile.svg';
 import{ ReactComponent as  DeskIcon }from '../assets/tablet.svg';
 import { DeviceType } from "../interface/DeviceType";
 import { Breakpoint, ButtonStyleEnum, Color, mediaBreakpointDown, vw } from "@freelbee/shared/ui-kit";
-import { IconButton } from '@freelbee/features/common';
+import { IconButton } from "@freelbee/shared/ui-kit";
 
 import desktopSrc from "@landing/assets/images/main/devices/desktop.png";
 import tabletSrc from "@landing/assets/images/main/devices/tablet.png";

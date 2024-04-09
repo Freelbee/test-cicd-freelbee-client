@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, PasswordInput } from "@freelbee/features/common";
+import { Button, PasswordInput } from "@freelbee/shared/ui-kit";
 import { Breakpoint, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
 import { FormEventHandler, HTMLAttributes, useState } from "react";
 import styled, { css } from "styled-components";

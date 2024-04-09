@@ -1,6 +1,6 @@
 'use client';
 
-import { LinkButton, LinkStyle } from "@freelbee/features/common";
+import { LinkButton, LinkStyle } from "@freelbee/shared/ui-kit";
 import { Color, Text } from "@freelbee/shared/ui-kit";
 
 import { ReactComponent as HelpIcon} from '@freelbee/assets/icons/menu-icons/help.svg';

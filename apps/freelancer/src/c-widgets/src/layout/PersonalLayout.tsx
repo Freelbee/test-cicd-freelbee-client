@@ -4,6 +4,7 @@ import { HeadMenu, LayoutContext, MobileMenu, NavigationMenu } from "@freelancer
 import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit"
 import { PropsWithChildren, useState } from "react"
 import styled from "styled-components"
+import { OnboardingModal } from "../onboarding"
 
 export const PersonalLayout = ({children}: PropsWithChildren) => {
   
@@ -15,6 +16,9 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
       setNavigationMenuOpened,
     }}>
       <Container>
+
+        <OnboardingModal />
+
         <HeadMenu />
         <NavigationMenu />
         <MobileMenu />

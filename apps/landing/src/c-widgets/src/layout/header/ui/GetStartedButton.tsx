@@ -1,6 +1,6 @@
 'use client';
 
-import { SquareButton } from "@freelbee/features/common";
+import { SquareButton } from "@freelbee/shared/ui-kit";
 import { Breakpoint, SquareButtonStyle } from "@freelbee/shared/ui-kit";
 import {ReactComponent as StartIcon} from '@freelbee/assets/icons/alert-icons/flash.svg';
 import { useQueryParamsNavigation } from "@freelbee/shared/hooks";

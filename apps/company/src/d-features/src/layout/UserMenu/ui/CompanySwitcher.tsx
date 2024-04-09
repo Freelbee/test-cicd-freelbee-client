@@ -5,7 +5,7 @@ import { Color, Text } from '@freelbee/shared/ui-kit';
 import {ForwardedRef, HTMLAttributes, forwardRef} from 'react';
 import styled, { css } from 'styled-components';
 import { ReactComponent as AddIcon} from '@freelbee/assets/icons/cross-icons/plus.svg';
-import { IconButton } from '@freelbee/features/common';
+import { IconButton } from "@freelbee/shared/ui-kit";
 import { CompanyItem } from './CompanyItem';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {

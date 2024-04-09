@@ -1,7 +1,7 @@
 
 import { ReactComponent as PersonalIcon } from "@freelbee/assets/icons/menu-icons/personal.svg";
 import { ReactComponent as LockIcon } from "@freelbee/assets/icons/menu-icons/lock.svg";
-import { NavLink } from "@freelbee/features/common";
+import { NavLink } from "@freelbee/shared/ui-kit";
 
 export const links: Array<NavLink> = [
     {

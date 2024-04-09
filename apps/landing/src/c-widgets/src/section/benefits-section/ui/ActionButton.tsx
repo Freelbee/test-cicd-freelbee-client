@@ -2,7 +2,7 @@
 
 import { useQueryParamsNavigation } from "@freelbee/shared/hooks";
 import { ButtonStyleEnum, IconPosition, } from "@freelbee/shared/ui-kit";
-import {Button} from "@freelbee/features/common";
+import {Button} from "@freelbee/shared/ui-kit";
 import { ModalQueryValue, SectionId } from "@landing/entities";
 
 export const ActionButton = () => {

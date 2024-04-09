@@ -47,7 +47,7 @@ export function TextArea (props: TextAreaProps) {
             <Container>
                 {(label || maxLength) &&
                 <InputHeader>
-                    {label && <Label forInput={id} isRequired={isRequired} text={label}/>}
+                    {label && <Label forInput={id} isRequired={isRequired} label={label}/>}
                     {maxLength &&
                     <Text font='captions' color={Color.GRAY_600}>
                         {value.length} / {maxLength}

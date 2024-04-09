@@ -11,7 +11,7 @@ import logo from '@freelbee/assets/icons/logo/freelbee-logo.svg';
 import { LayoutContext } from '../context/LayoutContext';
 import {ReactComponent as CloseIcon} from '@freelbee/assets/icons/cross-icons/close-icon.svg';
 import { usePathname } from 'next/navigation';
-import { NavigationLink } from '@freelbee/features/common';
+import { NavigationLink } from "@freelbee/shared/ui-kit";
 
 export function NavigationMenu () {
 
