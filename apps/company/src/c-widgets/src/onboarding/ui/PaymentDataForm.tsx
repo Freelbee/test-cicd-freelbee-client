@@ -4,74 +4,89 @@ import { Button, Color, InfoWithIcon, Input } from "@freelbee/shared/ui-kit";
 import { FormEventHandler, useContext, useState} from "react";
 import styled from "styled-components";
 import { OnboardingContext } from "../context/OnboardingContext";
-import { Onboarding_Step } from "../interface/OnboardingStep";
-import { useGetCountriesQuery } from "@freelancer/entities";
-import { CountrySelect, ValidatorResult } from "@freelbee/features";
+import { ValidatorResult } from "@freelbee/features";
 import {ReactComponent as AlertIcon} from '@freelbee/assets/icons/alert-icons/alert_icon.svg';
-import { FormData } from "../interface/PersonalFormData";
-import { AddressFormValidator } from "../util/CompanyDataValidator";
 import { LanguageType } from "@freelbee/shared/language";
+import { PaymentDataValidator } from "../util/PaymentDataValidator";
+import { useDataStateUpdater } from "@freelbee/shared/hooks";
+import { PaymentMethodFormData } from "../interface/PaymentMethodsFormData";
+import { PaymentMethodPropType } from "@freelbee/entities";
+
+const initialData: PaymentMethodFormData = {
+    [PaymentMethodPropType.BANK_ACCOUNT_NUMBER]: "",
+    [PaymentMethodPropType.IBAN]: "",
+    [PaymentMethodPropType.HOLDER_NAME]: "",
+    [PaymentMethodPropType.BANK_NAME]: "",
+    [PaymentMethodPropType.BIC_OR_SWIFT]: "",
+    [PaymentMethodPropType.CRYPTO_WALLET_NUMBER]: "",
+    [PaymentMethodPropType.CARD_NUMBER]: ""
+}
 
 export const PaymentDataForm = () => {
 
-    const {setStep, formData, setFormData} = useContext(OnboardingContext);
-    const {data} = useGetCountriesQuery();
-    const [validationResult, setValidationResult] = useState(new ValidatorResult<FormData>());
-    const validator = new AddressFormValidator();
+    const {setOpen} = useContext(OnboardingContext);
+    const [validationResult, setValidationResult] = useState(new ValidatorResult<PaymentMethodFormData>());
+    const validator = new PaymentDataValidator();
+    const [data, setData] = useDataStateUpdater<PaymentMethodFormData>(initialData);
 
     const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
-        const validationResult = validator.validate(formData);
+        const validationResult = validator.validate(data);
         setValidationResult(validationResult);
-
-        // if(!validationResult.isSuccess()) {
-        //     return;
-        // }
+        if(!validationResult.isSuccess()) {
+            return;
+        }
         // To-Do
-        setStep(Onboarding_Step.USER_DATA);
+        setOpen(false);
     }
 
   return (
     <Form onSubmit={submitHandler}>
-        <CountrySelect 
-            isError={validationResult.hasError('country')}
-            countries={data ?? []} 
-            selectedCountry={formData.country ?? null} 
-            onSelect={(c) => setFormData(prev => ({...prev, country: c}))} />
         <Input 
             isRequired
-            isError={validationResult.hasError('city')}
-            errorMessage={validationResult.getMessageByLanguage('city', LanguageType.EN)}
-            label="City"
-            placeholder="Enter the city name" 
-            value={""} 
-            setValue={() => {}} />
+            isError={validationResult.hasError(PaymentMethodPropType.BANK_ACCOUNT_NUMBER)}
+            errorMessage={validationResult.getMessageByLanguage(PaymentMethodPropType.BANK_ACCOUNT_NUMBER, LanguageType.EN)}
+            label="Bank account number"
+            placeholder="Enter the account number" 
+            value={data.BANK_ACCOUNT_NUMBER} 
+            setValue={(v) => setData(PaymentMethodPropType.BANK_ACCOUNT_NUMBER, v)} />
         <Input 
             isRequired
-            isError={validationResult.hasError('postalCode')}
-            errorMessage={validationResult.getMessageByLanguage('postalCode', LanguageType.EN)}
-            label="Postal code"
-            placeholder="000 000" 
-            value={""} 
-            setValue={() => {}} />
+            isError={validationResult.hasError(PaymentMethodPropType.IBAN)}
+            errorMessage={validationResult.getMessageByLanguage(PaymentMethodPropType.IBAN, LanguageType.EN)}
+            label="IBAN"
+            placeholder="Enter the IBAN" 
+            value={data.IBAN} 
+            setValue={(v) => setData(PaymentMethodPropType.IBAN, v)} />
 
         <Input 
             isRequired
-            isError={validationResult.hasError('street')}
-            errorMessage={validationResult.getMessageByLanguage('street', LanguageType.EN)}
-            label="Street"
-            placeholder="Enter the street name" 
-            value={""} 
-            setValue={() => {}} />
+            isError={validationResult.hasError(PaymentMethodPropType.HOLDER_NAME)}
+            errorMessage={validationResult.getMessageByLanguage(PaymentMethodPropType.HOLDER_NAME, LanguageType.EN)}
+            label="Account holder name"
+            maxLength={100}
+            placeholder="John Silver" 
+            value={data.HOLDER_NAME} 
+            setValue={(v) => setData(PaymentMethodPropType.HOLDER_NAME, v)} />
         <Input 
             isRequired
-            isError={validationResult.hasError('houseNumber')}
-            errorMessage={validationResult.getMessageByLanguage('houseNumber', LanguageType.EN)}
+            isError={validationResult.hasError(PaymentMethodPropType.BANK_NAME)}
+            errorMessage={validationResult.getMessageByLanguage(PaymentMethodPropType.BANK_NAME, LanguageType.EN)}
             maxLength={100}
-            label="House number"
-            placeholder="For example, 3" 
-            value={""} 
-            setValue={() => {}} />      
+            label="Bank name"
+            placeholder="For example, Bank of Georgia" 
+            value={data.BANK_NAME} 
+            setValue={(v) => setData(PaymentMethodPropType.BANK_NAME, v)} />      
+        
+        <Input 
+            isRequired
+            isError={validationResult.hasError(PaymentMethodPropType.BIC_OR_SWIFT)}
+            errorMessage={validationResult.getMessageByLanguage(PaymentMethodPropType.BIC_OR_SWIFT, LanguageType.EN)}
+            maxLength={100}
+            label="BIC / SWIFT"
+            placeholder="BIC / SWIFT" 
+            value={data.BIC_OR_SWIFT} 
+            setValue={(v) => setData(PaymentMethodPropType.BIC_OR_SWIFT, v)} />    
 
         <InfoWithIcon
             Icon={AlertIcon}
@@ -85,7 +100,7 @@ export const PaymentDataForm = () => {
         <Button 
             type="submit" 
             isWide
-            >Next</Button>
+            >Submit</Button>
     </Form>
   )
 }

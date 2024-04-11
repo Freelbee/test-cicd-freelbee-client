@@ -89,8 +89,6 @@ export const PersonalForm = () => {
               font='body'
           >
             Fill all fields with * to continue.
-            <br/>
-            After clicking «Submit», it will be impossible to change your personal information
         </InfoWithIcon>
 
         <ButtonsContainer>

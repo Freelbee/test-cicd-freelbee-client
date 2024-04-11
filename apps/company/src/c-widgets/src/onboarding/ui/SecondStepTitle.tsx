@@ -4,8 +4,8 @@ export const SecondStepTitle = () => {
 
     return (
         <>
-            <Text font='captions' color={Color.GRAY_600}>3 of 3 Payment details</Text>
-            <Heading1>Bank account</Heading1>   
+            <Text font='captions' color={Color.GRAY_600}>2 of 3 Company registration</Text>
+            <Heading1>Company registration</Heading1>   
         </>
     );
 };

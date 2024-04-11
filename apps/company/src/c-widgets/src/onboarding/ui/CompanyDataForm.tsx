@@ -11,7 +11,7 @@ import { LanguageType } from "@freelbee/shared/language";
 import { CompanyDataValidator } from "../util/CompanyDataValidator";
 import { useGetCountriesQuery } from "@company/entities";
 import { CompanyFormData } from "../interface/CompanyFormData";
-import { CounterpartyDetailsPropsType } from "@freelbee/entities";
+import { CounterpartyDetailsPropsType, Country } from "@freelbee/entities";
 import { useDataStateUpdater } from "@freelbee/shared/hooks";
 
 const initialData: CompanyFormData = {
@@ -33,16 +33,17 @@ export const CompanyDataForm = () => {
     const {data: countries} = useGetCountriesQuery();
     const [validationResult, setValidationResult] = useState(new ValidatorResult<CompanyFormData>());
     const validator = new CompanyDataValidator();
+    const [country, setCountry] = useState<Country | null>(null);
     const [data, setData] = useDataStateUpdater<CompanyFormData>(initialData);
 
     const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
         const validationResult = validator.validate(data);
         setValidationResult(validationResult);
-
         if(!validationResult.isSuccess()) {
             return;
         }
+        console.log(data)
         // To-Do
         setStep(Onboarding_Step.PAYMENT_DATA);
     }
@@ -52,8 +53,11 @@ export const CompanyDataForm = () => {
         <CountrySelect 
             isError={validationResult.hasError(CounterpartyDetailsPropsType.COUNTRY)}
             countries={countries ?? []} 
-            selectedCountry={null} 
-            onSelect={(c) => setData(CounterpartyDetailsPropsType.COUNTRY, c.alpha2Code)} />
+            selectedCountry={country} 
+            onSelect={(c) => {
+                setCountry(c)
+                setData(CounterpartyDetailsPropsType.COUNTRY, c.alpha2Code);
+            }} />
         <Input 
             isRequired
             isError={validationResult.hasError(CounterpartyDetailsPropsType.NAME)}

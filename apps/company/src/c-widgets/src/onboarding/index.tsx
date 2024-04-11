@@ -3,24 +3,27 @@
 import { CloseBtnSize, CloseButton, ModalWindow } from "@freelbee/shared/ui-kit";
 import { BORDER_RADIUS, Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
 import styled, { css } from "styled-components";
-import { AddressForm } from "./ui/CompanyDataForm";
 import { useState } from "react";
 import { PersonalForm } from "./ui/PersonalForm";
-import { FirstStepTitle } from "./ui/SecondStepTitle";
-import { SecondStepTitle } from "./ui/FirstStepTitle";
 import { Onboarding_Step } from "./interface/OnboardingStep";
 import { OnboardingContext } from "./context/OnboardingContext";
-import { FormData } from "./interface/PersonalFormData";
+import { CompanyDataForm } from "./ui/CompanyDataForm";
+import { PaymentDataForm } from "./ui/PaymentDataForm";
+import { FirstStepTitle } from "./ui/FirstStepTitle";
+import { SecondStepTitle } from "./ui/SecondStepTitle";
+import { ThirdStepTitle } from "./ui/ThirdStepTitle";
 
 
 const onboardingContent: Record<Onboarding_Step, JSX.Element> = {
-    [Onboarding_Step.ADDRESS]: <AddressForm />,
-    [Onboarding_Step.USER_DATA]: <PersonalForm />
+    [Onboarding_Step.USER_DATA]: <PersonalForm />,
+    [Onboarding_Step.COMPANY_DATA]: <CompanyDataForm />,
+    [Onboarding_Step.PAYMENT_DATA]: <PaymentDataForm />,
 }
 
 const onboardingTitle: Record<Onboarding_Step, JSX.Element> = {
-    [Onboarding_Step.ADDRESS]: <FirstStepTitle />,
-    [Onboarding_Step.USER_DATA]: <SecondStepTitle />
+    [Onboarding_Step.USER_DATA]: <FirstStepTitle />,
+    [Onboarding_Step.COMPANY_DATA]: <SecondStepTitle />,
+    [Onboarding_Step.PAYMENT_DATA]: <ThirdStepTitle />
 }
 
 export const OnboardingModal = () => {
@@ -35,21 +38,11 @@ export const OnboardingModal = () => {
         status: '',
         }
       
-
-    const [formData, setFormData] = useState<FormData>({
-        name: "",
-        surname: "",
-        phone: "",
-        dateOfBirth: "",
-        country: null,
-        city: "",
-        postalCode: "",
-        street: "",
-        houseNumber: ""
-    });
-    const [step, setStep] = useState<Onboarding_Step>(Onboarding_Step.ADDRESS);
-    const [open, setOpen] = useState<boolean>(() => user.status != 'approved');
+    const [step, setStep] = useState<Onboarding_Step>(Onboarding_Step.USER_DATA);
+    const [open, setOpen] = useState<boolean>(true);
     const closeModal = () => setOpen(false);
+
+    console.log(step)
 
     return (
         <ModalWindow
@@ -59,9 +52,7 @@ export const OnboardingModal = () => {
                     open,
                     setOpen,
                     step,
-                    setStep,
-                    formData,
-                    setFormData
+                    setStep
                 }}>
                     <Container>
                         <Header>
@@ -82,7 +73,8 @@ export const OnboardingModal = () => {
 
 const Container = styled.div`
     position: relative;
-    max-width: 560px;
+    max-width: 580px;
+    min-width: 540px;
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -99,6 +91,7 @@ const Container = styled.div`
         padding: 16px;
         width: 100%;
         max-width: 400px;
+        min-width: 300px;
     }
 `;
 
