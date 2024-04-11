@@ -1,15 +1,3 @@
-// To-Do
+import { UserDataPropsType } from "@freelbee/entities"
 
-import { Country } from "@freelbee/entities";
-
-export interface FormData {
-    street: string,
-    houseNumber: string,
-    country: Country | null,
-    city: string,
-    postalCode: string,
-    name: string,
-    surname: string,
-    phone: string,
-    dateOfBirth: string
-}
+export type FormData = Record<UserDataPropsType, string>;

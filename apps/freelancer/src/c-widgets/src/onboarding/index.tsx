@@ -11,6 +11,8 @@ import { SecondStepTitle } from "./ui/SecondStepTitle";
 import { Onboarding_Step } from "./interface/OnboardingStep";
 import { OnboardingContext } from "./context/OnboardingContext";
 import { FormData } from "./interface/FormData";
+import { useDataStateUpdater } from "@freelbee/shared/hooks";
+import { UserDataPropsType } from "@freelbee/entities";
 
 
 const onboardingContent: Record<Onboarding_Step, JSX.Element> = {
@@ -21,6 +23,18 @@ const onboardingContent: Record<Onboarding_Step, JSX.Element> = {
 const onboardingTitle: Record<Onboarding_Step, JSX.Element> = {
     [Onboarding_Step.ADDRESS]: <FirstStepTitle />,
     [Onboarding_Step.USER_DATA]: <SecondStepTitle />
+}
+
+const initialData: FormData = {
+    [UserDataPropsType.FIRST_NAME]: "",
+    [UserDataPropsType.LAST_NAME]: "",
+    [UserDataPropsType.PHONE_NUMBER]: "",
+    [UserDataPropsType.BIRTH_DATE]: "",
+    [UserDataPropsType.STREET]: "",
+    [UserDataPropsType.COUNTRY]: "",
+    [UserDataPropsType.CITY]: "",
+    [UserDataPropsType.POSTAL_CODE]: "",
+    [UserDataPropsType.HOUSE_NUMBER]: ""
 }
 
 export const OnboardingModal = () => {
@@ -35,18 +49,8 @@ export const OnboardingModal = () => {
         status: '',
         }
       
+    const [formData, setFormData] = useDataStateUpdater<FormData>(initialData);
 
-    const [formData, setFormData] = useState<FormData>({
-        name: "",
-        surname: "",
-        phone: "",
-        dateOfBirth: "",
-        country: null,
-        city: "",
-        postalCode: "",
-        street: "",
-        houseNumber: ""
-    });
     const [step, setStep] = useState<Onboarding_Step>(Onboarding_Step.ADDRESS);
     const [open, setOpen] = useState<boolean>(() => user.status != 'approved');
     const closeModal = () => setOpen(false);
