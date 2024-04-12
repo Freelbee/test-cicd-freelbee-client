@@ -28,6 +28,7 @@ export * from "./inputs/checkbox/checkbox";
 export * from "./inputs/date/DateInput";
 export * from './select/TabsSelect/TabsSelect'
 export * from './select/SelectWithSearch/SelectWithSearch'
+export * from './spinner/Spinner'
 
 export * from "./buttons/Button";
 export * from "./buttons/CloseButton";

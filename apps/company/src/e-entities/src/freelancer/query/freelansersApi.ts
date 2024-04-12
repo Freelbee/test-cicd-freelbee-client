@@ -4,6 +4,6 @@ export const freelansersApi = API.injectEndpoints({
   endpoints: (builder) => ({
     getCompanyFreelancers: builder.query({
       query: () => Endpoint_Enum.COMPANY_FREELANCERS,
-    }),
+    })
   }),
 });

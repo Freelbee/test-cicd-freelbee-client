@@ -1,8 +1,9 @@
 
-import { zohoAPI } from "@freelancer/entities";
+import { onboardingReducer, zohoAPI } from "@freelancer/entities";
 import { API } from "@freelancer/shared";
 import { combineReducers, configureStore, isRejectedWithValue,Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
+import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 export const rtkQueryErrorLogger: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
     if (isRejectedWithValue(action)) {
@@ -29,6 +30,7 @@ if(process.env.NODE_ENV === `development`) {
 }
 
 export const rootReducer = combineReducers({
+    onboardingReducer,
     [zohoAPI.reducerPath]: zohoAPI.reducer,
 });
 
@@ -44,3 +46,4 @@ setupListeners(store.dispatch);
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
 export type AppDispatch = AppStore[`dispatch`];
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

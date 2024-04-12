@@ -3,7 +3,7 @@
 import { CloseBtnSize, CloseButton, ModalWindow } from "@freelbee/shared/ui-kit";
 import { BORDER_RADIUS, Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
 import styled, { css } from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PersonalForm } from "./ui/PersonalForm";
 import { Onboarding_Step } from "./interface/OnboardingStep";
 import { OnboardingContext } from "./context/OnboardingContext";
@@ -12,6 +12,10 @@ import { PaymentDataForm } from "./ui/PaymentDataForm";
 import { FirstStepTitle } from "./ui/FirstStepTitle";
 import { SecondStepTitle } from "./ui/SecondStepTitle";
 import { ThirdStepTitle } from "./ui/ThirdStepTitle";
+import { setOpened, useGetCompanyOnboardingStateQuery } from "@company/entities";
+import Spinner from "packages/f-shared/src/ui-kit/spinner/Spinner";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@company/features";
 
 
 const onboardingContent: Record<Onboarding_Step, JSX.Element> = {
@@ -28,43 +32,50 @@ const onboardingTitle: Record<Onboarding_Step, JSX.Element> = {
 
 export const OnboardingModal = () => {
 
-    // To-Do
-    const user = {
-        id: 1,
-        firstname: 'Testov',
-        lastname: 'Test',
-        email: 'test@mail.com',
-        phone: '+79784556633',
-        status: '',
-        }
-      
+    const {data, isLoading} = useGetCompanyOnboardingStateQuery();
     const [step, setStep] = useState<Onboarding_Step>(Onboarding_Step.USER_DATA);
-    const [open, setOpen] = useState<boolean>(true);
-    const closeModal = () => setOpen(false);
+    const dispatch = useDispatch();
+    const isModalOpened = useAppSelector(state => state.onboardingReducer.onboardingOpened);
 
-    console.log(step)
+    const closeModal = () => {
+        dispatch(setOpened(false))
+    };
+
+    useEffect(() => {
+        if(data?.isUserDataSet && !data.isCounterpartyCreated) {
+            setStep(Onboarding_Step.COMPANY_DATA)
+        }
+        if(data?.isUserDataSet 
+            && data.isCounterpartyCreated
+            && !data.isPaymentMethodSet) {
+            setStep(Onboarding_Step.PAYMENT_DATA)
+        }
+    }, [data])
 
     return (
         <ModalWindow
-            isOpen={open}
+            isOpen={isModalOpened}
             onClose={closeModal}>
                 <OnboardingContext.Provider value={{
-                    open,
-                    setOpen,
+                    isModalOpened,
+                    setOpened,
                     step,
                     setStep
                 }}>
-                    <Container>
+                    {isLoading ? 
+                    <Container><Spinner loading={isLoading} size={50} /></Container>
+                    :
+                     <Container>
                         <Header>
                             {onboardingTitle[step]}
                             <CloseButton 
                                 size={CloseBtnSize.L}
                                 styles={closeBtnStyle}
                                 clickHandler={closeModal} />
-                            </Header>
-                        
+                        </Header>  
                         {onboardingContent[step]}
-                    </Container>
+                    </Container>}
+                   
                 </OnboardingContext.Provider>
 
         </ModalWindow>
