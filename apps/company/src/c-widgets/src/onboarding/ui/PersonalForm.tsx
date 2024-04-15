@@ -11,7 +11,9 @@ import { PersonalFormValidator } from "../util/PersonalFormValidator";
 import { LanguageType } from "@freelbee/shared/language";
 import { PersonalFormData } from "../interface/PersonalFormData";
 import { useDataStateUpdater } from "@freelbee/shared/hooks";
-import { UserDataPropsType } from "@freelbee/entities";
+import { UserDataPropsType, UserDataType } from "@freelbee/entities";
+import { useSaveUserDataMutation } from "@company/entities";
+import { FormHelper } from "@freelbee/shared/helpers";
 
 const initialData = {
     [UserDataPropsType.FIRST_NAME]: "",
@@ -28,23 +30,26 @@ const initialData = {
 export const PersonalForm = () => {
   
   const {setStep} = useContext(OnboardingContext);
+  const [saveUserData, {isLoading}] = useSaveUserDataMutation();
   const [validationResult, setValidationResult] = useState(new ValidatorResult<PersonalFormData>());
   const validator = new PersonalFormValidator();
 
   const [data, setData] = useDataStateUpdater<PersonalFormData>(initialData);
 
   const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
-      e.preventDefault();
-      // To-Do
+    e.preventDefault();
+    const validationResult = validator.validate(data);
+    setValidationResult(validationResult);
 
-      const validationResult = validator.validate(data);
-      setValidationResult(validationResult);
+    if(!validationResult.isSuccess()) {
+        return;
+    }
 
-      if(!validationResult.isSuccess()) {
-          return;
-      }
-
-      setStep(Onboarding_Step.COMPANY_DATA);
+    saveUserData({
+        type: UserDataType.DEFAULT,
+        props: FormHelper.MapFieldsToProps(data)
+    })
+    .then(() => setStep(Onboarding_Step.COMPANY_DATA));
   }
 
   return (
@@ -93,6 +98,7 @@ export const PersonalForm = () => {
 
         <ButtonsContainer>
           <Button 
+            isLoading={isLoading}
             type='submit'
             isWide>Next</Button>  
         </ButtonsContainer>

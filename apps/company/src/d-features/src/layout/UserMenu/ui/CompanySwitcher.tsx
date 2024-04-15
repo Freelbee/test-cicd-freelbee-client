@@ -7,6 +7,8 @@ import styled, { css } from 'styled-components';
 import { ReactComponent as AddIcon} from '@freelbee/assets/icons/cross-icons/plus.svg';
 import { IconButton } from "@freelbee/shared/ui-kit";
 import { CompanyItem } from './CompanyItem';
+import { useDispatch } from 'react-redux';
+import { setOnboardingOpened } from '@company/entities';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
     // To-DO интерфейс компании
@@ -26,6 +28,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 
 export const CompanySwitcher = forwardRef(function Switcher({companies, selectedCompany, isOpen, toggleOpen, ...rest}: Props, ref?: ForwardedRef<HTMLDivElement>) {
 
+    const dispatch = useDispatch();
     const handleCompanySelect = (id: number) => {
         // To-Do
     };
@@ -57,7 +60,11 @@ export const CompanySwitcher = forwardRef(function Switcher({companies, selected
                     }
                 </CompanyList>
                 <AddSection>
-                    <IconButton label={'Add new company'} Icon={<AddIcon />} isSmall 
+                    <IconButton 
+                      onClick={() => dispatch(setOnboardingOpened(true))}
+                      label={'Add new company'} 
+                      Icon={<AddIcon />} 
+                      isSmall 
                       styles={addButtonStyled} />
                     <Text font='bodyMedium' color={Color.GRAY_700}>Add company</Text>
                 </AddSection>

@@ -15,7 +15,7 @@ import { useDataStateUpdater } from "@freelbee/shared/hooks";
 import { UserDataPropsType } from "@freelbee/entities";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@freelancer/features";
-import { setOpened } from "@freelancer/entities";
+import { setOnboardingOpened } from "@freelancer/entities";
 
 
 const onboardingContent: Record<Onboarding_Step, JSX.Element> = {
@@ -48,7 +48,7 @@ export const OnboardingModal = () => {
     const isModalOpened = useAppSelector(state => state.onboardingReducer.onboardingOpened);
 
     const closeModal = () => {
-        dispatch(setOpened(false))
+        dispatch(setOnboardingOpened(false))
     };
     return (
         <ModalWindow
@@ -56,7 +56,7 @@ export const OnboardingModal = () => {
             onClose={closeModal}>
                 <OnboardingContext.Provider value={{
                     isModalOpened,
-                    setOpened,
+                    setOpened: setOnboardingOpened,
                     step,
                     setStep,
                     formData,

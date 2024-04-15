@@ -1,4 +1,4 @@
-import { API, Endpoint_Enum } from '@company/shared';
+import { API, Endpoint_Enum } from '@freelancer/shared';
 import { UserDataDto } from '@freelbee/entities';
 
 export const userAPI = API.injectEndpoints({

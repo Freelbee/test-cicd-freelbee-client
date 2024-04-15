@@ -12,11 +12,10 @@ import { PaymentDataForm } from "./ui/PaymentDataForm";
 import { FirstStepTitle } from "./ui/FirstStepTitle";
 import { SecondStepTitle } from "./ui/SecondStepTitle";
 import { ThirdStepTitle } from "./ui/ThirdStepTitle";
-import { setOpened, useGetCompanyOnboardingStateQuery } from "@company/entities";
+import { setOnboardingOpened, useGetCompanyOnboardingStateQuery, useGetCompanyQuery } from "@company/entities";
 import Spinner from "packages/f-shared/src/ui-kit/spinner/Spinner";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@company/features";
-
 
 const onboardingContent: Record<Onboarding_Step, JSX.Element> = {
     [Onboarding_Step.USER_DATA]: <PersonalForm />,
@@ -32,25 +31,27 @@ const onboardingTitle: Record<Onboarding_Step, JSX.Element> = {
 
 export const OnboardingModal = () => {
 
-    const {data, isLoading} = useGetCompanyOnboardingStateQuery();
+    const {data: onboardingState, isLoading} = useGetCompanyOnboardingStateQuery();
+    // To-do: query
+    const {data: company} = useGetCompanyQuery();
     const [step, setStep] = useState<Onboarding_Step>(Onboarding_Step.USER_DATA);
     const dispatch = useDispatch();
     const isModalOpened = useAppSelector(state => state.onboardingReducer.onboardingOpened);
 
     const closeModal = () => {
-        dispatch(setOpened(false))
+        dispatch(setOnboardingOpened(false))
     };
 
     useEffect(() => {
-        if(data?.isUserDataSet && !data.isCounterpartyCreated) {
+        if(onboardingState?.isUserDataSet && !onboardingState.isCounterpartyCreated) {
             setStep(Onboarding_Step.COMPANY_DATA)
         }
-        if(data?.isUserDataSet 
-            && data.isCounterpartyCreated
-            && !data.isPaymentMethodSet) {
+        if(onboardingState?.isUserDataSet 
+            && onboardingState.isCounterpartyCreated
+            && !onboardingState.isPaymentMethodSet) {
             setStep(Onboarding_Step.PAYMENT_DATA)
         }
-    }, [data])
+    }, [onboardingState, company, dispatch])
 
     return (
         <ModalWindow
@@ -58,7 +59,7 @@ export const OnboardingModal = () => {
             onClose={closeModal}>
                 <OnboardingContext.Provider value={{
                     isModalOpened,
-                    setOpened,
+                    setOpened: setOnboardingOpened,
                     step,
                     setStep
                 }}>

@@ -1,6 +1,6 @@
 'use client'
 
-import { HeadMenu, LayoutContext, MobileMenu, NavigationMenu } from "@freelancer/features"
+import { HeadMenu, LayoutContext, MobileMenu, NavigationMenu, OnboardingNotification } from "@freelancer/features"
 import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit"
 import { PropsWithChildren, useState } from "react"
 import styled from "styled-components"
@@ -9,6 +9,11 @@ import { OnboardingModal } from "../onboarding"
 export const PersonalLayout = ({children}: PropsWithChildren) => {
   
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
+
+  //To-Do
+  const user = {
+    status: ''
+  }
 
   return (
     <LayoutContext.Provider value={{
@@ -23,7 +28,11 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
         <NavigationMenu />
         <MobileMenu />
         <Main>
-          {children}        
+          {user.status !== 'APPROVED' ?
+            <OnboardingNotification />
+            :
+            children
+          }
         </Main>
       </Container>      
     </LayoutContext.Provider>

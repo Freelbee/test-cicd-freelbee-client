@@ -5,6 +5,7 @@ export * from './user/interface/UserDataDto';
 export * from './user/interface/UserDataType';
 export * from './user/interface/UserDataPropType';
 export * from './user/interface/UserStatus';
+export * from './user/ui/InfoBadge/InfoBadge';
 
 export * from './counterparty/interface/CounterpartyDataDto';
 export * from './counterparty/interface/CounterpartyDetailsType';

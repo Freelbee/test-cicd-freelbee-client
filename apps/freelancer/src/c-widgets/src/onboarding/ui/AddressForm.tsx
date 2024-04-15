@@ -75,7 +75,7 @@ export const AddressForm = () => {
             maxLength={100}
             label="House number"
             placeholder="For example, 3" 
-            value={UserDataPropsType.HOUSE_NUMBER} 
+            value={formData.HOUSE_NUMBER} 
             setValue={(v) => setFormData(UserDataPropsType.HOUSE_NUMBER, v)} />      
 
         <InfoWithIcon

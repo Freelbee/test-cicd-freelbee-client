@@ -9,10 +9,11 @@ import { CountrySelect, ValidatorResult } from "@freelbee/features";
 import {ReactComponent as AlertIcon} from '@freelbee/assets/icons/alert-icons/alert_icon.svg';
 import { LanguageType } from "@freelbee/shared/language";
 import { CompanyDataValidator } from "../util/CompanyDataValidator";
-import { useGetCountriesQuery } from "@company/entities";
+import { useCreateCompanyMutation, useGetCountriesQuery } from "@company/entities";
 import { CompanyFormData } from "../interface/CompanyFormData";
-import { CounterpartyDetailsPropsType, Country } from "@freelbee/entities";
+import { CounterpartyDetailsPropsType, CounterpartyDetailsType, Country } from "@freelbee/entities";
 import { useDataStateUpdater } from "@freelbee/shared/hooks";
+import { FormHelper } from "@freelbee/shared/helpers";
 
 const initialData: CompanyFormData = {
     [CounterpartyDetailsPropsType.NAME]: "",
@@ -31,6 +32,7 @@ export const CompanyDataForm = () => {
 
     const {setStep} = useContext(OnboardingContext);
     const {data: countries} = useGetCountriesQuery();
+    const [createCompany, {isLoading}] = useCreateCompanyMutation();
     const [validationResult, setValidationResult] = useState(new ValidatorResult<CompanyFormData>());
     const validator = new CompanyDataValidator();
     const [country, setCountry] = useState<Country | null>(null);
@@ -44,8 +46,19 @@ export const CompanyDataForm = () => {
             return;
         }
         console.log(data)
-        // To-Do
-        setStep(Onboarding_Step.PAYMENT_DATA);
+
+        const body = {
+            CounterpartyDetailDto: {
+                country: data.COUNTRY,
+                type: CounterpartyDetailsType.DEFAULT_COMPANY_DATA,
+                props: FormHelper.MapFieldsToProps(data) 
+            }
+        }
+        console.log(body)
+        createCompany(body)
+        .then(() => {
+            setStep(Onboarding_Step.PAYMENT_DATA);
+        })
     }
 
   return (
@@ -111,6 +124,7 @@ export const CompanyDataForm = () => {
 
         <Button 
             type="submit" 
+            isLoading={isLoading}
             isWide
             >Next</Button>
     </Form>

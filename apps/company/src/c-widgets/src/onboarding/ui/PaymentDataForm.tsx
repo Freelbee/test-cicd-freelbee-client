@@ -1,16 +1,18 @@
 'use client';
 
 import { Button, Color, InfoWithIcon, Input } from "@freelbee/shared/ui-kit";
-import { FormEventHandler, useContext, useState} from "react";
+import { FormEventHandler, useState} from "react";
 import styled from "styled-components";
-import { OnboardingContext } from "../context/OnboardingContext";
 import { ValidatorResult } from "@freelbee/features";
 import {ReactComponent as AlertIcon} from '@freelbee/assets/icons/alert-icons/alert_icon.svg';
 import { LanguageType } from "@freelbee/shared/language";
 import { PaymentDataValidator } from "../util/PaymentDataValidator";
 import { useDataStateUpdater } from "@freelbee/shared/hooks";
 import { PaymentMethodFormData } from "../interface/PaymentMethodsFormData";
-import { PaymentMethodPropType } from "@freelbee/entities";
+import { PaymentMethodPropType, PaymentMethodType } from "@freelbee/entities";
+import { useDispatch } from "react-redux";
+import { setOnboardingOpened, useCreatePaymentDataMutation } from "@company/entities";
+import { FormHelper } from "@freelbee/shared/helpers";
 
 const initialData: PaymentMethodFormData = {
     [PaymentMethodPropType.BANK_ACCOUNT_NUMBER]: "",
@@ -24,7 +26,8 @@ const initialData: PaymentMethodFormData = {
 
 export const PaymentDataForm = () => {
 
-    const {setOpen} = useContext(OnboardingContext);
+    const dispatch = useDispatch();
+    const [createPaymentData, {isLoading}] = useCreatePaymentDataMutation();
     const [validationResult, setValidationResult] = useState(new ValidatorResult<PaymentMethodFormData>());
     const validator = new PaymentDataValidator();
     const [data, setData] = useDataStateUpdater<PaymentMethodFormData>(initialData);
@@ -36,8 +39,12 @@ export const PaymentDataForm = () => {
         if(!validationResult.isSuccess()) {
             return;
         }
-        // To-Do
-        setOpen(false);
+        
+        createPaymentData({
+            counterpartyId: 1, //To-Do
+            type: PaymentMethodType.BANK_ACCOUNT,
+            props: FormHelper.MapFieldsToProps(data)
+        }).then(() => dispatch(setOnboardingOpened(false)));
     }
 
   return (
@@ -100,6 +107,7 @@ export const PaymentDataForm = () => {
         <Button 
             type="submit" 
             isWide
+            isLoading={isLoading}
             >Submit</Button>
     </Form>
   )

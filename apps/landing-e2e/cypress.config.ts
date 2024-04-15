@@ -13,7 +13,7 @@ export default defineConfig({
     env: {
       NEXT_PUBLIC_SITE: 'com',
       NEXT_PUBLIC_MODE: 'test',
-      NEXT_PUBLIC_URL: '/api/v1',
+      NEXT_PUBLIC_URL: '',
       NEXT_PUBLIC_FREELANCER_URL: 'https://personal.freelbee.com',
       NEXT_PUBLIC_COMPANY_URL: 'https://personal.freelbee.com',
       NEXT_PUBLIC_EMAIL: 'hello@freelbee.com',
