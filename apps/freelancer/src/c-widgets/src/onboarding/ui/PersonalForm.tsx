@@ -9,28 +9,33 @@ import { ValidatorResult } from "@freelbee/features";
 import { FormData } from "../interface/FormData";
 import { PersonalFormValidator } from "../util/PersonalFormValidator";
 import { LanguageType } from "@freelbee/shared/language";
-import { UserDataPropsType } from "@freelbee/entities";
+import { UserDataPropsType, UserDataType } from "@freelbee/entities";
 import { Onboarding_Step } from "../interface/OnboardingStep";
+import { setOnboardingOpened, useSaveUserDataMutation } from "@freelancer/entities";
+import { PropsHelper } from "@freelbee/shared/helpers";
+import { useDispatch } from "react-redux";
 
 export const PersonalForm = () => {
   
-  const {setStep, setOpen, formData, setFormData} = useContext(OnboardingContext);
+  const {setStep, formData, setFormData} = useContext(OnboardingContext);
   const [validationResult, setValidationResult] = useState(new ValidatorResult<FormData>());
   const validator = new PersonalFormValidator();
-
+  const [saveUserData, {isLoading}] = useSaveUserDataMutation();
+  const dispatch = useDispatch();
 
   const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
       e.preventDefault();
-      // To-Do
-
       const validationResult = validator.validate(formData);
       setValidationResult(validationResult);
 
       if(!validationResult.isSuccess()) {
           return;
       }
-
-      setOpen(false);
+      saveUserData({
+        type: UserDataType.DEFAULT,
+        props: PropsHelper.MapFieldsToProps(formData)
+      }).unwrap()
+      .then(() => dispatch(setOnboardingOpened(false)));
   }
 
   return (
@@ -81,11 +86,13 @@ export const PersonalForm = () => {
 
         <ButtonsContainer>
           <Button 
+            isLoading={isLoading}
             isWide 
+            styleType={ButtonStyleEnum.GREEN} 
             type='submit'>Submit</Button> 
           <Button 
+            type='button'
             onClick={() => setStep(Onboarding_Step.ADDRESS)}
-            styleType={ButtonStyleEnum.GREEN} 
             isWide>Back</Button>  
         </ButtonsContainer>
         

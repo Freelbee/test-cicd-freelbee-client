@@ -12,7 +12,7 @@ import { PaymentMethodFormData } from "../interface/PaymentMethodsFormData";
 import { PaymentMethodPropType, PaymentMethodType } from "@freelbee/entities";
 import { useDispatch } from "react-redux";
 import { setOnboardingOpened, useCreatePaymentDataMutation } from "@company/entities";
-import { FormHelper } from "@freelbee/shared/helpers";
+import { PropsHelper } from "@freelbee/shared/helpers";
 
 const initialData: PaymentMethodFormData = {
     [PaymentMethodPropType.BANK_ACCOUNT_NUMBER]: "",
@@ -43,8 +43,9 @@ export const PaymentDataForm = () => {
         createPaymentData({
             counterpartyId: 1, //To-Do
             type: PaymentMethodType.BANK_ACCOUNT,
-            props: FormHelper.MapFieldsToProps(data)
-        }).then(() => dispatch(setOnboardingOpened(false)));
+            props: PropsHelper.MapFieldsToProps(data)
+        }).unwrap()
+        .then(() => dispatch(setOnboardingOpened(false)));
     }
 
   return (

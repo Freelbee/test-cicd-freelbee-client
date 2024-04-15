@@ -29,7 +29,6 @@ export const AddressForm = () => {
         if(!validationResult.isSuccess()) {
             return;
         }
-        // To-Do
         setStep(Onboarding_Step.USER_DATA);
     }
 

@@ -13,7 +13,7 @@ import { PersonalFormData } from "../interface/PersonalFormData";
 import { useDataStateUpdater } from "@freelbee/shared/hooks";
 import { UserDataPropsType, UserDataType } from "@freelbee/entities";
 import { useSaveUserDataMutation } from "@company/entities";
-import { FormHelper } from "@freelbee/shared/helpers";
+import { PropsHelper } from "@freelbee/shared/helpers";
 
 const initialData = {
     [UserDataPropsType.FIRST_NAME]: "",
@@ -47,8 +47,8 @@ export const PersonalForm = () => {
 
     saveUserData({
         type: UserDataType.DEFAULT,
-        props: FormHelper.MapFieldsToProps(data)
-    })
+        props: PropsHelper.MapFieldsToProps(data)
+    }).unwrap()
     .then(() => setStep(Onboarding_Step.COMPANY_DATA));
   }
 

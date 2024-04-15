@@ -13,7 +13,7 @@ import { useCreateCompanyMutation, useGetCountriesQuery } from "@company/entitie
 import { CompanyFormData } from "../interface/CompanyFormData";
 import { CounterpartyDetailsPropsType, CounterpartyDetailsType, Country } from "@freelbee/entities";
 import { useDataStateUpdater } from "@freelbee/shared/hooks";
-import { FormHelper } from "@freelbee/shared/helpers";
+import { PropsHelper } from "@freelbee/shared/helpers";
 
 const initialData: CompanyFormData = {
     [CounterpartyDetailsPropsType.NAME]: "",
@@ -51,11 +51,11 @@ export const CompanyDataForm = () => {
             CounterpartyDetailDto: {
                 country: data.COUNTRY,
                 type: CounterpartyDetailsType.DEFAULT_COMPANY_DATA,
-                props: FormHelper.MapFieldsToProps(data) 
+                props: PropsHelper.MapFieldsToProps(data) 
             }
         }
         console.log(body)
-        createCompany(body)
+        createCompany(body).unwrap()
         .then(() => {
             setStep(Onboarding_Step.PAYMENT_DATA);
         })

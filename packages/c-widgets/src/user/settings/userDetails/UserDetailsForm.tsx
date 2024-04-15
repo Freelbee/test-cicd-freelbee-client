@@ -1,6 +1,5 @@
 'use client';
 
-import { User } from "@freelbee/entities";
 import { Input } from "@freelbee/shared/ui-kit";
 import { Breakpoint, Color, Text, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
 import { FormEventHandler } from "react";
@@ -9,7 +8,8 @@ import styled from "styled-components";
 
 interface Props {
   // To-Do Interface
-  user: User;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  user: any;
 }
 
 export const UserDetailsForm = ({user}: Props) => {
