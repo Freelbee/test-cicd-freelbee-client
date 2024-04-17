@@ -85,7 +85,7 @@ export const Input = (props: Props) => {
                     {label && <Label forInput={id} isRequired={isRequired} label={label}/>}
                     {maxLength &&
                     <Text font='captions' color={Color.GRAY_600}>
-                        {value.length} / {maxLength}
+                        {value?.length ?? 0} / {maxLength}
                     </Text>}
                 </InputHeader>}
                 

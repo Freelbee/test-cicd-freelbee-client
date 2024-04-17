@@ -11,7 +11,7 @@ import { useDataStateUpdater } from "@freelbee/shared/hooks";
 import { PaymentMethodFormData } from "../interface/PaymentMethodsFormData";
 import { PaymentMethodPropType, PaymentMethodType } from "@freelbee/entities";
 import { useDispatch } from "react-redux";
-import { setOnboardingOpened, useCreatePaymentDataMutation } from "@company/entities";
+import { setOnboardingOpened, useCreatePaymentDataMutation, useGetCompanyQuery } from "@company/entities";
 import { PropsHelper } from "@freelbee/shared/helpers";
 
 const initialData: PaymentMethodFormData = {
@@ -19,14 +19,13 @@ const initialData: PaymentMethodFormData = {
     [PaymentMethodPropType.IBAN]: "",
     [PaymentMethodPropType.HOLDER_NAME]: "",
     [PaymentMethodPropType.BANK_NAME]: "",
-    [PaymentMethodPropType.BIC_OR_SWIFT]: "",
-    [PaymentMethodPropType.CRYPTO_WALLET_NUMBER]: "",
-    [PaymentMethodPropType.CARD_NUMBER]: ""
+    [PaymentMethodPropType.BIC_OR_SWIFT]: ""
 }
 
 export const PaymentDataForm = () => {
 
     const dispatch = useDispatch();
+    const {data: company, isLoading: isCompanyLoading } = useGetCompanyQuery();
     const [createPaymentData, {isLoading}] = useCreatePaymentDataMutation();
     const [validationResult, setValidationResult] = useState(new ValidatorResult<PaymentMethodFormData>());
     const validator = new PaymentDataValidator();
@@ -36,12 +35,12 @@ export const PaymentDataForm = () => {
         e.preventDefault();
         const validationResult = validator.validate(data);
         setValidationResult(validationResult);
-        if(!validationResult.isSuccess()) {
+        if(!validationResult.isSuccess() || !company) {
             return;
         }
         
         createPaymentData({
-            counterpartyId: 1, //To-Do
+            counterpartyId: company.id,
             type: PaymentMethodType.BANK_ACCOUNT,
             props: PropsHelper.MapFieldsToProps(data)
         }).unwrap()
@@ -56,7 +55,7 @@ export const PaymentDataForm = () => {
             errorMessage={validationResult.getMessageByLanguage(PaymentMethodPropType.BANK_ACCOUNT_NUMBER, LanguageType.EN)}
             label="Bank account number"
             placeholder="Enter the account number" 
-            value={data.BANK_ACCOUNT_NUMBER} 
+            value={data?.BANK_ACCOUNT_NUMBER ?? ''} 
             setValue={(v) => setData(PaymentMethodPropType.BANK_ACCOUNT_NUMBER, v)} />
         <Input 
             isRequired
@@ -64,7 +63,7 @@ export const PaymentDataForm = () => {
             errorMessage={validationResult.getMessageByLanguage(PaymentMethodPropType.IBAN, LanguageType.EN)}
             label="IBAN"
             placeholder="Enter the IBAN" 
-            value={data.IBAN} 
+            value={data?.IBAN ?? ''} 
             setValue={(v) => setData(PaymentMethodPropType.IBAN, v)} />
 
         <Input 
@@ -74,7 +73,7 @@ export const PaymentDataForm = () => {
             label="Account holder name"
             maxLength={100}
             placeholder="John Silver" 
-            value={data.HOLDER_NAME} 
+            value={data?.HOLDER_NAME ?? ''} 
             setValue={(v) => setData(PaymentMethodPropType.HOLDER_NAME, v)} />
         <Input 
             isRequired
@@ -83,7 +82,7 @@ export const PaymentDataForm = () => {
             maxLength={100}
             label="Bank name"
             placeholder="For example, Bank of Georgia" 
-            value={data.BANK_NAME} 
+            value={data?.BANK_NAME ?? ''} 
             setValue={(v) => setData(PaymentMethodPropType.BANK_NAME, v)} />      
         
         <Input 
@@ -93,7 +92,7 @@ export const PaymentDataForm = () => {
             maxLength={100}
             label="BIC / SWIFT"
             placeholder="BIC / SWIFT" 
-            value={data.BIC_OR_SWIFT} 
+            value={data?.BIC_OR_SWIFT ?? ''} 
             setValue={(v) => setData(PaymentMethodPropType.BIC_OR_SWIFT, v)} />    
 
         <InfoWithIcon
@@ -108,7 +107,7 @@ export const PaymentDataForm = () => {
         <Button 
             type="submit" 
             isWide
-            isLoading={isLoading}
+            isLoading={isLoading || isCompanyLoading}
             >Submit</Button>
     </Form>
   )

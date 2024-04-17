@@ -20,12 +20,7 @@ const initialData: CompanyFormData = {
     [CounterpartyDetailsPropsType.ADDRESS]: "",
     [CounterpartyDetailsPropsType.ZIP_CODE]: "",
     [CounterpartyDetailsPropsType.TAX_NUMBER]: "",
-    [CounterpartyDetailsPropsType.TIN]: "",
-    [CounterpartyDetailsPropsType.KPP]: "",
-    [CounterpartyDetailsPropsType.OGRN]: "",
-    [CounterpartyDetailsPropsType.REGISTRATION_NUMBER]: "",
-    [CounterpartyDetailsPropsType.REGISTRATION_DATE]: "",
-    [CounterpartyDetailsPropsType.COUNTRY]: ""
+    [CounterpartyDetailsPropsType.TIN]: ""
 }
 
 export const CompanyDataForm = () => {
@@ -42,34 +37,33 @@ export const CompanyDataForm = () => {
         e.preventDefault();
         const validationResult = validator.validate(data);
         setValidationResult(validationResult);
-        if(!validationResult.isSuccess()) {
+        if(!validationResult.isSuccess() || !country) {
             return;
         }
-        console.log(data)
 
         const body = {
-            CounterpartyDetailDto: {
-                country: data.COUNTRY,
+            counterpartyDetail: {
+                country: country.alpha2Code,
                 type: CounterpartyDetailsType.DEFAULT_COMPANY_DATA,
                 props: PropsHelper.MapFieldsToProps(data) 
             }
         }
-        console.log(body)
+        
         createCompany(body).unwrap()
         .then(() => {
             setStep(Onboarding_Step.PAYMENT_DATA);
         })
+        .catch(e => {})
     }
 
   return (
     <Form onSubmit={submitHandler}>
         <CountrySelect 
-            isError={validationResult.hasError(CounterpartyDetailsPropsType.COUNTRY)}
+            isError={!country}
             countries={countries ?? []} 
             selectedCountry={country} 
             onSelect={(c) => {
-                setCountry(c)
-                setData(CounterpartyDetailsPropsType.COUNTRY, c.alpha2Code);
+                setCountry(c);
             }} />
         <Input 
             isRequired
@@ -77,7 +71,7 @@ export const CompanyDataForm = () => {
             errorMessage={validationResult.getMessageByLanguage(CounterpartyDetailsPropsType.NAME, LanguageType.EN)}
             label="Company name"
             placeholder="Enter the company name" 
-            value={data.NAME} 
+            value={data?.NAME ?? ''} 
             setValue={(v) => setData(CounterpartyDetailsPropsType.NAME, v)} />
         <Input 
             isRequired
@@ -85,7 +79,7 @@ export const CompanyDataForm = () => {
             errorMessage={validationResult.getMessageByLanguage(CounterpartyDetailsPropsType.TIN, LanguageType.EN)}
             label="TIN"
             placeholder="Enter the TIN" 
-            value={data.TIN} 
+            value={data?.TIN ?? ''} 
             setValue={(v) => setData(CounterpartyDetailsPropsType.TIN, v)} />
 
         <Input 
@@ -94,7 +88,7 @@ export const CompanyDataForm = () => {
             errorMessage={validationResult.getMessageByLanguage(CounterpartyDetailsPropsType.TAX_NUMBER, LanguageType.EN)}
             label="Tax code"
             placeholder="Enter the code" 
-            value={data.TAX_NUMBER} 
+            value={data?.TAX_NUMBER ?? ''} 
             setValue={(v) => setData(CounterpartyDetailsPropsType.TAX_NUMBER, v)} />
         <Input 
             isRequired
@@ -102,7 +96,7 @@ export const CompanyDataForm = () => {
             errorMessage={validationResult.getMessageByLanguage(CounterpartyDetailsPropsType.ADDRESS, LanguageType.EN)}
             label="Company adress"
             placeholder="Enter the street name" 
-            value={data.ADDRESS} 
+            value={data?.ADDRESS ?? ''} 
             setValue={(v) => setData(CounterpartyDetailsPropsType.ADDRESS, v)} />      
         <Input 
             isRequired
@@ -110,7 +104,7 @@ export const CompanyDataForm = () => {
             errorMessage={validationResult.getMessageByLanguage(CounterpartyDetailsPropsType.ZIP_CODE, LanguageType.EN)}
             label="Zip code"
             placeholder="Enter the code" 
-            value={data.ZIP_CODE} 
+            value={data?.ZIP_CODE ?? ''} 
             setValue={(v) => setData(CounterpartyDetailsPropsType.ZIP_CODE, v)} />      
 
         <InfoWithIcon

@@ -1,6 +1,6 @@
 import { PaymentMethodPropType, PaymentMethodType } from "@freelbee/entities";
 
-export type PaymentMethodFormData = Record<PaymentMethodPropType, string>;
+export type PaymentMethodFormData =  Partial<{[K in PaymentMethodPropType]: string}>;
 
 export interface PaymentMethodData {
     type: PaymentMethodType,

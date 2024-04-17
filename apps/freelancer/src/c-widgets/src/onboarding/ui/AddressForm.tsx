@@ -48,7 +48,7 @@ export const AddressForm = () => {
             errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.CITY, LanguageType.EN)}
             label="City"
             placeholder="Enter the city name" 
-            value={formData.CITY} 
+            value={formData?.CITY ?? ''} 
             setValue={(v) => setFormData(UserDataPropsType.CITY, v)} />
         <Input 
             isRequired
@@ -56,7 +56,7 @@ export const AddressForm = () => {
             errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.POSTAL_CODE, LanguageType.EN)}
             label="Postal code"
             placeholder="Enter the code" 
-            value={formData.POSTAL_CODE} 
+            value={formData?.POSTAL_CODE ?? ''} 
             setValue={(v) => setFormData(UserDataPropsType.POSTAL_CODE, v)} />
 
         <Input 
@@ -65,7 +65,7 @@ export const AddressForm = () => {
             errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.STREET, LanguageType.EN)}
             label="Street"
             placeholder="Enter the street name" 
-            value={formData.STREET} 
+            value={formData?.STREET ?? ''} 
             setValue={(v) => setFormData(UserDataPropsType.STREET, v)} />
         <Input 
             isRequired
@@ -74,7 +74,7 @@ export const AddressForm = () => {
             maxLength={100}
             label="House number"
             placeholder="For example, 3" 
-            value={formData.HOUSE_NUMBER} 
+            value={formData?.HOUSE_NUMBER ?? ''} 
             setValue={(v) => setFormData(UserDataPropsType.HOUSE_NUMBER, v)} />      
 
         <InfoWithIcon

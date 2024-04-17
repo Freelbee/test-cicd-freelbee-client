@@ -1,3 +1,3 @@
 import { CounterpartyDetailsPropsType } from "@freelbee/entities";
 
-export type CompanyFormData = Record<CounterpartyDetailsPropsType, string>;
+export type CompanyFormData = Partial<{[K in CounterpartyDetailsPropsType]: string}>;

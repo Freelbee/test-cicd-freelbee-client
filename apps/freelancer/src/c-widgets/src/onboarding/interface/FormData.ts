@@ -1,3 +1,3 @@
-import { UserDataPropsType } from "@freelbee/entities"
+import { UserDataPropsType } from "@freelbee/entities";
 
-export type FormData = Record<UserDataPropsType, string>;
+export type FormData = Partial<{[K in UserDataPropsType]: string}>;

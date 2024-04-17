@@ -17,9 +17,9 @@ export default function RootLayout({
 
           <StoreProvider>
             <PersonalLayout>
-              {children}      
-              <ToastContainer position='bottom-right' />        
+              {children}            
             </PersonalLayout>
+            <ToastContainer position='bottom-right' />  
           </StoreProvider>
 
         </StyledComponentsRegistry>

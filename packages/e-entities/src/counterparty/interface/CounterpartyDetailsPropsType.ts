@@ -1,6 +1,5 @@
 export enum CounterpartyDetailsPropsType {
     NAME = 'NAME',
-    COUNTRY = 'COUNTRY',
     ADDRESS = 'ADDRESS',
     ZIP_CODE = 'ZIP_CODE',
     TAX_NUMBER = 'TAX_NUMBER',

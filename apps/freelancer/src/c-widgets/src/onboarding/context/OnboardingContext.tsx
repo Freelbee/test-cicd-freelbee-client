@@ -3,7 +3,7 @@
 import { createContext } from "react";
 import { Onboarding_Step } from "../interface/OnboardingStep";
 import { FormData } from "../interface/FormData";
-import { UserDataPropsType } from "@freelbee/entities";
+import { UserDataPropsType} from "@freelbee/entities";
 
 export interface IOnboardingContext {
     isModalOpened: boolean,

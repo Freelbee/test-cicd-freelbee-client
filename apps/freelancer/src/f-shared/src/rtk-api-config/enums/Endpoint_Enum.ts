@@ -3,6 +3,7 @@ export enum Endpoint_Enum {
   ZOHO_CREATE_LEAD = `/zoho/lead`,
   FREELANCER_COMPANIES = ``,
   FREELANCER = ``,
+  USER = '/users',
 
   FREELANCER_ONBOARDING_STATUS = `/counterparty-onboarding/freelancer/onboarding/state`,
   SET_USER_DATA = `/users/user-data`,

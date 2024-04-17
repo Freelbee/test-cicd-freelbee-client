@@ -19,12 +19,7 @@ const initialData = {
     [UserDataPropsType.FIRST_NAME]: "",
     [UserDataPropsType.LAST_NAME]: "",
     [UserDataPropsType.PHONE_NUMBER]: "",
-    [UserDataPropsType.BIRTH_DATE]: "",
-    [UserDataPropsType.STREET]: "",
-    [UserDataPropsType.COUNTRY]: "",
-    [UserDataPropsType.CITY]: "",
-    [UserDataPropsType.POSTAL_CODE]: "",
-    [UserDataPropsType.HOUSE_NUMBER]: ""
+    [UserDataPropsType.BIRTH_DATE]: ""
 }
 
 export const PersonalForm = () => {
@@ -44,14 +39,14 @@ export const PersonalForm = () => {
     if(!validationResult.isSuccess()) {
         return;
     }
-
     saveUserData({
         type: UserDataType.DEFAULT,
         props: PropsHelper.MapFieldsToProps(data)
     }).unwrap()
-    .then(() => setStep(Onboarding_Step.COMPANY_DATA));
+    .then(() => setStep(Onboarding_Step.COMPANY_DATA))
+    .catch(e => {})
   }
-
+  
   return (
     <Form onSubmit={submitHandler}>
         <Input 
@@ -61,7 +56,7 @@ export const PersonalForm = () => {
             label="Name"
             placeholder={"John"} 
             tipsText='Will be displayed in your profile and visible to freelancers'
-            value={data.FIRST_NAME} 
+            value={data?.FIRST_NAME ?? ''} 
             setValue={(v) => setData(UserDataPropsType.FIRST_NAME, v)} />
         <Input 
             isRequired
@@ -70,21 +65,21 @@ export const PersonalForm = () => {
             label="Surname"
             placeholder="Silver" 
             tipsText='Will be displayed in your profile and visible to freelancers'
-            value={data.LAST_NAME} 
+            value={data?.LAST_NAME ?? ''} 
             setValue={(v) => setData(UserDataPropsType.LAST_NAME, v)} />
         <PhoneNumberInput 
             isRequired
             isError={validationResult.hasError(UserDataPropsType.PHONE_NUMBER)}
             errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.PHONE_NUMBER, LanguageType.EN)}
             label="Phone"
-            value={data.PHONE_NUMBER} 
+            value={data?.PHONE_NUMBER ?? ''} 
             setValue={(v) => setData(UserDataPropsType.PHONE_NUMBER, v)} />
         <DateInput 
           isRequired
           isError={validationResult.hasError(UserDataPropsType.BIRTH_DATE)}
           errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.BIRTH_DATE, LanguageType.EN)}
           label="Date of birth"
-          value={data.BIRTH_DATE} 
+          value={data?.BIRTH_DATE ?? ''} 
           setValue={(v) => setData(UserDataPropsType.BIRTH_DATE, v)} />
 
           <InfoWithIcon

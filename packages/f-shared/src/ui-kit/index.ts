@@ -40,3 +40,4 @@ export * from "./links/NavigationLink";
 export * from "./links/interface/NavLink";
 export * from "./buttons/SquareButton";
 export * from "./messages/InfoWithIcon";
+export * from "./messages/ErrorText";

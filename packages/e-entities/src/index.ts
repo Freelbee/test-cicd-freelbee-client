@@ -2,6 +2,7 @@ export * from './zoho-crm/interface/ZohoError';
 export * from './zoho-crm/interface/ZohoLeadRequest';
 
 export * from './user/interface/UserDataDto';
+export * from './user/interface/UserResponse';
 export * from './user/interface/UserDataType';
 export * from './user/interface/UserDataPropType';
 export * from './user/interface/UserStatus';

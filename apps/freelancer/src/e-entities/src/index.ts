@@ -11,3 +11,4 @@ export * from './layout/TableHead';
 export * from './user/ui/UserAvatar';
 export * from './user/ui/UserBadge';
 export * from './user/query/userApi';
+export * from './user/hooks/UseUserData';

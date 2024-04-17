@@ -5,15 +5,15 @@ import { Breakpoint, Color, Text, mediaBreakpointDown } from "@freelbee/shared/u
 import { FormEventHandler } from "react";
 import {ReactComponent as CopyIcon} from '@freelbee/assets/icons/copy/copy.svg';
 import styled from "styled-components";
+import { UserData } from "@freelbee/entities";
 
 interface Props {
-  // To-Do Interface
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  user: any;
+  user: UserData;
 }
 
 export const UserDetailsForm = ({user}: Props) => {
 
+  const userProps = user.userData.props;
   const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
   }
@@ -30,13 +30,13 @@ export const UserDetailsForm = ({user}: Props) => {
           disabled
           label="Name" 
           placeholder={""} 
-          value={user.firstname} 
+          value={userProps.FIRST_NAME} 
           setValue={() => {}} />
         <Input 
           disabled
           label="Surname" 
           placeholder={""} 
-          value={user.lastname} 
+          value={userProps.LAST_NAME} 
           setValue={() => {}} />      
       </InputRow>
 
@@ -59,7 +59,7 @@ export const UserDetailsForm = ({user}: Props) => {
         disabled
         label="Phone" 
         placeholder={""} 
-        value={user.phone} 
+        value={userProps.PHONE_NUMBER} 
         setValue={() => {}} />
         <InputContainer>
           <Input 

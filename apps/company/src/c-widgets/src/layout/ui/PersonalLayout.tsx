@@ -5,15 +5,12 @@ import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit"
 import { PropsWithChildren, useState } from "react"
 import styled from "styled-components"
 import { OnboardingModal } from "../../onboarding"
+import { useGetUserQuery } from "@company/entities"
 
 export const PersonalLayout = ({children}: PropsWithChildren) => {
   
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
-
-  //To-Do
-  const user = {
-    status: ''
-  }
+  const {data: user} = useGetUserQuery();
 
   return (
     <LayoutContext.Provider value={{
@@ -27,7 +24,7 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
         <NavigationMenu />
         <MobileMenu />
         <Main>
-          {user.status !== 'APPROVED' ?
+          {!user?.userData.status ?
             <OnboardingNotification />
             :
             children
