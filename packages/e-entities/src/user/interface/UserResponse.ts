@@ -21,6 +21,6 @@ export interface UserData {
 		id: number,
 		status: UserStatus | null,
 		type: UserType,
-		props: Record<UserDataPropsType, string>
+		props: Partial<{[K in UserDataPropsType]: string}>
 	}
 }

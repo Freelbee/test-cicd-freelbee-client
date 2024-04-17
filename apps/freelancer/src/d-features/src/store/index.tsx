@@ -11,7 +11,7 @@ export const rtkQueryErrorLogger: Middleware = (api: MiddlewareAPI) => (next) =>
     if (isRejectedWithValue(action)) {
         console.warn('Async error!');
         console.log(action);
-        toast('ERROR', {type: 'error'})
+        toast(<ErrorText title={"Error"} message={ErrorHelper.GetErrorMessageOrDefault(action.payload)} />, {type: 'error'})
         // Sentry.captureException(action.payload);
         // api.dispatch(addErrors({
         //     error: ApiErrorAdapter.getPayAssistantError(action.payload),

@@ -1,3 +1,5 @@
+'use client';
+
 import { PageTitle, useUserData } from "@freelancer/entities"
 import { AvatarWidget, UserDetailsForm } from "@freelbee/widgets"
 

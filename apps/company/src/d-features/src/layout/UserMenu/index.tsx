@@ -40,9 +40,9 @@ export function UserMenu () {
           onClick={(e) => DOMHelper.isNotChildOfElem(e) && toggleMenu()}>
           <UserBadge 
             onClick={toggleMenu}
-            avatarContent={userData.props.FIRST_NAME[0]}
+            avatarContent={userData.props?.FIRST_NAME && userData.props?.FIRST_NAME[0] }
             status={userData.status}
-            name={`${userData.props.FIRST_NAME} ${userData.props.LAST_NAME}`} />
+            name={`${userData.props?.FIRST_NAME} ${userData.props.LAST_NAME}`} />
 
           <OpenMenu $isOpened={profileMenuIsOpen} onClick={toggleMenu}>
               <ArrowIcon />
@@ -56,7 +56,7 @@ export function UserMenu () {
 
                   <UserBadge 
                     onClick={toggleMenu}
-                    avatarContent={userData.props.FIRST_NAME[0]}
+                    avatarContent={userData.props?.FIRST_NAME && userData.props.FIRST_NAME[0]}
                     status={userData.status}
                     name={`${userData.props.FIRST_NAME} ${userData.props.LAST_NAME}`} />
 

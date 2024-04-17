@@ -47,7 +47,7 @@ export const PersonalForm = () => {
             label="Name"
             placeholder={"John"} 
             tipsText='Will be displayed in your profile and visible to freelancers'
-            value={formData.FIRST_NAME} 
+            value={formData?.FIRST_NAME ?? ''} 
             setValue={(v) => setFormData(UserDataPropsType.FIRST_NAME, v)} />
         <Input 
             isRequired
@@ -56,21 +56,21 @@ export const PersonalForm = () => {
             label="Surname"
             placeholder="Silver" 
             tipsText='Will be displayed in your profile and visible to freelancers'
-            value={formData.LAST_NAME} 
+            value={formData?.LAST_NAME ?? ''} 
             setValue={(v) => setFormData(UserDataPropsType.LAST_NAME, v)} />
         <PhoneNumberInput 
             isRequired
             isError={validationResult.hasError(UserDataPropsType.PHONE_NUMBER)}
             errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.PHONE_NUMBER, LanguageType.EN)}
             label="Phone"
-            value={formData.PHONE_NUMBER} 
+            value={formData?.PHONE_NUMBER ?? ''} 
             setValue={(v) => setFormData(UserDataPropsType.PHONE_NUMBER, v)} />
         <DateInput 
           isRequired
           isError={validationResult.hasError(UserDataPropsType.BIRTH_DATE)}
           errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.BIRTH_DATE, LanguageType.EN)}
           label="Date of birth"
-          value={formData.BIRTH_DATE} 
+          value={formData?.BIRTH_DATE ?? ''} 
           setValue={(v) => setFormData(UserDataPropsType.BIRTH_DATE, v)} />
 
           <InfoWithIcon

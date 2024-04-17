@@ -30,13 +30,13 @@ export const UserDetailsForm = ({user}: Props) => {
           disabled
           label="Name" 
           placeholder={""} 
-          value={userProps.FIRST_NAME} 
+          value={userProps.FIRST_NAME ?? ''} 
           setValue={() => {}} />
         <Input 
           disabled
           label="Surname" 
           placeholder={""} 
-          value={userProps.LAST_NAME} 
+          value={userProps.LAST_NAME ?? ''} 
           setValue={() => {}} />      
       </InputRow>
 
@@ -59,7 +59,7 @@ export const UserDetailsForm = ({user}: Props) => {
         disabled
         label="Phone" 
         placeholder={""} 
-        value={userProps.PHONE_NUMBER} 
+        value={userProps.PHONE_NUMBER ?? ''} 
         setValue={() => {}} />
         <InputContainer>
           <Input 
