@@ -14,3 +14,11 @@ export type ErrorResponse = {
     message: MessageWithLanguages,
     status: string
 };
+
+export interface NewError {
+    status: number,
+    error: string,
+    message: string,
+    techMessage: string,
+    timestamp: string
+} 

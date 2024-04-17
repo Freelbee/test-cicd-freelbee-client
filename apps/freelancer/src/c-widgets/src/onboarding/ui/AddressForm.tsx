@@ -11,6 +11,7 @@ import {ReactComponent as AlertIcon} from '@freelbee/assets/icons/alert-icons/al
 import { FormData } from "../interface/FormData";
 import { AddressFormValidator } from "../util/AddressFormValidator";
 import { LanguageType } from "@freelbee/shared/language";
+import { Country, UserDataPropsType } from "@freelbee/entities";
 
 export const AddressForm = () => {
 
@@ -18,60 +19,63 @@ export const AddressForm = () => {
     const {data} = useGetCountriesQuery();
     const [validationResult, setValidationResult] = useState(new ValidatorResult<FormData>());
     const validator = new AddressFormValidator();
+    const [country, setCountry] = useState<Country | null>(null);
 
     const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
         const validationResult = validator.validate(formData);
         setValidationResult(validationResult);
 
-        // if(!validationResult.isSuccess()) {
-        //     return;
-        // }
-        // To-Do
+        if(!validationResult.isSuccess()) {
+            return;
+        }
         setStep(Onboarding_Step.USER_DATA);
     }
 
   return (
     <Form onSubmit={submitHandler}>
         <CountrySelect 
-            isError={validationResult.hasError('country')}
+            isError={validationResult.hasError(UserDataPropsType.COUNTRY)}
             countries={data ?? []} 
-            selectedCountry={formData.country ?? null} 
-            onSelect={(c) => setFormData(prev => ({...prev, country: c}))} />
+            selectedCountry={country ?? null} 
+            onSelect={(c) => {
+                setCountry(c)
+                setFormData(UserDataPropsType.COUNTRY, c.alpha2Code);
+            }} />
         <Input 
             isRequired
-            isError={validationResult.hasError('city')}
-            errorMessage={validationResult.getMessageByLanguage('city', LanguageType.EN)}
+            isError={validationResult.hasError(UserDataPropsType.CITY)}
+            errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.CITY, LanguageType.EN)}
             label="City"
             placeholder="Enter the city name" 
-            value={""} 
-            setValue={() => {}} />
+            value={formData?.CITY ?? ''} 
+            setValue={(v) => setFormData(UserDataPropsType.CITY, v)} />
         <Input 
             isRequired
-            isError={validationResult.hasError('postalCode')}
-            errorMessage={validationResult.getMessageByLanguage('postalCode', LanguageType.EN)}
+            isError={validationResult.hasError(UserDataPropsType.POSTAL_CODE)}
+            errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.POSTAL_CODE, LanguageType.EN)}
             label="Postal code"
-            placeholder="000 000" 
-            value={""} 
-            setValue={() => {}} />
+            placeholder="Enter the code" 
+            value={formData?.POSTAL_CODE ?? ''} 
+            setValue={(v) => setFormData(UserDataPropsType.POSTAL_CODE, v)} />
 
         <Input 
             isRequired
-            isError={validationResult.hasError('street')}
-            errorMessage={validationResult.getMessageByLanguage('street', LanguageType.EN)}
+            isError={validationResult.hasError(UserDataPropsType.STREET)}
+            errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.STREET, LanguageType.EN)}
             label="Street"
             placeholder="Enter the street name" 
-            value={""} 
-            setValue={() => {}} />
+            value={formData?.STREET ?? ''} 
+            setValue={(v) => setFormData(UserDataPropsType.STREET, v)} />
         <Input 
             isRequired
-            isError={validationResult.hasError('houseNumber')}
-            errorMessage={validationResult.getMessageByLanguage('houseNumber', LanguageType.EN)}
+            isError={validationResult.hasError(UserDataPropsType.HOUSE_NUMBER)}
+            errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.HOUSE_NUMBER, LanguageType.EN)}
             maxLength={100}
             label="House number"
             placeholder="For example, 3" 
-            value={""} 
-            setValue={() => {}} />      
+            value={formData?.HOUSE_NUMBER ?? ''} 
+            setValue={(v) => setFormData(UserDataPropsType.HOUSE_NUMBER, v)} />      
 
         <InfoWithIcon
             Icon={AlertIcon}

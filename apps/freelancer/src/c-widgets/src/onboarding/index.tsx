@@ -11,6 +11,11 @@ import { SecondStepTitle } from "./ui/SecondStepTitle";
 import { Onboarding_Step } from "./interface/OnboardingStep";
 import { OnboardingContext } from "./context/OnboardingContext";
 import { FormData } from "./interface/FormData";
+import { useDataStateUpdater } from "@freelbee/shared/hooks";
+import { UserDataPropsType } from "@freelbee/entities";
+import { useDispatch } from "react-redux";
+import { useAppSelector } from "@freelancer/features";
+import { setOnboardingOpened } from "@freelancer/entities";
 
 
 const onboardingContent: Record<Onboarding_Step, JSX.Element> = {
@@ -23,41 +28,35 @@ const onboardingTitle: Record<Onboarding_Step, JSX.Element> = {
     [Onboarding_Step.USER_DATA]: <SecondStepTitle />
 }
 
+const initialData: FormData = {
+    [UserDataPropsType.FIRST_NAME]: "",
+    [UserDataPropsType.LAST_NAME]: "",
+    [UserDataPropsType.PHONE_NUMBER]: "",
+    [UserDataPropsType.BIRTH_DATE]: "",
+    [UserDataPropsType.STREET]: "",
+    [UserDataPropsType.COUNTRY]: "",
+    [UserDataPropsType.CITY]: "",
+    [UserDataPropsType.POSTAL_CODE]: "",
+    [UserDataPropsType.HOUSE_NUMBER]: ""
+}
+
 export const OnboardingModal = () => {
 
-    // To-Do
-    const user = {
-        id: 1,
-        firstname: 'Testov',
-        lastname: 'Test',
-        email: 'test@mail.com',
-        phone: '+79784556633',
-        status: '',
-        }
-      
-
-    const [formData, setFormData] = useState<FormData>({
-        name: "",
-        surname: "",
-        phone: "",
-        dateOfBirth: "",
-        country: null,
-        city: "",
-        postalCode: "",
-        street: "",
-        houseNumber: ""
-    });
+    const [formData, setFormData] = useDataStateUpdater<FormData>(initialData);
     const [step, setStep] = useState<Onboarding_Step>(Onboarding_Step.ADDRESS);
-    const [open, setOpen] = useState<boolean>(() => user.status != 'approved');
-    const closeModal = () => setOpen(false);
+    const dispatch = useDispatch();
+    const isModalOpened = useAppSelector(state => state.onboardingReducer.onboardingOpened);
 
+    const closeModal = () => {
+        dispatch(setOnboardingOpened(false))
+    };
     return (
         <ModalWindow
-            isOpen={open}
+            isOpen={isModalOpened}
             onClose={closeModal}>
                 <OnboardingContext.Provider value={{
-                    open,
-                    setOpen,
+                    isModalOpened,
+                    setOpened: setOnboardingOpened,
                     step,
                     setStep,
                     formData,

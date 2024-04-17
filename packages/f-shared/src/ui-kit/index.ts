@@ -28,6 +28,7 @@ export * from "./inputs/checkbox/checkbox";
 export * from "./inputs/date/DateInput";
 export * from './select/TabsSelect/TabsSelect'
 export * from './select/SelectWithSearch/SelectWithSearch'
+export * from './spinner/Spinner'
 
 export * from "./buttons/Button";
 export * from "./buttons/CloseButton";
@@ -39,3 +40,4 @@ export * from "./links/NavigationLink";
 export * from "./links/interface/NavLink";
 export * from "./buttons/SquareButton";
 export * from "./messages/InfoWithIcon";
+export * from "./messages/ErrorText";

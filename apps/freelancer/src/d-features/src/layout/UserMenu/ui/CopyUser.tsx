@@ -6,16 +6,15 @@ import { ReactComponent as CopyIcon} from "@freelbee/assets/icons/copy/copy.svg"
 import { toast } from "react-toastify";
 
 interface Props {
-    // To-DO interface
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    user: any;
+    id: number,
+    email: string
 }
 
-export const CopyUser = ({user}: Props) => {
+export const CopyUser = ({id, email}: Props) => {
 
     const copyToClipboard = () => {
-        if(!user) return;
-        window.navigator.clipboard.writeText(`user id: ${user?.id};\nemail: ${user?.email};\ncompany id: ${user?.currentCompany?.id};`);
+        if(!id || !email) return;
+        window.navigator.clipboard.writeText(`user id: ${id};\nemail: ${email};`);
         toast('Your ID has been copied to the clipboard!', {
           theme: 'dark',
           type: 'success',
