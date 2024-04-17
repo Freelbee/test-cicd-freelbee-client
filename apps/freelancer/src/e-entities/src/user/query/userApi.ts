@@ -6,6 +6,7 @@ export const userAPI = API.injectEndpoints({
   endpoints: (builder) => ({
     getUser: builder.query<UserData, void>({
       query: () => Endpoint_Enum.USER,
+      providesTags: ['user'],
       transformResponse: (res: UserResponse) => {
         const mappedProps = PropsHelper.MapPropsToFields(res.userData.props);
         return {...res, userData: {...res.userData, props: mappedProps}};
@@ -18,6 +19,7 @@ export const userAPI = API.injectEndpoints({
           method: 'POST',
           body
       }), 
+      invalidatesTags: ['user']
     })
   })
 });

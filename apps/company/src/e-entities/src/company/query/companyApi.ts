@@ -9,6 +9,7 @@ export const companyAPI = API.injectEndpoints({
   endpoints: (builder) => ({
     getCompany: builder.query<CompanyData, void>({
       query: () => Endpoint_Enum.COMPANY,
+      providesTags: ['counterparty'],
       transformResponse: (res: CompanyResponse) => {
         const mappedProps = PropsHelper.MapPropsToFields(res.counterpartyDetail.props);
         return {...res, counterpartyDetail: {...res.counterpartyDetail, props: mappedProps}};
@@ -23,6 +24,7 @@ export const companyAPI = API.injectEndpoints({
           method: 'POST',
           body
       }), 
+      invalidatesTags: ['counterparty']
     }),
     createPaymentData: builder.mutation<void, PaymentMethodDto>({
       query: (body) => ({
@@ -30,6 +32,7 @@ export const companyAPI = API.injectEndpoints({
         method: 'POST',
         body
     }), 
+    invalidatesTags: ['payment-data']
     }),
   })
 });

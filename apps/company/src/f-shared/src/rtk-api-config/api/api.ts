@@ -7,6 +7,9 @@ export const API = createApi({
   baseQuery: baseQueryWithAuth,
   tagTypes: [
       'zoho-crm',
+      'user',
+      'counterparty',
+      'payment-data'
   ],
   endpoints: () => ({}),
 });
