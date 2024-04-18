@@ -1,6 +1,6 @@
 'use client';
 
-import { PageTitle, useUserData } from "@company/entities"
+import { PageTitle, useUserData } from "@company/entities";
 import { AvatarWidget, UserDetailsForm } from "@freelbee/widgets"
 
 export const MainPage = () => {

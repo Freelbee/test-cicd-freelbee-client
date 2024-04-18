@@ -1,11 +1,17 @@
 import { PageContainer, PageTitle } from "@company/entities"
+import { TaskTable, TasksCounter } from "@company/widgets"
 
 export const TasksPage = () => {
 
   return (
-    <PageContainer>
+    <>
+      <PageContainer>
+          <TasksCounter />
+      </PageContainer>    
+      <PageContainer style={{marginTop: '24px'}}>
         <PageTitle text='Tasks' />
-        <div>Tasks page</div>
+        <TaskTable />
     </PageContainer>
+    </>
   )
 }

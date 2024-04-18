@@ -1,16 +1,16 @@
 'use client'
 
-import { HeadMenu, LayoutContext, MobileMenu, NavigationMenu, OnboardingNotification } from "@company/features"
+import { HeadMenu, LayoutContext, MobileMenu, NavigationMenu } from "@company/features"
 import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit"
 import { PropsWithChildren, useState } from "react"
 import styled from "styled-components"
 import { OnboardingModal } from "../../onboarding"
-import { useGetUserQuery } from "@company/entities"
+// import { useGetUserQuery } from "@company/entities"
 
 export const PersonalLayout = ({children}: PropsWithChildren) => {
   
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
-  const {data: user} = useGetUserQuery();
+  // const {data: user} = useGetUserQuery();
 
   return (
     <LayoutContext.Provider value={{
@@ -24,11 +24,12 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
         <NavigationMenu />
         <MobileMenu />
         <Main>
-          {!user?.userData.status ?
+          {children}
+          {/* {!user?.userData.status ?
             <OnboardingNotification />
             :
             children
-          }
+          } */}
         </Main>
       </Container>      
     </LayoutContext.Provider>
