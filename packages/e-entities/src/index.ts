@@ -18,3 +18,7 @@ export * from './payment/interface/PaymentMethodPropType';
 export * from './payment/interface/PaymentMethodType';
 
 export * from './country/index';
+
+export * from './task/interface/TaskCounterpartyDataDto';
+export * from './task/interface/TaskStatus';
+export * from './task/interface/SwitchTaskStatusDto';

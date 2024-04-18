@@ -5,6 +5,11 @@ export * from './company/dtos/FreelancerCompanyDto';
 
 export * from './onboarding/store/onboardingSlice';
 
+export * from './payment/interface/PaymentReceiverDto';
+
+export * from './tasks/query/taskApi';
+export * from './tasks/hooks/UseTasksData';
+
 export * from './layout/PageContainer';
 export * from './layout/PageTitle';
 export * from './layout/TableHead';

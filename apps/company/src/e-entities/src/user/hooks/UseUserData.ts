@@ -1,9 +1,9 @@
 'use client'
 
 import { UserData, UserDataPropsType} from "@freelbee/entities";
-import { useGetUserQuery } from "../query/userApi";
 import { UserType } from "packages/e-entities/src/user/interface/UserType";
 import { QueryStatus } from "@reduxjs/toolkit/query";
+import { useGetUserQuery } from "@company/entities";
 
 const DEFAULT: UserData = {
     "id": 0,

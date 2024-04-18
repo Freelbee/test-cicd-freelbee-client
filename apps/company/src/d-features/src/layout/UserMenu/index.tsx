@@ -13,7 +13,7 @@ import { Breakpoint, Color, mediaBreakpointDown, mediaBreakpointUp } from '@free
 import { CopyUser } from './ui/CopyUser';
 import { TechInfo } from './ui/TechInfo';
 import { AccountActions } from './ui/AccountActions';
-import { UserBadge, useUserData } from '@company/entities';
+import { UserBadge, useUserData} from '@company/entities';
 
 export function UserMenu () {
 
