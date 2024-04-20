@@ -5,19 +5,27 @@ import { RoleCard } from "./RoleCard";
 import companyImage from '@landing/assets/icons/roles/company.svg';
 import freelancerImage from '@landing/assets/icons/roles/freelancer.svg';
 import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
+import { ModalQueryValue } from "@landing/entities";
 
-export const Roles = () => {
+interface Props {
+    modal: ModalQueryValue;
+}
+
+export const Roles = ({modal}: Props) => {
+
+    const getPath = () => modal === ModalQueryValue.START ? '/sign-up' : '/';
+
     return (
         <Container>
             <RoleCard 
                 data-testid='company-login'
-                url={process.env.NEXT_PUBLIC_COMPANY_URL ?? '/'} 
+                url={process.env.NEXT_PUBLIC_COMPANY_URL + getPath()} 
                 icon={companyImage} 
                 name={"Company"} />
             <RoleCard 
                 data-testid='freelancer-login'
                 color={Color.BLUE}
-                url={process.env.NEXT_PUBLIC_FREELANCER_URL ?? '/'} 
+                url={process.env.NEXT_PUBLIC_FREELANCER_URL + getPath()}
                 icon={freelancerImage} 
                 name={"Freelancer"} />
         </Container>

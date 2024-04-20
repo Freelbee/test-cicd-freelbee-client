@@ -1,6 +1,6 @@
 'use client';
 
-import { ModalWindow } from "@freelbee/features/common"
+import { ModalWindow } from "@freelbee/shared/ui-kit";
 import { useQueryParamsNavigation } from "@freelbee/shared/hooks";
 import { FormBlock } from "./ui/FormBlock";
 import { ModalQueryValue } from "@landing/entities";

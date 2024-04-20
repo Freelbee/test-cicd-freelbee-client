@@ -1,29 +1,24 @@
 'use client';
 
 import React, {useContext, useRef} from 'react';
-import Link from 'next/link';
 import styled from 'styled-components';
 
 import { DOMHelper } from '@freelbee/shared/helpers';
-import { NavigationLink } from './ui/NavigationLink';
 import { links } from './data/links';
 import { Breakpoint, Color, Z_INDEX, mediaBreakpointDown, vw } from '@freelbee/shared/ui-kit';
 import Image from 'next/image';
 import logo from '@freelbee/assets/icons/logo/freelbee-logo.svg';
 import { LayoutContext } from '../context/LayoutContext';
 import {ReactComponent as CloseIcon} from '@freelbee/assets/icons/cross-icons/close-icon.svg';
-
-export type Link = {
-    link: string,
-    title: string,
-    icon: JSX.Element
-};
-
-export type Links = Array<Link>;
+import { usePathname } from 'next/navigation';
+import { NavigationLink } from "@freelbee/shared/ui-kit";
 
 export function NavigationMenu () {
 
     const {navigationMenuOpened, setNavigationMenuOpened} = useContext(LayoutContext);
+    const pathName = usePathname();
+
+    const isRouteActive = (link: string) => pathName.endsWith(link);
 
     const refWrapper = useRef<HTMLDivElement>(null);
     const refNavigation = useRef<HTMLDivElement>(null);
@@ -53,8 +48,11 @@ export function NavigationMenu () {
                     
 
                     <div>
-                        {links.map((link, i) => (
-                            <NavigationLink key={i} {...link} />
+                        {links.map((link) => (
+                            <NavigationLink 
+                            key={link.title} 
+                            isActive={isRouteActive(link.link)}
+                            {...link} />
                         ))}
                     </div>
                     

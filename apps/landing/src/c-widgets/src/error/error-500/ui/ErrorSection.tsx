@@ -4,7 +4,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { SectionTitle } from '@landing/shared';
 import { Breakpoint, ButtonStyleEnum, Text, Title1, mediaBreakpointDown, mediaBreakpointUp, vw } from '@freelbee/shared/ui-kit';
-import { Button } from '@freelbee/features/common';
+import { Button } from "@freelbee/shared/ui-kit";
 
 import { ErrorImage } from './ErrorImage';
 

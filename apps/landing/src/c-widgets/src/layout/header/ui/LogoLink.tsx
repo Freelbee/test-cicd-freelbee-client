@@ -11,14 +11,14 @@ interface Props {
 export const LogoLink = ({mobileBreakpoint}: Props) => {
   return (
     <Link href={`/`}>
-        <Logo mobileBreakpoint={mobileBreakpoint}>
+        <Logo $mobileBreakpoint={mobileBreakpoint}>
             <LogoIcon/>
         </Logo>
     </Link>
   )
 }
 
-const Logo = styled.div<{mobileBreakpoint: number}>`
+const Logo = styled.div<{$mobileBreakpoint: number}>`
   cursor: pointer;
   width: ${vw(100, Breakpoint.Medium)};
   max-width: 150px;
@@ -33,8 +33,8 @@ const Logo = styled.div<{mobileBreakpoint: number}>`
     width: 100px;
   }
 
-  ${({mobileBreakpoint}) => css`
-    ${mediaBreakpointDown(mobileBreakpoint)}{
+  ${({$mobileBreakpoint}) => css`
+    ${mediaBreakpointDown($mobileBreakpoint)}{
         position: absolute;
         z-index: 10;
         top: 25px;

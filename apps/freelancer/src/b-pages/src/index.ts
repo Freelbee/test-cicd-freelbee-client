@@ -1,3 +1,4 @@
 export * from "./companies/CompaniesPage";
-export * from "./settings/SettingsPage";
 export * from "./tasks/TasksPage";
+export * from "./settings/MainPage";
+export * from "./settings/SecurityPage";

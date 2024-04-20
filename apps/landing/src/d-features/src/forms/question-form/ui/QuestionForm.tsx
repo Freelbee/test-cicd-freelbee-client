@@ -11,7 +11,7 @@ import ApplicationFormValidator from "../util/ApplicationFormValidator";
 import { SectionId, sectionSeoText } from "@landing/entities";
 import { LeadMessageBuilder } from "@freelbee/features";
 import { useSendRegisteredLeadMutation } from "@landing/features";
-import { Button, Input, TextArea } from "@freelbee/features/common";
+import { Button, Input, TextArea } from "@freelbee/shared/ui-kit";
 import { Breakpoint, ButtonStyleEnum, Color } from "@freelbee/shared/ui-kit";
 import { LanguageType } from "@freelbee/shared/language";
 import { ValidatorResult } from "@freelbee/features";

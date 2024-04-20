@@ -4,59 +4,25 @@ import {useRef, useState} from 'react';
 import styled from 'styled-components';
 
 import { ReactComponent as ArrowIcon} from '@freelbee/assets/icons/arrow-icons/arrow_down.svg';
-import { ReactComponent as OpenIcon} from '@freelbee/assets/icons/cross-icons/plus.svg';
+// import { ReactComponent as OpenIcon} from '@freelbee/assets/icons/cross-icons/plus.svg';
 import { useOnClickOutside } from '@freelbee/shared/hooks';
 import { DOMHelper } from '@freelbee/shared/helpers';
 import { Breakpoint, Color, mediaBreakpointDown, mediaBreakpointUp } from '@freelbee/shared/ui-kit';
-import { ProfileVerificationLink } from './ui/ProfileVerificationLink';
-import { CompanySwitcher } from './ui/CompanySwitcher';
+// import { ProfileVerificationLink } from './ui/ProfileVerificationLink';
+// import { CompanySwitcher } from './ui/CompanySwitcher';
 import { CopyUser } from './ui/CopyUser';
 import { TechInfo } from './ui/TechInfo';
 import { AccountActions } from './ui/AccountActions';
-import { UserBadge } from '@company/entities';
+import { UserBadge, useUserData} from '@company/entities';
 
 export function UserMenu () {
 
     const [profileMenuIsOpen, setProfileMenuIsOpen] = useState(false);
-    const [companiesIsOpen, setCompaniesIsOpen] = useState(false);
+    // const [companiesIsOpen, setCompaniesIsOpen] = useState(false);
+    const [{id, email, userData}] = useUserData();
     const modalRef = useRef(null);
     const buttonRef = useRef(null);
 
-    // MOCK
-    const user = {
-      id: 1,
-      firstname: 'Testov',
-      lastname: 'Test',
-      email: 'test@mail.com',
-      status: 'approved',
-      currentCompany: {
-        id: 1,
-        name: 'Company1',
-        status: 'approved',
-      },
-      companies: [
-        {
-          id: 1,
-          name: 'Company1',
-          status: 'approved',
-        },
-        {
-          id: 2,
-          name: 'Company2',
-          status: 'approved',
-        },
-        {
-          id: 3,
-          name: 'Company3',
-          status: 'not approved',
-        },
-        {
-          id: 4,
-          name: 'Company4',
-          status: 'waiting',
-        }
-      ]
-    }
 
     useOnClickOutside(modalRef, () => {
         setProfileMenuIsOpen(false);
@@ -74,10 +40,9 @@ export function UserMenu () {
           onClick={(e) => DOMHelper.isNotChildOfElem(e) && toggleMenu()}>
           <UserBadge 
             onClick={toggleMenu}
-            avatarContent={user.firstname[0]}
-            status={user.status}
-            name={`${user.firstname} ${user.lastname}`}
-            subInfo={user.status === 'not approved' && <ProfileVerificationLink />} />
+            avatarContent={userData.props?.FIRST_NAME && userData.props?.FIRST_NAME[0] }
+            status={userData.status}
+            name={`${userData.props?.FIRST_NAME} ${userData.props.LAST_NAME}`} />
 
           <OpenMenu $isOpened={profileMenuIsOpen} onClick={toggleMenu}>
               <ArrowIcon />
@@ -91,32 +56,31 @@ export function UserMenu () {
 
                   <UserBadge 
                     onClick={toggleMenu}
-                    avatarContent={user.firstname[0]}
-                    status={user.status}
-                    name={`${user.firstname} ${user.lastname}`}
-                    subInfo={user.status === 'not approved' && <ProfileVerificationLink />} />
+                    avatarContent={userData.props?.FIRST_NAME && userData.props.FIRST_NAME[0]}
+                    status={userData.status}
+                    name={`${userData.props.FIRST_NAME} ${userData.props.LAST_NAME}`} />
 
-                    <CompaniesButton 
+                    {/* <CompaniesButton 
                       onClick={() => {
                         setCompaniesIsOpen(prev => !prev)
                       }}
                       $opened={companiesIsOpen}
                       aria-label={companiesIsOpen ? 'close companies menu' : 'open companies menu'}>
                       <OpenIcon />
-                    </CompaniesButton>
+                    </CompaniesButton> */}
                       
                   </AccountUserNames>
 
-                  <CompanySwitcher
+                  {/* <CompanySwitcher
                     style={{
                       height: companiesIsOpen ? '250px' : '0px'
                     }} 
                     isOpen={companiesIsOpen}
                     toggleOpen={() => setCompaniesIsOpen(prev => !prev)}
                     companies={user.companies} 
-                    selectedCompany={user.currentCompany} />
+                    selectedCompany={user.currentCompany} /> */}
                   
-                  <CopyUser user={user} />
+                  <CopyUser id={id} email={email} />
               </AccountUserData>
 
               <AccountActions />
@@ -136,23 +100,23 @@ const PersonalMenuAccount = styled.div`
   align-items: center;
 `;
 
-const CompaniesButton = styled.button<{$opened: boolean}>`
-  display: block;
-  cursor: pointer;
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  align-self: center;
-  margin-left: auto;
-  transition: transform 0.5s;
-  transform: ${({$opened}) => $opened ? 'rotate(45deg)' : 'rotate(0deg)'};
+// const CompaniesButton = styled.button<{$opened: boolean}>`
+//   display: block;
+//   cursor: pointer;
+//   flex-shrink: 0;
+//   width: 20px;
+//   height: 20px;
+//   align-self: center;
+//   margin-left: auto;
+//   transition: transform 0.5s;
+//   transform: ${({$opened}) => $opened ? 'rotate(45deg)' : 'rotate(0deg)'};
 
-  svg {
-    fill: ${Color.GRAY_700};
-    width: 16px;
-    height: 16px;
-  }
-`;
+//   svg {
+//     fill: ${Color.GRAY_700};
+//     width: 16px;
+//     height: 16px;
+//   }
+// `;
 
 const OpenMenu = styled.div<{ $isOpened: boolean }>`
   cursor: pointer;

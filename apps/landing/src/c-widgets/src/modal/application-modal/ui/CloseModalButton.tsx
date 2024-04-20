@@ -1,7 +1,7 @@
 'use client';
 
 import { useQueryParamsNavigation } from "@freelbee/shared/hooks";
-import { CloseBtnSize, CloseButton,  } from '@freelbee/features/common';
+import { CloseBtnSize, CloseButton,  } from "@freelbee/shared/ui-kit";
 
 export const CloseModalButton = () => {
     const [ , navigateWithParam] = useQueryParamsNavigation();

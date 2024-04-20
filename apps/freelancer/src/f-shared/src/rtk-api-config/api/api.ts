@@ -8,7 +8,11 @@ export const API = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithAuth,
   tagTypes: [
-      'zoho-crm',
+    'zoho-crm',
+    'user',
+    'counterparty',
+    'payment-data',
+    'tasks'
   ],
   endpoints: () => ({}),
 });

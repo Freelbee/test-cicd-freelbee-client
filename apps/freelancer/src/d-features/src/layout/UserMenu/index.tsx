@@ -7,26 +7,17 @@ import { ReactComponent as ArrowIcon} from '@freelbee/assets/icons/arrow-icons/a
 import { useOnClickOutside } from '@freelbee/shared/hooks';
 import { DOMHelper } from '@freelbee/shared/helpers';
 import { Breakpoint, Color, mediaBreakpointDown, mediaBreakpointUp } from '@freelbee/shared/ui-kit';
-import { ProfileVerificationLink } from './ui/ProfileVerificationLink';
 import { CopyUser } from './ui/CopyUser';
 import { TechInfo } from './ui/TechInfo';
 import { AccountActions } from './ui/AccountActions';
-import { UserBadge } from '@freelancer/entities';
+import { UserBadge, useUserData } from '@freelancer/entities';
 
 export function UserMenu () {
 
     const [profileMenuIsOpen, setProfileMenuIsOpen] = useState(false);
+    const [{id, email, userData}] = useUserData();
     const modalRef = useRef(null);
     const buttonRef = useRef(null);
-
-    // MOCK
-    const user = {
-      id: 1,
-      firstname: 'Testov',
-      lastname: 'Test',
-      email: 'test@mail.com',
-      status: 'not approved'
-    }
 
     useOnClickOutside(modalRef, () => {
         setProfileMenuIsOpen(false);
@@ -45,9 +36,8 @@ export function UserMenu () {
 
           <UserBadge 
             onClick={toggleMenu}
-            status={user.status}
-            name={`${user.firstname} ${user.lastname}`}
-            subInfo={user.status === 'not approved' && <ProfileVerificationLink />} />
+            status={userData.status}
+            name={`${userData.props.FIRST_NAME} ${userData.props.LAST_NAME}`} />
 
           <OpenMenu $isOpened={profileMenuIsOpen} onClick={toggleMenu}>
               <ArrowIcon />
@@ -59,11 +49,10 @@ export function UserMenu () {
 
                   <UserBadge 
                     onClick={toggleMenu}
-                    status={user.status}
-                    name={`${user.firstname} ${user.lastname}`}
-                    subInfo={user.status === 'not approved' && <ProfileVerificationLink />} />
+                    status={userData.status}
+                    name={`${userData.props.FIRST_NAME} ${userData.props.LAST_NAME}`}/>
                       
-                  <CopyUser user={user} />
+                  <CopyUser id={id} email={email} />
               </AccountUserData>
 
               <AccountActions />

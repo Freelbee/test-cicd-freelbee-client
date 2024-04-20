@@ -5,7 +5,10 @@ export class RequiredRule implements IRule
 {
     public check (value : string) : boolean
     {
-        return !!(value.trim());
+        if(typeof value === 'string') {
+          return !!(value.trim());  
+        }
+        return !!value;
     }
 
     public message () : RuleMessage

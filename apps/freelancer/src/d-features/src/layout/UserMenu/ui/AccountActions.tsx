@@ -19,8 +19,8 @@ export const AccountActions = () => {
   return (
     <AccountLinks>  
         <AccountLink onClick={logout}>
-            <LogoutIcon stroke={Color.GRAY_800} />
-            <Text font='body'>
+            <LogoutIcon stroke={Color.GRAY_800} /> 
+            <Text font='body'> 
                 Exit
             </Text>
         </AccountLink>

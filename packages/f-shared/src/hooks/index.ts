@@ -5,6 +5,7 @@ import {useMatchMedia} from './useMatchMedia';
 import {useOnClickOutside} from './useOnClickOutside';
 import {useQueryParamsNavigation} from './useQueryParamsNavigation';
 import {useSelectKeyboardNavigation} from './useSelectKeyboardNavigation';
+import {useDataStateUpdater} from './useDataStateUpdater';
 
 export {
     useDebounce,
@@ -13,5 +14,6 @@ export {
     useMatchMedia,
     useOnClickOutside,
     useQueryParamsNavigation,
-    useSelectKeyboardNavigation
+    useSelectKeyboardNavigation,
+    useDataStateUpdater
 };

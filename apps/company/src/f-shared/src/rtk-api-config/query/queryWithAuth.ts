@@ -9,7 +9,6 @@ import { baseQuery } from './baseQuery';
 import { Endpoint_Enum, Token_Enum, TokensDto } from '@company/shared';
 import { redirect } from 'next/navigation';
 import { QueryReturnValue } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
-import { ErrorResponse } from '@freelbee/shared/error';
 
 const mutex = new Mutex();
 
@@ -21,7 +20,7 @@ interface ExtraOptions {
 export const baseQueryWithAuth: BaseQueryFn<
 string | FetchArgs,
 unknown,
-FetchBaseQueryError | ErrorResponse,
+FetchBaseQueryError,
 ExtraOptions
 > = async (args, api, extraOptions) => {
 

@@ -9,7 +9,7 @@ import {ReactComponent as MailIcon} from '@freelbee/assets/icons/mail/mail.svg';
 import {ReactComponent as PhoneIcon} from '@freelbee/assets/icons/phone/call.svg';
 
 import { Breakpoint, mediaBreakpointDown, mediaBreakpointUp, vw, Heading3, Color, typography } from '@freelbee/shared/ui-kit';
-import { LinkButton, LinkStyle } from '@freelbee/features/common';
+import { LinkButton, LinkStyle } from "@freelbee/shared/ui-kit";
 import { DOC_LINKS } from './data/documentLinks';
 import { NAV_LINKS } from './data/navigationLinks';
 import { FooterBottom } from './ui/FooterBottom';

@@ -1,8 +1,7 @@
 'use client';
 
 import { FreelancerCompanyDto, UserBadge } from "@freelancer/entities";
-import { LinkButton } from "@freelbee/features/common";
-import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
+import { Breakpoint, Color, mediaBreakpointDown, LinkButton } from "@freelbee/shared/ui-kit";
 import styled, { css } from "styled-components";
 
 interface Props {
