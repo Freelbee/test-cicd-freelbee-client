@@ -1,1 +1,2 @@
-export * from './lib/c-widgets';
+export * from './modal/auth-modal/AuthModal'
+export * from './modal/auth-modal/Types'
