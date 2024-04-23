@@ -21,11 +21,14 @@ export * from "./hoc/Portal/Portal";
 export * from "./modal/modalWindow";
 
 export * from "./inputs/input/input";
+export * from "./inputs/inputWithSelect/InputWithSelect";
 export * from "./inputs/passwordInput/passwordInput";
 export * from "./inputs/phoneNumberInput/phoneNumberInput";
 export * from "./inputs/textArea/textArea";
 export * from "./inputs/checkbox/checkbox";
 export * from "./inputs/date/DateInput";
+export * from "./inputs/calendar/Calendar";
+export * from "./inputs/fileLoader/FileLoader";
 export * from './select/TabsSelect/TabsSelect'
 export * from './select/SelectWithSearch/SelectWithSearch'
 export * from './spinner/Spinner'

@@ -6,9 +6,10 @@ import { PropsWithChildren, useState } from "react"
 import styled from "styled-components"
 import { OnboardingModal } from "../../onboarding"
 import { useGetUserQuery } from "@company/entities"
+import { TaskCreationModal } from '../../tasks';
 
 export const PersonalLayout = ({children}: PropsWithChildren) => {
-  
+
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
   const {data: user} = useGetUserQuery();
 
@@ -19,6 +20,7 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
     }}>
       <Container>
         <OnboardingModal />
+        <TaskCreationModal />
 
         <HeadMenu />
         <NavigationMenu />
@@ -30,7 +32,7 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
             children
           }
         </Main>
-      </Container>      
+      </Container>
     </LayoutContext.Provider>
 
   )

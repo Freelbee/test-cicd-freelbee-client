@@ -1,4 +1,6 @@
 import { Breakpoint } from "../enums/enums";
+import { css, Interpolation, ThemedStyledProps } from 'styled-components';
+//TODO::: change 'ThemedStyledProps' to proper import
 
 /**
  * @param breakpoint - целевой Breakpoint
@@ -46,3 +48,19 @@ export const vw: (value: number, screenWidth?: Breakpoint | number) => string = 
 export const vh: (value: number, screenHeight?: number) => string = (value, screenHeight = 1080) => `${(value / screenHeight) * 100}vh`;
 
 export const rem: (size: number, rootFontSize?: number) => string = (size, rootFontSize = 16) => `${size / rootFontSize}rem`;
+
+/**
+ * @description Применение стилей для эффектов ховера(определяет может ли устройство использовать ховеры)
+ * @param styles - Стили, применяемые для ховера
+ * @example
+ * ${hover(css`
+ *     //styles
+ * `)}
+ */
+export const hover = <P = any, T extends Interpolation<ThemedStyledProps<object, P>> = Interpolation<ThemedStyledProps<object, P>>>(styles:T) => css`
+        @media (hover: hover) {
+            &:hover {
+                ${styles}
+            }
+        }
+    `;
