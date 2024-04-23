@@ -13,5 +13,7 @@ export enum Endpoint_Enum {
   ACCEPT_TASK = '/task/{0}/accept',
   SET_STATUS = '/saas-task/{0}/set-status',
   GET_CONTRACT_LINK = '/contract/{0}/download-link',
-  GET_TASK_FILES = '/task/{0}/files'
+  GET_TASK_FILES = '/task/{0}/files',
+
+  GET_CURRENCIES = '/currencies'
 }

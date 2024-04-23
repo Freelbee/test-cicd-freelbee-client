@@ -6,6 +6,7 @@ export * from './tasks/store/taskSlice';
 export * from './onboarding/store/onboardingSlice';
 
 export * from './payment/interface/PaymentReceiverDto';
+export * from './payment/query/paymentAPI';
 
 export * from './tasks/query/taskApi';
 export * from './tasks/hooks/UseTasksData';
