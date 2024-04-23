@@ -1,5 +1,5 @@
 import { API, Endpoint_Enum } from '@company/shared';
-import { TaskCounterpartyDataDto, TaskStatus} from '@freelbee/entities';
+import { FileAction, FileLink, TaskCounterpartyDataDto, TaskFileDto, TaskStatus} from '@freelbee/entities';
 
 export const taskAPI = API.injectEndpoints({
   endpoints: (builder) => ({
@@ -25,12 +25,24 @@ export const taskAPI = API.injectEndpoints({
           body
       }), 
       invalidatesTags: ['tasks']
-    })
+    }),
+
+    getContractLink: builder.query<FileLink, number>({
+      query: (contractId) => Endpoint_Enum.GET_CONTRACT_LINK.replace('{0}', contractId.toString())
+    }),
+    getTaskFiles: builder.query<Array<TaskFileDto>, number>({
+      query: (taskId) => Endpoint_Enum.GET_TASK_FILES.replace('{0}', taskId.toString()),
+      transformResponse: (res: Array<TaskFileDto>) => {
+        return res.map(f => ({...f, action: FileAction.NO_ACTION}));
+      }
+    }),
   })
 });
 
 export const {
     useSearchTasksQuery,
     useCreateTaskMutation,
-    useSetTaskStatusMutation
+    useSetTaskStatusMutation,
+    useGetContractLinkQuery,
+    useGetTaskFilesQuery
 } = taskAPI;

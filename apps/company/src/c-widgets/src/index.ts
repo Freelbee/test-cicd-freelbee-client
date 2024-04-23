@@ -3,3 +3,4 @@ export * from './layout/index';
 export * from './onboarding/index';
 export * from './task/TasksCounter/index';
 export * from './task/TaskTable/index';
+export * from './task/taskDetails/index';

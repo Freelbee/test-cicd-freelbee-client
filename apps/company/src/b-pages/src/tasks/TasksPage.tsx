@@ -1,5 +1,5 @@
 import { PageContainer, PageTitle } from "@company/entities"
-import { TaskTable, TasksCounter } from "@company/widgets"
+import { TaskDetailsModal, TaskTable, TasksCounter } from "@company/widgets"
 
 export const TasksPage = () => {
 
@@ -11,6 +11,8 @@ export const TasksPage = () => {
       <PageContainer style={{marginTop: '24px'}}>
         <PageTitle text='Tasks' />
         <TaskTable />
+
+        <TaskDetailsModal />
     </PageContainer>
     </>
   )
