@@ -3,7 +3,7 @@ import styled, { css, RuleSet, keyframes } from 'styled-components';
 import { Color, Text, typography } from '@freelbee/shared/ui-kit';
 
 import { ReactComponent as PaperClipIcon } from '@freelbee/assets/icons/paper-clip/paper-clip.svg';
-import { ReactComponent as CloseIcon } from '@freelbee/assets/icons/cross-icons/close-icon.svg';
+import { ReactComponent as CloseIcon } from '@freelbee/assets/icons/cross-icons/Cross8.svg';
 import { ReactComponent as ExcelFileIcon } from '@freelbee/assets/icons/extention-icons/excel.svg';
 import { ReactComponent as OtherFileIcon } from '@freelbee/assets/icons/extention-icons/other.svg';
 import { ReactComponent as PdfFileIcon } from '@freelbee/assets/icons/extention-icons/pdf.svg';
@@ -17,8 +17,7 @@ import { RuleMessage } from '@freelbee/features';
 
 export interface FileData {
   id?: number,
-  name: string,
-  payload: string,
+  file: File,
   loading?: boolean,
   isError?: boolean,
   message?: RuleMessage,
@@ -71,16 +70,16 @@ export default function FileLoader(props: FileLoaderProps) {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function() {
-      setFiles(prev => prev.map(file => {
-        if (file.id === id) {
+      setFiles(prev => prev.map(fileData => {
+        if (fileData.id === id) {
           return {
-            ...file,
-            payload: (reader.result as string).replace(/^[^,]*,/, ''),
+            ...fileData,
+            file: fileData.file,
             loading: false,
             isLoaded: true
           };
         }
-        return file;
+        return fileData;
       }));
     };
     reader.onerror = function(error) {
@@ -98,8 +97,7 @@ export default function FileLoader(props: FileLoaderProps) {
       if(newFiles[i].size > maxFileSize) {
         const newFile = {
           id: id,
-          name: file.name,
-          payload: '',
+          file: file,
           loading: false,
           isError: true,
           message: errors.fileIsTooBig,
@@ -115,8 +113,7 @@ export default function FileLoader(props: FileLoaderProps) {
       else {
         const newFile = {
           id: id,
-          name: file.name,
-          payload: '',
+          file: file,
           loading: false,
         };
         if (multiply) {
@@ -204,16 +201,16 @@ export default function FileLoader(props: FileLoaderProps) {
         <Text font="bodyMedium">{isRequired ? label + '*' : label}</Text>}
       <Content borderColor={borderColor} styles={fileContainerStyles}>
         {
-          files.map(file => (
-            <FileContainer key={file.id} $isLoading={!!file.loading} $isError={!!file.isError} $isLoaded={!!file.isLoaded}>
-              {!file.isError && getExtensionIcon(file.name)}
-              {file.isError && getErrorIcon(file.errorType!)}
-              <FileName $isError={!!file.isError} title={file.name}>
-                {!file.isError ? getFileName(file.name) : (file?.message?.['en']) ?? getFileName(file.name)}
+          files.map(fileData => (
+            <FileContainer key={fileData.id} $isLoading={!!fileData.loading} $isError={!!fileData.isError} $isLoaded={!!fileData.isLoaded}>
+              {!fileData.isError && getExtensionIcon(fileData.file.name)}
+              {fileData.isError && getErrorIcon(fileData.errorType!)}
+              <FileName $isError={!!fileData.isError} title={fileData.file.name}>
+                {!fileData.isError ? getFileName(fileData.file.name) : (fileData?.message?.['en']) ?? getFileName(fileData.file.name)}
               </FileName>
-              {file.loading && <ClockIconContainer><ClockIcon /></ClockIconContainer>}
-              {!file.loading &&
-                <CloseIconContainer onClick={() => removeFile(file!.id!)}><CloseIcon /></CloseIconContainer>}
+              {fileData.loading && <ClockIconContainer><ClockIcon /></ClockIconContainer>}
+              {!fileData.loading &&
+                <CloseIconContainer onClick={() => removeFile(fileData!.id!)}><CloseIcon /></CloseIconContainer>}
             </FileContainer>
           ))
         }

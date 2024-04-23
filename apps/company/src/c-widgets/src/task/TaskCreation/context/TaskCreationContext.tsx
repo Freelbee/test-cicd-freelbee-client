@@ -6,6 +6,7 @@ import { PaymentMethod, TaskCreationBuilder } from '../interface/TaskRequestDto'
 import moment from 'moment/moment';
 import { FileData } from '@freelbee/shared/ui-kit';
 import DateUtil from 'packages/f-shared/src/utils/date/DateUtil';
+import { Task } from '../interface/Task';
 
 export enum TaskCreation_Step {
   GENERAL_INFO = 'general_info',
@@ -40,10 +41,10 @@ export interface ITaskCreationContext {
   attachedFiles: FileData[];
   setAttachedFiles: Dispatch<SetStateAction<FileData[]>>,
 
-  contractFiles: FileData[];
-  setContractFiles: Dispatch<SetStateAction<FileData[]>>,
+  customContractFiles: FileData[];
+  setCustomContractFiles: Dispatch<SetStateAction<FileData[]>>,
 
-  // createOneTask: () => Promise<Task>,
+  createOneTask: () => Promise<Task>,
   clearTaskCreator: () => void
 }
 
@@ -60,9 +61,9 @@ export const TaskCreationContext = createContext<ITaskCreationContext>({
   attachedFiles: [],
   setAttachedFiles: () => ({}),
 
-  contractFiles: [],
-  setContractFiles: () => ({}),
+  customContractFiles: [],
+  setCustomContractFiles: () => ({}),
 
-  // createOneTask: () => Promise.resolve({} as Task),
+  createOneTask: () => Promise.resolve({} as Task),
   clearTaskCreator: () => ({}),
 });

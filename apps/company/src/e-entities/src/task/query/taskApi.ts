@@ -1,5 +1,6 @@
 import { API, Endpoint_Enum } from '@company/shared';
 import { TaskCounterpartyDataDto, TaskStatus} from '@freelbee/entities';
+import { Task } from '../../../../c-widgets/src/task/TaskCreation/interface/Task';
 
 export const taskAPI = API.injectEndpoints({
   endpoints: (builder) => ({
@@ -14,16 +15,15 @@ export const taskAPI = API.injectEndpoints({
           body: {
             status: body.status
           }
-      }), 
+      }),
       invalidatesTags: ['tasks']
     }),
-    // To- Do
-    createTask: builder.mutation<void, object>({
+    createTask: builder.mutation<Task, FormData>({
       query: (body) => ({
           url: Endpoint_Enum.ADD_TASK,
           method: 'POST',
           body
-      }), 
+      }),
       invalidatesTags: ['tasks']
     })
   })

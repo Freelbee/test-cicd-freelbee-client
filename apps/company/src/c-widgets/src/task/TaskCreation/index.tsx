@@ -15,8 +15,11 @@ import { StepTwoTitle } from './ui/StepTwoTitle';
 import { TaskInGroupRequest } from './interface/CreateGroupRequest';
 import { TaskCreationBuilder } from './interface/TaskRequestDto';
 import { useAppSelector } from '@company/features';
-import { setTaskCreationModalOpened } from '@company/entities';
+import { setTaskCreationModalOpened, useCreateTaskMutation, useGetCompanyQuery } from '@company/entities';
 import { useDispatch } from 'react-redux';
+import DateUtil from 'packages/f-shared/src/utils/date/DateUtil';
+import { useGetUserQuery } from "@freelancer/entities"
+import moment from "moment";
 
 const taskCreationContent: Record<TaskCreation_Step, JSX.Element> = {
   [TaskCreation_Step.GENERAL_INFO]: <StepOneForm />,
@@ -37,65 +40,45 @@ export const TaskCreationModal = () => {
   const [step, setStep] = useState<TaskCreation_Step>(TaskCreation_Step.GENERAL_INFO);
   const [tasks, setTasks] = useState<TaskInGroupRequest[]>([]);
   const [attachedFiles, setAttachedFiles] = useState<FileData[]>([]);
-  const [contractFiles, setContractFiles] = useState<FileData[]>([]);
+  const [customContractFiles, setCustomContractFiles] = useState<FileData[]>([]);
 
-  // const {data: user} = useAppSelector((state) => state.userSlice);
-  // const { company } = useEntityCompany();
+  const { data: user } = useGetUserQuery();
+  const { data: company } = useGetCompanyQuery();
+  const [createTask] = useCreateTaskMutation();
 
-  const [ taskCreationBuilder, setTaskCreationBuilder,] = useState<TaskCreationBuilder>({
+  const [ taskCreationBuilder, setTaskCreationBuilder ] = useState<TaskCreationBuilder>({
     ...taskRequestDtoInit,
-    // signature: user.signature ?? '',
-    // companyId: company.id,
+    signature: user?.userData.signature ?? '',
   });
 
-  // const [createTask] = useCreateTaskMutation();
 
   const clearTaskCreator = () => {
     setTaskCreationBuilder({
       ...taskRequestDtoInit,
-      // signature: user.signature ?? '',
-      // companyId: company.id
+      signature: user?.userData.signature ?? '',
     });
     setTasks([]);
     setAttachedFiles([]);
-    setContractFiles([]);
+    setCustomContractFiles([]);
     setStep(TaskCreation_Step.GENERAL_INFO);
   };
 
-  // const createOneTask = async () => {
-  //   const customContractFile = (()=>{
-  //     if (contractFiles?.length === 0) return undefined;
-  //     return {
-  //       name: contractFiles[0].name,
-  //       payload: contractFiles[0].payload,
-  //     };
-  //   })();
-  //   const worksTypeId = taskCreationBuilder!.worksType!.id!;
-  //   const freelancers = taskCreationBuilder!.freelancers;
-  //   const fiatCurrency = taskCreationBuilder!.fiatCurrency;
-  //
-  //   const taskCreateBuilderTmp = {...taskCreationBuilder};
-  //   delete taskCreateBuilderTmp!.worksType;
-  //   delete taskCreateBuilderTmp!.worksCategory;
-  //   delete taskCreateBuilderTmp!.freelancers;
-  //   delete taskCreateBuilderTmp!.fiatCurrency;
-  //
-  //   const requestData:TaskRequestDto = {
-  //     ...taskCreateBuilderTmp,
-  //     worksTypeId,
-  //     freelancerEmail: freelancers!.map((freelancer) => freelancer.email)[0]!,
-  //     deadline: moment.utc(taskCreationBuilder.deadline, DateUtil.EUROPEAN_DATE_FORMAT).startOf('day').toISOString(),
-  //     companyId: company.id,
-  //     fiatCurrencyId: fiatCurrency!.id!,
-  //     attachedFiles: attachedFiles.map((file) => ({
-  //       name: file.name,
-  //       payload: file.payload,
-  //     })),
-  //     attributeValues: [],
-  //     customContractFile
-  //   };
-  //   return await createTask(requestData).unwrap();
-  // };
+  const createOneTask = async () => {
+    const formData = new FormData();
+    formData.append('title', taskCreationBuilder.name);
+    formData.append('deadlineAt', moment.utc(taskCreationBuilder.deadline, DateUtil.EUROPEAN_DATE_FORMAT).startOf('day').toISOString());
+    formData.append('description', taskCreationBuilder.description);
+    formData.append('customerId', company!.id.toString());
+    // formData.append('executorId', taskCreationBuilder!.freelancers!.map((freelancer) => freelancer.id)[0]);
+    formData.append('executorId', '2'); //todo::: remove, uncomment above
+    formData.append('workTypeId', taskCreationBuilder!.worksType!.id!.toString());
+    formData.append('price', taskCreationBuilder.price);
+    formData.append('customerCurrency', taskCreationBuilder.fiatCurrency!.id.toString());
+    formData.append('signature', taskCreationBuilder.signature);
+    attachedFiles.forEach(fileData => formData.append('files', fileData.file));
+    customContractFiles[0]?.file && formData.append('customContractFile', customContractFiles[0].file);
+    return await createTask(formData).unwrap();
+  };
 
   const closeModal = () => dispatch(setTaskCreationModalOpened(false));
 
@@ -109,13 +92,13 @@ export const TaskCreationModal = () => {
     attachedFiles,
     setAttachedFiles,
 
-    contractFiles,
-    setContractFiles,
+    customContractFiles,
+    setCustomContractFiles,
 
     taskCreationBuilder,
     setTaskCreationBuilder,
 
-    // createOneTask,
+    createOneTask,
     clearTaskCreator,
   };
 

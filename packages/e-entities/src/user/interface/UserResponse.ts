@@ -10,7 +10,8 @@ export interface UserResponse {
 		id: number,
 		status: UserStatus | null,
 		type: UserType,
-		props: DetailProps<UserDataPropsType>
+    signature: string,
+    props: DetailProps<UserDataPropsType>
 	}
 }
 
@@ -21,6 +22,7 @@ export interface UserData {
 		id: number,
 		status: UserStatus | null,
 		type: UserType,
+    signature: string,
 		props: Partial<{[K in UserDataPropsType]: string}>
 	}
 }

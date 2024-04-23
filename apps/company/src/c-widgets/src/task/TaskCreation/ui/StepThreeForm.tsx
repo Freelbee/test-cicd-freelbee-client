@@ -17,6 +17,8 @@ import { ReactComponent as DownloadIcon } from '@freelbee/assets/icons/download/
 import { useDataStateUpdater } from '@freelbee/shared/hooks';
 import { TaskCreationBuilder } from '../interface/TaskRequestDto';
 import FileLoader from 'packages/f-shared/src/ui-kit/inputs/fileLoader/FileLoader';
+import { setTaskCreationModalOpened } from '@company/entities';
+import { useDispatch } from 'react-redux';
 
 enum ContractType {
   STANDARD = 'STANDARD',
@@ -46,29 +48,39 @@ export const StepThreeForm = () => {
     setStep,
     taskCreationBuilder,
     setTaskCreationBuilder,
-    contractFiles,
-    setContractFiles,
+    customContractFiles,
+    setCustomContractFiles,
+    createOneTask,
+    clearTaskCreator
   } = useContext(TaskCreationContext);
 
+  const dispatch = useDispatch();
   const [, setData] = useDataStateUpdater<TaskCreationBuilder>(taskCreationBuilder, setTaskCreationBuilder);
   const [contractType, setContractType] = useState<ContractType>(ContractType.STANDARD);
   const [isBoxChecked, setBoxChecked] = useState(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const isDisabled = !isBoxChecked || (contractType === ContractType.STANDARD && !taskCreationBuilder.signature) || (contractType === ContractType.CUSTOM && contractFiles.length === 0) || isLoading;
+  const isDisabled = !isBoxChecked || (contractType === ContractType.STANDARD && !taskCreationBuilder.signature) || (contractType === ContractType.CUSTOM && customContractFiles.length === 0) || isLoading;
 
-  const onClickSignAndCreate = () => {};
-  const onClickDownloadContract = () => {};
+  const createTask = () => { //todo::: consider adding 'async'
+    setIsLoading(true);
+    createOneTask()
+      .then(()=>{
+        clearTaskCreator();
+        dispatch(setTaskCreationModalOpened(false));
+      })
+      .finally(()=> setIsLoading(false));
+  };
 
   return (
     <Content>
       <SelectWithSearch<ContractType>
         label='Select agreement type'
         placeholder=''
-        items={[ContractType.CUSTOM, ContractType.STANDARD]}
+        items={Object.values(ContractType)}
         value={contractType}
         setValue={(item) => {
-          setContractFiles([]);
+          setCustomContractFiles([]);
           setContractType(item);
         }}
         renderOption={(item) => (<Text font="body">{contractTypeMapping[item].optionText}</Text>)}
@@ -79,7 +91,7 @@ export const StepThreeForm = () => {
       {contractTypeMapping[contractType].isWithDownloadAgreement && (
         <AgreementFileContainer>
           <Heading3 color={Color.GRAY_900}>Agreement</Heading3>
-          <DownloadContainer onClick={onClickDownloadContract}>
+          <DownloadContainer onClick={() => {}}>{/*//TODO::: fix*/}
             <DownloadIconStyled />
             <Text font={'body'} color={Color.BLUE}>Download agreement</Text>
           </DownloadContainer>
@@ -90,12 +102,12 @@ export const StepThreeForm = () => {
         <FileLoader
           multiply={false}
           label={'Attached files'}
-          files={contractFiles ?? []}
-          setFiles={setContractFiles}
+          files={customContractFiles ?? []}
+          setFiles={setCustomContractFiles}
           fileContainerStyles={[css`max-height: 250px;`]}
           text={'Attach a file'}
           maxSizeText={'Max. file size: 5 MB'}
-          borderColor={contractFiles.length === 0 ? undefined : contractFiles.some(el => el.isError) ? Color.DANGER : Color.EMERALD}
+          borderColor={customContractFiles.length === 0 ? undefined : customContractFiles.some(el => el.isError) ? Color.DANGER : Color.EMERALD}
         />
       )}
 
@@ -122,7 +134,7 @@ export const StepThreeForm = () => {
           styleType={ButtonStyleEnum.GREEN}
           disabled={isDisabled}
           isLoading={isLoading}
-          onClick={onClickSignAndCreate}
+          onClick={createTask}
         >
           Sign and create
         </Button>

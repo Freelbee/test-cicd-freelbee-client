@@ -1,4 +1,5 @@
 import { TaskStatus } from "./TaskStatus";
+import { FileT } from '../../../../../apps/company/src/c-widgets/src/task/TaskCreation/interface/FileT';
 
 export interface TaskCounterpartyDataDto {
     id: number,
@@ -17,26 +18,7 @@ export interface TaskCounterpartyDataDto {
     workTypeId: number | null,
     price: number | null,
     customerCurrency: string,
-    executorCurrency: string
+    executorCurrency: string,
+    signature: string,
+    files: FileT[],
 }
-
-// {
-//     "id": 2,
-//     "taskId": 3,
-//     "title": "Develop website frontend",
-//     "status": "NEW",
-//     "createdAt": "2024-04-18T05:53:42.257115Z",
-//     "deadlineAt": "2024-04-15T18:00:00Z",
-//     "finishedAt": null,
-//     "payedAt": null,
-//     "description": "Create responsive frontend for a corporate website with HTML, CSS, and JavaScript",
-//     "customerId": 1,
-//     "executorId": 1,
-//     "customerEmail": "ff@mail.com",
-//     "executorEmail": "ff1@mail.com",
-//     "workTypeId": null,
-//     "price": null,
-//     "customerCurrency": "1",
-//     "executorCurrency": "USD"
-// }
-
