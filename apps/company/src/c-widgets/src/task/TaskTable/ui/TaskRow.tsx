@@ -2,8 +2,8 @@
 
 import { Status } from "@company/features";
 import { TaskCounterpartyDataDto, TaskStatus } from "@freelbee/entities";
+import { DateUtil } from "@freelbee/shared/helpers";
 import { Breakpoint, Color, Text, mediaBreakpointDown, typography, vw } from "@freelbee/shared/ui-kit";
-import moment from "moment";
 import styled from "styled-components";
 
 interface Props {
@@ -31,7 +31,9 @@ export const TaskRow = ({task}: Props) => {
         <Text font='bodySmall'>{`${task.price} ${task?.customerCurrency || ''}`}</Text>
 
         <MobileTitle>Deadline</MobileTitle>
-        <Text font='bodySmall'>{moment(task.deadlineAt).format('DD.MM.YYYY')}</Text>
+        <Text font='bodySmall'>
+          {` ${DateUtil.getFormatDate(task?.deadlineAt) ?? '--  --'}`}
+        </Text>
 
         <MobileTitle>Status</MobileTitle>
         <StatusContainer>

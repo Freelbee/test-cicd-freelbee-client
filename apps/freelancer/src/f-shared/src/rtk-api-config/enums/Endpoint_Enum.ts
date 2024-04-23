@@ -2,7 +2,7 @@ export enum Endpoint_Enum {
   REFRESH_TOKEN = '/auth/refresh',
   ZOHO_CREATE_LEAD = `/zoho/lead`,
   FREELANCER_COMPANIES = ``,
-  FREELANCER = ``,
+  FREELANCER = ` /counterparties/freelancer`,
   USER = '/users',
 
   FREELANCER_ONBOARDING_STATUS = `/counterparty-onboarding/freelancer/onboarding/state`,
@@ -11,5 +11,7 @@ export enum Endpoint_Enum {
 
   SEARCH_TASKS = '/search/{0}/tasks',
   ACCEPT_TASK = '/task/{0}/accept',
-  SET_STATUS = '/saas-task/{0}/set-status'
+  SET_STATUS = '/saas-task/{0}/set-status',
+  GET_CONTRACT_LINK = '/contract/{0}/download-link',
+  GET_TASK_FILES = '/task/{0}/files'
 }

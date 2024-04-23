@@ -2,13 +2,15 @@ export * from './zoho-crm/index';
 export * from './country/index';
 export * from './company/api/companyApi';
 export * from './company/dtos/FreelancerCompanyDto';
-
+export * from './tasks/store/taskSlice';
 export * from './onboarding/store/onboardingSlice';
 
 export * from './payment/interface/PaymentReceiverDto';
 
 export * from './tasks/query/taskApi';
 export * from './tasks/hooks/UseTasksData';
+export * from './tasks/interface/TaskAcceptanceStep';
+
 
 export * from './layout/PageContainer';
 export * from './layout/PageTitle';

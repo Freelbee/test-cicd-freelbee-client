@@ -77,5 +77,6 @@ export enum BORDER_RADIUS {
   'XXS' = '2px',
   'S' = '8px',
   'M' = '14px',
-  'L' = '24px',
+  'L' = '20px',
+  'XL' = '24px',
 }

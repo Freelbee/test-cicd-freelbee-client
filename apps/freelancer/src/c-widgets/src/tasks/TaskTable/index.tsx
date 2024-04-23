@@ -19,7 +19,7 @@ export const TaskTable = () => {
       "deadlineAt": "2024-04-15T18:00:00Z",
       "finishedAt": null,
       "payedAt": null,
-      "description": "Create responsive frontend for a corporate website with HTML, CSS, and JavaScript",
+      "description": "Create responsive frontend for a corporate website with HTML, CSS, and JavaScript. Create responsive frontend for a corporate website with HTML, CSS, and JavaScript. Create responsive frontend for a corporate website with HTML, CSS, and JavaScript. Create responsive frontend for a corporate website with HTML, CSS, and JavaScript. Create responsive frontend for a corporate website with HTML, CSS, and JavaScript. Create responsive frontend for a corporate website with HTML, CSS, and JavaScript. Create responsive frontend for a corporate website with HTML, CSS, and JavaScript. Create responsive frontend for a corporate website with HTML, CSS, and JavaScript. Create responsive frontend for a corporate website with HTML, CSS, and JavaScript.",
       "customerId": 1,
       "executorId": 1,
       "customerEmail": "ff@mail.com",
@@ -27,8 +27,9 @@ export const TaskTable = () => {
       "workTypeId": null,
       "price": 100,
       "customerCurrency": "USD",
-      "executorCurrency": "USD"
-  },
+      "executorCurrency": "USD",
+      contractId: null
+    },
     {
       "id": 2,
       "taskId": 3,
@@ -46,8 +47,9 @@ export const TaskTable = () => {
       "workTypeId": null,
       "price": 250,
       "customerCurrency": "USD",
-      "executorCurrency": "USD"
-  }
+      "executorCurrency": "USD",
+      contractId: null
+    }
   ]
 
 
