@@ -6,7 +6,6 @@ import { PropsWithChildren, useState } from "react"
 import styled from "styled-components"
 import { OnboardingModal } from "../../onboarding"
 // import { useGetUserQuery } from "@company/entities"
-import { TaskCreationModal } from '../../tasks';
 
 export const PersonalLayout = ({children}: PropsWithChildren) => {
 
@@ -20,7 +19,6 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
     }}>
       <Container>
         <OnboardingModal />
-        <TaskCreationModal />
 
         <HeadMenu />
         <NavigationMenu />

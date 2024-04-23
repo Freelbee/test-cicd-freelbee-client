@@ -15,3 +15,4 @@ export * from './onboarding/store/onboardingSlice';
 export * from './task/query/taskApi';
 export * from './user/hooks/UseUserData';
 export * from './task/hooks/UseTasksData';
+export * from './task/store/taskCreationSlice';

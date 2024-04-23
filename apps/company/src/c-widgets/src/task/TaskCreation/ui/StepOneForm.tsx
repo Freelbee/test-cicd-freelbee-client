@@ -21,11 +21,12 @@ import { TaskCreationBuilder } from '../interface/TaskRequestDto';
 import { tempWorksCategories, WorksCategory, WorksType } from '../interface/WorksCategory';
 import DateUtil from 'packages/f-shared/src/utils/date/DateUtil';
 import FileLoader from 'packages/f-shared/src/ui-kit/inputs/fileLoader/FileLoader';
+import { setTaskCreationModalOpened } from '@company/entities';
+import { useDispatch } from 'react-redux';
 
 export const StepOneForm = () => {
 
   const {
-    setModalOpened,
     setStep,
     taskCreationBuilder,
     setTaskCreationBuilder,
@@ -33,6 +34,7 @@ export const StepOneForm = () => {
     setAttachedFiles,
   } = useContext(TaskCreationContext);
 
+  const dispatch = useDispatch();
   const [, setData] = useDataStateUpdater<TaskCreationBuilder>(taskCreationBuilder, setTaskCreationBuilder);
   const [isLoading, setLoading] = React.useState(false);
 
@@ -134,7 +136,7 @@ export const StepOneForm = () => {
         <Button
           isWide
           styleType={ButtonStyleEnum.STROKE_WHITE}
-          onClick={() => setModalOpened(false)}
+          onClick={() => dispatch(setTaskCreationModalOpened(false))}
         >
           Back
         </Button>

@@ -28,9 +28,6 @@ export const taskRequestDtoInit: TaskCreationBuilder = {
 };
 
 export interface ITaskCreationContext {
-  isModalOpened: boolean;
-  setModalOpened: (v: boolean) => void;
-
   taskCreationBuilder: TaskCreationBuilder,
   setTaskCreationBuilder: Dispatch<SetStateAction<TaskCreationBuilder>>,
 
@@ -51,9 +48,6 @@ export interface ITaskCreationContext {
 }
 
 export const TaskCreationContext = createContext<ITaskCreationContext>({
-  isModalOpened: false,
-  setModalOpened: () => {},
-
   taskCreationBuilder: taskRequestDtoInit,
   setTaskCreationBuilder: () => ({}),
 

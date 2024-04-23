@@ -14,6 +14,9 @@ import { TaskCreation_Step, TaskCreationContext, taskRequestDtoInit } from './co
 import { StepTwoTitle } from './ui/StepTwoTitle';
 import { TaskInGroupRequest } from './interface/CreateGroupRequest';
 import { TaskCreationBuilder } from './interface/TaskRequestDto';
+import { useAppSelector } from '@company/features';
+import { setTaskCreationModalOpened } from '@company/entities';
+import { useDispatch } from 'react-redux';
 
 const taskCreationContent: Record<TaskCreation_Step, JSX.Element> = {
   [TaskCreation_Step.GENERAL_INFO]: <StepOneForm />,
@@ -29,8 +32,9 @@ const taskCreationTitle: Record<TaskCreation_Step, JSX.Element> = {
 
 export const TaskCreationModal = () => {
 
+  const dispatch = useDispatch();
+  const isModalOpened = useAppSelector(state => state.taskCreationReducer.taskCreationModalOpened);
   const [step, setStep] = useState<TaskCreation_Step>(TaskCreation_Step.GENERAL_INFO);
-  const [isModalOpened, setModalOpened] = useState<boolean>(true);
   const [tasks, setTasks] = useState<TaskInGroupRequest[]>([]);
   const [attachedFiles, setAttachedFiles] = useState<FileData[]>([]);
   const [contractFiles, setContractFiles] = useState<FileData[]>([]);
@@ -93,10 +97,9 @@ export const TaskCreationModal = () => {
   //   return await createTask(requestData).unwrap();
   // };
 
-  const initialData = {
-    isModalOpened,
-    setModalOpened,
+  const closeModal = () => dispatch(setTaskCreationModalOpened(false));
 
+  const initialData = {
     step,
     setStep,
 
@@ -114,10 +117,6 @@ export const TaskCreationModal = () => {
 
     // createOneTask,
     clearTaskCreator,
-  };
-
-  const closeModal = () => {
-    setModalOpened(false);
   };
 
   return (
