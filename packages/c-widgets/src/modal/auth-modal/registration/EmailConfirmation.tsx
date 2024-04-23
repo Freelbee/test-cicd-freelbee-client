@@ -1,4 +1,5 @@
-import {useState} from 'react';
+'use client'
+
 import ConfirmationAuthLayout from "../ConfirmationAuthLayout";
 
 type Props = {
@@ -6,34 +7,34 @@ type Props = {
   userRegSession: any;
   checkCode: any;
   resendCode: any;
+  setModalState: any;
 };
 
 export default function EmailConfirmation (props: Props) {
-  const { email, userRegSession, checkCode, resendCode } = props;
-    const [sendLoading, setSetLoading] = useState(true);
+  const { email, userRegSession, checkCode, resendCode, setModalState } = props;
 
 
-  const getSessionState = (): Promise<{needSend: boolean, resendRemain: number}> => {
-    if (!userRegSession) return Promise.resolve({needSend: false, resendRemain: 100});
+  const getSessionState = (): Promise<number> => {
+    if (!userRegSession) return Promise.resolve(100);
     return userRegSession().then((response) => {
       const now = new Date();
-      const remainingDate = new Date(response.codeCanBeForwardedIn);
-      return {needSend: false, resendRemain: (remainingDate - now)/1000}
+      const remainingDate = new Date(response.data.codeCanBeForwardedIn);
+      return (remainingDate - now)/1000
     })
   }
 
     return (
         <ConfirmationAuthLayout
-            getSessionState={getSessionState}
-            buttonText={'Next'}
-            description={`
+          remainingTime={getSessionState}
+          buttonText={'Next'}
+          description={`
                     A letter was sent to
                     ${email}
                     . To complete your registration, enter the code from email.
             `}
-            sendCode={resendCode}
-            sendLoading={sendLoading}
-            checkCode={checkCode}
+          sendCode={resendCode}
+          checkCode={checkCode}
+          setModalState={setModalState}
         />
     );
 }

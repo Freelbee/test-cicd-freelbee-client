@@ -1,12 +1,14 @@
+'use client'
 import React, {useState} from 'react';
 
 import AuthLayout from '../AuthLayout';
 import {RegistrationSteps} from "./AuthSteps";
 import AuthContainer from "../AuthContainer";
 import {RegistrationContext} from "./RegistrationContext";
-import {RegistrationData} from "../../../../../e-entities/src/auth/interface/RegistrationData";
 import RegistrationForm from "./RegistrationForm";
 import EmailConfirmation from "./EmailConfirmation";
+import {AuthModalState} from "@freelbee/widgets";
+import {RegistrationData} from "@freelbee/entities";
 
 type Props = {
     isOpen: boolean;
@@ -14,10 +16,11 @@ type Props = {
     userRegSession: any;
     checkCode: any;
     resendCode: any;
+    setModalState: any;
 };
 
 export default function Registration (props: Props) {
-    const { isOpen, registerUser, userRegSession, checkCode, resendCode } = props;
+    const { isOpen, registerUser, userRegSession, checkCode, resendCode, setModalState } = props;
 
     const [step, setStep] = useState<RegistrationSteps>(RegistrationSteps.FillUserData);
     const [registrationData, setRegistrationData] = useState<RegistrationData>({
@@ -44,7 +47,7 @@ export default function Registration (props: Props) {
                     context={RegistrationContext}
                     steps={registrationSteps}
                     data={data}
-                    onClick={() => console.log('router.push(router.asPath.replace(\'sign-up\', \'sign-in\'));')}
+                    onClick={() => setModalState(AuthModalState.Login)}
                     /*onClick={() => {
                         router.push(router.asPath.replace('sign-up', 'sign-in'));
                         setAuthModalState(AuthModalState.Login);
@@ -56,6 +59,7 @@ export default function Registration (props: Props) {
                       userRegSession={userRegSession}
                       checkCode={checkCode}
                       resendCode={resendCode}
+                      setModalState={setModalState}
                     />}
                 </AuthLayout>
             </RegistrationContext.Provider>

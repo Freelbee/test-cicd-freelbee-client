@@ -1,8 +1,19 @@
+'use client'
 import React, {useContext, useState} from 'react';
 import styled, {css} from 'styled-components';
 import {RegistrationContext} from "./RegistrationContext";
-import {Breakpoint, Color, IconPosition, mediaBreakpointDown, typography} from "@freelbee/shared/ui-kit";
-import {Button, Checkbox, Input, LinkButton, PasswordInput} from "@freelbee/features/common";
+import {
+  Breakpoint,
+  Button,
+  Checkbox,
+  Color,
+  IconPosition,
+  Input,
+  LinkButton,
+  mediaBreakpointDown,
+  PasswordInput,
+  typography
+} from "@freelbee/shared/ui-kit";
 import {ReactComponent as ArrIcon} from "@freelbee/assets/icons/arrow-icons/long_arrow.svg"
 import {ValidatorResult} from "@freelbee/features";
 import {RegistrationData} from "@freelbee/entities";
@@ -42,9 +53,11 @@ export default function RegistrationForm (props: Props) {
             password: registrationData.password
 
         }
-        registerUser(body).then(() => {
+        registerUser(body).unwrap()
+          .then(() => {
           setStep(RegistrationSteps.ConfirmEmail);
         })
+          .catch(e => {setLoading(false)})
     };
   const handleInput = (value, field) => {
     setRegistrationData(prevState => ({

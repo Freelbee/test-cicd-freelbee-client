@@ -1,25 +1,38 @@
+'use client'
 import React, {createRef, RefObject, useEffect, useRef, useState} from 'react';
 import styled, {css} from 'styled-components';
 
 
 import {ReactComponent as ArrIcon} from "@freelbee/assets/icons/arrow-icons/long_arrow.svg"
 import Timer from "./Timer";
-import {Breakpoint, Color, IconPosition, mediaBreakpointDown, typography} from "@freelbee/shared/ui-kit";
-import {Button, LinkButton} from "@freelbee/features/common";
+import {
+  Breakpoint,
+  Button,
+  Color,
+  IconPosition,
+  LinkButton,
+  mediaBreakpointDown,
+  typography
+} from "@freelbee/shared/ui-kit";
+import {usePathname, useRouter} from "next/navigation";
+import {AuthModalState} from "@freelbee/widgets";
+
 
 type Props = {
-  description: string,
-  sendCode: () => Promise<void>,
-  checkCode: (code: string) => Promise<void>,
-  getSessionState: () => Promise<{ needSend: boolean, resendRemain: number }>,
-  buttonText?: string
+  description: string;
+  sendCode: () => Promise<void>;
+  checkCode: (code: string) => Promise<void>;
+  remainingTime: () => Promise<number>;
+  buttonText?: string;
+  setModalState: any;
 };
 
 const CODE_LENGTH = 4;
 
 export default function ConfirmationAuthLayout(props: Props) {
-  const {getSessionState, description, sendCode, checkCode, buttonText} = props;
-
+  const {remainingTime, description, sendCode, checkCode, buttonText, setModalState} = props;
+  const router = useRouter();
+  const pathname = usePathname();
   const [code, setCode] = useState<string[]>([``, ``, ``, ``]);
   const [focusPosition, setFocusPosition] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
@@ -111,24 +124,17 @@ export default function ConfirmationAuthLayout(props: Props) {
 
   const timer = new Timer((time) => setResendRemain(time));
 
-  const onSend = () => {
-    setLoading(true);
-    sendCode().unwrap()
-      .then(res => {
-        if (res.isSuccess) {
-          setLoading(false)
-        }
-      })
-  };
-
   const sendCheckCodeForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (code.join(``).length !== CODE_LENGTH) return;
     setLoading(true);
     checkCode(code.join(``)).unwrap()
       .then((response) => {
-        console.log(response)
-        localStorage.setItem('ACCESS_TOKEN', response);
+        if (response?.length > 0){
+          localStorage.setItem('ACCESS_TOKEN', response);
+          router.replace(`${pathname}`);
+          setModalState(AuthModalState.Closed);
+        }
       })
       .finally(() => {
         timer.stop();
@@ -155,10 +161,10 @@ export default function ConfirmationAuthLayout(props: Props) {
             as='button'
             onClick={() => sendCode().unwrap().then(() => {
               console.log('timer should be restarted')
-              getSessionState().then((state) => {
-                console.log('got session state' + state.resendRemain)
+              remainingTime().then((time) => {
+                console.log('got session state' + time)
                 setLoading(false);
-                timer.start(state.resendRemain);
+                timer.start(time);
               });
             })}
           >
@@ -183,12 +189,9 @@ export default function ConfirmationAuthLayout(props: Props) {
   };
 
   useEffect(() => {
-    getSessionState().then((state) => {
-      if (state.needSend) {
-        return onSend();
-      }
+    remainingTime().then((time) => {
       setLoading(false);
-      timer.start(state.resendRemain);
+      timer.start(time);
 
       return () => {
         timer.stop();

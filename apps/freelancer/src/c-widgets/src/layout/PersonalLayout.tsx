@@ -1,20 +1,13 @@
 'use client'
+import { Suspense } from "react";
 
 import { HeadMenu, LayoutContext, MobileMenu, NavigationMenu } from "@freelancer/features"
 import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit"
 import { PropsWithChildren, useState } from "react"
 import styled from "styled-components"
-import {AuthModal, AuthModalState} from "@freelbee/widgets";
-import {
-  authApi,
-  useRegisterFreelancerMutation, useResendFreelancerAuthConfirmationMutation,
-  useResendFreelancerConfirmationMutation, useSendFreelancerAuthConfirmationMutation,
-  useSendFreelancerRegConfirmationMutation, useSignInFreelancerMutation
-} from "@freelancer/entities";
-import {SessionDto} from "@freelbee/entities";
-import {useDispatch} from "react-redux";
 
 import { OnboardingModal } from "../onboarding"
+import {FreelancerAuthModal} from "../auth/FreelancerAuthModal";
 // import { useGetUserQuery } from "@freelancer/entities"
 
 export const PersonalLayout = ({children}: PropsWithChildren) => {
@@ -22,25 +15,7 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
   // const {data: user} = useGetUserQuery();
 
-  const [registerUser] = useRegisterFreelancerMutation();
-  const [checkCode] = useSendFreelancerRegConfirmationMutation();
-  const [resendCode] = useResendFreelancerConfirmationMutation();
 
-  const [authUser] = useSignInFreelancerMutation();
-  const [checkAuthCode] = useSendFreelancerAuthConfirmationMutation();
-  const [resendAuthCode] = useResendFreelancerAuthConfirmationMutation();
-
-  const dispatch = useDispatch<any>();
-
-  const userRegSession = async (): Promise<SessionDto> => {
-    const res = dispatch(authApi.endpoints.getFreelancerRegSession.initiate({ timestamp: Date.now() }));
-    return res.data;
-  }
-
-  const userAuthSession = async (): Promise<SessionDto> => {
-    const res = await dispatch(authApi.endpoints.getFreelancerAuthSession.initiate({ timestamp: Date.now() }));
-    return res.data;
-  }
 
   return (
     <LayoutContext.Provider value={{
@@ -48,19 +23,9 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
       setNavigationMenuOpened,
     }}>
       <Container>
-        <AuthModal
-          authModalState={AuthModalState.Login}
-          registerUser={registerUser}
-          userRegSession={userRegSession}
-          checkCode={checkCode}
-          resendCode={resendCode}
-
-          authUser={authUser}
-          checkAuthCode={checkAuthCode}
-          resendAuthCode={resendAuthCode}
-          userAuthSession={userAuthSession}
-        />
-
+        <Suspense fallback={<></>}>
+          <FreelancerAuthModal/>
+        </Suspense>
         <OnboardingModal />
 
         <HeadMenu />

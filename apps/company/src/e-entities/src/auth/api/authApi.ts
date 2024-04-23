@@ -23,7 +23,10 @@ export const authApi = API.injectEndpoints({
         url: `registration/company/email/confirm/${code}`,
         method: 'POST'
       }),
-      extraOptions: { notAuthorized: true}
+      extraOptions: { notAuthorized: true},
+      transformResponse: (apiResponse, meta) => {
+        return meta.response.headers.get('Authorization').replace('Bearer ', '')
+      }
     }),
     resendCompanyConfirmation: builder.mutation<void, void>({
       query: () => ({

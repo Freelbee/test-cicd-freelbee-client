@@ -1,3 +1,4 @@
+'use client'
 import React, {useState} from 'react';
 
 
@@ -5,9 +6,10 @@ import AuthLayout from '../AuthLayout';
 import AuthContainer from "../AuthContainer";
 import LoginForm from "./LoginForm";
 import {LoginSteps} from "../registration/AuthSteps";
-import {AuthDto} from "../../../../../e-entities/src/auth/dto/AuthDto";
 import {LoginContext} from "./LoginContext";
 import EmailConfirmation from "../registration/EmailConfirmation";
+import {AuthDto} from "@freelbee/entities";
+import {AuthModalState} from "@freelbee/widgets";
 
 type Props = {
   isOpen: boolean;
@@ -15,10 +17,11 @@ type Props = {
   checkAuthCode: any;
   resendAuthCode: any;
   userAuthSession: any;
+  setModalState: any;
 };
 
 export default function Login(props: Props) {
-  const {isOpen, authUser, checkAuthCode, resendAuthCode, userAuthSession} = props;
+  const {isOpen, authUser, checkAuthCode, resendAuthCode, userAuthSession, setModalState} = props;
   const [step, setStep] = useState<LoginSteps>(LoginSteps.SEND_CREDENTIALS);
   const [loginData, setLoginData] = useState<AuthDto>({
     email: '',
@@ -44,7 +47,7 @@ export default function Login(props: Props) {
           steps={loginSteps}
           data={data}
           onClick={() => {
-            console.log('go to registration')
+            setModalState(AuthModalState.Register)
             /*router.push(router.asPath.replace('sign-in', 'sign-up'));
             setAuthModalState(AuthModalState.Register);*/
           }}
@@ -55,7 +58,8 @@ export default function Login(props: Props) {
             email={loginData.email}
             userRegSession={userAuthSession}
             checkCode={checkAuthCode}
-            resendCode={resendAuthCode}/>}
+            resendCode={resendAuthCode}
+            setModalState={setModalState}/>}
 
         </AuthLayout>
 

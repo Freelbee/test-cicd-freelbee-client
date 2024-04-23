@@ -1,3 +1,4 @@
+'use client'
 import React, {Dispatch, ReactNode, SetStateAction, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {Breakpoint, Color, mediaBreakpointDown, typography} from "@freelbee/shared/ui-kit";

@@ -6,39 +6,12 @@ import { PropsWithChildren, useState } from "react"
 import styled from "styled-components"
 import { OnboardingModal } from "../../onboarding"
 // import { useGetUserQuery } from "@company/entities"
-import {
-  authApi,
-  useRegisterCompanyMutation, useResendCompanyAuthConfirmationMutation,
-  useResendCompanyConfirmationMutation, useSendCompanyAuthConfirmationMutation,
-  useSendCompanyRegConfirmationMutation, useSignInCompanyMutation
-} from "@company/entities";
-import {useDispatch} from "react-redux";
-import {SessionDto} from "@freelbee/entities";
-import {AuthModal, AuthModalState} from "@freelbee/widgets";
+import {CompanyAuthModal} from "../../auth/CompanyAuthModal";
 
 export const PersonalLayout = ({children}: PropsWithChildren) => {
 
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
   // const {data: user} = useGetUserQuery();
-
-  const [registerUser] = useRegisterCompanyMutation();
-  const [checkCode] = useSendCompanyRegConfirmationMutation();
-  const [resendCode] = useResendCompanyConfirmationMutation();
-  const [authUser] = useSignInCompanyMutation();
-  const [checkAuthCode] = useSendCompanyAuthConfirmationMutation();
-  const [resendAuthCode] = useResendCompanyAuthConfirmationMutation();
-
-  const dispatch = useDispatch<any>();
-
-  const userRegSession = async (): Promise<SessionDto> => {
-    const res = dispatch(authApi.endpoints.getCompanyRegSession.initiate({ timestamp: Date.now() }));
-    return res.data;
-  }
-
-  const userAuthSession = async (): Promise<SessionDto> => {
-    const res = await dispatch(authApi.endpoints.getCompanyAuthSession.initiate({ timestamp: Date.now() }));
-    return res.data;
-  }
 
   return (
     <LayoutContext.Provider value={{
@@ -46,18 +19,7 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
       setNavigationMenuOpened,
     }}>
       <Container>
-        <AuthModal
-          authModalState={AuthModalState.Register}
-          registerUser={registerUser}
-          userRegSession={userRegSession}
-          checkCode={checkCode}
-          resendCode={resendCode}
-
-          authUser={authUser}
-          checkAuthCode={checkAuthCode}
-          resendAuthCode={resendAuthCode}
-          userAuthSession={userAuthSession}
-        />
+        <CompanyAuthModal/>
         <OnboardingModal />
 
         <HeadMenu />

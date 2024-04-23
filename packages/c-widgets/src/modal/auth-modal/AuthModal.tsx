@@ -1,15 +1,14 @@
 'use client';
 
-import {CloseButton, ModalWindow} from "@freelbee/features/common";
 import styled from "styled-components";
-import {Breakpoint, mediaBreakpointDown} from "@freelbee/shared/ui-kit";
-import {useState} from "react";
+import {Breakpoint, CloseButton, mediaBreakpointDown, ModalWindow} from "@freelbee/shared/ui-kit";
 import Login from "./login/Login";
 import Registration from "./registration/Registration";
 import {AuthModalState} from "./Types";
 
 type Props = {
-  authModalState?: AuthModalState;
+  authModalState: AuthModalState;
+  setAuthModalState: any;
   registerUser: any;
   userRegSession: any;
   checkCode: any;
@@ -21,35 +20,37 @@ type Props = {
 }
 
 export const AuthModal = (props: Props) => {
-  const { authModalState = AuthModalState.Closed, registerUser, userRegSession, checkCode, resendCode,
+  const { authModalState, setAuthModalState, registerUser, userRegSession, checkCode, resendCode,
     authUser, checkAuthCode, resendAuthCode, userAuthSession} = props;
-  const [modalState, setModalState] = useState<AuthModalState>(authModalState)
+ // const [modalState, setModalState] = useState<AuthModalState>(authModalState)
 
   const onModalClose = () => {
-    setModalState(AuthModalState.Closed);
+    setAuthModalState(AuthModalState.Closed);
   }
 
   return (
     <ModalWindow
-      isOpen={modalState !== AuthModalState.Closed}
+      isOpen={authModalState !== AuthModalState.Closed}
       onClose={onModalClose}>
       <AuthContainer>
         <CloseContainer>
           <CloseButton clickHandler={onModalClose}/>
         </CloseContainer>
         <Login
-          isOpen={modalState === AuthModalState.Login}
+          isOpen={authModalState === AuthModalState.Login}
           authUser={authUser}
           checkAuthCode={checkAuthCode}
           resendAuthCode={resendAuthCode}
           userAuthSession={userAuthSession}
+          setModalState={setAuthModalState}
         />
         <Registration
-          isOpen={modalState === AuthModalState.Register}
+          isOpen={authModalState === AuthModalState.Register}
           registerUser={registerUser}
           userRegSession={userRegSession}
           checkCode={checkCode}
           resendCode={resendCode}
+          setModalState={setAuthModalState}
         />
       </AuthContainer>
     </ModalWindow>

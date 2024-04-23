@@ -13,25 +13,25 @@ interface Props {
 
 export const Roles = ({modal}: Props) => {
 
-    const getPath = () => modal === ModalQueryValue.START ? '/sign-up' : '/';
+    const getPath = () => modal === ModalQueryValue.START ? '/?authState=start' : '/';
 
     return (
         <Container>
-            <RoleCard 
+            <RoleCard
                 data-testid='company-login'
-                url={process.env.NEXT_PUBLIC_COMPANY_URL + getPath()} 
-                icon={companyImage} 
+                url={process.env.NEXT_PUBLIC_COMPANY_URL + getPath()}
+                icon={companyImage}
                 name={"Company"} />
-            <RoleCard 
+            <RoleCard
                 data-testid='freelancer-login'
                 color={Color.BLUE}
                 url={process.env.NEXT_PUBLIC_FREELANCER_URL + getPath()}
-                icon={freelancerImage} 
+                icon={freelancerImage}
                 name={"Freelancer"} />
         </Container>
         )
 }
-    
+
 const Container = styled.div`
     display: flex;
     gap: 32px;
