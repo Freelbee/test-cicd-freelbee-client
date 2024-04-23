@@ -7,5 +7,9 @@ export enum Endpoint_Enum {
   SET_USER_DATA = `/users/user-data`,
   CREATE_COMPANY = `/counterparties/company`,
   COMPANY = `/counterparties/company`,
-  CREATE_PAYMENT_METHODS = '/payment-methods'
+  CREATE_PAYMENT_METHODS = '/payment-methods',
+
+  SEARCH_TASKS = '/search/{0}/tasks',
+  ADD_TASK = '/company/tasks',
+  SET_STATUS = '/saas-task/{0}/set-status'
 }

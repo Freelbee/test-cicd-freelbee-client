@@ -8,4 +8,8 @@ export enum Endpoint_Enum {
   FREELANCER_ONBOARDING_STATUS = `/counterparty-onboarding/freelancer/onboarding/state`,
   SET_USER_DATA = `/users/user-data`,
   CREATE_FREELANCER = `/users/counterparty/freelancer`,
+
+  SEARCH_TASKS = '/search/{0}/tasks',
+  ACCEPT_TASK = '/task/{0}/accept',
+  SET_STATUS = '/saas-task/{0}/set-status'
 }

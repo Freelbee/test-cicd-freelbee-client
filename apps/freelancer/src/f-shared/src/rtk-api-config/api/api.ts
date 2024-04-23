@@ -11,7 +11,8 @@ export const API = createApi({
     'zoho-crm',
     'user',
     'counterparty',
-    'payment-data'
+    'payment-data',
+    'tasks'
   ],
   endpoints: () => ({}),
 });
