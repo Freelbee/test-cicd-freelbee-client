@@ -13,5 +13,6 @@ export * from './country/index';
 export * from './onboarding/store/onboardingSlice';
 
 export * from './task/query/taskApi';
+export * from './task/store/taskSlice';
 export * from './user/hooks/UseUserData';
 export * from './task/hooks/UseTasksData';

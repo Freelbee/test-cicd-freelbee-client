@@ -1,9 +1,11 @@
 'use client';
 
+import { setDetailsOpen, setDisplayedTask } from "@company/entities";
 import { Status } from "@company/features";
 import { TaskCounterpartyDataDto, TaskStatus } from "@freelbee/entities";
 import { DateUtil } from "@freelbee/shared/helpers";
 import { Breakpoint, Color, Text, mediaBreakpointDown, typography, vw } from "@freelbee/shared/ui-kit";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 interface Props {
@@ -12,8 +14,14 @@ interface Props {
 
 export const TaskRow = ({task}: Props) => {
 
+  const dispatch = useDispatch();
+  const handleOpen = () => {
+    dispatch(setDisplayedTask(task));
+    dispatch(setDetailsOpen(true));
+  }
+
   return (
-    <Container>
+    <Container onClick={handleOpen}>
         <MobileTitle>ID</MobileTitle>
         <Text font='bodySmall'>{task.id}</Text>
 
@@ -23,7 +31,7 @@ export const TaskRow = ({task}: Props) => {
         </TaskName>
 
         <MobileTitle>Freelancer</MobileTitle>
-        <a href={`mailto:${task.executorEmail}`}>
+        <a href={`mailto:${task.executorEmail}`} onClick={e => e.preventDefault()}>
          <Text font='bodySmall' color={Color.GRAY_600}>{task.executorEmail}</Text>   
         </a>
 
@@ -36,16 +44,17 @@ export const TaskRow = ({task}: Props) => {
         </Text>
 
         <MobileTitle>Status</MobileTitle>
-        <StatusContainer>
+        <StatusContainer onClick={e => e.preventDefault()}>
             <Status 
                 task={task} 
-                openTask={() => {}} />
+                openTask={handleOpen} />
         </StatusContainer>
     </Container>
   )
 }
 
 const Container = styled.div`
+    cursor: pointer;
     display: grid;
     grid-template-columns: 40px 2fr 1fr 0.8fr 0.8fr 0.8fr;
     align-items: center;

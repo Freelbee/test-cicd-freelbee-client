@@ -42,5 +42,7 @@ export const taskAPI = API.injectEndpoints({
 export const {
     useSearchTasksQuery,
     useCreateTaskMutation,
-    useSetTaskStatusMutation
+    useSetTaskStatusMutation,
+    useGetContractLinkQuery,
+    useGetTaskFilesQuery
 } = taskAPI;

@@ -37,29 +37,6 @@ export type Params = {
     }>
 };
 
-const params: Params = {
-    [TaskStatus.ASSIGNED]: [{
-        toStatus: TaskStatus.IN_PROGRESS,
-        text: 'Accept',
-        hoverColor: StatusColor.IN_PROCESS,
-        hoverBackground: StatusBackground.IN_PROCESS,
-        onSetStatus: () => {}
-    },
-    {
-        toStatus: TaskStatus.CANCELLED,
-        text: 'Cancel',
-        hoverColor: StatusColor.CANCELLED,
-        hoverBackground: StatusBackground.CANCELLED,
-    }
-    ],
-    [TaskStatus.IN_PROGRESS]: [{
-        toStatus: TaskStatus.REVIEWING,
-        text: 'To Check',
-        hoverColor: StatusColor.IN_PROCESS,
-        hoverBackground: StatusBackground.IN_PROCESS,
-    }],
-};
-
 type Props = {
     task: TaskCounterpartyDataDto,
     openTask: () => void,
@@ -170,6 +147,29 @@ export function Status (props: Props) {
             taskId: task.id,
             status
         });
+    };
+
+    const params: Params = {
+        [TaskStatus.ASSIGNED]: [{
+            toStatus: TaskStatus.IN_PROGRESS,
+            text: 'Accept',
+            hoverColor: StatusColor.IN_PROCESS,
+            hoverBackground: StatusBackground.IN_PROCESS,
+            onSetStatus: openTask
+        },
+        {
+            toStatus: TaskStatus.CANCELLED,
+            text: 'Cancel',
+            hoverColor: StatusColor.CANCELLED,
+            hoverBackground: StatusBackground.CANCELLED,
+        }
+        ],
+        [TaskStatus.IN_PROGRESS]: [{
+            toStatus: TaskStatus.REVIEWING,
+            text: 'To Check',
+            hoverColor: StatusColor.IN_PROCESS,
+            hoverBackground: StatusBackground.IN_PROCESS,
+        }],
     };
 
     const getParams = (status: TaskStatus) => {

@@ -45,7 +45,7 @@ export const TaskRow = ({task}: Props) => {
         <StatusContainer onClick={e => e.stopPropagation()}>
             <Status 
                 task={task} 
-                openTask={() => {}} />
+                openTask={handleOpen} />
         </StatusContainer>
     </Container>
   )
