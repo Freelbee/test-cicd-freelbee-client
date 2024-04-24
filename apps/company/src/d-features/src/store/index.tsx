@@ -11,9 +11,9 @@ import { toast } from "react-toastify";
 
 export const rtkQueryErrorLogger: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
     if (isRejectedWithValue(action)) {
-        console.warn('Async error!');
+        // console.warn('Async error!');
         toast(<ErrorText title={"Error"} message={ErrorHelper.GetErrorMessageOrDefault(action.payload)} />, {type: 'error'})
-        console.log(action);
+        // console.log(action);
         // Sentry.captureException(action.payload);
         // api.dispatch(addErrors({
         //     error: ApiErrorAdapter.getPayAssistantError(action.payload),

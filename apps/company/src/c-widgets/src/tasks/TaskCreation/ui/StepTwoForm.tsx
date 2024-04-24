@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, ButtonStyleEnum, Checkbox, Color, Heading1, InfoWithIcon, Input, SelectWithSearch, Text } from '@freelbee/shared/ui-kit';
+import { Button, ButtonStyleEnum, Checkbox, Color, Heading1, InfoWithIcon, Input, InputWithSelect, SelectWithSearch, Text } from '@freelbee/shared/ui-kit';
 import styled from 'styled-components';
 import React, { useContext, useState } from 'react';
 import { TaskCreation_Step, TaskCreationContext, TaskCreationData } from '../context/TaskCreationContext';

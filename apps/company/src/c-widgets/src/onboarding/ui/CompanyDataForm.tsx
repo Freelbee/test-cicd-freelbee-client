@@ -17,6 +17,7 @@ import { PropsHelper } from "@freelbee/shared/helpers";
 
 const initialData: CompanyFormData = {
     [CounterpartyDetailsPropsType.NAME]: "",
+    [CounterpartyDetailsPropsType.DIRECTOR_NAME]: "",
     [CounterpartyDetailsPropsType.ADDRESS]: "",
     [CounterpartyDetailsPropsType.ZIP_CODE]: "",
     [CounterpartyDetailsPropsType.TAX_NUMBER]: "",
@@ -45,10 +46,10 @@ export const CompanyDataForm = () => {
             counterpartyDetail: {
                 country: country.alpha2Code,
                 type: CounterpartyDetailsType.DEFAULT_COMPANY_DATA,
-                props: PropsHelper.MapFieldsToProps(data) 
+                props: PropsHelper.MapFieldsToProps(data)
             }
         }
-        
+
         createCompany(body).unwrap()
         .then(() => {
             setStep(Onboarding_Step.PAYMENT_DATA);
@@ -58,54 +59,62 @@ export const CompanyDataForm = () => {
 
   return (
     <Form onSubmit={submitHandler}>
-        <CountrySelect 
+        <CountrySelect
             isError={!country}
-            countries={countries ?? []} 
-            selectedCountry={country} 
+            countries={countries ?? []}
+            selectedCountry={country}
             onSelect={(c) => {
                 setCountry(c);
             }} />
-        <Input 
+        <Input
             isRequired
             isError={validationResult.hasError(CounterpartyDetailsPropsType.NAME)}
             errorMessage={validationResult.getMessageByLanguage(CounterpartyDetailsPropsType.NAME, LanguageType.EN)}
             label="Company name"
-            placeholder="Enter the company name" 
-            value={data?.NAME ?? ''} 
+            placeholder="Enter the company name"
+            value={data?.NAME ?? ''}
             setValue={(v) => setData(CounterpartyDetailsPropsType.NAME, v)} />
-        <Input 
+        <Input
+          isRequired
+          isError={validationResult.hasError(CounterpartyDetailsPropsType.DIRECTOR_NAME)}
+          errorMessage={validationResult.getMessageByLanguage(CounterpartyDetailsPropsType.DIRECTOR_NAME, LanguageType.EN)}
+          label="CEO name"
+          placeholder="Enter the name of the CEO"
+          value={data?.DIRECTOR_NAME ?? ''}
+          setValue={(v) => setData(CounterpartyDetailsPropsType.DIRECTOR_NAME, v)} />
+        <Input
             isRequired
             isError={validationResult.hasError(CounterpartyDetailsPropsType.TIN)}
             errorMessage={validationResult.getMessageByLanguage(CounterpartyDetailsPropsType.TIN, LanguageType.EN)}
             label="TIN"
-            placeholder="Enter the TIN" 
-            value={data?.TIN ?? ''} 
+            placeholder="Enter the TIN"
+            value={data?.TIN ?? ''}
             setValue={(v) => setData(CounterpartyDetailsPropsType.TIN, v)} />
 
-        <Input 
+        <Input
             isRequired
             isError={validationResult.hasError(CounterpartyDetailsPropsType.TAX_NUMBER)}
             errorMessage={validationResult.getMessageByLanguage(CounterpartyDetailsPropsType.TAX_NUMBER, LanguageType.EN)}
             label="Tax code"
-            placeholder="Enter the code" 
-            value={data?.TAX_NUMBER ?? ''} 
+            placeholder="Enter the code"
+            value={data?.TAX_NUMBER ?? ''}
             setValue={(v) => setData(CounterpartyDetailsPropsType.TAX_NUMBER, v)} />
-        <Input 
+        <Input
             isRequired
             isError={validationResult.hasError(CounterpartyDetailsPropsType.ADDRESS)}
             errorMessage={validationResult.getMessageByLanguage(CounterpartyDetailsPropsType.ADDRESS, LanguageType.EN)}
             label="Company adress"
-            placeholder="Enter the street name" 
-            value={data?.ADDRESS ?? ''} 
-            setValue={(v) => setData(CounterpartyDetailsPropsType.ADDRESS, v)} />      
-        <Input 
+            placeholder="Enter the street name"
+            value={data?.ADDRESS ?? ''}
+            setValue={(v) => setData(CounterpartyDetailsPropsType.ADDRESS, v)} />
+        <Input
             isRequired
             isError={validationResult.hasError(CounterpartyDetailsPropsType.ZIP_CODE)}
             errorMessage={validationResult.getMessageByLanguage(CounterpartyDetailsPropsType.ZIP_CODE, LanguageType.EN)}
             label="Zip code"
-            placeholder="Enter the code" 
-            value={data?.ZIP_CODE ?? ''} 
-            setValue={(v) => setData(CounterpartyDetailsPropsType.ZIP_CODE, v)} />      
+            placeholder="Enter the code"
+            value={data?.ZIP_CODE ?? ''}
+            setValue={(v) => setData(CounterpartyDetailsPropsType.ZIP_CODE, v)} />
 
         <InfoWithIcon
             Icon={AlertIcon}
@@ -116,8 +125,8 @@ export const CompanyDataForm = () => {
             Fill all fields with * to continue.
         </InfoWithIcon>
 
-        <Button 
-            type="submit" 
+        <Button
+            type="submit"
             isLoading={isLoading}
             isWide
             >Next</Button>

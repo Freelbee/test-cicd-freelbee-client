@@ -4,3 +4,4 @@ export interface PaymentReceiverDto {
     receiverWalletAddress: string,
     receiverCurrencyId: number
 }
+

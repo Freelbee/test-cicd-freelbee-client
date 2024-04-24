@@ -9,8 +9,8 @@ import { useGetUserQuery } from "@freelancer/entities"
 
 export const PersonalLayout = ({children}: PropsWithChildren) => {
 
-  const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
   const {data: user} = useGetUserQuery();
+  const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
 
   return (
     <LayoutContext.Provider value={{
@@ -25,12 +25,11 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
         <NavigationMenu />
         <MobileMenu />
         <Main>
-          {!user?.userData.status ?
-            <OnboardingNotification />
+          {!user?.userData
+            ? <OnboardingNotification />
             :
             children
           }
-          {/*{children}*/}
         </Main>
       </Container>
     </LayoutContext.Provider>
