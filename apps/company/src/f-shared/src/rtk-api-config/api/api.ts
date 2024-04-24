@@ -6,13 +6,14 @@ export const API = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithAuth,
   tagTypes: [
-      'zoho-crm',
-      'user',
-      'counterparty',
-      'payment-data',
-      'tasks'
+    'zoho-crm',
+    'user',
+    'counterparty',
+    'company-onboarding-state',
+    'payment-data',
+    'tasks'
   ],
-  endpoints: () => ({}),
+  endpoints: () => ({})
 });
 
 export type MutationResponse<T> = Promise<

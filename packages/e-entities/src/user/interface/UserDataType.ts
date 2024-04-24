@@ -1,5 +1,4 @@
 export enum UserDataType {
     PASSPORT = 'PASSPORT',
-    DRIVER_LICENSE = 'DRIVER_LICENSE',
-    DEFAULT = 'DEFAULT'
+    DRIVER_LICENSE = 'DRIVER_LICENSE'
 }
