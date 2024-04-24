@@ -1,5 +1,5 @@
 export enum Endpoint_Enum {
-  REFRESH_TOKEN = '/auth/refresh',
+  REFRESH_TOKEN = '/auth/company/refresh',
   ZOHO_CREATE_LEAD = `/zoho/lead`,
   COMPANY_FREELANCERS = ``,
   USER = '/users',
