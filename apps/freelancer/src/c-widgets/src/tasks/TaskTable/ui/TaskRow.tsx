@@ -1,9 +1,11 @@
 'use client';
 
+import { setDetailsOpen, setDisplayedTask } from "@freelancer/entities";
 import { Status } from "@freelancer/features";
 import { TaskCounterpartyDataDto, TaskStatus } from "@freelbee/entities";
+import { DateUtil } from "@freelbee/shared/helpers";
 import { Breakpoint, Color, Text, mediaBreakpointDown, typography, vw } from "@freelbee/shared/ui-kit";
-import moment from "moment";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 interface Props {
@@ -12,8 +14,14 @@ interface Props {
 
 export const TaskRow = ({task}: Props) => {
 
+  const dispatch = useDispatch();
+  const handleOpen = () => {
+    dispatch(setDisplayedTask(task));
+    dispatch(setDetailsOpen(true));
+  }
+
   return (
-    <Container>
+    <Container onClick={handleOpen}>
         <MobileTitle>ID</MobileTitle>
         <Text font='bodySmall'>{task.id}</Text>
 
@@ -23,7 +31,7 @@ export const TaskRow = ({task}: Props) => {
         </TaskName>
 
         <MobileTitle>Company</MobileTitle>
-        <a href={`mailto:${task.customerEmail}`}>
+        <a href={`mailto:${task.customerEmail}`} onClick={e => e.stopPropagation()}>
          <Text font='bodySmall' color={Color.GRAY_600}>{task.customerEmail}</Text>   
         </a>
 
@@ -31,19 +39,20 @@ export const TaskRow = ({task}: Props) => {
         <Text font='bodySmall'>{`${task.price} ${task?.customerCurrency || ''}`}</Text>
 
         <MobileTitle>Deadline</MobileTitle>
-        <Text font='bodySmall'>{moment(task.deadlineAt).format('DD.MM.YYYY')}</Text>
+        <Text font='bodySmall'>{` ${DateUtil.getFormatDate(task?.deadlineAt) ?? '--  --'}`}</Text>
 
         <MobileTitle>Status</MobileTitle>
-        <StatusContainer>
+        <StatusContainer onClick={e => e.stopPropagation()}>
             <Status 
                 task={task} 
-                openTask={() => {}} />
+                openTask={handleOpen} />
         </StatusContainer>
     </Container>
   )
 }
 
 const Container = styled.div`
+    cursor: pointer;
     display: grid;
     grid-template-columns: 40px 2fr 1fr 0.8fr 0.8fr 0.8fr;
     align-items: center;

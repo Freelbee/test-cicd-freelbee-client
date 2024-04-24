@@ -13,6 +13,7 @@ export interface TaskCounterpartyDataDto {
     description: string,
     customerId: number,
     executorId: number,
+    contractId: number | null,
     customerEmail: string,
     executorEmail: string,
     workTypeId: number | null,

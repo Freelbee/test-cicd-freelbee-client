@@ -1,4 +1,4 @@
-import { onboardingReducer, zohoAPI } from "@freelancer/entities";
+import { onboardingReducer, taskSliceReducer, zohoAPI } from "@freelancer/entities";
 import { API } from "@freelancer/shared";
 import { ErrorHelper } from "@freelbee/shared/error";
 import { ErrorText } from "@freelbee/shared/ui-kit";
@@ -34,6 +34,7 @@ if(process.env.NODE_ENV === `development`) {
 
 export const rootReducer = combineReducers({
     onboardingReducer,
+    taskSliceReducer,
     [zohoAPI.reducerPath]: zohoAPI.reducer,
 });
 
