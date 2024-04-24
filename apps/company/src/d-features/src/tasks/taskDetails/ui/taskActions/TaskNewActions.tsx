@@ -1,6 +1,6 @@
 'use client';
 
-import { setDetailsOpen, useGetCompanyQuery, useSetTaskStatusMutation } from "@company/entities";
+import { setDetailsOpen, useGetCompanyCounterpartyQuery, useSetTaskStatusMutation } from "@company/entities";
 import { CounterpartyStatus, TaskStatus } from "@freelbee/entities";
 import { useAppSelector } from "../../../../store";
 import { useDispatch } from "react-redux";
@@ -12,7 +12,7 @@ export default function TaskNewActions () {
     const dispatch = useDispatch();
     const {displayedTask} = useAppSelector(state => state.taskSliceReducer);
     const [setTaskStatus] = useSetTaskStatusMutation();
-    const {data: company} = useGetCompanyQuery();
+    const {data: company} = useGetCompanyCounterpartyQuery();
 
     const handleSetStatus = (status: TaskStatus) => {
         if(!displayedTask) return;

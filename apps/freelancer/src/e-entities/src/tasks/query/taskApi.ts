@@ -4,8 +4,8 @@ import { PaymentReceiverDto } from '../../payment/interface/PaymentReceiverDto';
 
 export const taskAPI = API.injectEndpoints({
   endpoints: (builder) => ({
-    searchTasks: builder.query<Array<TaskCounterpartyDataDto>, number>({
-      query: (counterpartyId) => Endpoint_Enum.SEARCH_TASKS.replace('{0}', counterpartyId.toString()),
+    getFreelancerTasksPage: builder.query<Array<TaskCounterpartyDataDto>, number>({
+      query: (counterpartyId) => Endpoint_Enum.GET_FREELANCER_TASKS_PAGE.replace('{0}', counterpartyId.toString()),
       providesTags: ['tasks']
     }),
     setTaskStatus: builder.mutation<void, {status: TaskStatus, taskId: number}>({
@@ -15,7 +15,7 @@ export const taskAPI = API.injectEndpoints({
           body: {
             status: body.status
           }
-      }), 
+      }),
       invalidatesTags: ['tasks']
     }),
     acceptTask: builder.mutation<void, {taskId: number, body: PaymentReceiverDto}>({
@@ -23,7 +23,7 @@ export const taskAPI = API.injectEndpoints({
           url: Endpoint_Enum.ACCEPT_TASK.replace('{0}', taskId.toString()),
           method: 'POST',
           body
-      }), 
+      }),
       invalidatesTags: ['tasks']
     }),
     getContractLink: builder.query<FileLink, number>({
@@ -39,7 +39,7 @@ export const taskAPI = API.injectEndpoints({
 });
 
 export const {
-    useSearchTasksQuery,
+    useGetFreelancerTasksPageQuery,
     useAcceptTaskMutation,
     useSetTaskStatusMutation,
     useGetContractLinkQuery,

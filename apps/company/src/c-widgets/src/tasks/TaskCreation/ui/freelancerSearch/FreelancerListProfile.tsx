@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Color, Text, typography } from '@freelbee/shared/ui-kit';
-import { TaskFreelancerData } from '../../interface/TaskFreelancerData';
+import { TaskFreelancerData } from '@company/entities';
 
 type Props = {
   freelancer: TaskFreelancerData

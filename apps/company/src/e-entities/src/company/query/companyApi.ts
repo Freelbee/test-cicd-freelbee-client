@@ -7,7 +7,7 @@ import { CompanyData, CompanyResponse } from '../dto/CompanyResponse';
 
 export const companyAPI = API.injectEndpoints({
   endpoints: (builder) => ({
-    getCompany: builder.query<CompanyData, void>({
+    getCompanyCounterparty: builder.query<CompanyData, void>({
       query: () => Endpoint_Enum.COMPANY,
       providesTags: ['counterparty'],
       transformResponse: (res: CompanyResponse) => {
@@ -23,7 +23,7 @@ export const companyAPI = API.injectEndpoints({
           url: Endpoint_Enum.CREATE_COMPANY,
           method: 'POST',
           body
-      }), 
+      }),
       invalidatesTags: ['counterparty']
     }),
     createPaymentData: builder.mutation<void, PaymentMethodDto>({
@@ -31,14 +31,14 @@ export const companyAPI = API.injectEndpoints({
         url: Endpoint_Enum.CREATE_PAYMENT_METHODS,
         method: 'POST',
         body
-    }), 
+    }),
     invalidatesTags: ['payment-data']
     }),
   })
 });
 
 export const {
-    useGetCompanyQuery,
+    useGetCompanyCounterpartyQuery,
     useGetCompanyOnboardingStateQuery,
     useCreateCompanyMutation,
     useCreatePaymentDataMutation

@@ -7,7 +7,6 @@ import { Input } from "../../inputs/input/input";
 import { DOMHelper } from "@freelbee/shared/helpers";
 import { Color, Text, typography } from "@freelbee/shared/ui-kit";
 
-
 interface SelectWithInputProps<T> {
     placeholder?: string,
     searchPlaceholder?: string,

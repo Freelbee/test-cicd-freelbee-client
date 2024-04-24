@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CloseIcon } from '@freelbee/assets/icons/cross-icons/close-icon.svg';
 import FreelancerListProfile from './FreelancerListProfile';
-import { TaskFreelancerData } from '../../interface/TaskFreelancerData';
+import { TaskFreelancerData } from '@company/entities';
 
 type Props = {
   freelancer: TaskFreelancerData,

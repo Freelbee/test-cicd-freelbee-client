@@ -8,10 +8,10 @@ import { OnboardingModal } from "../onboarding"
 import { useGetUserQuery } from "@freelancer/entities"
 
 export const PersonalLayout = ({children}: PropsWithChildren) => {
-  
+
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
   const {data: user} = useGetUserQuery();
-  
+
   return (
     <LayoutContext.Provider value={{
       navigationMenuOpened,
@@ -30,9 +30,9 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
             :
             children
           }
-          {children}
+          {/*{children}*/}
         </Main>
-      </Container>      
+      </Container>
     </LayoutContext.Provider>
 
   )

@@ -9,11 +9,12 @@ export enum Endpoint_Enum {
   COMPANY = `/counterparties/company`,
   CREATE_PAYMENT_METHODS = '/payment-methods',
 
-  SEARCH_TASKS = '/search/{0}/tasks',
-  ADD_TASK = '/company/tasks',
-  GET_CONTRACT_LINK = '/contract/{0}/download-link',
+  GET_COMPANY_TASKS_PAGE = '/search/{0}/tasks',
+  FIND_FREELANCERS = '/freelancers',
   GET_WORKS_CATEGORIES = '/categories',
   GET_CURRENCIES = '/currencies',
+  ADD_TASK = '/company/tasks',
+  GET_CONTRACT_LINK = '/contract/{0}/download-link',
   GET_TASK_FILES = '/task/{0}/files',
-  SET_STATUS = '/saas-task/{0}/set-status',
+  SET_STATUS = '/task/{0}/set-status',
 }

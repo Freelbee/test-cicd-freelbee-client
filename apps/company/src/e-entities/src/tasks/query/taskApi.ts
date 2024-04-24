@@ -1,12 +1,13 @@
 import { API, Endpoint_Enum } from '@company/shared';
 import { Currency, PaymentProviderName } from '../dto/Currency';
 import { WorksCategory } from '../dto/WorksCategory';
-import { FileAction, FileLink, TaskCounterpartyDataDto, TaskFileDto, TaskStatus} from '@freelbee/entities';
+import { TaskFreelancerData } from '../dto/TaskFreelancerData';
+import { FileAction, FileLink, TaskCounterpartyDataDto, TaskFileDto, TaskStatus } from '@freelbee/entities';
 
 export const taskAPI = API.injectEndpoints({
   endpoints: (builder) => ({
-    searchTasks: builder.query<Array<TaskCounterpartyDataDto>, number>({
-      query: (counterpartyId) => Endpoint_Enum.SEARCH_TASKS.replace('{0}', counterpartyId.toString()),
+    getCompanyTasksPage: builder.query<Array<TaskCounterpartyDataDto>, number>({
+      query: (counterpartyId) => Endpoint_Enum.GET_COMPANY_TASKS_PAGE.replace('{0}', counterpartyId.toString()),
       providesTags: ['tasks']
     }),
     setTaskStatus: builder.mutation<void, {status: TaskStatus, taskId: number}>({
@@ -18,6 +19,13 @@ export const taskAPI = API.injectEndpoints({
           }
       }),
       invalidatesTags: ['tasks']
+    }),
+    findFreelancers: builder.query<TaskFreelancerData[], {email: string}>({
+      query: (body) => ({
+        url: Endpoint_Enum.FIND_FREELANCERS,
+        method: 'GET',
+        params: { email: body.email },
+      })
     }),
     createTask: builder.mutation<void, FormData>({
       query: (body) => ({
@@ -53,8 +61,9 @@ export const taskAPI = API.injectEndpoints({
 });
 
 export const {
-    useSearchTasksQuery,
+    useGetCompanyTasksPageQuery,
     useCreateTaskMutation,
+    useFindFreelancersQuery,
     useSetTaskStatusMutation,
     useGetWorksCategoriesQuery,
     useGetCurrenciesQuery,

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SelectWithSearch } from '@freelbee/shared/ui-kit';
 import FreelancerListItem from './FreelancerListItem';
 import FreelancerSelectItem from './FreelancerSelectItem';
-import { TaskFreelancerData, tempTaskFreelancerData } from '../../interface/TaskFreelancerData';
+import { TaskFreelancerData, useFindFreelancersQuery } from '@company/entities';
 
 type Props = {
   max: number
@@ -13,6 +13,9 @@ type Props = {
 
 export default function FreelancerSelect(props: Props) {
   const { max, freelancers, onSelect } = props;
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const { data: freelancersSearchResult = [] } = useFindFreelancersQuery({ email: searchQuery });
 
   const addFreelancer = (freelancer : TaskFreelancerData) => {
     const newFreelancers = [...freelancers];
@@ -21,7 +24,7 @@ export default function FreelancerSelect(props: Props) {
   };
 
   const removeFreelancer = (freelancer : TaskFreelancerData) => {
-    onSelect(freelancers.filter((prevFreelancer) => !(prevFreelancer.email === freelancer.email && prevFreelancer.role === freelancer.role)));
+    onSelect(freelancers.filter((prevFreelancer) => !(prevFreelancer.email === freelancer.email)));
   };
 
   return (
@@ -31,9 +34,9 @@ export default function FreelancerSelect(props: Props) {
         label='Add freelancer'
         placeholder='Enter the name or e-mail of the freelancer'
         searchPlaceholder='Search by freelancer name or e-mail'
-        items={tempTaskFreelancerData}
+        items={freelancersSearchResult}
         value={null}
-        getStringValue={f => f.firstName}
+        getStringValue={f => f.email}
         setValue={addFreelancer}
         renderOption={(freelancer) => <FreelancerSelectItem freelancer={freelancer} />}
         isDisabled={freelancers.length >= max}
