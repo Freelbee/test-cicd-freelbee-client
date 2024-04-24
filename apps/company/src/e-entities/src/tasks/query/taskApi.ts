@@ -1,4 +1,6 @@
 import { API, Endpoint_Enum } from '@company/shared';
+import { Currency, PaymentProviderName } from '../dto/Currency';
+import { WorksCategory } from '../dto/WorksCategory';
 import { FileAction, FileLink, TaskCounterpartyDataDto, TaskFileDto, TaskStatus} from '@freelbee/entities';
 
 export const taskAPI = API.injectEndpoints({
@@ -14,19 +16,30 @@ export const taskAPI = API.injectEndpoints({
           body: {
             status: body.status
           }
-      }), 
+      }),
       invalidatesTags: ['tasks']
     }),
-    // To- Do
-    createTask: builder.mutation<void, object>({
+    createTask: builder.mutation<void, FormData>({
       query: (body) => ({
           url: Endpoint_Enum.ADD_TASK,
           method: 'POST',
           body
-      }), 
+      }),
       invalidatesTags: ['tasks']
     }),
-
+    getWorksCategories: builder.query<WorksCategory[], void>({
+      query: () => ({
+        url: Endpoint_Enum.GET_WORKS_CATEGORIES,
+        method: 'GET',
+      })
+    }),
+    getCurrencies: builder.query<Currency[], PaymentProviderName>({
+      query: (paymentProviderName: PaymentProviderName) => ({
+        url: Endpoint_Enum.GET_CURRENCIES,
+        method: 'GET',
+        params: { provider: paymentProviderName },
+      }),
+    }),
     getContractLink: builder.query<FileLink, number>({
       query: (contractId) => Endpoint_Enum.GET_CONTRACT_LINK.replace('{0}', contractId.toString())
     }),
@@ -43,6 +56,8 @@ export const {
     useSearchTasksQuery,
     useCreateTaskMutation,
     useSetTaskStatusMutation,
+    useGetWorksCategoriesQuery,
+    useGetCurrenciesQuery,
     useGetContractLinkQuery,
     useGetTaskFilesQuery
 } = taskAPI;

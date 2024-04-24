@@ -8,7 +8,7 @@ import { OnboardingModal } from "../../onboarding"
 import { useGetUserQuery } from "@company/entities"
 
 export const PersonalLayout = ({children}: PropsWithChildren) => {
-  
+
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
   const {data: user} = useGetUserQuery();
 
@@ -24,14 +24,13 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
         <NavigationMenu />
         <MobileMenu />
         <Main>
-          {children}
-          {!user?.userData.status ?
-            <OnboardingNotification />
-            :
-            children
+          {
+            !user?.userData.status
+              ? <OnboardingNotification />
+              : children
           }
         </Main>
-      </Container>      
+      </Container>
     </LayoutContext.Provider>
 
   )

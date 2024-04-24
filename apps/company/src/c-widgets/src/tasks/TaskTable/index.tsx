@@ -28,7 +28,9 @@ export const TaskTable = () => {
       "price": 100,
       "customerCurrency": "USD",
       "executorCurrency": "USD",
-      contractId: null
+      "signature": "",
+      "files": [],
+      contractId: null,
     },
     {
       "id": 2,
@@ -48,6 +50,8 @@ export const TaskTable = () => {
       "price": 250,
       "customerCurrency": "USD",
       "executorCurrency": "USD",
+      "signature": "",
+      "files": [],
       contractId: null
     }
   ]
