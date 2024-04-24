@@ -3,6 +3,7 @@ export enum UserDataPropsType {
     LAST_NAME = 'LAST_NAME',
     PHONE_NUMBER = 'PHONE_NUMBER',
     BIRTH_DATE = 'BIRTH_DATE',
+    DOCUMENT_NUMBER = 'DOCUMENT_NUMBER',
 
     //Freelancer:
     STREET = 'STREET',

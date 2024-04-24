@@ -17,21 +17,22 @@ export const companyAPI = API.injectEndpoints({
     }),
     getCompanyOnboardingState: builder.query<CompanyOnboardingStateDto, void>({
         query: () => Endpoint_Enum.COMPANY_ONBOARDING_STATUS,
+        providesTags: ['company-onboarding-state']
     }),
     createCompany: builder.mutation<void, CreateCounterpartyRequestDto>({
       query: (body) => ({
           url: Endpoint_Enum.CREATE_COMPANY,
           method: 'POST',
           body
-      }), 
-      invalidatesTags: ['counterparty']
+      }),
+      invalidatesTags: ['counterparty', 'company-onboarding-state']
     }),
     createPaymentData: builder.mutation<void, PaymentMethodDto>({
       query: (body) => ({
         url: Endpoint_Enum.CREATE_PAYMENT_METHODS,
         method: 'POST',
         body
-    }), 
+    }),
     invalidatesTags: ['payment-data']
     }),
   })

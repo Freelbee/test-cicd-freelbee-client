@@ -31,7 +31,6 @@ const onboardingTitle: Record<Onboarding_Step, JSX.Element> = {
 const initialData: FormData = {
     [UserDataPropsType.FIRST_NAME]: "",
     [UserDataPropsType.LAST_NAME]: "",
-    [UserDataPropsType.PHONE_NUMBER]: "",
     [UserDataPropsType.BIRTH_DATE]: "",
     [UserDataPropsType.STREET]: "",
     [UserDataPropsType.COUNTRY]: "",
@@ -65,12 +64,12 @@ export const OnboardingModal = () => {
                     <Container>
                         <Header>
                             {onboardingTitle[step]}
-                            <CloseButton 
+                            <CloseButton
                                 size={CloseBtnSize.L}
                                 styles={closeBtnStyle}
                                 clickHandler={closeModal} />
                             </Header>
-                        
+
                         {onboardingContent[step]}
                     </Container>
                 </OnboardingContext.Provider>
@@ -110,5 +109,5 @@ const Header = styled.div`
 const closeBtnStyle = css`
   position: absolute;
   top: 16px;
-  right: 16px;  
+  right: 16px;
 `;
