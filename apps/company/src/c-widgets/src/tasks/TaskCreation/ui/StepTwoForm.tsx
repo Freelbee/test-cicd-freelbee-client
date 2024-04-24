@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, ButtonStyleEnum, Checkbox, Color, Heading1, InfoWithIcon, Input, SelectWithSearch, Text } from '@freelbee/shared/ui-kit';
+import { Button, ButtonStyleEnum, Checkbox, Color, Heading1, InfoWithIcon, Input, InputWithSelect, SelectWithSearch, Text } from '@freelbee/shared/ui-kit';
 import styled from 'styled-components';
 import React, { useContext, useState } from 'react';
 import { TaskCreation_Step, TaskCreationContext, TaskCreationData } from '../context/TaskCreationContext';
@@ -8,8 +8,8 @@ import { ReactComponent as AlertIcon } from '@freelbee/assets/icons/alert-icons/
 import { useDataStateUpdater } from '@freelbee/shared/hooks';
 import { ReactComponent as TransakIcon } from '@freelbee/assets/icons/payment-method/transak.svg';
 import { ReactComponent as NebeusIcon } from '@freelbee/assets/icons/payment-method/nebeus.svg';
-import InputWithSelect from 'packages/f-shared/src/ui-kit/inputs/inputWithSelect/InputWithSelect';
-import { Currency, PaymentProviderName, useGetCompanyQuery, useGetCurrenciesQuery } from '@company/entities';
+import { useGetCompanyQuery, useGetCurrenciesQuery } from '@company/entities';
+import { Currency, PaymentProviderName } from '@freelbee/entities';
 
 export const StepTwoForm = () => {
   const {

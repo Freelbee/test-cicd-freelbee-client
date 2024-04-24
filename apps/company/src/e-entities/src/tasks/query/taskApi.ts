@@ -1,7 +1,6 @@
 import { API, Endpoint_Enum } from '@company/shared';
-import { Currency, PaymentProviderName } from '../dto/Currency';
 import { WorksCategory } from '../dto/WorksCategory';
-import { FileAction, FileLink, TaskCounterpartyDataDto, TaskFileDto, TaskStatus} from '@freelbee/entities';
+import { Currency, FileAction, FileLink, PaymentProviderName, TaskCounterpartyDataDto, TaskFileDto, TaskStatus} from '@freelbee/entities';
 
 export const taskAPI = API.injectEndpoints({
   endpoints: (builder) => ({
@@ -23,7 +22,11 @@ export const taskAPI = API.injectEndpoints({
       query: (body) => ({
           url: Endpoint_Enum.ADD_TASK,
           method: 'POST',
-          body
+          body,
+          // headers: {
+          //   'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7RuPdQSBSezqrxIq'
+          // },
+          // formData: true
       }),
       invalidatesTags: ['tasks']
     }),

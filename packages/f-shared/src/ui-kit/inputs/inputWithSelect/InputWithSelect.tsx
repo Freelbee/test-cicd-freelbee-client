@@ -26,7 +26,7 @@ interface Props<T> extends React.InputHTMLAttributes<HTMLInputElement> {
     searchStringValue: (item: T) => string;
 };
 
-export default function InputWithSelect<T> (props: Props<T>) {
+export function InputWithSelect<T> (props: Props<T>) {
 
     const {
         items = [],

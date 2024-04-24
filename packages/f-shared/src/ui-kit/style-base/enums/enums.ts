@@ -61,7 +61,7 @@ export enum Color {
   
   VIOLET = '#7B61FF',
   VIOLET_TRANSPARENT = 'rgb(229 221 248 / 30%)',
-
+  TRANSPARENT = 'transparent'
   
 }
 

@@ -1,3 +1,6 @@
+import { CurrencyType } from "./CurrencyType";
+import { PaymentProviderName } from "./PaymentProviderName";
+
 export interface Currency {
   id: number,
   paymentProviderName: PaymentProviderName,
@@ -11,14 +14,4 @@ export interface Currency {
   iconUrl?: string,
   minAmount?: string, //TODO::: or number, not supported on frontend yet
   maxAmount?: string, //TODO::: or number, not supported on frontend yet
-}
-
-export enum PaymentProviderName {
-  NEBEUS = 'NEBEUS',
-  TRANSAK = 'TRANSAK',
-}
-
-export enum CurrencyType {
-  FIAT = 'FIAT',
-  CRYPTO = 'CRYPTO',
 }

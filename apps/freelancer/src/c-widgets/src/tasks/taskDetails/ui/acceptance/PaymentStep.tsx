@@ -1,52 +1,202 @@
 'use client';
 
-import { Button, ButtonStyleEnum, Color, Heading1, InfoWithIcon, Text } from "@freelbee/shared/ui-kit";
+import { Button, ButtonStyleEnum, Color, Heading1, InfoWithIcon, SelectWithSearch, Text } from "@freelbee/shared/ui-kit";
 import styled from "styled-components";
+import { ReactComponent as CryptoIcon } from '@freelbee/assets/icons/payment-method/bitcoin.svg';
+import { ReactComponent as CardIcon } from '@freelbee/assets/icons/payment-method/card.svg';
+import { ReactComponent as BankIcon } from '@freelbee/assets/icons/payment-method/bank.svg';
+import { ActionsContainer, FormGrid, useAppSelector } from "@freelancer/features";
+import { PaymentMethodType } from "@freelbee/entities";
+import { CryptoTips } from "./PaymentMethosTips/CryptoTips";
+import { BancAccountTips } from "./PaymentMethosTips/BancAccountTips";
+import { useDispatch } from "react-redux";
+import { TaskAcceptanceStep, setAcceptanceStep, setDetailsOpen, useAcceptTaskMutation, useGetFreelancerQuery} from "@freelancer/entities";
+import { BankPaymentDataForm } from "./PaymentMethodForms/BankPaymentDataForm";
+import { CryptoPaymentDataForm } from "./PaymentMethodForms/CryptoPaymentDataForm";
+import { CardPaymentDataForm } from "./PaymentMethodForms/CardPaymentDataForm";
+import { useContext } from "react";
+import { TaskAcceptanceContext } from "./context/TaskAcceptanceContext";
 import {ReactComponent as AlertIcon} from '@freelbee/assets/icons/alert-icons/alert_icon.svg';
-import { ActionsContainer } from "@freelancer/features";
+import { PropsHelper } from "@freelbee/shared/helpers";
+import { BankFormValidator } from "./util/BankFormValidator";
+import { CardFormValidator } from "./util/CardFormValidator";
+import { CryptoFormValidator } from "./util/CryptoFormValidator";
+
+const TIPS_BY_PAYMENT_METHOD: Record<PaymentMethodType, JSX.Element> = {
+    [PaymentMethodType.BANK_ACCOUNT]: <BancAccountTips />,
+    [PaymentMethodType.CRYPTO_WALLET]: <CryptoTips />,
+    [PaymentMethodType.CARD]: <></>
+}
+
+const PAYMENT_METHOD_FORM: Record<PaymentMethodType, JSX.Element> = {
+    [PaymentMethodType.BANK_ACCOUNT]: <BankPaymentDataForm/>,
+    [PaymentMethodType.CRYPTO_WALLET]: <CryptoPaymentDataForm/>,
+    [PaymentMethodType.CARD]: <CardPaymentDataForm />
+}
+
+const PAYMENT_METHOD_ICONS: Record<PaymentMethodType, JSX.Element> = {
+    [PaymentMethodType.BANK_ACCOUNT]: <BankIcon/>,
+    [PaymentMethodType.CRYPTO_WALLET]: <CryptoIcon />,
+    [PaymentMethodType.CARD]: <CardIcon />
+}
+
+const PAYMENT_METHOD_NAMES: Record<PaymentMethodType, string> = {
+    [PaymentMethodType.BANK_ACCOUNT]: 'Bank account',
+    [PaymentMethodType.CRYPTO_WALLET]: 'Crypto',
+    [PaymentMethodType.CARD]: 'Card'
+}
 
 export const PaymentStep = () => {
+    
+    const dispatch = useDispatch();
+    const {displayedTask} = useAppSelector(state => state.taskSliceReducer);
+    const [acceptTask] = useAcceptTaskMutation();
+    const {data: freelancer} = useGetFreelancerQuery();
+    const {formData, 
+        setFormData, 
+        paymentFormData, 
+        resetPaymentData, 
+        resetFormData,
+        setValidatorResult} = useContext(TaskAcceptanceContext);
+
+    const bankFormFalidator = new BankFormValidator();
+    const cardFormValidator = new CardFormValidator();
+    const cryptoFormvalidator = new CryptoFormValidator();
+
+    const validatePaymentData = () => {
+        let validationResult = null;
+
+        if(formData.paymentMethodType === PaymentMethodType.CRYPTO_WALLET) {
+            validationResult = cryptoFormvalidator.validate(paymentFormData);
+        }
+        if(formData.paymentMethodType === PaymentMethodType.BANK_ACCOUNT) {
+            validationResult = bankFormFalidator.validate(paymentFormData);
+        }
+        if(formData.paymentMethodType === PaymentMethodType.CARD) {
+            validationResult = cardFormValidator.validate(paymentFormData);
+        }
+
+        setValidatorResult(validationResult);
+        return validationResult;
+    }
+
+    const handleAccept = () => {
+        //To - Do - вернуть проверки, пока замокано 
+        if(!displayedTask || !displayedTask.contractId || !freelancer || !formData.paymentMethodType) return;
+
+        const validationResult = validatePaymentData();
+        if(validationResult && !validationResult.isSuccess()) {
+            return;
+        }
+
+        const body = {
+            contractId: displayedTask.contractId,
+            freelancerCounterpartyId: freelancer?.freelancerCounterpartyId,
+            freelancerSignature: formData.freelancerSignature,
+            freelancerPaymentDetails: formData.freelancerPaymentDetails,
+            freelancerCurrencyId: formData.freelancerCurrency!.id,
+            taskId: displayedTask.id,
+            paymentMethodType: formData.paymentMethodType,
+            receiverPaymentMethodProps: PropsHelper.MapFieldsToProps(paymentFormData)
+        };
+
+        acceptTask(body).unwrap().then(() => {
+                dispatch(setDetailsOpen(false));
+                resetFormData();
+        });
+    };
+
+    const renderPaymentMethod = (paymentMethod: PaymentMethodType) => (
+        <PaymentMethodContainer>
+                {PAYMENT_METHOD_ICONS[paymentMethod]}
+                <Text font={'body'} color={Color.GRAY_900}>
+                    {PAYMENT_METHOD_NAMES[paymentMethod]}
+                </Text>
+        </PaymentMethodContainer>
+      );
+    
   return (
-    <div>
+    <FormGrid>
         <Header>
             <Heading1>Payment detail</Heading1>
             <Text font='body'>Select the payment method by which you want to receive a reward from the drop-down list below</Text>
         </Header>
 
-        <Container>
-            <InfoWithIcon
-                Icon={AlertIcon}
-                textColor={Color.BLUE}
-                align='flex-start'
-                font='body'
-            >
-                Fill all fields with * to continue.
-            </InfoWithIcon>      
-            <ActionsContainer>
-                <Button
-                    isWide
-                    onClick={() => {}}
-                    styleType={ButtonStyleEnum.GREEN}>
-                    Next
-                </Button>
-                <Button
-                    onClick={()=> {}}
-                    isWide>
-                    Back
-                </Button>
-            </ActionsContainer>      
-        </Container>
+        <FormGrid>
 
-    </div>
+        <RowContainer>
+            <SelectWithSearch<PaymentMethodType>
+                label='Payment method*'
+                placeholder='Select from the dropdown list'
+                items={Object.values(PaymentMethodType)}
+                value={formData.paymentMethodType}
+                setValue={(item) => {
+                    setFormData('paymentMethodType', item);
+                    setFormData('freelancerCurrency', null);
+                    setFormData('freelancerPaymentDetails', '');
+                    setValidatorResult(null);
+                    resetPaymentData();
+                }}
+                renderOption={(item) => renderPaymentMethod(item)}
+                getStringValue={v => v.toString()}
+                hideSearch={true}
+            />   
+            {formData.paymentMethodType && TIPS_BY_PAYMENT_METHOD[formData.paymentMethodType]}         
+        </RowContainer>
+
+        <FormContainer>
+            {formData.paymentMethodType && PAYMENT_METHOD_FORM[formData.paymentMethodType]}
+        </FormContainer>
+
+        <InfoWithIcon
+            Icon={AlertIcon}
+            textColor={Color.BLUE}
+            align="flex-start"
+            font="body">
+            Fill all fields with * to go next
+        </InfoWithIcon>
+     
+        <ActionsContainer>
+            <Button
+                disabled={!formData.paymentMethodType}
+                isWide
+                onClick={handleAccept}
+                styleType={ButtonStyleEnum.GREEN}>
+                Next
+            </Button>
+            <Button
+                styleType={ButtonStyleEnum.STROKE_WHITE}
+                onClick={()=> dispatch(setAcceptanceStep(TaskAcceptanceStep.CONTRACT))}
+                isWide>
+                Back
+            </Button>
+        </ActionsContainer>      
+        </FormGrid>
+
+    </FormGrid>
   )
 }
 
-const Container = styled.div`
+const RowContainer = styled.div`
     display: grid;
-    gap: 16px;
+    gap: 8px;
+`
+const FormContainer = styled.div`
+   margin: 16px 0px;
 `
 
 const Header = styled.div`
     display: grid;
     gap: 8px;
 `
+
+const PaymentMethodContainer = styled.div`
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+`;
