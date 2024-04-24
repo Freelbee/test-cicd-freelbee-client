@@ -6,6 +6,7 @@ export interface CompanyResponse {
     id: number,
     counterpartyDetail: {
         id: number,
+        iban: string,
         country: string,
         type: CounterpartyDetailsType,
         props: DetailProps<CounterpartyDetailsPropsType>
@@ -17,6 +18,7 @@ export interface CompanyData {
     id: number,
     counterpartyDetail: {
         id: number,
+        iban: string,
         country: string,
         type: CounterpartyDetailsType,
         props: Record<CounterpartyDetailsPropsType, string>

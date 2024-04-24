@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { TaskFreelancerData, tempTaskFreelancerData } from '../../interface/TaskGeneralInfoFormData';
 import { SelectWithSearch } from '@freelbee/shared/ui-kit';
 import FreelancerListItem from './FreelancerListItem';
-import FreelancerSelectProfile from './FreelancerSelectProfile';
+import FreelancerSelectItem from './FreelancerSelectItem';
+import { TaskFreelancerData, tempTaskFreelancerData } from '../../interface/TaskFreelancerData';
 
 type Props = {
   max: number
@@ -13,12 +13,6 @@ type Props = {
 
 export default function FreelancerSelect(props: Props) {
   const { max, freelancers, onSelect } = props;
-
-  const renderFreelancer = (freelancer: TaskFreelancerData) =>
-    <FreelancerItem>
-      <FreelancerSelectProfile freelancer={freelancer} />
-    </FreelancerItem>
-  ;
 
   const addFreelancer = (freelancer : TaskFreelancerData) => {
     const newFreelancers = [...freelancers];
@@ -41,7 +35,7 @@ export default function FreelancerSelect(props: Props) {
         value={null}
         getStringValue={f => f.firstName}
         setValue={addFreelancer}
-        renderOption={renderFreelancer}
+        renderOption={(freelancer) => <FreelancerSelectItem freelancer={freelancer} />}
         isDisabled={freelancers.length >= max}
       />
       {freelancers.length > 0 && (
@@ -61,12 +55,4 @@ const FreelancerListContainer = styled.div`
   flex-wrap: wrap;
   gap: 10px;
   justify-content: flex-start;
-`;
-
-const FreelancerItem = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  height: 55px;
-  align-items: center;
 `;

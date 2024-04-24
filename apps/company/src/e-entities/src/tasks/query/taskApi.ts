@@ -1,6 +1,7 @@
 import { API, Endpoint_Enum } from '@company/shared';
-import { TaskCounterpartyDataDto, TaskStatus} from '@freelbee/entities';
-import { Task } from '../../../../c-widgets/src/task/TaskCreation/interface/Task';
+import { Currency, PaymentProviderName } from '../dto/Currency';
+import { WorksCategory } from '../dto/WorksCategory';
+import { TaskCounterpartyDataDto, TaskStatus } from '@freelbee/entities';
 
 export const taskAPI = API.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,19 +19,34 @@ export const taskAPI = API.injectEndpoints({
       }),
       invalidatesTags: ['tasks']
     }),
-    createTask: builder.mutation<Task, FormData>({
+    createTask: builder.mutation<void, FormData>({
       query: (body) => ({
           url: Endpoint_Enum.ADD_TASK,
           method: 'POST',
           body
       }),
       invalidatesTags: ['tasks']
-    })
+    }),
+    getWorksCategories: builder.query<WorksCategory[], void>({
+      query: () => ({
+        url: Endpoint_Enum.GET_WORKS_CATEGORIES,
+        method: 'GET',
+      })
+    }),
+    getCurrencies: builder.query<Currency[], PaymentProviderName>({
+      query: (paymentProviderName: PaymentProviderName) => ({
+        url: Endpoint_Enum.GET_CURRENCIES,
+        method: 'GET',
+        params: { provider: paymentProviderName },
+      }),
+    }),
   })
 });
 
 export const {
     useSearchTasksQuery,
     useCreateTaskMutation,
-    useSetTaskStatusMutation
+    useSetTaskStatusMutation,
+    useGetWorksCategoriesQuery,
+    useGetCurrenciesQuery,
 } = taskAPI;

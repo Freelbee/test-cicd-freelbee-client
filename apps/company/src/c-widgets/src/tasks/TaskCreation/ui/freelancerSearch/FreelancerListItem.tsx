@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as CloseIcon } from '@freelbee/assets/icons/cross-icons/close-icon.svg';
-import { TaskFreelancerData } from '../../interface/TaskGeneralInfoFormData';
 import FreelancerListProfile from './FreelancerListProfile';
+import { TaskFreelancerData } from '../../interface/TaskFreelancerData';
 
 type Props = {
   freelancer: TaskFreelancerData,
@@ -11,11 +11,10 @@ type Props = {
 
 export default function FreelancerListItem(props: Props) {
   const { freelancer, removeFreelancer } = props;
-  const getFreelancerProfile = () => <FreelancerListProfile freelancer={freelancer} />;
 
   return (
     <Item>
-      {getFreelancerProfile()}
+      <FreelancerListProfile freelancer={freelancer} />
       <ItemRemove onClick={() => removeFreelancer(freelancer)}>
         <ItemRemoveIcon>
           <CloseIcon />

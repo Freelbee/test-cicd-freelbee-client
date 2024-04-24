@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { SystemStatus, TaskFreelancerData } from '../../interface/TaskGeneralInfoFormData';
 import { Color, Text } from '@freelbee/shared/ui-kit';
+import { SystemStatus, TaskFreelancerData } from '../../interface/TaskFreelancerData';
 
 const statusColor: Record<SystemStatus, Color> = {
   [SystemStatus.NEW]: Color.PLAN,
@@ -15,7 +15,7 @@ type Props = {
   freelancer: TaskFreelancerData
 };
 
-export default function FreelancerSelectProfile(props: Props) {
+export default function FreelancerSelectItem(props: Props) {
   const { freelancer } = props;
 
   const getStatus = (status: SystemStatus) => {
@@ -37,7 +37,7 @@ export default function FreelancerSelectProfile(props: Props) {
   };
 
   return (
-    <>
+    <FreelancerItem>
       <FreelancerUser>
         {
           freelancer.firstName && freelancer.lastName &&
@@ -48,9 +48,17 @@ export default function FreelancerSelectProfile(props: Props) {
         </>}
       </FreelancerUser>
       <FreelancerState>{getStatus(freelancer.systemStatus)}</FreelancerState>
-    </>
+    </FreelancerItem>
   );
 }
+
+const FreelancerItem = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  height: 55px;
+  align-items: center;
+`;
 
 const FreelancerUser = styled.div`
   display: flex;

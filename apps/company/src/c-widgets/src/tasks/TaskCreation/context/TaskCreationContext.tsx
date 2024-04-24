@@ -1,12 +1,11 @@
 'use client';
 
 import { createContext, Dispatch, SetStateAction } from 'react';
-import { TaskInGroupRequest } from '../interface/CreateGroupRequest';
-import { PaymentMethod, TaskCreationBuilder } from '../interface/TaskRequestDto';
 import moment from 'moment/moment';
 import { FileData } from '@freelbee/shared/ui-kit';
 import DateUtil from 'packages/f-shared/src/utils/date/DateUtil';
-import { Task } from '../interface/Task';
+import { TaskFreelancerData } from '../interface/TaskFreelancerData';
+import { Currency, PaymentProviderName, WorksCategory, WorksType } from '@company/entities';
 
 export enum TaskCreation_Step {
   GENERAL_INFO = 'general_info',
@@ -14,29 +13,35 @@ export enum TaskCreation_Step {
   CONTRACT_INFO = 'contract_info',
 }
 
-export const taskRequestDtoInit: TaskCreationBuilder = {
+export type TaskCreationData = {
+  name: string;
+  worksCategory?: WorksCategory,
+  worksType?: WorksType;
+  description: string;
+  deadline: string;
+  freelancers?: TaskFreelancerData[];
+  paymentProviderName: PaymentProviderName,
+  price: string;
+  currency?: Currency;
+  signature: string;
+};
+
+export const taskCreationDataInit: TaskCreationData = {
   name: '',
   description: '',
   freelancers: [],
   price: '',
-  fiatCurrencyId: 0,
   signature: '',
   deadline: moment().add(1, 'd').format(DateUtil.EUROPEAN_DATE_FORMAT),
-  companyId: -1,
-  attributeValues: [],
-  attachedFiles: [],
-  paymentMethod: PaymentMethod.NEBEUS,
+  paymentProviderName: PaymentProviderName.NEBEUS,
 };
 
 export interface ITaskCreationContext {
-  taskCreationBuilder: TaskCreationBuilder,
-  setTaskCreationBuilder: Dispatch<SetStateAction<TaskCreationBuilder>>,
+  taskCreationData: TaskCreationData,
+  setTaskCreationData: Dispatch<SetStateAction<TaskCreationData>>,
 
   step: TaskCreation_Step;
   setStep: (step: TaskCreation_Step) => void;
-
-  tasks: TaskInGroupRequest[];
-  setTasks: (tasks: TaskInGroupRequest[]) => void;
 
   attachedFiles: FileData[];
   setAttachedFiles: Dispatch<SetStateAction<FileData[]>>,
@@ -44,19 +49,16 @@ export interface ITaskCreationContext {
   customContractFiles: FileData[];
   setCustomContractFiles: Dispatch<SetStateAction<FileData[]>>,
 
-  createOneTask: () => Promise<Task>,
+  createOneTask: () => Promise<void>,
   clearTaskCreator: () => void
 }
 
 export const TaskCreationContext = createContext<ITaskCreationContext>({
-  taskCreationBuilder: taskRequestDtoInit,
-  setTaskCreationBuilder: () => ({}),
+  taskCreationData: taskCreationDataInit,
+  setTaskCreationData: () => ({}),
 
   step: TaskCreation_Step.GENERAL_INFO,
   setStep: () => {},
-
-  tasks: [],
-  setTasks: () => ({}),
 
   attachedFiles: [],
   setAttachedFiles: () => ({}),
@@ -64,6 +66,6 @@ export const TaskCreationContext = createContext<ITaskCreationContext>({
   customContractFiles: [],
   setCustomContractFiles: () => ({}),
 
-  createOneTask: () => Promise.resolve({} as Task),
+  createOneTask: () => Promise.resolve(),
   clearTaskCreator: () => ({}),
 });

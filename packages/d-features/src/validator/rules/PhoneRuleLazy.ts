@@ -1,4 +1,4 @@
-import { RuleMessage } from '../interface/RuleMessage';
+import { RuleMessage } from 'packages/f-shared/src/validator/RuleMessage';
 import { IRule } from '../interface/IRule';
 
 export class PhoneRuleLazy implements IRule {

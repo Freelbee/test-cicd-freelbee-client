@@ -1,44 +1,35 @@
 'use client';
 
 import {
-  Button,
-  ButtonStyleEnum, Calendar,
-  Color,
-  InfoWithIcon,
-  Input,
-  SelectWithSearch,
-  Text,
-  TextArea
+  Button, ButtonStyleEnum, Calendar, Color, InfoWithIcon, Input, SelectWithSearch, Text, TextArea
 } from '@freelbee/shared/ui-kit';
 import styled, { css } from 'styled-components';
 import React, { useContext } from 'react';
-import { TaskCreation_Step, TaskCreationContext } from '../context/TaskCreationContext';
+import { TaskCreation_Step, TaskCreationContext, TaskCreationData } from '../context/TaskCreationContext';
 import { useDataStateUpdater } from '@freelbee/shared/hooks';
 import { ReactComponent as AlertIcon } from '@freelbee/assets/icons/alert-icons/alert_icon.svg';
 import moment from "moment/moment";
 import FreelancerSelect from './freelancerSearch/FreelancerSelect';
-import { TaskCreationBuilder } from '../interface/TaskRequestDto';
-import { tempWorksCategories, WorksCategory, WorksType } from '../interface/WorksCategory';
 import DateUtil from 'packages/f-shared/src/utils/date/DateUtil';
 import FileLoader from 'packages/f-shared/src/ui-kit/inputs/fileLoader/FileLoader';
-import { setTaskCreationModalOpened } from '@company/entities';
+import { setTaskCreationModalOpened, useGetWorksCategoriesQuery, WorksCategory, WorksType } from '@company/entities';
 import { useDispatch } from 'react-redux';
 
 export const StepOneForm = () => {
-
   const {
     setStep,
-    taskCreationBuilder,
-    setTaskCreationBuilder,
+    taskCreationData,
+    setTaskCreationData,
     attachedFiles,
     setAttachedFiles,
   } = useContext(TaskCreationContext);
 
   const dispatch = useDispatch();
-  const [, setData] = useDataStateUpdater<TaskCreationBuilder>(taskCreationBuilder, setTaskCreationBuilder);
-  const [isLoading, setLoading] = React.useState(false);
+  const {data: worksCategories = []} = useGetWorksCategoriesQuery();
+  const [, setData] = useDataStateUpdater<TaskCreationData>(taskCreationData, setTaskCreationData);
 
-  const isDisabled = () => !taskCreationBuilder.name || !taskCreationBuilder.description || !taskCreationBuilder.deadline || !taskCreationBuilder.worksType || taskCreationBuilder?.freelancers?.length === 0 || attachedFiles.some((file) => file.isError) || isLoading;
+  const isButtonDisabled = !taskCreationData.name || !taskCreationData.description || !taskCreationData.deadline
+    || !taskCreationData.worksType || taskCreationData?.freelancers?.length === 0 || attachedFiles.some((file) => file.isError);
 
   return (
     <Content>
@@ -46,7 +37,7 @@ export const StepOneForm = () => {
         isRequired
         label="Name of the task"
         placeholder="Enter a name that will briefly show the essence"
-        value={taskCreationBuilder.name ?? ''}
+        value={taskCreationData.name ?? ''}
         maxLength={100}
         setValue={(item) => setData("name", item)}
         isError={false}
@@ -57,8 +48,8 @@ export const StepOneForm = () => {
           label='Category of work'
           placeholder='Enter or select from the dropdown list'
           searchPlaceholder='Search by works category'
-          items={tempWorksCategories}//TODO::: change with query result
-          value={taskCreationBuilder.worksCategory ?? null}
+          items={worksCategories}
+          value={taskCreationData.worksCategory ?? null}
           setValue={(value) => {
             setData("worksCategory", value);
             setData("worksType", undefined);
@@ -66,18 +57,18 @@ export const StepOneForm = () => {
           getStringValue={v => v.name}
           renderOption={(item) => <Text font='body' styles={worksText}>{item.name}</Text>}
         />
-        <HiddenBlock isHide={!taskCreationBuilder?.worksCategory} data-ishide={!taskCreationBuilder?.worksCategory}>
+        <HiddenBlock isHide={!taskCreationData?.worksCategory} data-ishide={!taskCreationData?.worksCategory}>
           <SelectWithSearch<WorksType>
             isRequired
             label='Type of work'
             placeholder='Click to select the job type'
             searchPlaceholder='Search by works type'
-            items={taskCreationBuilder?.worksCategory?.worksTypes ?? []}
-            value={taskCreationBuilder?.worksType ?? null}
+            items={taskCreationData?.worksCategory?.workTypes ?? []}
+            value={taskCreationData?.worksType ?? null}
             setValue={(item) => setData("worksType", item)}
             getStringValue={v => v.name}
             renderOption={(item) => <Text font='body' styles={worksText}>{item.name}</Text>}
-            isDisabled={!taskCreationBuilder?.worksCategory}
+            isDisabled={!taskCreationData?.worksCategory}
           />
         </HiddenBlock>
       </Section>
@@ -86,7 +77,7 @@ export const StepOneForm = () => {
         isRequired
         label="Describe"
         placeholder="See what an excellent description of the task, take up our order!"
-        value={taskCreationBuilder?.description ?? ''}
+        value={taskCreationData?.description ?? ''}
         maxLength={100}
         noMessageSpace
         onChange={(e) => setData("description", e.target.value)}
@@ -106,12 +97,12 @@ export const StepOneForm = () => {
         isRequired
         canClear
         minDate={moment().add(1, 'day').toDate()}
-        selectedDate={moment(taskCreationBuilder?.deadline, DateUtil.EUROPEAN_DATE_FORMAT).isValid() ? moment(taskCreationBuilder?.deadline, DateUtil.EUROPEAN_DATE_FORMAT).toDate() : undefined}
+        selectedDate={moment(taskCreationData?.deadline, DateUtil.EUROPEAN_DATE_FORMAT).isValid() ? moment(taskCreationData?.deadline, DateUtil.EUROPEAN_DATE_FORMAT).toDate() : undefined}
         onSelect={(date: Date | null) => setData("deadline", date)}
       />
       <FreelancerSelect
         max={1}
-        freelancers={taskCreationBuilder?.freelancers ?? []}
+        freelancers={taskCreationData?.freelancers ?? []}
         onSelect={(value) => setData("freelancers", value)}
       />
 
@@ -128,8 +119,7 @@ export const StepOneForm = () => {
         <Button
           isWide
           onClick={() => setStep(TaskCreation_Step.PAYMENT_INFO)}
-          disabled={isDisabled()}
-          isLoading={isLoading}
+          disabled={isButtonDisabled}
         >
           Next
         </Button>

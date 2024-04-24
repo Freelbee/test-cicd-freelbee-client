@@ -1,6 +1,6 @@
 import checkPhone from 'google-libphonenumber';
 import { IRule } from '../interface/IRule';
-import { RuleMessage } from '../interface/RuleMessage';
+import { RuleMessage } from 'packages/f-shared/src/validator/RuleMessage';
 const phoneUtil = checkPhone.PhoneNumberUtil.getInstance();
 
 export class PhoneRule implements IRule

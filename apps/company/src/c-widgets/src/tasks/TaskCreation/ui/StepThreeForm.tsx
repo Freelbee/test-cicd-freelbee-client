@@ -1,21 +1,11 @@
 'use client';
 
-import {
-  Button,
-  ButtonStyleEnum,
-  Checkbox,
-  Color,
-  Heading3,
-  Input,
-  SelectWithSearch,
-  Text
-} from '@freelbee/shared/ui-kit';
 import styled, { css } from 'styled-components';
+import { Button, ButtonStyleEnum, Checkbox, Color, Heading3, Input, SelectWithSearch, Text } from '@freelbee/shared/ui-kit';
 import React, { useContext, useState } from 'react';
-import { TaskCreation_Step, TaskCreationContext } from '../context/TaskCreationContext';
+import { TaskCreation_Step, TaskCreationContext, TaskCreationData } from '../context/TaskCreationContext';
 import { ReactComponent as DownloadIcon } from '@freelbee/assets/icons/download/download.svg';
 import { useDataStateUpdater } from '@freelbee/shared/hooks';
-import { TaskCreationBuilder } from '../interface/TaskRequestDto';
 import FileLoader from 'packages/f-shared/src/ui-kit/inputs/fileLoader/FileLoader';
 import { setTaskCreationModalOpened } from '@company/entities';
 import { useDispatch } from 'react-redux';
@@ -25,29 +15,11 @@ enum ContractType {
   CUSTOM = 'CUSTOM'
 }
 
-const contractTypeMapping = {
-  [ContractType.STANDARD]: {
-    optionText: 'Standard service agreement',
-    checkboxText: 'By checking the box, I agree with the terms and conditions of the Contract. All the data I\'ve provided is correct. I understand that when I click the "I agree" button, I am entering into a Contract with Contractor as a Client on the terms and conditions described',
-    isWithCustomContractFiles: false,
-    isWithDownloadAgreement: true,
-    isWithFreelbeeSignature: true,
-  },
-  [ContractType.CUSTOM]: {
-    optionText: 'I\'ll upload my own',
-    checkboxText: 'By putting a tick in the box, I agree with the terms and conditions of the downloaded text of the Contract. I guarantee, that all the data I\'ve provided in this Task form is correct and fully comply with the downloaded text of the Contract. In case of any contradictions between the data provided in the Task form and in the text of the downloaded Contract, the data provided in the Task form shall prevail.  For the sake of clearence for settlement purposes Freelbee shall use only the data provided in the Task form',
-    isWithCustomContractFiles: true,
-    isWithDownloadAgreement: false,
-    isWithFreelbeeSignature: false,
-  },
-};
-
 export const StepThreeForm = () => {
-
   const {
     setStep,
-    taskCreationBuilder,
-    setTaskCreationBuilder,
+    taskCreationData,
+    setTaskCreationData,
     customContractFiles,
     setCustomContractFiles,
     createOneTask,
@@ -55,16 +27,34 @@ export const StepThreeForm = () => {
   } = useContext(TaskCreationContext);
 
   const dispatch = useDispatch();
-  const [, setData] = useDataStateUpdater<TaskCreationBuilder>(taskCreationBuilder, setTaskCreationBuilder);
+  const [, setData] = useDataStateUpdater<TaskCreationData>(taskCreationData, setTaskCreationData);
   const [contractType, setContractType] = useState<ContractType>(ContractType.STANDARD);
   const [isBoxChecked, setBoxChecked] = useState(false);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const isDisabled = !isBoxChecked || (contractType === ContractType.STANDARD && !taskCreationBuilder.signature) || (contractType === ContractType.CUSTOM && customContractFiles.length === 0) || isLoading;
+  const contractTypeMapping = {
+    [ContractType.STANDARD]: {
+      optionText: 'Standard service agreement',
+      checkboxText: 'By checking the box, I agree with the terms and conditions of the Contract. All the data I\'ve provided is correct. I understand that when I click the "I agree" button, I am entering into a Contract with Contractor as a Client on the terms and conditions described',
+      isWithCustomContractFiles: false,
+      isWithDownloadAgreement: true,
+      isWithFreelbeeSignature: true,
+    },
+    [ContractType.CUSTOM]: {
+      optionText: 'I\'ll upload my own',
+      checkboxText: 'By putting a tick in the box, I agree with the terms and conditions of the downloaded text of the Contract. I guarantee, that all the data I\'ve provided in this Task form is correct and fully comply with the downloaded text of the Contract. In case of any contradictions between the data provided in the Task form and in the text of the downloaded Contract, the data provided in the Task form shall prevail.  For the sake of clearence for settlement purposes Freelbee shall use only the data provided in the Task form',
+      isWithCustomContractFiles: true,
+      isWithDownloadAgreement: false,
+      isWithFreelbeeSignature: false,
+    },
+  };
 
-  const createTask = () => { //todo::: consider adding 'async'
+  const isButtonDisabled = !isBoxChecked || (contractType === ContractType.STANDARD && !taskCreationData.signature)
+    || (contractType === ContractType.CUSTOM && customContractFiles.length === 0) || isLoading;
+
+  const createTask = async () => {
     setIsLoading(true);
-    createOneTask()
+    await createOneTask()
       .then(()=>{
         clearTaskCreator();
         dispatch(setTaskCreationModalOpened(false));
@@ -115,7 +105,7 @@ export const StepThreeForm = () => {
         <Input
             label="Signature"
             placeholder="Enter signature"
-            value={taskCreationBuilder?.signature ?? ''}
+            value={taskCreationData?.signature ?? ''}
             setValue={(v) => setData("signature", v)}
           />
       )}
@@ -132,7 +122,7 @@ export const StepThreeForm = () => {
         <Button
           isWide
           styleType={ButtonStyleEnum.GREEN}
-          disabled={isDisabled}
+          disabled={isButtonDisabled}
           isLoading={isLoading}
           onClick={createTask}
         >

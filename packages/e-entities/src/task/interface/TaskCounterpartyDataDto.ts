@@ -1,5 +1,5 @@
 import { TaskStatus } from "./TaskStatus";
-import { FileT } from '../../../../../apps/company/src/c-widgets/src/task/TaskCreation/interface/FileT';
+import { FileData } from '@freelbee/shared/ui-kit';
 
 export interface TaskCounterpartyDataDto {
     id: number,
@@ -20,5 +20,5 @@ export interface TaskCounterpartyDataDto {
     customerCurrency: string,
     executorCurrency: string,
     signature: string,
-    files: FileT[],
+    files: FileData[],
 }

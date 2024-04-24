@@ -13,7 +13,7 @@ import { ReactComponent as WordFileIcon } from '@freelbee/assets/icons/extention
 import { ReactComponent as SizeErrorIcon } from '@freelbee/assets/icons/file-loader/cargo.svg';
 import { ReactComponent as ClockIcon } from '@freelbee/assets/icons/file-loader/clockIcon.svg';
 import { ReactComponent as SymbolsErrorIcon } from '@freelbee/assets/icons/file-loader/symbols.svg';
-import { RuleMessage } from '@freelbee/features';
+import { RuleMessage } from '../../../validator/RuleMessage';
 
 export interface FileData {
   id?: number,

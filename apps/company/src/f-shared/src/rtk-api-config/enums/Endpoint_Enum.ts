@@ -11,5 +11,7 @@ export enum Endpoint_Enum {
 
   SEARCH_TASKS = '/search/{0}/tasks',
   ADD_TASK = '/company/tasks',
-  SET_STATUS = '/saas-task/{0}/set-status'
+  GET_WORKS_CATEGORIES = '/categories',
+  GET_CURRENCIES = '/currencies',
+  SET_STATUS = '/saas-task/{0}/set-status',
 }

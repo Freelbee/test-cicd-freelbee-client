@@ -12,6 +12,7 @@ const DEFAULT: UserData = {
         "id": 0,
         "status": null,
         "type": UserType.DEFAULT,
+        "signature": "",
         "props": {
             [UserDataPropsType.FIRST_NAME]: "",
             [UserDataPropsType.LAST_NAME]: "",
