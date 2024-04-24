@@ -14,6 +14,7 @@ export enum Endpoint_Enum {
   GET_WORKS_CATEGORIES = '/categories',
   GET_CURRENCIES = '/currencies',
   ADD_TASK = '/company/tasks',
+  GENERATE_AND_DOWNLOAD_CONTRACT_PREVIEW = '/contract-preview',
   GET_CONTRACT_LINK = '/contract/{0}/download-link',
   GET_TASK_FILES = '/task/{0}/files',
   SET_STATUS = '/task/{0}/set-status',

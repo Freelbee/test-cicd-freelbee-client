@@ -13,9 +13,8 @@ type Props = {
 
 export default function FreelancerSelect(props: Props) {
   const { max, freelancers, onSelect } = props;
-  const [searchQuery, setSearchQuery] = useState('');
 
-  const { data: freelancersSearchResult = [] } = useFindFreelancersQuery({ email: searchQuery });
+  const { data: freelancersSearchResult = [] } = useFindFreelancersQuery({ email: "" });
 
   const addFreelancer = (freelancer : TaskFreelancerData) => {
     const newFreelancers = [...freelancers];

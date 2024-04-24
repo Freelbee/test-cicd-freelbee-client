@@ -3,6 +3,8 @@ import { Currency, PaymentProviderName } from '../dto/Currency';
 import { WorksCategory } from '../dto/WorksCategory';
 import { TaskFreelancerData } from '../dto/TaskFreelancerData';
 import { FileAction, FileLink, TaskCounterpartyDataDto, TaskFileDto, TaskStatus } from '@freelbee/entities';
+import { ContractPreviewDto } from '../dto/ContractPreviewDto';
+import { FileDownloadHelper } from 'packages/f-shared/src/helpers/FileDownloadHelper';
 
 export const taskAPI = API.injectEndpoints({
   endpoints: (builder) => ({
@@ -48,6 +50,14 @@ export const taskAPI = API.injectEndpoints({
         params: { provider: paymentProviderName },
       }),
     }),
+    generateAndDownloadContractPreview: builder.mutation<string, ContractPreviewDto>({
+      query: (body) => ({
+        url: Endpoint_Enum.GENERATE_AND_DOWNLOAD_CONTRACT_PREVIEW,
+        method: 'POST',
+        body,
+        responseHandler: async (response) => FileDownloadHelper.downloadFileFromOctetStreamByRtkQuery(response)
+      })
+    }),
     getContractLink: builder.query<FileLink, number>({
       query: (contractId) => Endpoint_Enum.GET_CONTRACT_LINK.replace('{0}', contractId.toString())
     }),
@@ -67,6 +77,7 @@ export const {
     useSetTaskStatusMutation,
     useGetWorksCategoriesQuery,
     useGetCurrenciesQuery,
+    useGenerateAndDownloadContractPreviewMutation,
     useGetContractLinkQuery,
     useGetTaskFilesQuery
 } = taskAPI;
