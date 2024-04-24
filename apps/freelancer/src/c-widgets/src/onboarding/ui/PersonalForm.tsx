@@ -7,7 +7,6 @@ import {
   DateInput,
   InfoWithIcon,
   Input,
-  PhoneNumberInput,
   SelectWithSearch, Text
 } from '@freelbee/shared/ui-kit';
 import React, { FormEventHandler, useContext, useState } from "react";

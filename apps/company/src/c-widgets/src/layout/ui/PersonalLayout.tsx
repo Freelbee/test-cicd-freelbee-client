@@ -5,7 +5,7 @@ import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit"
 import { PropsWithChildren, useState } from "react"
 import styled from "styled-components"
 import { OnboardingModal } from "../../onboarding"
-import { useGetCompanyOnboardingStateQuery, useGetUserQuery } from '@company/entities';
+import { useGetCompanyOnboardingStateQuery } from '@company/entities';
 
 export const PersonalLayout = ({children}: PropsWithChildren) => {
 
