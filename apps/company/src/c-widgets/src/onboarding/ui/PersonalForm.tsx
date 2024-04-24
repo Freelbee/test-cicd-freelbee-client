@@ -27,9 +27,7 @@ const initialData = {
     [UserDataPropsType.LAST_NAME]: "",
     [UserDataPropsType.BIRTH_DATE]: "",
     [UserDataPropsType.DOCUMENT_NUMBER]: "",
-
 }
-
 const documentTypes: { [key in UserDataType]: string } = {
     [UserDataType.PASSPORT]: 'Passport',
     [UserDataType.DRIVER_LICENSE]: 'Driver license',

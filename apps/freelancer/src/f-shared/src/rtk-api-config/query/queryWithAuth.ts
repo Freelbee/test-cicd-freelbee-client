@@ -29,16 +29,16 @@ ExtraOptions
     const crmQuery = extraOptions?.crmQuery;
 
     const getArgsConfig = () => notAuthorizedRequest ? args : getAuthorizedArgsConfig(args);
-    
+
     let result = await baseQuery(
         getArgsConfig(),
-        api, 
+        api,
         extraOptions);
-    
+
     if (result?.error && result.error?.status === 401 && !crmQuery) {
         if (!mutex.isLocked()) {
             const release = await mutex.acquire();
-            
+
             try {
                 const res = await refreshTokensQuery(args, api, extraOptions);
                 result = res ? res : result;
@@ -49,7 +49,7 @@ ExtraOptions
             await mutex.waitForUnlock();
             result = await baseQuery(
                 getArgsConfig(),
-                api, 
+                api,
                 extraOptions);
         }
     }
@@ -76,14 +76,14 @@ const refreshTokensQuery = async (args: string | FetchArgs, api: BaseQueryApi, e
     if (refreshResult.data) {
       const refreshToken = refreshResult.data?.refreshToken;
       const accessToken = refreshResult.data?.accessToken;
-  
+
       localStorage.setItem(Token_Enum.REFRESH_TOKEN, refreshToken);
       localStorage.setItem(Token_Enum.ACCESS_TOKEN, accessToken);
 
         // retry the initial query
         return await baseQuery(
             getAuthorizedArgsConfig(args),
-            api, 
+            api,
             extraOptions);
     } else {
         localStorage.removeItem(Token_Enum.REFRESH_TOKEN);
@@ -92,7 +92,7 @@ const refreshTokensQuery = async (args: string | FetchArgs, api: BaseQueryApi, e
     }
 };
 
-/* For a request without authorization headers, you need to set for an endpoint definition -  
+/* For a request without authorization headers, you need to set for an endpoint definition -
     extraOptions: { notAuthorized: true}
     */
 const getAuthorizedArgsConfig = (args: string | FetchArgs) => {

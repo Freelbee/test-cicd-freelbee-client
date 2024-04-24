@@ -20,6 +20,7 @@ export const OnboardingContext = createContext<IOnboardingContext>({
     formData: {
         [UserDataPropsType.FIRST_NAME]: "",
         [UserDataPropsType.LAST_NAME]: "",
+        [UserDataPropsType.DOCUMENT_NUMBER]: "",
         [UserDataPropsType.PHONE_NUMBER]: "",
         [UserDataPropsType.BIRTH_DATE]: "",
         [UserDataPropsType.STREET]: "",

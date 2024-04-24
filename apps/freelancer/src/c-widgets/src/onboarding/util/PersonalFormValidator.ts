@@ -7,7 +7,7 @@ export class PersonalFormValidator extends AbstractValidator<FormData>
     protected rules () : {[key in keyof FormData]?: IRule[]}
     {
         return {
-            [UserDataPropsType.PHONE_NUMBER]: [new RequiredRule(), new PhoneRuleLazy()],
+            [UserDataPropsType.DOCUMENT_NUMBER]: [new RequiredRule()],
             [UserDataPropsType.FIRST_NAME]: [ new RequiredRule(), new OnlyLettersRule()],
             [UserDataPropsType.LAST_NAME]: [new RequiredRule(), new OnlyLettersRule()],
             [UserDataPropsType.BIRTH_DATE]: [new RequiredRule()],
