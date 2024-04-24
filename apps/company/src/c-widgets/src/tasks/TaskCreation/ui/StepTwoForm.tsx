@@ -64,7 +64,7 @@ export const StepTwoForm = () => {
         label="IBAN"
         placeholder=""
         tipsText="There is the IBAN you entered during registration. Funds will be debited from this bank account"
-        value={company!.counterpartyDetail.iban}
+        value={company!.counterpartyDetail.props.IBAN}
         setValue={() => null}
         disabled
       />
