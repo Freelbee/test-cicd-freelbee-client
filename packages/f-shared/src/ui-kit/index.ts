@@ -29,9 +29,11 @@ export * from "./inputs/checkbox/checkbox";
 export * from "./inputs/date/DateInput";
 export * from "./inputs/calendar/Calendar";
 export * from "./inputs/fileLoader/FileLoader";
-export * from './select/TabsSelect/TabsSelect'
-export * from './select/SelectWithSearch/SelectWithSearch'
-export * from './spinner/Spinner'
+export * from './select/TabsSelect/TabsSelect';
+export * from './select/SelectWithSearch/SelectWithSearch';
+export * from './select/Select/Select';
+export * from './select/Select/MultiSelect';
+export * from './spinner/Spinner';
 
 export * from "./buttons/Button";
 export * from "./buttons/CloseButton";

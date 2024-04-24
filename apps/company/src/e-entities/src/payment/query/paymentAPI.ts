@@ -1,9 +1,9 @@
 import { API, Endpoint_Enum } from '@company/shared';
-import { CurrencyDto, CurrencyType, PaymentProviderName } from '@freelbee/entities';
+import {Currency, CurrencyType, PaymentProviderName } from '@freelbee/entities';
 
 export const paymentAPI = API.injectEndpoints({
   endpoints: (builder) => ({
-    getCurrencies: builder.query<Array<CurrencyDto>, {
+    getCurrencies: builder.query<Array<Currency>, {
       provider: PaymentProviderName,
       type?: CurrencyType
     }>({

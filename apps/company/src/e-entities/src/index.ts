@@ -13,7 +13,6 @@ export * from './user/hooks/UseUserData';
 export * from './country/index';
 export * from './onboarding/store/onboardingSlice';
 
-export * from './tasks/dto/Currency';
 export * from './tasks/dto/WorksCategory';
 export * from './tasks/hooks/UseTasksData';
 export * from './tasks/query/taskApi';

@@ -1,6 +1,6 @@
 import { API, Endpoint_Enum } from '@freelancer/shared';
 import { FileAction, FileLink, TaskCounterpartyDataDto, TaskFileDto, TaskStatus} from '@freelbee/entities';
-import { PaymentReceiverDto } from '../../payment/interface/PaymentReceiverDto';
+import { TaskAcceptanceDto } from '../interface/TaskAcceptanceDto';
 
 export const taskAPI = API.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,9 +18,9 @@ export const taskAPI = API.injectEndpoints({
       }), 
       invalidatesTags: ['tasks']
     }),
-    acceptTask: builder.mutation<void, {taskId: number, body: PaymentReceiverDto}>({
-      query: ({taskId, body}) => ({
-          url: Endpoint_Enum.ACCEPT_TASK.replace('{0}', taskId.toString()),
+    acceptTask: builder.mutation<void, TaskAcceptanceDto>({
+      query: (body) => ({
+          url: Endpoint_Enum.ACCEPT_TASK.replace('{0}', body.taskId.toString()),
           method: 'POST',
           body
       }), 

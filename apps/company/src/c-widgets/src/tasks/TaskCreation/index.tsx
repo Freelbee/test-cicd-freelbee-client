@@ -67,7 +67,7 @@ export const TaskCreationModal = () => {
     formData.append('deadlineAt', moment.utc(taskCreationData.deadline, DateUtil.EUROPEAN_DATE_FORMAT).startOf('day').toISOString());
     formData.append('description', taskCreationData.description);
     formData.append('customerId', company!.id.toString());
-    formData.append('executorId', taskCreationData.freelancers!.map((freelancer) => freelancer.id.toString())[0]);
+    formData.append('executorId', '2');
     formData.append('workTypeId', taskCreationData.worksType!.id!.toString());
     formData.append('price', taskCreationData.price);
     formData.append('customerCurrency', "1");
