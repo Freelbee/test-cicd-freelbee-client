@@ -15,7 +15,7 @@ import {
 } from './context/TaskCreationContext';
 import { StepTwoTitle } from './ui/StepTwoTitle';
 import { useAppSelector } from '@company/features';
-import { setTaskCreationModalOpened, useCreateTaskMutation, useGetCompanyQuery } from '@company/entities';
+import { setTaskCreationModalOpened, useCreateTaskMutation, useGetCompanyCounterpartyQuery } from '@company/entities';
 import { useDispatch } from 'react-redux';
 import DateUtil from 'packages/f-shared/src/utils/date/DateUtil';
 import { useGetUserQuery } from "@company/entities"
@@ -42,7 +42,7 @@ export const TaskCreationModal = () => {
   const [customContractFiles, setCustomContractFiles] = useState<FileData[]>([]);
 
   const { data: user } = useGetUserQuery();
-  const { data: company } = useGetCompanyQuery();
+  const { data: company } = useGetCompanyCounterpartyQuery();
   const [createTask] = useCreateTaskMutation();
 
   const [ taskCreationData, setTaskCreationData ] = useState<TaskCreationData>({
@@ -67,10 +67,10 @@ export const TaskCreationModal = () => {
     formData.append('deadlineAt', moment.utc(taskCreationData.deadline, DateUtil.EUROPEAN_DATE_FORMAT).startOf('day').toISOString());
     formData.append('description', taskCreationData.description);
     formData.append('customerId', company!.id.toString());
-    formData.append('executorId', '2');
+    formData.append('executorId', taskCreationData.freelancers!.map((freelancer) => freelancer.counterpartyId.toString())[0]);
     formData.append('workTypeId', taskCreationData.worksType!.id!.toString());
     formData.append('price', taskCreationData.price);
-    formData.append('customerCurrency', "1");
+    formData.append('customerCurrency', taskCreationData.currency!.id.toString());
     formData.append('signature', taskCreationData.signature);
     attachedFiles.forEach(fileData => formData.append('files', fileData.file));
     customContractFiles[0]?.file && formData.append('customContractFile', customContractFiles[0].file);

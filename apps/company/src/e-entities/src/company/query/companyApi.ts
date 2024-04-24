@@ -7,7 +7,7 @@ import { CompanyData, CompanyResponse } from '../dto/CompanyResponse';
 
 export const companyAPI = API.injectEndpoints({
   endpoints: (builder) => ({
-    getCompany: builder.query<CompanyData, void>({
+    getCompanyCounterparty: builder.query<CompanyData, void>({
       query: () => Endpoint_Enum.COMPANY,
       providesTags: ['counterparty'],
       transformResponse: (res: CompanyResponse) => {
@@ -39,7 +39,7 @@ export const companyAPI = API.injectEndpoints({
 });
 
 export const {
-    useGetCompanyQuery,
+    useGetCompanyCounterpartyQuery,
     useGetCompanyOnboardingStateQuery,
     useCreateCompanyMutation,
     useCreatePaymentDataMutation

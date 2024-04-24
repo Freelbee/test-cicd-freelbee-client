@@ -7,7 +7,12 @@ import { TaskCreation_Step, TaskCreationContext, TaskCreationData } from '../con
 import { ReactComponent as DownloadIcon } from '@freelbee/assets/icons/download/download.svg';
 import { useDataStateUpdater } from '@freelbee/shared/hooks';
 import FileLoader from 'packages/f-shared/src/ui-kit/inputs/fileLoader/FileLoader';
-import { setTaskCreationModalOpened } from '@company/entities';
+import {
+  ContractPreviewDto,
+  setTaskCreationModalOpened,
+  useGenerateAndDownloadContractPreviewMutation,
+  useGetCompanyCounterpartyQuery
+} from '@company/entities';
 import { useDispatch } from 'react-redux';
 
 enum ContractType {
@@ -27,6 +32,8 @@ export const StepThreeForm = () => {
   } = useContext(TaskCreationContext);
 
   const dispatch = useDispatch();
+  const { data: company } = useGetCompanyCounterpartyQuery();
+  const [getContractPreview] = useGenerateAndDownloadContractPreviewMutation();
   const [, setData] = useDataStateUpdater<TaskCreationData>(taskCreationData, setTaskCreationData);
   const [contractType, setContractType] = useState<ContractType>(ContractType.STANDARD);
   const [isBoxChecked, setBoxChecked] = useState(false);
@@ -51,6 +58,18 @@ export const StepThreeForm = () => {
 
   const isButtonDisabled = !isBoxChecked || (contractType === ContractType.STANDARD && !taskCreationData.signature)
     || (contractType === ContractType.CUSTOM && customContractFiles.length === 0) || isLoading;
+
+  const downloadContractPreview = async () => {
+    const body: ContractPreviewDto = {
+      companyCounterpartyId: company.id,
+      freelancerEmail: taskCreationData.freelancers[0].email,
+      taskWorkTypeName: taskCreationData.worksType?.name,
+      taskDeadline: taskCreationData.deadline,
+      companyAmount: taskCreationData.price,
+      companyCurrencyId: taskCreationData.currency?.id,
+    };
+    getContractPreview(body);
+  };
 
   const createTask = async () => {
     setIsLoading(true);
@@ -81,7 +100,7 @@ export const StepThreeForm = () => {
       {contractTypeMapping[contractType].isWithDownloadAgreement && (
         <AgreementFileContainer>
           <Heading3 color={Color.GRAY_900}>Agreement</Heading3>
-          <DownloadContainer onClick={() => {}}>{/*//TODO::: fix*/}
+          <DownloadContainer onClick={downloadContractPreview}>
             <DownloadIconStyled />
             <Text font={'body'} color={Color.BLUE}>Download agreement</Text>
           </DownloadContainer>

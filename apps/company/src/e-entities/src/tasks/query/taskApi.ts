@@ -1,11 +1,15 @@
 import { API, Endpoint_Enum } from '@company/shared';
+import { Currency, PaymentProviderName } from '../dto/Currency';
 import { WorksCategory } from '../dto/WorksCategory';
-import { Currency, FileAction, FileLink, PaymentProviderName, TaskCounterpartyDataDto, TaskFileDto, TaskStatus} from '@freelbee/entities';
+import { TaskFreelancerData } from '../dto/TaskFreelancerData';
+import { FileAction, FileLink, TaskCounterpartyDataDto, TaskFileDto, TaskStatus } from '@freelbee/entities';
+import { ContractPreviewDto } from '../dto/ContractPreviewDto';
+import { FileDownloadHelper } from 'packages/f-shared/src/helpers/FileDownloadHelper';
 
 export const taskAPI = API.injectEndpoints({
   endpoints: (builder) => ({
-    searchTasks: builder.query<Array<TaskCounterpartyDataDto>, number>({
-      query: (counterpartyId) => Endpoint_Enum.SEARCH_TASKS.replace('{0}', counterpartyId.toString()),
+    getCompanyTasksPage: builder.query<Array<TaskCounterpartyDataDto>, number>({
+      query: (counterpartyId) => Endpoint_Enum.GET_COMPANY_TASKS_PAGE.replace('{0}', counterpartyId.toString()),
       providesTags: ['tasks']
     }),
     setTaskStatus: builder.mutation<void, {status: TaskStatus, taskId: number}>({
@@ -18,15 +22,18 @@ export const taskAPI = API.injectEndpoints({
       }),
       invalidatesTags: ['tasks']
     }),
+    findFreelancers: builder.query<TaskFreelancerData[], {email: string}>({
+      query: (body) => ({
+        url: Endpoint_Enum.FIND_FREELANCERS,
+        method: 'GET',
+        params: { email: body.email },
+      })
+    }),
     createTask: builder.mutation<void, FormData>({
       query: (body) => ({
           url: Endpoint_Enum.ADD_TASK,
           method: 'POST',
-          body,
-          // headers: {
-          //   'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7RuPdQSBSezqrxIq'
-          // },
-          // formData: true
+          body
       }),
       invalidatesTags: ['tasks']
     }),
@@ -43,6 +50,14 @@ export const taskAPI = API.injectEndpoints({
         params: { provider: paymentProviderName },
       }),
     }),
+    generateAndDownloadContractPreview: builder.mutation<string, ContractPreviewDto>({
+      query: (body) => ({
+        url: Endpoint_Enum.GENERATE_AND_DOWNLOAD_CONTRACT_PREVIEW,
+        method: 'POST',
+        body,
+        responseHandler: async (response) => FileDownloadHelper.downloadFileFromOctetStreamByRtkQuery(response)
+      })
+    }),
     getContractLink: builder.query<FileLink, number>({
       query: (contractId) => Endpoint_Enum.GET_CONTRACT_LINK.replace('{0}', contractId.toString())
     }),
@@ -56,11 +71,13 @@ export const taskAPI = API.injectEndpoints({
 });
 
 export const {
-    useSearchTasksQuery,
+    useGetCompanyTasksPageQuery,
     useCreateTaskMutation,
+    useFindFreelancersQuery,
     useSetTaskStatusMutation,
     useGetWorksCategoriesQuery,
     useGetCurrenciesQuery,
+    useGenerateAndDownloadContractPreviewMutation,
     useGetContractLinkQuery,
     useGetTaskFilesQuery
 } = taskAPI;

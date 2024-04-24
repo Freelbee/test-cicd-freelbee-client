@@ -4,9 +4,7 @@ import { createContext, Dispatch, SetStateAction } from 'react';
 import moment from 'moment/moment';
 import { FileData } from '@freelbee/shared/ui-kit';
 import DateUtil from 'packages/f-shared/src/utils/date/DateUtil';
-import { TaskFreelancerData } from '../interface/TaskFreelancerData';
-import { WorksCategory, WorksType } from '@company/entities';
-import { Currency, PaymentProviderName } from '@freelbee/entities';
+import { Currency, PaymentProviderName, TaskFreelancerData, WorksCategory, WorksType } from '@company/entities';
 
 export enum TaskCreation_Step {
   GENERAL_INFO = 'general_info',

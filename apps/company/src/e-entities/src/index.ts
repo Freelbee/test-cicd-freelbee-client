@@ -13,10 +13,13 @@ export * from './user/hooks/UseUserData';
 export * from './country/index';
 export * from './onboarding/store/onboardingSlice';
 
+export * from './tasks/dto/ContractPreviewDto';
+export * from './tasks/dto/Currency';
 export * from './tasks/dto/WorksCategory';
+export * from './tasks/dto/TaskFreelancerData';
 export * from './tasks/hooks/UseTasksData';
 export * from './tasks/query/taskApi';
 export * from './tasks/store/taskCreationSlice';
 
-export * from './task/store/taskSlice';
+export * from './tasks/store/taskSlice';
 export * from './user/hooks/UseUserData';

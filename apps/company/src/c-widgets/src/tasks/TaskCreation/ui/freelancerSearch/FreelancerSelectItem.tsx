@@ -1,14 +1,12 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Color, Text } from '@freelbee/shared/ui-kit';
-import { SystemStatus, TaskFreelancerData } from '../../interface/TaskFreelancerData';
+import { TaskFreelancerData, UserDataStatus } from '@company/entities';
 
-const statusColor: Record<SystemStatus, Color> = {
-  [SystemStatus.NEW]: Color.PLAN,
-  [SystemStatus.INVITED]: Color.BLUE,
-  [SystemStatus.REGISTERED]: Color.SWAMPY,
-  [SystemStatus.SENT]: Color.GRAY_600,
-  [SystemStatus.UNKNOWN]: Color.GRAY_600
+const statusColor: Record<UserDataStatus, Color> = {
+  [UserDataStatus.IN_REVIEW]: Color.BLUE,
+  [UserDataStatus.APPROVED]: Color.SWAMPY,
+  [UserDataStatus.REJECTED]: Color.GRAY_600
 };
 
 type Props = {
@@ -18,17 +16,17 @@ type Props = {
 export default function FreelancerSelectItem(props: Props) {
   const { freelancer } = props;
 
-  const getStatus = (status: SystemStatus) => {
+  const getStatus = (status: UserDataStatus) => {
     switch (status) {
-      case SystemStatus.INVITED:
+      case UserDataStatus.IN_REVIEW:
         return <Text font="bodySmall" color={statusColor[status]} styles={css`padding-right: 15px;`}>
           Invited
         </Text>;
-      case SystemStatus.NEW:
+      case UserDataStatus.APPROVED:
         return <Text font="bodySmall" color={statusColor[status]} styles={css`padding-right: 15px;`}>
           To invite
         </Text>;
-      case SystemStatus.REGISTERED:
+      case UserDataStatus.REJECTED:
         return <Text font="bodySmall" color={statusColor[status]} styles={css`padding-right: 15px;`}>
           Registered
         </Text>;
@@ -47,7 +45,7 @@ export default function FreelancerSelectItem(props: Props) {
           <Text font="bodySmall" styles={email} color={Color.GRAY_600}>{freelancer.email}</Text>
         </>}
       </FreelancerUser>
-      <FreelancerState>{getStatus(freelancer.systemStatus)}</FreelancerState>
+      <FreelancerState>{getStatus(freelancer.status)}</FreelancerState>
     </FreelancerItem>
   );
 }
