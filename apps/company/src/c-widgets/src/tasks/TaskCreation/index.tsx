@@ -70,7 +70,7 @@ export const TaskCreationModal = () => {
     formData.append('executorId', taskCreationData.freelancers!.map((freelancer) => freelancer.id.toString())[0]);
     formData.append('workTypeId', taskCreationData.worksType!.id!.toString());
     formData.append('price', taskCreationData.price);
-    formData.append('customerCurrency', taskCreationData.currency!.id.toString());
+    formData.append('customerCurrency', "1");
     formData.append('signature', taskCreationData.signature);
     attachedFiles.forEach(fileData => formData.append('files', fileData.file));
     customContractFiles[0]?.file && formData.append('customContractFile', customContractFiles[0].file);

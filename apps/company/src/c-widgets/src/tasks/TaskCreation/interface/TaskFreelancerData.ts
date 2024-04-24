@@ -33,7 +33,7 @@ export enum FreelancerStatus {
 
 export const tempTaskFreelancerData: TaskFreelancerData[] = [ //TODO::: delete after the endpoint is added
   {
-    id: 111,
+    id: 2,
     email: "test111@mail.ru",
     firstName: "First1",
     lastName: "Last1",

@@ -3,7 +3,7 @@ import styled, {css} from "styled-components";
 
 import moment from "moment";
 import { calendarLogic } from './calendarLogic';
-import { Color, hover, typography } from '@freelbee/shared/ui-kit';
+import { Color, typography } from '@freelbee/shared/ui-kit';
 
 interface Props {
     setPickerDate: React.Dispatch<React.SetStateAction<Date>>;
@@ -127,7 +127,7 @@ const DateText	= styled.div<{isSelected: boolean, isDisabled: boolean}>`
   	  background: #F1F4F4;
   `}
 
-  ${hover(css`
-  	background: #F1F4F4;
-  `)}
+  a:hover {
+    background: #F1F4F4;
+  }
 `;

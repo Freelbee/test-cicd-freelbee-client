@@ -24,11 +24,10 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
         <NavigationMenu />
         <MobileMenu />
         <Main>
-          {children}
-          {!user?.userData.status ?
-            <OnboardingNotification />
-            :
-            children
+          {
+            !user?.userData.status
+              ? <OnboardingNotification />
+              : children
           }
         </Main>
       </Container>

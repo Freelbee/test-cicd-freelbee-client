@@ -4,4 +4,4 @@ export * from './onboarding/index';
 export * from './tasks/TasksCounter/index';
 export * from './tasks/TaskTable/index';
 export * from './tasks/TaskCreation/index';
-export * from './task/taskDetails/index';
+export * from './tasks/TaskDetails/index';
