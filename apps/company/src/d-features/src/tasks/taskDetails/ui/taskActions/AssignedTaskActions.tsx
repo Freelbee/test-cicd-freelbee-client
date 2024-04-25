@@ -18,7 +18,7 @@ export default function AssignedTaskActions () {
         if(!displayedTask) return;
 
         setTaskStatus({
-            taskId: displayedTask.id,
+            taskId: displayedTask.taskId,
             status
         }).unwrap().then(()=>{
             dispatch(setDetailsOpen(false));
@@ -28,7 +28,7 @@ export default function AssignedTaskActions () {
     return (
         <ActionsContainer>
             <Button
-                disabled={company?.status !== CounterpartyStatus.APPROVED}
+                disabled={company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED}
                 onClick={()=> handleSetStatus(TaskStatus.CANCELLED)}
                 isWide styleType={ButtonStyleEnum.ROUND_STROKE_WHITE}>
                 Cancel task

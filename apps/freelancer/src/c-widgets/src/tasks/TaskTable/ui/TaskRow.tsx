@@ -23,7 +23,7 @@ export const TaskRow = ({task}: Props) => {
   return (
     <Container onClick={handleOpen}>
         <MobileTitle>ID</MobileTitle>
-        <Text font='bodySmall'>{task.id}</Text>
+        <Text font='bodySmall'>{task.taskId}</Text>
 
         <MobileTitle>Name</MobileTitle>
         <TaskName color={task.status === TaskStatus.NEW ? Color.BLUE : Color.GRAY_900}>

@@ -18,7 +18,7 @@ export default function TaskNewActions () {
         if(!displayedTask) return;
 
         setTaskStatus({
-            taskId: displayedTask.id,
+            taskId: displayedTask.taskId,
             status
         }).unwrap().then(()=>{
             dispatch(setDetailsOpen(false));
@@ -29,7 +29,7 @@ export default function TaskNewActions () {
         <>
             <ActionsContainer>
                 <Button
-                    disabled={company?.status !== CounterpartyStatus.APPROVED}
+                    disabled={company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED}
                     isWide
                     onClick={()=> handleSetStatus(TaskStatus.ASSIGNED)}
                 >

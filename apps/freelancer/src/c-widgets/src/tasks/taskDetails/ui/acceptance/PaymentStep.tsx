@@ -10,7 +10,7 @@ import { PaymentMethodType } from "@freelbee/entities";
 import { CryptoTips } from "./PaymentMethosTips/CryptoTips";
 import { BancAccountTips } from "./PaymentMethosTips/BancAccountTips";
 import { useDispatch } from "react-redux";
-import { TaskAcceptanceStep, setAcceptanceStep, setDetailsOpen, useAcceptTaskMutation, useGetFreelancerQuery} from "@freelancer/entities";
+import { TaskAcceptanceStep, setAcceptanceStep, setDetailsOpen, useAcceptTaskMutation, useGetFreelancerCounterpartyQuery} from "@freelancer/entities";
 import { BankPaymentDataForm } from "./PaymentMethodForms/BankPaymentDataForm";
 import { CryptoPaymentDataForm } from "./PaymentMethodForms/CryptoPaymentDataForm";
 import { CardPaymentDataForm } from "./PaymentMethodForms/CardPaymentDataForm";
@@ -51,7 +51,7 @@ export const PaymentStep = () => {
     const dispatch = useDispatch();
     const {displayedTask} = useAppSelector(state => state.taskSliceReducer);
     const [acceptTask] = useAcceptTaskMutation();
-    const {data: freelancer} = useGetFreelancerQuery();
+    const {data: freelancer} = useGetFreelancerCounterpartyQuery();
     const {formData, 
         setFormData, 
         paymentFormData, 
@@ -81,7 +81,6 @@ export const PaymentStep = () => {
     }
 
     const handleAccept = () => {
-        //To - Do - вернуть проверки, пока замокано 
         if(!displayedTask || !displayedTask.contractId || !freelancer || !formData.paymentMethodType) return;
 
         const validationResult = validatePaymentData();
@@ -91,11 +90,11 @@ export const PaymentStep = () => {
 
         const body = {
             contractId: displayedTask.contractId,
-            freelancerCounterpartyId: freelancer?.freelancerCounterpartyId,
+            freelancerCounterpartyId: freelancer?.id,
             freelancerSignature: formData.freelancerSignature,
             freelancerPaymentDetails: formData.freelancerPaymentDetails,
             freelancerCurrencyId: formData.freelancerCurrency!.id,
-            taskId: displayedTask.id,
+            taskId: displayedTask.taskId,
             paymentMethodType: formData.paymentMethodType,
             receiverPaymentMethodProps: PropsHelper.MapFieldsToProps(paymentFormData)
         };

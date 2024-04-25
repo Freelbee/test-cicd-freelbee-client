@@ -18,7 +18,7 @@ export default function TaskInReviewActions () {
         if(!displayedTask) return;
 
         setTaskStatus({
-            taskId: displayedTask.id,
+            taskId: displayedTask.taskId,
             status
         }).unwrap().then(()=>{
             dispatch(setDetailsOpen(false));
@@ -29,7 +29,7 @@ export default function TaskInReviewActions () {
         <>
             <ActionsContainer>
                 <Button
-                    disabled={company?.status !== CounterpartyStatus.APPROVED}
+                    disabled={company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED}
                     isWide
                     styleType={ButtonStyleEnum.GREEN}
                     // to - DO - payment
@@ -38,7 +38,7 @@ export default function TaskInReviewActions () {
                     Approve and pay
                 </Button>
                 <Button
-                    disabled={company?.status !== CounterpartyStatus.APPROVED}
+                    disabled={company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED}
                     onClick={()=> handleSetStatus(TaskStatus.IN_PROGRESS)}
                     isWide
                     styleType={ButtonStyleEnum.ROUND_STROKE_WHITE}>
