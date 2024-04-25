@@ -23,3 +23,5 @@ export * from './tasks/store/taskCreationSlice';
 
 export * from './tasks/store/taskSlice';
 export * from './user/hooks/UseUserData';
+export * from './freelancer/store/freelancersInvitationSlice';
+export * from './freelancer/dto/FreelancerInvitationDto';

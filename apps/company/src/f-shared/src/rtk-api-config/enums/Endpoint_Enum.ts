@@ -18,6 +18,7 @@ export enum Endpoint_Enum {
   GET_CONTRACT_LINK = '/contract/{0}/download-link',
   GET_TASK_FILES = '/task/{0}/files',
   SET_STATUS = '/task/{0}/set-status',
+  FREELANCER_INVITATION = '/invitations/from-company/to-freelancer',
 
   //sign-up
   COMPANY_SIGNUP = '/registration/company',

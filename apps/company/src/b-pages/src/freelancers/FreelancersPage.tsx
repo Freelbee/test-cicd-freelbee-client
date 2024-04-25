@@ -1,11 +1,14 @@
-import { PageContainer, PageTitle } from "@company/entities";
-import { CompanyFreelancers } from "@company/widgets";
+import {PageContainer} from "@company/entities";
+import {CompanyFreelancers, FreelancersHeading} from "@company/widgets";
+import React from "react";
+import {FreelancerInvitationModal} from "../../../c-widgets/src/freelancer/FreelancerInvitation";
 
 export const FreelancersPage = () => {
   return (
     <PageContainer>
-        <PageTitle text='Freelancers' />
+        <FreelancersHeading />
         <CompanyFreelancers />
+        <FreelancerInvitationModal />
     </PageContainer>
   )
 }
