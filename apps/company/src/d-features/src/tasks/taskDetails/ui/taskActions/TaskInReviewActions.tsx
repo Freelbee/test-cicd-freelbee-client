@@ -7,7 +7,12 @@ import { CounterpartyStatus, TaskStatus } from "@freelbee/entities";
 import { ActionsContainer } from "./ActionsContainer";
 import { Button, ButtonStyleEnum } from "@freelbee/shared/ui-kit";
 
-export default function TaskInReviewActions () {
+interface Props {
+  isBoxChecked: boolean,
+}
+
+export default function TaskInReviewActions (props: Props) {
+    const { isBoxChecked } = props;
 
     const dispatch = useDispatch();
     const {displayedTask} = useAppSelector(state => state.taskSliceReducer);
@@ -25,23 +30,26 @@ export default function TaskInReviewActions () {
         });
     };
 
+    const isButtonApproveDisabled = !isBoxChecked || company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED;
+    const isButtonRefineDisabled = company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED;
+
     return (
         <>
             <ActionsContainer>
                 <Button
-                    disabled={company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED}
+                    disabled={isButtonApproveDisabled}
                     isWide
                     styleType={ButtonStyleEnum.GREEN}
-                    // to - DO - payment
-                    onClick={() => {}}
+                    onClick={()=> handleSetStatus(TaskStatus.WAITING_FOR_PAYMENT)}
                 >
-                    Approve and pay
+                    Approve
                 </Button>
                 <Button
-                    disabled={company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED}
+                    disabled={isButtonRefineDisabled}
                     onClick={()=> handleSetStatus(TaskStatus.IN_PROGRESS)}
                     isWide
-                    styleType={ButtonStyleEnum.ROUND_STROKE_WHITE}>
+                    styleType={ButtonStyleEnum.ROUND_STROKE_WHITE}
+                >
                     To refine
                 </Button>
             </ActionsContainer>

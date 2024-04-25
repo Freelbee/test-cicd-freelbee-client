@@ -9,13 +9,15 @@ import { TaskStatus } from "@freelbee/entities";
 import AssignedTaskActions from "./ui/taskActions/AssignedTaskActions";
 import TaskInProgressActions from "./ui/taskActions/TaskInProgressActions";
 import { ContractDownload } from "./ui/taskActions/ContractDownload";
+import React from 'react';
 
 const ACTIONS_BY_STATUS: Record<TaskStatus, JSX.Element> = {
-    [TaskStatus.ASSIGNED]: <AssignedTaskActions />,
-    [TaskStatus.IN_PROGRESS]: <TaskInProgressActions />,
     [TaskStatus.NEW]: <></>,
+    [TaskStatus.ASSIGNED]: <AssignedTaskActions />,
     [TaskStatus.CANCELLED]: <></>,
+    [TaskStatus.IN_PROGRESS]: <TaskInProgressActions />,
     [TaskStatus.REVIEWING]: <></>,
+    [TaskStatus.WAITING_FOR_PAYMENT]: <></>,
     [TaskStatus.PAYMENT_IN_PROGRESS]: <></>,
     [TaskStatus.PAYMENT_ERROR]: <></>,
     [TaskStatus.PAID]: <></>

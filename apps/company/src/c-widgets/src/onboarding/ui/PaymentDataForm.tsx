@@ -11,7 +11,7 @@ import { useDataStateUpdater } from "@freelbee/shared/hooks";
 import { PaymentMethodFormData } from "../interface/PaymentMethodsFormData";
 import { PaymentMethodPropType, PaymentMethodType } from "@freelbee/entities";
 import { useDispatch } from "react-redux";
-import { setOnboardingOpened, useCreatePaymentDataMutation, useGetCompanyCounterpartyQuery } from "@company/entities";
+import { setOnboardingOpened, useCreatePaymentMethodMutation, useGetCompanyCounterpartyQuery } from "@company/entities";
 import { PropsHelper } from "@freelbee/shared/helpers";
 
 const initialData: PaymentMethodFormData = {
@@ -26,7 +26,7 @@ export const PaymentDataForm = () => {
 
     const dispatch = useDispatch();
     const {data: company, isLoading: isCompanyLoading } = useGetCompanyCounterpartyQuery();
-    const [createPaymentData, {isLoading}] = useCreatePaymentDataMutation();
+    const [createPaymentData, {isLoading}] = useCreatePaymentMethodMutation();
     const [validationResult, setValidationResult] = useState(new ValidatorResult<PaymentMethodFormData>());
     const validator = new PaymentDataValidator();
     const [data, setData] = useDataStateUpdater<PaymentMethodFormData>(initialData);
