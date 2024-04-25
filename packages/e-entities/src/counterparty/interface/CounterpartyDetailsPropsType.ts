@@ -9,5 +9,5 @@ export enum CounterpartyDetailsPropsType {
     KPP = 'KPP', // for Russia
     OGRN = 'OGRN', // for Russia
     REGISTRATION_NUMBER = 'REGISTRATION_NUMBER',
-    REGISTRATION_DATE = 'REGISTRATION_DATE',
+    REGISTRATION_DATE = 'REGISTRATION_DATE'
 }

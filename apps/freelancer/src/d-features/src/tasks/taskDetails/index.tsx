@@ -32,7 +32,7 @@ export const TaskDetails = () => {
             </Heading2>
             <TaskHeadInfo task={displayedTask}/>
             <Description task={displayedTask}/>
-            {displayedTask && <ContractDownload taskId={displayedTask.id} />}
+            {displayedTask && <ContractDownload taskId={displayedTask.taskId} />}
             {displayedTask && ACTIONS_BY_STATUS[displayedTask?.status]}
         </FormGrid>
     );

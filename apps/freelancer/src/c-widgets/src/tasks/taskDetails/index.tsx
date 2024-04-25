@@ -78,12 +78,13 @@ return (
 const Container = styled.div`
     position: relative;
     padding: 32px;
-    max-width: 540px;
+    width: 540px;
     border-radius: ${BORDER_RADIUS.L};
     background-color: ${Color.WHITE};
 
     ${mediaBreakpointDown(Breakpoint.Tablet)} {
         padding: 24px;
+        width: 100%;
     }
 
     ${mediaBreakpointDown(Breakpoint.xMobile)} {

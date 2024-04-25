@@ -20,7 +20,7 @@ export const TaskTable = () => {
           <Text font='body' color={Color.GRAY_700}>Status</Text>
       </TableHead>
       {tasks.map(task => (
-        <TaskRow key={task.id} task={task} />
+        <TaskRow key={task.taskId} task={task} />
       ))}
     </div>
   )

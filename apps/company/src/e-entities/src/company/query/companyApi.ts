@@ -33,7 +33,7 @@ export const companyAPI = API.injectEndpoints({
         method: 'POST',
         body
     }),
-    invalidatesTags: ['payment-data']
+    invalidatesTags: ['payment-data', 'counterparty', 'user']
     }),
   })
 });

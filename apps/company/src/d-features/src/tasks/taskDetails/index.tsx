@@ -12,7 +12,6 @@ import { TaskStatus } from "@freelbee/entities";
 import { useGetContractLinkQuery } from "@company/entities";
 import AssignedTaskActions from "./ui/taskActions/AssignedTaskActions";
 import TaskNewActions from "./ui/taskActions/TaskNewActions";
-import TaskInErrorActions from "./ui/taskActions/TaskInErrorActions";
 import TaskInReviewActions from "./ui/taskActions/TaskInReviewActions";
 
 const ACTIONS_BY_STATUS: Record<TaskStatus, JSX.Element> = {
@@ -22,7 +21,7 @@ const ACTIONS_BY_STATUS: Record<TaskStatus, JSX.Element> = {
     [TaskStatus.CANCELLED]: <></>,
     [TaskStatus.REVIEWING]: <TaskInReviewActions />,
     [TaskStatus.PAYMENT_IN_PROGRESS]: <></>,
-    [TaskStatus.PAYMENT_ERROR]: <TaskInErrorActions />,
+    [TaskStatus.PAYMENT_ERROR]: <></>,
     [TaskStatus.PAID]: <></>
 }
 

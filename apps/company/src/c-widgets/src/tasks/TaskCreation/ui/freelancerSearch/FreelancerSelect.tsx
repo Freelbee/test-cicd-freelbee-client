@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { SelectWithSearch } from '@freelbee/shared/ui-kit';
 import FreelancerListItem from './FreelancerListItem';
