@@ -4,8 +4,10 @@ import { PaymentMethodType } from "./PaymentMethodType"
 export interface PaymentMethodDto {
     counterpartyId: number,
     type: PaymentMethodType,
-    props: Array<{
+    props: PaymentMethodProps
+}
+
+export type PaymentMethodProps = Array<{
        type: PaymentMethodPropType,
        value: string
     }>
-}

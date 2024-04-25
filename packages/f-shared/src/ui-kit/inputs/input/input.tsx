@@ -77,7 +77,7 @@ export const Input = (props: Props) => {
 
     return (
         <InputWrapper>
-            <InputContainer 
+            <InputContainer
                 $isDisabled={!!disabled}>
 
                 {(label || maxLength) &&
@@ -88,7 +88,7 @@ export const Input = (props: Props) => {
                         {value?.length ?? 0} / {maxLength}
                     </Text>}
                 </InputHeader>}
-                
+
                 <InputRow>
                     {icon && <IconWrapper>{icon}</IconWrapper>}
                     <InputField
@@ -105,7 +105,7 @@ export const Input = (props: Props) => {
                         $withButton={!!onClear}
                         $withIcon={!!icon}
                         {...rest}
-                    />                
+                    />
 
                     {onClear && <CloseButton clickHandler={onClear} size={CloseBtnSize.XS} style={{
                         position: 'absolute',
@@ -118,7 +118,7 @@ export const Input = (props: Props) => {
                 </InputRow>
 
                 {tipsText &&
-                <Text as='p' font='bodySmall' color={tipsColor || Color.GRAY_600}>
+                <Text as='p' font='bodySmall' color={tipsColor || Color.GRAY_500}>
                     {tipsText}
                 </Text>}
             </InputContainer>
@@ -126,7 +126,7 @@ export const Input = (props: Props) => {
             <AnimatePresence>
                 {isError && errorMessage &&
                 <ErrorOutput absolutePosition={noMessageSpace} message={errorMessage} />}
-            </AnimatePresence>            
+            </AnimatePresence>
         </InputWrapper>
     );
 };

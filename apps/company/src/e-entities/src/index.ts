@@ -8,11 +8,19 @@ export * from './layout/TableHead';
 export * from './user/ui/UserAvatar';
 export * from './user/ui/UserBadge';
 export * from './user/query/userApi';
+export * from './user/hooks/UseUserData';
 export * from './auth/api/authApi'
 
 export * from './country/index';
 export * from './onboarding/store/onboardingSlice';
 
-export * from './task/query/taskApi';
+export * from './tasks/dto/ContractPreviewDto';
+export * from './tasks/dto/Currency';
+export * from './tasks/dto/WorksCategory';
+export * from './tasks/dto/TaskFreelancerData';
+export * from './tasks/hooks/UseTasksData';
+export * from './tasks/query/taskApi';
+export * from './tasks/store/taskCreationSlice';
+
+export * from './tasks/store/taskSlice';
 export * from './user/hooks/UseUserData';
-export * from './task/hooks/UseTasksData';

@@ -1,6 +1,5 @@
 export * from './AbstractValidator';
 
-export * from './interface/RuleMessage';
 export * from './interface/IRule';
 
 export * from './result/ValidatorResult';

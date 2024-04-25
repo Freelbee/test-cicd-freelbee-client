@@ -1,6 +1,6 @@
 'use client'
 
-import { onboardingReducer, zohoAPI } from "@company/entities";
+import { onboardingReducer, taskCreationReducer, taskSliceReducer, zohoAPI } from "@company/entities";
 import { API } from "@company/shared";
 import { ErrorHelper } from "@freelbee/shared/error";
 import { ErrorText } from "@freelbee/shared/ui-kit";
@@ -11,9 +11,9 @@ import { toast } from "react-toastify";
 
 export const rtkQueryErrorLogger: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
     if (isRejectedWithValue(action)) {
-        console.warn('Async error!');
+        // console.warn('Async error!');
         toast(<ErrorText title={"Error"} message={ErrorHelper.GetErrorMessageOrDefault(action.payload)} />, {type: 'error'})
-        console.log(action);
+        // console.log(action);
         // Sentry.captureException(action.payload);
         // api.dispatch(addErrors({
         //     error: ApiErrorAdapter.getPayAssistantError(action.payload),
@@ -36,9 +36,11 @@ if(process.env.NODE_ENV === `development`) {
 
 export const rootReducer = combineReducers({
     onboardingReducer,
+    taskCreationReducer,
+    taskSliceReducer,
     [zohoAPI.reducerPath]: zohoAPI.reducer,
 });
- 
+
 export const setupStore = () => configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middlewares)

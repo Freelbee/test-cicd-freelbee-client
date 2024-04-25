@@ -2,54 +2,12 @@
 
 import { css } from "styled-components";
 import { Breakpoint, Color, Text, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
-import { TaskCounterpartyDataDto, TaskStatus } from "@freelbee/entities";
-import { TableHead } from "@freelancer/entities";
+import { TableHead, useTasksData } from '@freelancer/entities';
 import { TaskRow } from "./ui/TaskRow";
 
 export const TaskTable = () => {
 
-  // MOCK
-  const tasks: TaskCounterpartyDataDto[] = [
-    {
-      "id": 1,
-      "taskId": 1,
-      "title": "Develop website frontend",
-      "status": TaskStatus.IN_PROGRESS,
-      "createdAt": "2024-04-18T05:02:51.417647Z",
-      "deadlineAt": "2024-04-15T18:00:00Z",
-      "finishedAt": null,
-      "payedAt": null,
-      "description": "Create responsive frontend for a corporate website with HTML, CSS, and JavaScript",
-      "customerId": 1,
-      "executorId": 1,
-      "customerEmail": "ff@mail.com",
-      "executorEmail": "ff1@mail.com",
-      "workTypeId": null,
-      "price": 100,
-      "customerCurrency": "USD",
-      "executorCurrency": "USD"
-  },
-    {
-      "id": 2,
-      "taskId": 3,
-      "title": "Develop website frontendDevelop website frontend",
-      "status": TaskStatus.ASSIGNED,
-      "createdAt": "2024-04-18T05:53:42.257115Z",
-      "deadlineAt": "2024-04-15T18:00:00Z",
-      "finishedAt": null,
-      "payedAt": null,
-      "description": "Create responsive frontend for a corporate website with HTML, CSS, and JavaScript",
-      "customerId": 1,
-      "executorId": 1,
-      "customerEmail": "ff@mail.com",
-      "executorEmail": "ff1@mail.com",
-      "workTypeId": null,
-      "price": 250,
-      "customerCurrency": "USD",
-      "executorCurrency": "USD"
-  }
-  ]
-
+  const [tasks] = useTasksData();
 
   return (
     <div>

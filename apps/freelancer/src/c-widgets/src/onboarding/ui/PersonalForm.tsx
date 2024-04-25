@@ -1,7 +1,15 @@
 'use client';
 
-import { Button, ButtonStyleEnum, Color, DateInput, InfoWithIcon, Input, PhoneNumberInput } from "@freelbee/shared/ui-kit";
-import { FormEventHandler, useContext, useState } from "react";
+import {
+  Button,
+  ButtonStyleEnum,
+  Color,
+  DateInput,
+  InfoWithIcon,
+  Input,
+  SelectWithSearch, Text
+} from '@freelbee/shared/ui-kit';
+import React, { FormEventHandler, useContext, useState } from "react";
 import styled from "styled-components";
 import { OnboardingContext } from "../context/OnboardingContext";
 import {ReactComponent as AlertIcon} from '@freelbee/assets/icons/alert-icons/alert_icon.svg';
@@ -15,13 +23,22 @@ import { setOnboardingOpened, useSaveUserDataMutation } from "@freelancer/entiti
 import { PropsHelper } from "@freelbee/shared/helpers";
 import { useDispatch } from "react-redux";
 
+
+const documentTypes: { [key in UserDataType]: string } = {
+  [UserDataType.PASSPORT]: 'Passport',
+  [UserDataType.DRIVER_LICENSE]: 'Driver license',
+}
+const documentTypesArray = [UserDataType.PASSPORT, UserDataType.DRIVER_LICENSE];
+
 export const PersonalForm = () => {
-  
+
   const {setStep, formData, setFormData} = useContext(OnboardingContext);
   const [validationResult, setValidationResult] = useState(new ValidatorResult<FormData>());
   const validator = new PersonalFormValidator();
   const [saveUserData, {isLoading}] = useSaveUserDataMutation();
   const dispatch = useDispatch();
+
+  const [documentType, setDocumentType] = useState<UserDataType>(UserDataType.PASSPORT);
 
   const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
       e.preventDefault();
@@ -32,7 +49,7 @@ export const PersonalForm = () => {
           return;
       }
       saveUserData({
-        type: UserDataType.DEFAULT,
+        type: documentType,
         props: PropsHelper.MapFieldsToProps(formData)
       }).unwrap()
       .then(() => dispatch(setOnboardingOpened(false)));
@@ -40,37 +57,50 @@ export const PersonalForm = () => {
 
   return (
     <Form onSubmit={submitHandler}>
-        <Input 
+        <SelectWithSearch<UserDataType>
+          label='Document type'
+          placeholder=''
+          items={documentTypesArray}
+          value={documentType}
+          setValue={(item) => {
+            setDocumentType(item);
+          }}
+          renderOption={(item) => (<Text font="body">{documentTypes[item]}</Text>)}
+          getStringValue={value => documentTypes[value]}
+          hideSearch
+        />
+        <Input
+          isRequired
+          isError={validationResult.hasError(UserDataPropsType.DOCUMENT_NUMBER)}
+          errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.DOCUMENT_NUMBER, LanguageType.EN)}
+          label="Document number"
+          placeholder={"1234567890"}
+          value={formData?.DOCUMENT_NUMBER ?? ''}
+          setValue={(v) => setFormData(UserDataPropsType.DOCUMENT_NUMBER, v)} />
+        <Input
             isRequired
             isError={validationResult.hasError(UserDataPropsType.FIRST_NAME)}
             errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.FIRST_NAME, LanguageType.EN)}
             label="Name"
-            placeholder={"John"} 
+            placeholder={"John"}
             tipsText='Will be displayed in your profile and visible to freelancers'
-            value={formData?.FIRST_NAME ?? ''} 
+            value={formData?.FIRST_NAME ?? ''}
             setValue={(v) => setFormData(UserDataPropsType.FIRST_NAME, v)} />
-        <Input 
+        <Input
             isRequired
             isError={validationResult.hasError(UserDataPropsType.LAST_NAME)}
             errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.LAST_NAME, LanguageType.EN)}
             label="Surname"
-            placeholder="Silver" 
+            placeholder="Silver"
             tipsText='Will be displayed in your profile and visible to freelancers'
-            value={formData?.LAST_NAME ?? ''} 
+            value={formData?.LAST_NAME ?? ''}
             setValue={(v) => setFormData(UserDataPropsType.LAST_NAME, v)} />
-        <PhoneNumberInput 
-            isRequired
-            isError={validationResult.hasError(UserDataPropsType.PHONE_NUMBER)}
-            errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.PHONE_NUMBER, LanguageType.EN)}
-            label="Phone"
-            value={formData?.PHONE_NUMBER ?? ''} 
-            setValue={(v) => setFormData(UserDataPropsType.PHONE_NUMBER, v)} />
-        <DateInput 
+        <DateInput
           isRequired
           isError={validationResult.hasError(UserDataPropsType.BIRTH_DATE)}
           errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.BIRTH_DATE, LanguageType.EN)}
           label="Date of birth"
-          value={formData?.BIRTH_DATE ?? ''} 
+          value={formData?.BIRTH_DATE ?? ''}
           setValue={(v) => setFormData(UserDataPropsType.BIRTH_DATE, v)} />
 
           <InfoWithIcon
@@ -85,17 +115,16 @@ export const PersonalForm = () => {
         </InfoWithIcon>
 
         <ButtonsContainer>
-          <Button 
+          <Button
             isLoading={isLoading}
-            isWide 
-            styleType={ButtonStyleEnum.GREEN} 
-            type='submit'>Submit</Button> 
-          <Button 
+            isWide
+            styleType={ButtonStyleEnum.GREEN}
+            type='submit'>Submit</Button>
+          <Button
             type='button'
             onClick={() => setStep(Onboarding_Step.ADDRESS)}
-            isWide>Back</Button>  
+            isWide>Back</Button>
         </ButtonsContainer>
-        
     </Form>
   )
 }

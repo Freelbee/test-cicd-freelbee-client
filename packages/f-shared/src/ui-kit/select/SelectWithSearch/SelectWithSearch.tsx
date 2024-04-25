@@ -7,7 +7,6 @@ import { Input } from "../../inputs/input/input";
 import { DOMHelper } from "@freelbee/shared/helpers";
 import { Color, Text, typography } from "@freelbee/shared/ui-kit";
 
-
 interface SelectWithInputProps<T> {
     placeholder?: string,
     searchPlaceholder?: string,
@@ -19,6 +18,9 @@ interface SelectWithInputProps<T> {
     isRequired?: boolean,
     label: string;
     isError?: boolean;
+    isDisabled?: boolean;
+    hideSearch?: boolean;
+    noBorder?: boolean;
 }
 
 export function SelectWithSearch<T> (props: SelectWithInputProps<T>) {
@@ -32,9 +34,12 @@ export function SelectWithSearch<T> (props: SelectWithInputProps<T>) {
         setValue,
         getStringValue,
         isError,
+        isDisabled,
+        hideSearch = false,
+        noBorder = false,
         ...rest
     } = props;
-    
+
     const ariaId = useId();
     const searchId = useId();
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -56,7 +61,7 @@ export function SelectWithSearch<T> (props: SelectWithInputProps<T>) {
     const toggleOpen = () => setIsOpen(prev => !prev);
 
     const renderItems = () => {
-      return items.filter(el => getStringValue(el).toLowerCase().includes(searchValue.toLowerCase()))
+      return items.filter(v => v !== value).filter(el => getStringValue(el).toLowerCase().includes(searchValue.toLowerCase()))
                   .map((item, idx) => (
                     <Item
                       role='option'
@@ -75,27 +80,25 @@ export function SelectWithSearch<T> (props: SelectWithInputProps<T>) {
     return (
         <Content ref={modalRef}>
             {rest.label && <Label {...rest} forInput={searchId}/>}
-            <InputContainer onClick={toggleOpen} ref={buttonRef} $isError={isError}>
-                    {!value && 
-                    <Text font='bodySmall' color={Color.GRAY_600} styles={placeholderStyled}>
-                      {placeholder}
-                    </Text>}
-                    {value && renderOption(value)}
-                    <ArrowContainer isOpen={isOpen} isDisabled={false}>
-                        <ArrowIcon/>
-                    </ArrowContainer>
+            <InputContainer onClick={toggleOpen} ref={buttonRef} $isError={isError} $isDisabled={isDisabled} $noBorder={noBorder}>
+                {!value && <Text font='body' color={Color.GRAY_500} styles={placeholderStyled}>{placeholder}</Text>}
+                {value && <Text styles={placeholderStyled}>{renderOption(value)}</Text>}
+                <ArrowContainer isOpen={isOpen} isDisabled={false}>
+                    <ArrowIcon/>
+                </ArrowContainer>
             </InputContainer>
 
             <ListContainer show={isOpen}>
-              <SearchContainer>
-                <Input
-                    id={searchId}
-                    placeholder={searchPlaceholder}
-                    value={searchValue}
-                    setValue={(v) => setSearchValue(v)}
-                />                
-              </SearchContainer>
-
+                {!hideSearch && (
+                    <SearchContainer>
+                      <Input
+                          id={searchId}
+                          placeholder={searchPlaceholder}
+                          value={searchValue}
+                          setValue={(v) => setSearchValue(v)}
+                      />
+                    </SearchContainer>
+                )}
                 <ListContent role='listbox' id={ariaId} ref={listboxRef}>
                     {renderItems()}
                 </ListContent>
@@ -107,7 +110,7 @@ export function SelectWithSearch<T> (props: SelectWithInputProps<T>) {
 
 const placeholderStyled = css`
 height: 100%;
-padding: 10px;
+padding: 15px;
 display: flex;
 align-items: center;
 `
@@ -125,8 +128,10 @@ const SearchContainer = styled.div`
 `;
 
 const InputContainer = styled.div<{
-  $isError?: boolean, 
+  $isError?: boolean,
   $isValid?: boolean,
+  $isDisabled?: boolean,
+  $noBorder: boolean,
 }>`
   position: relative;
   ${typography.body};
@@ -137,6 +142,7 @@ const InputContainer = styled.div<{
   border-radius: 10px;
   border: 1px solid ${({$isError, $isValid}) => $isError ? Color.DANGER
         : $isValid ? Color.EMERALD : Color.GRAY_400};
+  border-color: ${({ $noBorder }) => $noBorder && 'transparent'};
   transition: 0.3s border;
 
   &::placeholder {
@@ -146,6 +152,7 @@ const InputContainer = styled.div<{
   &:hover {
     border: 1px solid ${({$isError, $isValid}) => $isError ? Color.DANGER
         : $isValid ? Color.EMERALD : Color.GRAY_600};
+    border-color: ${({ $noBorder }) => $noBorder && 'transparent'};
   }
 
   &:focus {
@@ -154,9 +161,10 @@ const InputContainer = styled.div<{
         : $isValid ? Color.EMERALD : Color.BLUE};
   }
 
-  &:disabled {
-    border: 1px solid ${Color.GRAY_400};
-  }
+  ${({ $isDisabled }) => $isDisabled && css`
+    opacity: 0.8;
+    pointer-events: none;
+  `}
 `;
 
 const ListContainer = styled.div<{ show: boolean }>`

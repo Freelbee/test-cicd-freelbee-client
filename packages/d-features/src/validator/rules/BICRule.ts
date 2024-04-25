@@ -1,5 +1,5 @@
 import {IRule} from "../interface/IRule";
-import { RuleMessage } from "../interface/RuleMessage";
+import { RuleMessage } from "../../../../f-shared/src/validator/RuleMessage";
 
 export class BICRule implements IRule
 {

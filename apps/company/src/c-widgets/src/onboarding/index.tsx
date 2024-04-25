@@ -12,7 +12,7 @@ import { PaymentDataForm } from "./ui/PaymentDataForm";
 import { FirstStepTitle } from "./ui/FirstStepTitle";
 import { SecondStepTitle } from "./ui/SecondStepTitle";
 import { ThirdStepTitle } from "./ui/ThirdStepTitle";
-import { setOnboardingOpened, useGetCompanyOnboardingStateQuery, useGetCompanyQuery } from "@company/entities";
+import { setOnboardingOpened, useGetCompanyOnboardingStateQuery, useGetCompanyCounterpartyQuery } from "@company/entities";
 import Spinner from "packages/f-shared/src/ui-kit/spinner/Spinner";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@company/features";
@@ -33,7 +33,7 @@ export const OnboardingModal = () => {
 
     const {data: onboardingState, isLoading} = useGetCompanyOnboardingStateQuery();
     // To-do: query
-    const {data: company} = useGetCompanyQuery();
+    const {data: company} = useGetCompanyCounterpartyQuery();
     const [step, setStep] = useState<Onboarding_Step>(Onboarding_Step.USER_DATA);
     const dispatch = useDispatch();
     const isModalOpened = useAppSelector(state => state.onboardingReducer.onboardingOpened);
@@ -46,7 +46,7 @@ export const OnboardingModal = () => {
         if(onboardingState?.isUserDataSet && !onboardingState.isCounterpartyCreated) {
             setStep(Onboarding_Step.COMPANY_DATA)
         }
-        if(onboardingState?.isUserDataSet 
+        if(onboardingState?.isUserDataSet
             && onboardingState.isCounterpartyCreated
             && !onboardingState.isPaymentMethodSet) {
             setStep(Onboarding_Step.PAYMENT_DATA)
@@ -63,20 +63,20 @@ export const OnboardingModal = () => {
                     step,
                     setStep
                 }}>
-                    {isLoading ? 
+                    {isLoading ?
                     <Container><Spinner loading={isLoading} size={50} /></Container>
                     :
                      <Container>
                         <Header>
                             {onboardingTitle[step]}
-                            <CloseButton 
+                            <CloseButton
                                 size={CloseBtnSize.L}
                                 styles={closeBtnStyle}
                                 clickHandler={closeModal} />
-                        </Header>  
+                        </Header>
                         {onboardingContent[step]}
                     </Container>}
-                   
+
                 </OnboardingContext.Provider>
 
         </ModalWindow>
@@ -116,5 +116,5 @@ const Header = styled.div`
 const closeBtnStyle = css`
   position: absolute;
   top: 16px;
-  right: 16px;  
+  right: 16px;
 `;

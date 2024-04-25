@@ -12,6 +12,7 @@ const DEFAULT: UserData = {
         "id": 0,
         "status": null,
         "type": UserType.DEFAULT,
+        "signature": "",
         "props": {
             [UserDataPropsType.FIRST_NAME]: "",
             [UserDataPropsType.LAST_NAME]: "",
@@ -24,7 +25,7 @@ const DEFAULT: UserData = {
 export const useUserData = (): [UserData, QueryStatus] => {
     const {data, status} = useGetUserQuery();
     const user = data || DEFAULT;
-    
+
     // To-Do убрать когда все будет работать со статусами и показом онбоардинга
     if(!user.userData) {
         user.userData = DEFAULT.userData

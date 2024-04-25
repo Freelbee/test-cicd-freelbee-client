@@ -1,21 +1,18 @@
 'use client'
 import { Suspense } from "react";
 
-import { HeadMenu, LayoutContext, MobileMenu, NavigationMenu } from "@freelancer/features"
+import { HeadMenu, LayoutContext, MobileMenu, NavigationMenu, OnboardingNotification } from "@freelancer/features"
 import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit"
 import { PropsWithChildren, useState } from "react"
 import styled from "styled-components"
-
 import { OnboardingModal } from "../onboarding"
+import { useGetUserQuery } from "@freelancer/entities"
 import {FreelancerAuthModal} from "../auth/FreelancerAuthModal";
-// import { useGetUserQuery } from "@freelancer/entities"
 
 export const PersonalLayout = ({children}: PropsWithChildren) => {
 
+  const {data: user} = useGetUserQuery();
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
-  // const {data: user} = useGetUserQuery();
-
-
 
   return (
     <LayoutContext.Provider value={{
@@ -32,12 +29,11 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
         <NavigationMenu />
         <MobileMenu />
         <Main>
-          {/* {!user?.userData.status ?
-            <OnboardingNotification />
+          {!user?.userData
+            ? <OnboardingNotification />
             :
             children
-          } */}
-          {children}
+          }
         </Main>
       </Container>
     </LayoutContext.Provider>

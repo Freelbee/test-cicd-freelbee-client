@@ -9,6 +9,7 @@ export * from './user/interface/UserResponse';
 export * from './user/interface/UserDataType';
 export * from './user/interface/UserDataPropType';
 export * from './user/interface/UserStatus';
+export * from './user/interface/UserRole';
 export * from './user/ui/InfoBadge/InfoBadge';
 
 export * from './counterparty/interface/CounterpartyDataDto';
@@ -19,9 +20,14 @@ export * from './counterparty/interface/CounterpartyStatus';
 export * from './payment/interface/PaymentMethodDto';
 export * from './payment/interface/PaymentMethodPropType';
 export * from './payment/interface/PaymentMethodType';
+export * from './payment/interface/Currency';
+export * from './payment/interface/CurrencyType';
+export * from './payment/interface/PaymentProviderName';
 
 export * from './country/index';
 
 export * from './task/interface/TaskCounterpartyDataDto';
 export * from './task/interface/TaskStatus';
 export * from './task/interface/SwitchTaskStatusDto';
+export * from './task/interface/FileLink';
+export * from './task/interface/TaskFileDto';

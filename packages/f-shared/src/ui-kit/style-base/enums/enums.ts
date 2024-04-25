@@ -61,7 +61,7 @@ export enum Color {
   
   VIOLET = '#7B61FF',
   VIOLET_TRANSPARENT = 'rgb(229 221 248 / 30%)',
-
+  TRANSPARENT = 'transparent'
   
 }
 
@@ -77,5 +77,6 @@ export enum BORDER_RADIUS {
   'XXS' = '2px',
   'S' = '8px',
   'M' = '14px',
-  'L' = '24px',
+  'L' = '20px',
+  'XL' = '24px',
 }
