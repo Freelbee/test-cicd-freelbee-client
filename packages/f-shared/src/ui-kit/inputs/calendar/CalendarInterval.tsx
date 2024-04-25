@@ -49,7 +49,7 @@ export function CalendarInterval(props: Props) {
 
   const [pickerDate, setPickerDate] = useState<Date>(endDate ?? new Date());
 
-  const [monthsIsOpen, setMonthsIsOpen] = useState<boolean>(false);
+  const [monthsIsOpen] = useState<boolean>(false);
   const [monthsYearsIsOpen, setMonthsYearsIsOpen] = useState<boolean>(false);
 
   const [isOpen, setIsOpen] = useState(false);
