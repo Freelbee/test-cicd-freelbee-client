@@ -1,9 +1,15 @@
-import {API, Endpoint_Enum} from "@freelancer/shared";
+import { API, Endpoint_Enum, Token_Enum } from '@freelancer/shared';
 import {AuthDto, RegistrationDto, SessionDto} from "@freelbee/entities";
 
 
 export const authApi = API.injectEndpoints({
   endpoints: (builder) => ({
+    isAuthenticated: builder.query<boolean, void>({
+      query: () => ({
+        url: Endpoint_Enum.AUTH__FREELANCER__IS_AUTHENTICATED
+      }),
+      providesTags: ['is-authenticated']
+    }),
     registerFreelancer: builder.mutation<void, RegistrationDto>({
       query: (body) => ({
         url: Endpoint_Enum.FREELANCER_SIGNUP,
@@ -12,7 +18,7 @@ export const authApi = API.injectEndpoints({
       }),
       extraOptions: {notAuthorized: true}
     }),
-    getFreelancerRegSession: builder.query<SessionDto, { timestamp: number; }>({
+    getFreelancerRegSession: builder.mutation<SessionDto, void>({
       query: () => ({
         url: Endpoint_Enum.FREELANCER_REG_SESSION
       }),
@@ -24,6 +30,7 @@ export const authApi = API.injectEndpoints({
         method: 'POST'
       }),
       extraOptions: {notAuthorized: true},
+      invalidatesTags: ['is-authenticated']
     }),
     resendFreelancerConfirmation: builder.mutation<void, void>({
       query: () => ({
@@ -40,7 +47,7 @@ export const authApi = API.injectEndpoints({
       }),
       extraOptions: {notAuthorized: true}
     }),
-    getFreelancerAuthSession: builder.query<SessionDto, { timestamp: number; }>({
+    getFreelancerAuthSession: builder.mutation<SessionDto, void>({
       query: () => ({
         url: Endpoint_Enum.FREELANCER_AUTH_SESSION
       }),
@@ -53,6 +60,7 @@ export const authApi = API.injectEndpoints({
         method: 'POST'
       }),
       extraOptions: {notAuthorized: true},
+      invalidatesTags: ['is-authenticated']
     }),
     resendFreelancerAuthConfirmation: builder.mutation<void, void>({
       query: () => ({
@@ -61,16 +69,34 @@ export const authApi = API.injectEndpoints({
       }),
       extraOptions: {notAuthorized: true}
     }),
+    logout: builder.mutation<string, void>({
+      query: () => {
+        const token  = localStorage.getItem(Token_Enum.ACCESS_TOKEN);
+        localStorage.removeItem(Token_Enum.ACCESS_TOKEN);
+
+        return {
+          url: Endpoint_Enum.AUTH__FREELANCER__LOGOUT,
+          method: 'POST',
+          headers: new Headers({
+            'Authorization': `Bearer ${token}`
+          }),}
+
+      },
+      extraOptions: { notAuthorized: true },
+      invalidatesTags: ['is-authenticated']
+    }),
   })
 })
 
 export const {
+  useLogoutMutation,
+  useIsAuthenticatedQuery,
   useRegisterFreelancerMutation,
-  useGetFreelancerRegSessionQuery,
+  useGetFreelancerRegSessionMutation,
+  useGetFreelancerAuthSessionMutation,
   useSendFreelancerRegConfirmationMutation,
   useResendFreelancerConfirmationMutation,
   useSignInFreelancerMutation,
-  useGetFreelancerAuthSessionQuery,
   useSendFreelancerAuthConfirmationMutation,
   useResendFreelancerAuthConfirmationMutation
 } = authApi;

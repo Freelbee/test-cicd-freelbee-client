@@ -10,7 +10,7 @@ import { PaymentMethodType } from "@freelbee/entities";
 import { CryptoTips } from "./PaymentMethosTips/CryptoTips";
 import { BancAccountTips } from "./PaymentMethosTips/BancAccountTips";
 import { useDispatch } from "react-redux";
-import { TaskAcceptanceStep, setAcceptanceStep, setDetailsOpen, useAcceptTaskMutation, useGetFreelancerQuery} from "@freelancer/entities";
+import { TaskAcceptanceStep, setAcceptanceStep, setDetailsOpen, useAcceptTaskMutation, useGetFreelancer} from "@freelancer/entities";
 import { BankPaymentDataForm } from "./PaymentMethodForms/BankPaymentDataForm";
 import { CryptoPaymentDataForm } from "./PaymentMethodForms/CryptoPaymentDataForm";
 import { CardPaymentDataForm } from "./PaymentMethodForms/CardPaymentDataForm";
@@ -47,15 +47,15 @@ const PAYMENT_METHOD_NAMES: Record<PaymentMethodType, string> = {
 }
 
 export const PaymentStep = () => {
-    
+
     const dispatch = useDispatch();
     const {displayedTask} = useAppSelector(state => state.taskSliceReducer);
     const [acceptTask] = useAcceptTaskMutation();
     const {data: freelancer} = useGetFreelancerQuery();
-    const {formData, 
-        setFormData, 
-        paymentFormData, 
-        resetPaymentData, 
+    const {formData,
+        setFormData,
+        paymentFormData,
+        resetPaymentData,
         resetFormData,
         setValidatorResult} = useContext(TaskAcceptanceContext);
 
@@ -81,7 +81,7 @@ export const PaymentStep = () => {
     }
 
     const handleAccept = () => {
-        //To - Do - вернуть проверки, пока замокано 
+        //To - Do - вернуть проверки, пока замокано
         if(!displayedTask || !displayedTask.contractId || !freelancer || !formData.paymentMethodType) return;
 
         const validationResult = validatePaymentData();
@@ -114,7 +114,7 @@ export const PaymentStep = () => {
                 </Text>
         </PaymentMethodContainer>
       );
-    
+
   return (
     <FormGrid>
         <Header>
@@ -140,8 +140,8 @@ export const PaymentStep = () => {
                 renderOption={(item) => renderPaymentMethod(item)}
                 getStringValue={v => v.toString()}
                 hideSearch={true}
-            />   
-            {formData.paymentMethodType && TIPS_BY_PAYMENT_METHOD[formData.paymentMethodType]}         
+            />
+            {formData.paymentMethodType && TIPS_BY_PAYMENT_METHOD[formData.paymentMethodType]}
         </RowContainer>
 
         <FormContainer>
@@ -155,7 +155,7 @@ export const PaymentStep = () => {
             font="body">
             Fill all fields with * to go next
         </InfoWithIcon>
-     
+
         <ActionsContainer>
             <Button
                 disabled={!formData.paymentMethodType}
@@ -170,7 +170,7 @@ export const PaymentStep = () => {
                 isWide>
                 Back
             </Button>
-        </ActionsContainer>      
+        </ActionsContainer>
         </FormGrid>
 
     </FormGrid>

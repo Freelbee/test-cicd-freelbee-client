@@ -27,5 +27,7 @@ export enum Endpoint_Enum {
   FREELANCER_SIGNIN = '/auth/freelancer',
   FREELANCER_AUTH_SESSION = '/auth/freelancer/session',
   FREELANCER_AUTH_CONFIRM = '/auth/freelancer/confirm/{0}',
-  FREELANCER_AUTH_RESEND_SESSION = '/auth/freelancer/email/resend'
+  FREELANCER_AUTH_RESEND_SESSION = '/auth/freelancer/email/resend',
+  AUTH__FREELANCER__IS_AUTHENTICATED = '/auth/freelancer/is-authenticated',
+  AUTH__FREELANCER__LOGOUT = '/auth/freelancer/logout',
 }

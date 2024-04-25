@@ -2,18 +2,18 @@
 
 import {AuthModal, AuthModalState} from "@freelbee/widgets";
 import {
-  authApi,
   useRegisterFreelancerMutation,
   useResendFreelancerAuthConfirmationMutation,
   useResendFreelancerConfirmationMutation,
   useSendFreelancerAuthConfirmationMutation,
   useSendFreelancerRegConfirmationMutation,
-  useSignInFreelancerMutation
+  useSignInFreelancerMutation,
+  useGetFreelancerRegSessionMutation,
+  useGetFreelancerAuthSessionMutation,
 } from "@freelancer/entities";
 import {useEffect, useState} from "react";
 import {useQueryParamsNavigation} from "@freelbee/shared/hooks";
-import {SessionDto} from "@freelbee/entities";
-import {useDispatch} from "react-redux";
+import { AuthDto, RegistrationDto, SessionDto } from '@freelbee/entities';
 
 export const FreelancerAuthModal = () => {
   const [searchParams] = useQueryParamsNavigation();
@@ -27,14 +27,20 @@ export const FreelancerAuthModal = () => {
   const [checkAuthCode] = useSendFreelancerAuthConfirmationMutation();
   const [resendAuthCode] = useResendFreelancerAuthConfirmationMutation();
 
-  const dispatch = useDispatch();
+  const [getRegSession] = useGetFreelancerRegSessionMutation();
+  const [getAuthSession] = useGetFreelancerAuthSessionMutation();
+
 
   const userRegSession = async (): Promise<SessionDto> => {
-    return dispatch(authApi.endpoints.getFreelancerRegSession.initiate({timestamp: Date.now()}));
+    return getRegSession().unwrap().then((res) => {
+      return res;
+    });
   }
 
   const userAuthSession = async (): Promise<SessionDto> => {
-    return dispatch(authApi.endpoints.getFreelancerAuthSession.initiate({timestamp: Date.now()}));
+    return getAuthSession().unwrap().then((res) => {
+      return res;
+    });
   }
 
   useEffect(() => {
@@ -49,18 +55,41 @@ export const FreelancerAuthModal = () => {
   }, [searchParams]);
 
 
+  const onCheckAuthCode = async (code: string) => {
+    return checkAuthCode(code).unwrap();
+  }
+  const onResendAuthCode = async () => {
+    return resendAuthCode().unwrap();
+  }
+
+  const onAuthUser = async (dto: AuthDto) => {
+    return authUser(dto).unwrap();
+  }
+
+  const onCheckRegCode = async (code: string) => {
+    return checkCode(code).unwrap();
+  }
+
+  const onResendRegCode = async () => {
+    return resendCode().unwrap();
+  }
+
+  const onRegisterUser = async (dto: RegistrationDto) => {
+    return registerUser(dto).unwrap();
+  }
+
   return (
     <AuthModal
       authModalState={modalState}
       setAuthModalState={setModalState}
-      registerUser={registerUser}
+      registerUser={onRegisterUser}
       userRegSession={userRegSession}
-      checkCode={checkCode}
-      resendCode={resendCode}
+      checkCode={onCheckRegCode}
+      resendCode={onResendRegCode}
 
-      authUser={authUser}
-      checkAuthCode={checkAuthCode}
-      resendAuthCode={resendAuthCode}
+      authUser={onAuthUser}
+      checkAuthCode={onCheckAuthCode}
+      resendAuthCode={onResendAuthCode}
       userAuthSession={userAuthSession}
       />
   )
