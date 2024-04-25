@@ -1,5 +1,5 @@
 import { API, Endpoint_Enum } from '@freelancer/shared';
-import { FileAction, FileLink, TaskCounterpartyDataDto, TaskFileDto, TaskStatus} from '@freelbee/entities';
+import { FileLink, TaskCounterpartyDataDto, TaskFileDto, TaskStatus} from '@freelbee/entities';
 import { TaskAcceptanceDto } from '../interface/TaskAcceptanceDto';
 
 export const taskAPI = API.injectEndpoints({
@@ -31,9 +31,14 @@ export const taskAPI = API.injectEndpoints({
     }),
     getTaskFiles: builder.query<Array<TaskFileDto>, number>({
       query: (taskId) => Endpoint_Enum.GET_TASK_FILES.replace('{0}', taskId.toString()),
-      transformResponse: (res: Array<TaskFileDto>) => {
-        return res.map(f => ({...f, action: FileAction.NO_ACTION}));
-      }
+      
+    }),
+    updateTaskFiles: builder.mutation<Array<TaskFileDto>, {files: FormData, taskId: number}>({
+      query: ({taskId, files}) => ({
+        url: Endpoint_Enum.UPDATE_TASK_FILES.replace('{0}', taskId.toString()),
+        method: 'POST',
+        body: files
+      }) 
     }),
   })
 });
@@ -43,5 +48,6 @@ export const {
     useAcceptTaskMutation,
     useSetTaskStatusMutation,
     useGetContractLinkQuery,
-    useGetTaskFilesQuery
+    useGetTaskFilesQuery,
+    useUpdateTaskFilesMutation
 } = taskAPI;

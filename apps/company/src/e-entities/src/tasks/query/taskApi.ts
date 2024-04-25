@@ -1,7 +1,7 @@
 import { API, Endpoint_Enum } from '@company/shared';
 import { WorksCategory } from '../dto/WorksCategory';
 import { TaskFreelancerData } from '../dto/TaskFreelancerData';
-import { Currency, FileAction, FileLink, PaymentProviderName, TaskCounterpartyDataDto, TaskFileDto, TaskStatus } from '@freelbee/entities';
+import { Currency, FileLink, PaymentProviderName, TaskCounterpartyDataDto, TaskFileDto, TaskStatus } from '@freelbee/entities';
 import { ContractPreviewDto } from '../dto/ContractPreviewDto';
 import { FileDownloadHelper } from 'packages/f-shared/src/helpers/FileDownloadHelper';
 
@@ -61,10 +61,7 @@ export const taskAPI = API.injectEndpoints({
       query: (contractId) => Endpoint_Enum.GET_CONTRACT_LINK.replace('{0}', contractId.toString())
     }),
     getTaskFiles: builder.query<Array<TaskFileDto>, number>({
-      query: (taskId) => Endpoint_Enum.GET_TASK_FILES.replace('{0}', taskId.toString()),
-      transformResponse: (res: Array<TaskFileDto>) => {
-        return res.map(f => ({...f, action: FileAction.NO_ACTION}));
-      }
+      query: (taskId) => Endpoint_Enum.GET_TASK_FILES.replace('{0}', taskId.toString())
     }),
   })
 });

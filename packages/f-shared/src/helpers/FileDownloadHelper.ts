@@ -13,4 +13,10 @@ export abstract class FileDownloadHelper {
         link.click();
         link.remove();
     };
+
+    public static hasNotInvalidSymbols (text: string) {
+        const regex = new RegExp(/^[\u0020-\u007E\u0410-\u044F\u0451\u0401\u00AB\u00BB]+$/);
+        console.log(regex.test(text));
+        return (regex.test(text) || text === '');
+    }
 }

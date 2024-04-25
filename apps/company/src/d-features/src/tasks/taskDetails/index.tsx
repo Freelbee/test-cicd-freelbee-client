@@ -8,11 +8,12 @@ import TaskHeadInfo from "./ui/TaskHeadInfo";
 import {Description} from "./ui/Description";
 import { useAppSelector } from "../../store";
 import { skipToken } from "@reduxjs/toolkit/query";
-import { TaskStatus } from "@freelbee/entities";
-import { useGetContractLinkQuery } from "@company/entities";
+import { TaskStatus, UserRole } from "@freelbee/entities";
+import { useGetContractLinkQuery, useGetTaskFilesQuery } from "@company/entities";
 import AssignedTaskActions from "./ui/taskActions/AssignedTaskActions";
 import TaskNewActions from "./ui/taskActions/TaskNewActions";
 import TaskInReviewActions from "./ui/taskActions/TaskInReviewActions";
+import { PinnedFiles } from "@freelbee/entities";
 
 const ACTIONS_BY_STATUS: Record<TaskStatus, JSX.Element> = {
     [TaskStatus.ASSIGNED]: <AssignedTaskActions />,
@@ -29,6 +30,7 @@ export const TaskDetails = () => {
 
     const {displayedTask} = useAppSelector(state => state.taskSliceReducer);
     const {data: link } = useGetContractLinkQuery(displayedTask?.contractId ?? skipToken);
+    const {data: files} = useGetTaskFilesQuery(displayedTask?.taskId ?? skipToken);
 
     return (
         <FormGrid>
@@ -46,6 +48,9 @@ export const TaskDetails = () => {
                 </DownLoadContent>
                 }
             </DownloadContainer>
+            <PinnedFiles 
+                userRole={UserRole.COMPANY}
+                files={files ?? []} />
             {displayedTask && ACTIONS_BY_STATUS[displayedTask?.status]}
         </FormGrid>
     );
