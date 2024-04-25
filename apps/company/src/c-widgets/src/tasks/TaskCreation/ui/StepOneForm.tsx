@@ -57,7 +57,7 @@ export const StepOneForm = () => {
           getStringValue={v => v.name}
           renderOption={(item) => <Text font='body' styles={worksText}>{item.name}</Text>}
         />
-        <HiddenBlock isHide={!taskCreationData?.worksCategory} data-ishide={!taskCreationData?.worksCategory}>
+        <HiddenBlock $isHide={!taskCreationData?.worksCategory} data-ishide={!taskCreationData?.worksCategory}>
           <SelectWithSearch<WorksType>
             isRequired
             label='Type of work'
@@ -146,13 +146,13 @@ const ButtonsContainer = styled.div`
   gap: 16px;
 `;
 
-const HiddenBlock = styled.div<{ isHide: boolean }>`
+const HiddenBlock = styled.div<{ $isHide: boolean }>`
   overflow: hidden;
   height: auto;
   max-height: 0;
   transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
 
-  ${({isHide}) => !isHide && css`
+  ${({$isHide}) => !$isHide && css`
     overflow: visible;
     max-height: 500px;
     transition: max-height 0.4s cubic-bezier(1, 0, 1, 0);

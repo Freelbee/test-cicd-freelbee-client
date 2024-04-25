@@ -117,7 +117,7 @@ export default function MultiSelect<T> (props: Props<T>) {
         <ScrollDrag>
             <SelectedRow>
 
-                {items.length === 0 ? 
+                {items.length === 0 ?
                     <PlaceHolder isDisabled={isDisabled}>{placeholder}</PlaceHolder>
                     :
                     <>
@@ -127,7 +127,7 @@ export default function MultiSelect<T> (props: Props<T>) {
                                 background={selectedBackground}
                                 key={index}>
                                 {selectedItemRender(item)}
-                                <DeleteButton 
+                                <DeleteButton
                                     background={deleteBtnBackground}
                                     iconColor={deleteBtnColor}
                                     onClick={(e) => {
@@ -140,7 +140,7 @@ export default function MultiSelect<T> (props: Props<T>) {
                         ))}
                     </>}
 
-            </SelectedRow>                        
+            </SelectedRow>
         </ScrollDrag>
     );
 
@@ -170,10 +170,10 @@ export default function MultiSelect<T> (props: Props<T>) {
     });
 
     return (
-        <Container 
+        <Container
             isDisabled={isDisabled}
-            height={height} 
-            ref={modalRef} 
+            height={height}
+            ref={modalRef}
             onKeyDown={navigateOptions}>
             <Field
                 ref={buttonRef}
@@ -188,15 +188,15 @@ export default function MultiSelect<T> (props: Props<T>) {
 
                 {renderSelectedList(selected)}
 
-                <ArrowContainer 
-                    isDisabled={isDisabled} 
+                <ArrowContainer
+                    isDisabled={isDisabled}
                     isOpen={isOpened}
                     startPosition={openToTop ? -1 : 1}>
                     <ArrIcon />
                 </ArrowContainer>
 
             </Field>
-            <ListContainer show={isOpened} >
+            <ListContainer $show={isOpened} >
 
                 <ListContent role='listbox' id={ariaId} ref={listboxRef}>
                     {withAllSelect &&
@@ -298,7 +298,7 @@ const Field = styled.div<{borderColor: string, background: string}>`
   background: ${({background}) => background};
   width: 100%;
   transition: 0.2s border;
-  
+
   &::placeholder{
     color: ${Color.GRAY_400};
     font-size: 13px;
@@ -333,7 +333,7 @@ const PlaceHolder = styled.div<{isDisabled: boolean}>`
   }
 `;
 
-const ListContainer = styled.div<{show: boolean}>`
+const ListContainer = styled.div<{$show: boolean}>`
   z-index: 10;
   position: absolute;
   top: calc(100% + 10px);
@@ -345,9 +345,9 @@ const ListContainer = styled.div<{show: boolean}>`
   border-radius: 8px;
 
   transition: opacity .5s, visibility .5s, top .5s;
-  pointer-events: ${({show}) => show ? 'unset' : 'none'};
-  visibility: ${({show}) => show ? 'visible' : 'hidden' };
-  opacity: ${({show}) => show ? '1' : '0'};
+  pointer-events: ${({$show}) => $show ? 'unset' : 'none'};
+  visibility: ${({$show}) => $show ? 'visible' : 'hidden' };
+  opacity: ${({$show}) => $show ? '1' : '0'};
 `;
 
 const ListContent = styled.div`
@@ -418,7 +418,7 @@ const ArrowContainer = styled.div<{isDisabled: boolean, startPosition: number, i
   width: 14px;
   height: 14px;
   transition: transform 0.5s;
-  
+
     svg {
         width: 100%;
         height: 100%;

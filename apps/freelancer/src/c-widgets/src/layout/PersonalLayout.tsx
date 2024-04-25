@@ -1,16 +1,34 @@
 'use client'
+import { useEffect } from 'react';
 
 import { HeadMenu, LayoutContext, MobileMenu, NavigationMenu, OnboardingNotification } from "@freelancer/features"
 import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit"
 import { PropsWithChildren, useState } from "react"
 import styled from "styled-components"
 import { OnboardingModal } from "../onboarding"
-import { useGetUserQuery } from "@freelancer/entities"
+import { useGetUserQuery, useIsAuthenticatedQuery } from '@freelancer/entities';
+import {FreelancerAuthModal} from "../auth/FreelancerAuthModal";
 
 export const PersonalLayout = ({children}: PropsWithChildren) => {
 
-  const {data: user} = useGetUserQuery();
+
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
+
+  const {
+    data: isAuthenticated,
+    isLoading: isAuthenticatedLoading,
+  } = useIsAuthenticatedQuery();
+
+  const {data: user, refetch} = useGetUserQuery(undefined, {
+    skip: !isAuthenticated,
+  });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      refetch();
+    }
+  }, [isAuthenticated, refetch]);
+
 
   return (
     <LayoutContext.Provider value={{
@@ -18,19 +36,24 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
       setNavigationMenuOpened,
     }}>
       <Container>
+        {
+          !isAuthenticated &&
+          !isAuthenticatedLoading &&
+          <FreelancerAuthModal/>
+        }
+        {
+          isAuthenticated && <>
+            <OnboardingModal />
 
-        <OnboardingModal />
+            <HeadMenu />
+            <NavigationMenu />
+            <MobileMenu />
+            <Main>
+              {!user?.userData ? <OnboardingNotification /> : children}
+            </Main>
+          </>
+        }
 
-        <HeadMenu />
-        <NavigationMenu />
-        <MobileMenu />
-        <Main>
-          {!user?.userData
-            ? <OnboardingNotification />
-            :
-            children
-          }
-        </Main>
       </Container>
     </LayoutContext.Provider>
 

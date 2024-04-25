@@ -9,7 +9,7 @@ export default function Spinner (props: Props) {
     const {loading, size} = props;
 
     return (
-        <Container load={loading} size={size}/>
+        <Container $load={loading} size={size}/>
     );
 }
 
@@ -22,7 +22,7 @@ const Spin = keyframes`
 `;
 
 
-const Container = styled.div<{ load: boolean, size: number }>`
+const Container = styled.div<{ $load: boolean, size: number }>`
   width: ${({size})=>size}px;
   height: ${({size})=>size}px;
 
@@ -36,8 +36,8 @@ const Container = styled.div<{ load: boolean, size: number }>`
   //left:0;
   //right: 0;
   //margin: auto;
-  
+
   transition: .5s;
-  
-  animation: ${Spin} ${({load})=>load ? '1' : '.5'}s  infinite linear;
+
+  animation: ${Spin} ${({$load})=>$load ? '1' : '.5'}s  infinite linear;
 `;

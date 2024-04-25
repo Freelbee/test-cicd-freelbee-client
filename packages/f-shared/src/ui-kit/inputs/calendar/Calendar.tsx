@@ -83,9 +83,9 @@ export function Calendar(props: Props) {
         </CalendarIconContainer>
       </Content>
       <PopupContainer
-        isOpen={isOpen}
-        popupPosition={popupPosition}
-        popupPositionMobile={popupPositionMobile}>
+        $isOpen={isOpen}
+        $popupPosition={popupPosition}
+        $popupPositionMobile={popupPositionMobile}>
         <MonthYearSelectorContainer>
           <Text
             font="bodySmall"
@@ -213,37 +213,37 @@ const CalendarIconContainer = styled.div`
 `;
 
 const PopupContainer = styled.div<{
-  isOpen: boolean,
-  popupPosition: PopupPosition,
-  popupPositionMobile?: PopupPosition
+  $isOpen: boolean,
+  $popupPosition: PopupPosition,
+  $popupPositionMobile?: PopupPosition
 }>`
   position: absolute;
   transition: visibility 0.2s, opacity 0.2s, top 0.2s;
-  pointer-events: ${({ isOpen }) => isOpen ? 'auto' : 'none'};
-  visibility: ${({ isOpen }) => isOpen ? 'visible' : 'hidden'};
-  opacity: ${({ isOpen }) => isOpen ? '1' : '0'};
-  top: ${({ isOpen }) => isOpen ? 'calc(100% + 5px)' : '100%'};
+  pointer-events: ${({ $isOpen }) => $isOpen ? 'auto' : 'none'};
+  visibility: ${({ $isOpen }) => $isOpen ? 'visible' : 'hidden'};
+  opacity: ${({ $isOpen }) => $isOpen ? '1' : '0'};
+  top: ${({ $isOpen }) => $isOpen ? 'calc(100% + 5px)' : '100%'};
   width: 290px;
   background: #FFFFFF;
   box-shadow: 0px 4px 54px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 16px;
 
-  ${({ popupPosition }) => {
-    if (popupPosition === PopupPosition.RIGHT) return css`right: 0;`;
-    if (popupPosition === PopupPosition.CENTER) return css`left: -25%;`;
+  ${({ $popupPosition }) => {
+    if ($popupPosition === PopupPosition.RIGHT) return css`right: 0;`;
+    if ($popupPosition === PopupPosition.CENTER) return css`left: -25%;`;
     return css`left: 0;`;
   }};
 
   ${mediaBreakpointDown(Breakpoint.Tablet)} {
-    ${({ popupPosition, popupPositionMobile }) => {
-      if (!popupPositionMobile || popupPosition === popupPositionMobile) return;
+    ${({ $popupPosition, $popupPositionMobile }) => {
+      if (!$popupPositionMobile || $popupPosition === $popupPositionMobile) return;
 
-      if (popupPositionMobile === PopupPosition.RIGHT) return css`
+      if ($popupPositionMobile === PopupPosition.RIGHT) return css`
         right: 0;
         left: unset;
       `;
-      if (popupPositionMobile === PopupPosition.CENTER) return css`
+      if ($popupPositionMobile === PopupPosition.CENTER) return css`
         left: -25%;
         right: unset;
       `;

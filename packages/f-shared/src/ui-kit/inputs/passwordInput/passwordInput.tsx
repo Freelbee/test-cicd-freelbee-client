@@ -67,6 +67,7 @@ export function PasswordInput (props: Props) {
                         id={id}
                     />
                     <EyeButton
+                        tabIndex={-1}
                         type='button'
                         $isHide={showPassword}
                         onClick={() => {

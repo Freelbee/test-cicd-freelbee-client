@@ -41,6 +41,7 @@ export const companyAPI = API.injectEndpoints({
 export const {
     useGetCompanyCounterpartyQuery,
     useGetCompanyOnboardingStateQuery,
+    useLazyGetCompanyOnboardingStateQuery,
     useCreateCompanyMutation,
     useCreatePaymentDataMutation
 } = companyAPI;

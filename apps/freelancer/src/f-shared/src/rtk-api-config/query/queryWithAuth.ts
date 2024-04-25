@@ -28,6 +28,8 @@ ExtraOptions
     const notAuthorizedRequest = extraOptions?.notAuthorized;
     const crmQuery = extraOptions?.crmQuery;
 
+
+
     const getArgsConfig = () => notAuthorizedRequest ? args : getAuthorizedArgsConfig(args);
 
     let result = await baseQuery(
@@ -58,27 +60,20 @@ ExtraOptions
 };
 
 const refreshTokensQuery = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: ExtraOptions) => {
-    const body = {
-        refreshToken: localStorage.getItem(Token_Enum.REFRESH_TOKEN)!,
-        accessToken: localStorage.getItem(Token_Enum.ACCESS_TOKEN)!
-    };
 
     const refreshResult = (await baseQuery(
         {
             url: Endpoint_Enum.REFRESH_TOKEN,
-            method: 'POST',
-            body
+            method: 'POST'
         },
         api,
         extraOptions,
     )) as QueryReturnValue<TokensDto, FetchBaseQueryError>;
 
-    if (refreshResult.data) {
-      const refreshToken = refreshResult.data?.refreshToken;
-      const accessToken = refreshResult.data?.accessToken;
+    if (refreshResult) {
+     /* const accessToken = refreshResult.meta.response.headers.get('Authorization').replace('Bearer ', '');
 
-      localStorage.setItem(Token_Enum.REFRESH_TOKEN, refreshToken);
-      localStorage.setItem(Token_Enum.ACCESS_TOKEN, accessToken);
+      localStorage.setItem(Token_Enum.ACCESS_TOKEN, accessToken);*/
 
         // retry the initial query
         return await baseQuery(
@@ -86,7 +81,6 @@ const refreshTokensQuery = async (args: string | FetchArgs, api: BaseQueryApi, e
             api,
             extraOptions);
     } else {
-        localStorage.removeItem(Token_Enum.REFRESH_TOKEN);
         localStorage.removeItem(Token_Enum.ACCESS_TOKEN);
         redirect('/sign-in');
     }

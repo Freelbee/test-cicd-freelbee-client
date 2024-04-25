@@ -36,7 +36,7 @@ export function MonthYearSwitcher (props: Props) {
                 {
                     months.map((month, index) => (
                         <DateText
-                            isDisabled={
+                            $isDisabled={
                                 (!!minDate && moment(minDate).isAfter(moment(pickerDate).clone().month(index), 'month')) ||
                                 !!maxDate && moment(maxDate).isBefore(moment(pickerDate).clone().month(index), 'month')
                             }
@@ -57,7 +57,7 @@ export function MonthYearSwitcher (props: Props) {
                 {
                     Array.from({length: maxDate.getFullYear() - minDate.getFullYear() + 1}, (_, i) => i + minDate.getFullYear()).map((year, index) => (
                         <DateText
-                            isDisabled={
+                            $isDisabled={
 							    !!minDate && minDate.getFullYear() > year || !!maxDate && maxDate.getFullYear() < year
                             }
                             onClick={() => {
@@ -104,7 +104,7 @@ const ScrollBlock = styled.div`
   }
 `;
 
-const DateText	= styled.div<{isSelected: boolean, isDisabled: boolean}>`
+const DateText	= styled.div<{isSelected: boolean, $isDisabled: boolean}>`
   cursor: pointer;
   ${typography.bodySmall};
   line-height: 150%;
@@ -118,7 +118,7 @@ const DateText	= styled.div<{isSelected: boolean, isDisabled: boolean}>`
   min-height: 30px;
   width: 100%;
 
-  ${props => props.isDisabled && css`
+  ${props => props.$isDisabled && css`
 	  pointer-events: none;
 	  opacity: 0.3;
   `}

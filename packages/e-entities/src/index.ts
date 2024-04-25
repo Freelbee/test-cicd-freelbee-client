@@ -1,5 +1,9 @@
 export * from './zoho-crm/interface/ZohoError';
 export * from './zoho-crm/interface/ZohoLeadRequest';
+export * from './auth/interface/RegistrationData';
+export * from './auth/dto/AuthDto';
+export * from './auth/dto/SessionDto';
+export * from './auth/dto/RegistrationDto';
 
 export * from './user/interface/UserDataDto';
 export * from './user/interface/UserResponse';

@@ -43,7 +43,10 @@ export const rootReducer = combineReducers({
 
 export const setupStore = () => configureStore({
     reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middlewares)
+
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false,
+  }).concat(middlewares)
 });
 
 export const store = setupStore();

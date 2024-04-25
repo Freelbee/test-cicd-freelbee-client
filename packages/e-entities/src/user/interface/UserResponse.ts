@@ -6,7 +6,7 @@ import { UserDataPropsType} from "./UserDataPropType"
 export interface UserResponse {
 	id: number,
 	email: string,
-	userData: {
+	userData:  {
 		id: number,
 		status: UserStatus | null,
 		type: UserType,
