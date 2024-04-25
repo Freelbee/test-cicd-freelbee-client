@@ -2,14 +2,17 @@
 
 import { Button } from "@freelbee/shared/ui-kit";
 import { css } from "styled-components";
-import { setTaskCreationModalOpened } from '@company/entities';
+import { setTaskCreationModalOpened, useGetCompanyCounterpartyQuery } from '@company/entities';
 import { useDispatch } from 'react-redux';
+import { CounterpartyStatus } from "@freelbee/entities";
 
 export const AddTaskButton = () => {
   const dispatch = useDispatch();
+  const {data: company} = useGetCompanyCounterpartyQuery();
 
   return (
     <Button
+    disabled={!company || company.counterpartyDetail.status !== CounterpartyStatus.APPROVED}
     styles={btnStyles}
     onClick={() => dispatch(setTaskCreationModalOpened(true))}
     isFit>Add task</Button>
