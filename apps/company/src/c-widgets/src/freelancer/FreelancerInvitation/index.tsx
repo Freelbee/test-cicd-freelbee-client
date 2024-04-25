@@ -45,7 +45,7 @@ export const FreelancerInvitationModal = () => {
   const sendInvitation = async () => {
     const body: FreelancerInvitationDto = {
       freelancerEmail: email,
-      companyCounterpartyId: company.id
+      companyCounterpartyId: company?.id
     };
     const formValidatorResult = validator.validate(body);
     setValidatorResult(formValidatorResult);
