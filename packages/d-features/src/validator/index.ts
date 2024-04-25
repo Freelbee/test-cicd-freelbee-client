@@ -4,8 +4,6 @@ export * from './interface/IRule';
 
 export * from './result/ValidatorResult';
 
-export * from './rules/BICRule';
-export * from './rules/BICRule';
 export * from './rules/CheckedRule';
 export * from './rules/CirilycRule';
 export * from './rules/EmailRule';

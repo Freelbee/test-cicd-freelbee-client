@@ -13,7 +13,7 @@ import { useGetContractLinkQuery, useGetTaskFilesQuery } from "@company/entities
 import AssignedTaskActions from "./ui/taskActions/AssignedTaskActions";
 import TaskNewActions from "./ui/taskActions/TaskNewActions";
 import TaskInReviewActions from "./ui/taskActions/TaskInReviewActions";
-import { PinnedFiles } from "@freelbee/features";
+import { PinnedFiles } from "@freelbee/entities";
 
 const ACTIONS_BY_STATUS: Record<TaskStatus, JSX.Element> = {
     [TaskStatus.ASSIGNED]: <AssignedTaskActions />,

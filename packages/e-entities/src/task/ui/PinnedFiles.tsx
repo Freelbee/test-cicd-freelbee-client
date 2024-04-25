@@ -3,7 +3,7 @@
 import { Color, Text } from "@freelbee/shared/ui-kit";
 import styled from "styled-components";
 import { TaskFileDto, UserRole } from "@freelbee/entities";
-import { StaticFileBadge } from "@freelbee/features";
+import { StaticFileBadge } from "./StaticFileBadge";
 
 interface Props {
     userRole: UserRole

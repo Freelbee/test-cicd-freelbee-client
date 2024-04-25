@@ -2,5 +2,3 @@
 export * from './validator/index';
 export * from './telegramBot/index';
 export * from './country/index';
-export * from './tasks/ui/StaticFileBadge';
-export * from './tasks/ui/PinnedFiles';
