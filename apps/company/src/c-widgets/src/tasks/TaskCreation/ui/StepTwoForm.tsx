@@ -9,7 +9,7 @@ import { useDataStateUpdater } from '@freelbee/shared/hooks';
 import { ReactComponent as TransakIcon } from '@freelbee/assets/icons/payment-method/transak.svg';
 import { ReactComponent as NebeusIcon } from '@freelbee/assets/icons/payment-method/nebeus.svg';
 import { useGetCompanyCounterpartyQuery, useGetCurrenciesQuery } from '@company/entities';
-import {Currency, PaymentProviderName} from "@freelbee/entities";
+import { Currency, PaymentProviderName } from '@freelbee/entities';
 
 export const StepTwoForm = () => {
   const {

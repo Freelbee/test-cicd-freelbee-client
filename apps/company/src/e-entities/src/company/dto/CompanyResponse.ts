@@ -2,9 +2,9 @@ import { CounterpartyDetailsPropsType, CounterpartyDetailsType, CounterpartyStat
 import { DetailProps } from "@freelbee/shared";
 
 export interface CompanyResponse {
-    status: CounterpartyStatus,
     id: number,
     counterpartyDetail: {
+        status: CounterpartyStatus,
         id: number,
         iban: string,
         country: string,
@@ -14,13 +14,14 @@ export interface CompanyResponse {
 }
 
 export interface CompanyData {
-    status: CounterpartyStatus,
     id: number,
     counterpartyDetail: {
+        status: CounterpartyStatus,
         id: number,
         iban: string,
         country: string,
         type: CounterpartyDetailsType,
+
         props: Record<CounterpartyDetailsPropsType, string>
     }
 }

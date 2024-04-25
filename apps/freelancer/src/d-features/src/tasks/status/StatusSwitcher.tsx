@@ -144,7 +144,7 @@ export function Status (props: Props) {
 
     const setStatus = (status: TaskStatus) => {
         setTaskStatus({
-            taskId: task.id,
+            taskId: task.taskId,
             status
         });
     };

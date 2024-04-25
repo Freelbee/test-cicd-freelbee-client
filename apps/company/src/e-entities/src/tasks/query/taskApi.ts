@@ -1,15 +1,7 @@
 import { API, Endpoint_Enum } from '@company/shared';
 import { WorksCategory } from '../dto/WorksCategory';
 import { TaskFreelancerData } from '../dto/TaskFreelancerData';
-import {
-  Currency,
-  FileAction,
-  FileLink,
-  PaymentProviderName,
-  TaskCounterpartyDataDto,
-  TaskFileDto,
-  TaskStatus
-} from '@freelbee/entities';
+import { Currency, FileAction, FileLink, PaymentProviderName, TaskCounterpartyDataDto, TaskFileDto, TaskStatus } from '@freelbee/entities';
 import { ContractPreviewDto } from '../dto/ContractPreviewDto';
 import { FileDownloadHelper } from 'packages/f-shared/src/helpers/FileDownloadHelper';
 

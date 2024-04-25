@@ -9,7 +9,7 @@ import { ReactComponent as OtherFileIcon } from '@freelbee/assets/icons/extentio
 import { ReactComponent as PdfFileIcon } from '@freelbee/assets/icons/extention-icons/pdf.svg';
 import { ReactComponent as ImageIcon } from '@freelbee/assets/icons/extention-icons/image.svg';
 import { ReactComponent as PptxFileIcon } from '@freelbee/assets/icons/extention-icons/pptx.svg';
-import { ReactComponent as WordFileIcon } from '@freelbee/assets/icons/extention-icons/word.svg';
+import { ReactComponent as WordFileIcon } from '@freelbee/assets/icons/extention-icons/Word.svg';
 import { ReactComponent as SizeErrorIcon } from '@freelbee/assets/icons/file-loader/cargo.svg';
 import { ReactComponent as ClockIcon } from '@freelbee/assets/icons/file-loader/clockIcon.svg';
 import { ReactComponent as SymbolsErrorIcon } from '@freelbee/assets/icons/file-loader/symbols.svg';
@@ -91,7 +91,7 @@ export default function FileLoader(props: FileLoaderProps) {
     e.preventDefault();
     const newFiles = e.target!.files!;
     for(let i = 0; i < newFiles.length; i++) {
-      const filename = newFiles[i].name;
+      // const filename = newFiles[i].name;
       const id = new Date().getTime() + i;
       const file = newFiles[i];
       if(newFiles[i].size > maxFileSize) {

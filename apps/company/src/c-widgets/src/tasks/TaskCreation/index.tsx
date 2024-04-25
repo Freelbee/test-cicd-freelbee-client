@@ -72,6 +72,7 @@ export const TaskCreationModal = () => {
     formData.append('price', taskCreationData.price);
     formData.append('customerCurrency', taskCreationData.currency!.id.toString());
     formData.append('signature', taskCreationData.signature);
+    formData.append('paymentProviderName', taskCreationData.paymentProviderName);
     attachedFiles.forEach(fileData => formData.append('files', fileData.file));
     customContractFiles[0]?.file && formData.append('customContractFile', customContractFiles[0].file);
     return await createTask(formData).unwrap();

@@ -21,7 +21,7 @@ export const ContractStep = () => {
     <FormGrid>
         <FormGrid>
             <Heading1>Signing the contract</Heading1>   
-            <ContractDownload taskId={displayedTask.id} />
+            <ContractDownload taskId={displayedTask.taskId} />
         </FormGrid>
         <Input
             label="Signature"

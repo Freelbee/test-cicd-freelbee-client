@@ -3,7 +3,7 @@
 import { TaskCounterpartyDataDto} from "@freelbee/entities";
 import { QueryStatus, skipToken } from "@reduxjs/toolkit/query";
 import { useGetUserQuery } from '../../user/query/userApi';
-import { useGetFreelancerTasksPageQuery } from '@freelancer/entities';
+import { useGetFreelancerTasksPageQuery } from "../query/taskApi";
 
 export const useTasksData = (): [Array<TaskCounterpartyDataDto>, QueryStatus] => {
 
