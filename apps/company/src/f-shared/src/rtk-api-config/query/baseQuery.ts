@@ -1,4 +1,5 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query';
+import {Token_Enum} from "../enums/Token_Enum";
 
 export const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NODE_ENV === `development` ? `http://localhost:8080/` : process.env.NEXT_PUBLIC_URL ?? '',
@@ -8,4 +9,11 @@ export const baseQuery = fetchBaseQuery({
 
     return headers;
   },
+  responseHandler: async (response) => {
+    if (response.headers.get('Authorization')) {
+      const tokenBearer = response.headers.get('Authorization') ?? '';
+      const token = tokenBearer?.replace('Bearer ', '');
+      localStorage.setItem(Token_Enum.ACCESS_TOKEN, token);
+    }
+  }
 });

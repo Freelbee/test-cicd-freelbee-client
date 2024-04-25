@@ -5,24 +5,25 @@ import {Breakpoint, CloseButton, mediaBreakpointDown, ModalWindow} from "@freelb
 import Login from "./login/Login";
 import Registration from "./registration/Registration";
 import {AuthModalState} from "./Types";
+import {Dispatch, SetStateAction} from "react";
+import {AuthDto, RegistrationDto, SessionDto} from "@freelbee/entities";
 
 type Props = {
   authModalState: AuthModalState;
-  setAuthModalState: any;
-  registerUser: any;
-  userRegSession: any;
-  checkCode: any;
-  resendCode: any;
-  authUser: any;
-  checkAuthCode: any;
-  resendAuthCode: any;
-  userAuthSession: any;
+  setAuthModalState: Dispatch<SetStateAction<AuthModalState>>;
+  registerUser: (dto: RegistrationDto) => void;
+  userRegSession: unknown;
+  checkCode: (code: string) => void;
+  resendCode: () => void;
+  authUser: (dto: AuthDto) => void;
+  checkAuthCode: (code: string) => void;
+  resendAuthCode: () => void;
+  userAuthSession: () => void;
 }
 
 export const AuthModal = (props: Props) => {
   const { authModalState, setAuthModalState, registerUser, userRegSession, checkCode, resendCode,
     authUser, checkAuthCode, resendAuthCode, userAuthSession} = props;
- // const [modalState, setModalState] = useState<AuthModalState>(authModalState)
 
   const onModalClose = () => {
     setAuthModalState(AuthModalState.Closed);

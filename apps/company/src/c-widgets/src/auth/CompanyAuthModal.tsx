@@ -1,3 +1,5 @@
+'use client';
+
 import {AuthModal, AuthModalState} from "@freelbee/widgets";
 import {
   authApi,
@@ -24,14 +26,14 @@ export const CompanyAuthModal = () => {
   const [checkAuthCode] = useSendCompanyAuthConfirmationMutation();
   const [resendAuthCode] = useResendCompanyAuthConfirmationMutation();
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
 
   const userRegSession = async (): Promise<SessionDto> => {
     return dispatch(authApi.endpoints.getCompanyRegSession.initiate({timestamp: Date.now()}));
   }
 
   const userAuthSession = async (): Promise<SessionDto> => {
-    return await dispatch(authApi.endpoints.getCompanyAuthSession.initiate({timestamp: Date.now()}));
+    return dispatch(authApi.endpoints.getCompanyAuthSession.initiate({timestamp: Date.now()}));
   }
 
   useEffect(() => {
@@ -43,7 +45,7 @@ export const CompanyAuthModal = () => {
       setModalState(AuthModalState.Login)
     }
 
-  }, [searchParams, localStorage]);
+  }, [searchParams]);
 
   return (
     <AuthModal

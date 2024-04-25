@@ -1,5 +1,5 @@
 'use client'
-import React, {createRef, RefObject, useEffect, useRef, useState} from 'react';
+import React, {createRef, Dispatch, RefObject, SetStateAction, useEffect, useRef, useState} from 'react';
 import styled, {css} from 'styled-components';
 
 
@@ -24,7 +24,7 @@ type Props = {
   checkCode: (code: string) => Promise<void>;
   remainingTime: () => Promise<number>;
   buttonText?: string;
-  setModalState: any;
+  setModalState: Dispatch<SetStateAction<AuthModalState>>;
 };
 
 const CODE_LENGTH = 4;
@@ -129,12 +129,10 @@ export default function ConfirmationAuthLayout(props: Props) {
     if (code.join(``).length !== CODE_LENGTH) return;
     setLoading(true);
     checkCode(code.join(``)).unwrap()
-      .then((response) => {
-        if (response?.length > 0){
-          localStorage.setItem('ACCESS_TOKEN', response);
+      .then(() => {
           router.replace(`${pathname}`);
           setModalState(AuthModalState.Closed);
-        }
+
       })
       .finally(() => {
         timer.stop();

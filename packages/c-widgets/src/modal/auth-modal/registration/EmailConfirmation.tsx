@@ -1,13 +1,16 @@
 'use client'
 
 import ConfirmationAuthLayout from "../ConfirmationAuthLayout";
+import {SessionDto} from "@freelbee/entities";
+import {Dispatch, SetStateAction} from "react";
+import {AuthModalState} from "@freelbee/widgets";
 
 type Props = {
   email: string;
-  userRegSession: any;
-  checkCode: any;
-  resendCode: any;
-  setModalState: any;
+  userRegSession: () => Promise<SessionDto>;
+  checkCode: (string) => void;
+  resendCode: () => void;
+  setModalState: Dispatch<SetStateAction<AuthModalState>>;
 };
 
 export default function EmailConfirmation (props: Props) {
@@ -19,7 +22,7 @@ export default function EmailConfirmation (props: Props) {
     return userRegSession().then((response) => {
       const now = new Date();
       const remainingDate = new Date(response.data.codeCanBeForwardedIn);
-      return (remainingDate - now)/1000
+      return (remainingDate.valueOf() - now.valueOf())/1000;
     })
   }
 

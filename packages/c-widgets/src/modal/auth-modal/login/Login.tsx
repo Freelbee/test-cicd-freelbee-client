@@ -1,23 +1,23 @@
 'use client'
-import React, {useState} from 'react';
+import React, {Dispatch, SetStateAction, useState} from 'react';
 
 
-import AuthLayout from '../AuthLayout';
+import AuthLayout from './AuthLayout';
 import AuthContainer from "../AuthContainer";
 import LoginForm from "./LoginForm";
-import {LoginSteps} from "../registration/AuthSteps";
 import {LoginContext} from "./LoginContext";
 import EmailConfirmation from "../registration/EmailConfirmation";
-import {AuthDto} from "@freelbee/entities";
+import {AuthDto, SessionDto} from "@freelbee/entities";
 import {AuthModalState} from "@freelbee/widgets";
+import {LoginSteps} from "./LoginSteps";
 
 type Props = {
   isOpen: boolean;
-  authUser: any;
-  checkAuthCode: any;
-  resendAuthCode: any;
-  userAuthSession: any;
-  setModalState: any;
+  authUser: (dto: AuthDto) => void;
+  checkAuthCode: (code: string) => void;
+  resendAuthCode: () => void;
+  userAuthSession: () => void;
+  setModalState: Dispatch<SetStateAction<AuthModalState>>;
 };
 
 export default function Login(props: Props) {
@@ -43,7 +43,6 @@ export default function Login(props: Props) {
     <AuthContainer isOpen={isOpen}>
       <LoginContext.Provider value={{loginData, setLoginData, step, setStep}}>
         <AuthLayout
-          context={LoginContext}
           steps={loginSteps}
           data={data}
           onClick={() => {
@@ -53,7 +52,6 @@ export default function Login(props: Props) {
           }}
         >
           {step === LoginSteps.SEND_CREDENTIALS && <LoginForm authUser={authUser}/>}
-
           {step === LoginSteps.CHECK_CODE && <EmailConfirmation
             email={loginData.email}
             userRegSession={userAuthSession}

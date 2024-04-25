@@ -1,6 +1,6 @@
 import React, {Dispatch, SetStateAction} from "react";
-import {LoginSteps} from "../registration/AuthSteps";
 import {AuthDto} from "@freelbee/entities";
+import {LoginSteps} from "./LoginSteps";
 
 export interface LoginContextType {
   loginData: AuthDto;

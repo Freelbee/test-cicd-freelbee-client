@@ -11,18 +11,19 @@ import {
   Input,
   LinkButton,
   mediaBreakpointDown,
-  PasswordInput,
+  PasswordInput, PhoneNumberInput,
   typography
 } from "@freelbee/shared/ui-kit";
 import {ReactComponent as ArrIcon} from "@freelbee/assets/icons/arrow-icons/long_arrow.svg"
 import {ValidatorResult} from "@freelbee/features";
-import {RegistrationData} from "@freelbee/entities";
+import {RegistrationData, UserDataPropsType} from "@freelbee/entities";
 import {RegistrationDataValidator} from './util/RegistrationDataValidator';
 import {LanguageType} from "@freelbee/shared/language";
-import {RegistrationSteps} from "./AuthSteps";
+import {RegistrationSteps} from "./RegistrationSteps";
+import {RegistrationDto} from "../../../../../e-entities/src/auth/dto/RegistrationDto";
 
 type Props = {
-  registerUser: any;
+  registerUser: (dto: RegistrationDto) => void;
 };
 
 export default function RegistrationForm (props: Props) {
@@ -50,12 +51,12 @@ export default function RegistrationForm (props: Props) {
 
         const body = {
             email: registrationData.email,
-            password: registrationData.password
-
+            password: registrationData.password,
+            phone: registrationData.phone
         }
         registerUser(body).unwrap()
           .then(() => {
-          setStep(RegistrationSteps.ConfirmEmail);
+          setStep(RegistrationSteps.CONFIRM_EMAIL);
         })
           .catch(e => {setLoading(false)})
     };
@@ -94,6 +95,13 @@ export default function RegistrationForm (props: Props) {
                             isError={validatorResult.hasError('email') /*|| !!errorResponse?.getErrorTranslationByField('email', language)*/}
                             errorMessage={validatorResult.getMessageByLanguage('email', LanguageType.EN) /*|| errorResponse?.getErrorTranslationByField('email', language)*/}
                         />
+                        <PhoneNumberInput
+                            isRequired
+                            isError={validatorResult.hasError('phone')}
+                            errorMessage={validatorResult.getMessageByLanguage('phone', LanguageType.EN)}
+                            label="Phone"
+                            value={registrationData.phone ?? ''}
+                            setValue={(v) => { handleInput(v, 'phone')}} />
                     </Fields>
                     <Fields>
                         <PasswordInput
@@ -151,7 +159,7 @@ export default function RegistrationForm (props: Props) {
                             styles={buttonStyles}
                             type='submit'
                             isLoading={loading}
-                            disabled={loading || !registrationData.email || !registrationData.password || !registrationData.repeatPassword}
+                            disabled={loading || !registrationData.email || !registrationData.password || !registrationData.repeatPassword || !registrationData.phone}
                             Icon={<ArrIcon/>}
                             iconPosition={IconPosition.RIGHT}>
                           Next

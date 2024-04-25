@@ -18,10 +18,10 @@ import {ReactComponent as ArrIcon} from "@freelbee/assets/icons/arrow-icons/long
 import {LoginDataValidator} from "./util/LoginDataValidator";
 import {ValidatorResult} from "@freelbee/features";
 import {AuthDto} from "@freelbee/entities";
-import {LoginSteps} from "../registration/AuthSteps";
+import {LoginSteps} from "./LoginSteps";
 
 type Props = {
-  authUser: any;
+  authUser: (AuthDto) => void;
 };
 
 export default function LoginForm(props: Props) {
@@ -93,7 +93,7 @@ export default function LoginForm(props: Props) {
             noMessageSpace
             name={'email'}
             placeholder={'E-mail'}
-            value={loginData.email}
+            value={loginData.email ?? ``}
             setValue={(v) => {
               handleInput(v, 'email')
             }}

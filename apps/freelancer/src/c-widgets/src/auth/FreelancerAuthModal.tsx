@@ -10,10 +10,10 @@ import {
   useSendFreelancerRegConfirmationMutation,
   useSignInFreelancerMutation
 } from "@freelancer/entities";
-import {useDispatch} from "react-redux";
-import {SessionDto} from "@freelbee/entities";
 import {useEffect, useState} from "react";
 import {useQueryParamsNavigation} from "@freelbee/shared/hooks";
+import {SessionDto} from "@freelbee/entities";
+import {useDispatch} from "react-redux";
 
 export const FreelancerAuthModal = () => {
   const [searchParams] = useQueryParamsNavigation();
@@ -27,14 +27,14 @@ export const FreelancerAuthModal = () => {
   const [checkAuthCode] = useSendFreelancerAuthConfirmationMutation();
   const [resendAuthCode] = useResendFreelancerAuthConfirmationMutation();
 
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch();
 
   const userRegSession = async (): Promise<SessionDto> => {
     return dispatch(authApi.endpoints.getFreelancerRegSession.initiate({timestamp: Date.now()}));
   }
 
   const userAuthSession = async (): Promise<SessionDto> => {
-    return await dispatch(authApi.endpoints.getFreelancerAuthSession.initiate({timestamp: Date.now()}));
+    return dispatch(authApi.endpoints.getFreelancerAuthSession.initiate({timestamp: Date.now()}));
   }
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export const FreelancerAuthModal = () => {
       setModalState(AuthModalState.Login)
     }
 
-  }, [searchParams, localStorage]);
+  }, [searchParams]);
 
 
   return (

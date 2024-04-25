@@ -12,15 +12,14 @@ export const AccountActions = () => {
     const router = useRouter();
     const logout = () =>{
         localStorage.removeItem(Token_Enum.ACCESS_TOKEN);
-        localStorage.removeItem(Token_Enum.REFRESH_TOKEN);
         router.push('/');
     };
 
   return (
-    <AccountLinks>  
+    <AccountLinks>
         <AccountLink onClick={logout}>
-            <LogoutIcon stroke={Color.GRAY_800} /> 
-            <Text font='body'> 
+            <LogoutIcon stroke={Color.GRAY_800} />
+            <Text font='body'>
                 Exit
             </Text>
         </AccountLink>
@@ -49,7 +48,7 @@ const AccountLink = styled.div`
 
   &:hover {
     background: ${Color.GRAY_200};
-    
+
   }
 
   svg {

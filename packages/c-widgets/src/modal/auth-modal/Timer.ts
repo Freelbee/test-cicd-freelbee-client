@@ -1,7 +1,7 @@
 export default class Timer
 {
     private endTime = 0;
-    private interval : any;
+    private interval : string | number | undefined | NodeJS.Timeout;
 
     private readonly callback : (remain: number) => void;
 

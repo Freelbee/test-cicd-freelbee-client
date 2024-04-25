@@ -1,37 +1,40 @@
 'use client'
-import React, {useState} from 'react';
+import React, {Dispatch, SetStateAction, useState} from 'react';
 
-import AuthLayout from '../AuthLayout';
-import {RegistrationSteps} from "./AuthSteps";
 import AuthContainer from "../AuthContainer";
 import {RegistrationContext} from "./RegistrationContext";
 import RegistrationForm from "./RegistrationForm";
 import EmailConfirmation from "./EmailConfirmation";
 import {AuthModalState} from "@freelbee/widgets";
-import {RegistrationData} from "@freelbee/entities";
+import { RegistrationData, SessionDto} from "@freelbee/entities";
+import RegistrationLayout from "./RegistrationLayout";
+import {RegistrationSteps} from "./RegistrationSteps";
+import {RegistrationDto} from "../../../../../e-entities/src/auth/dto/RegistrationDto";
 
 type Props = {
     isOpen: boolean;
-    registerUser: any;
-    userRegSession: any;
-    checkCode: any;
-    resendCode: any;
-    setModalState: any;
+    registerUser: (dto: RegistrationDto) => void;
+    userRegSession: () => Promise<SessionDto>;
+    checkCode: (code: string) => void;
+    resendCode: () => void;
+    setModalState: Dispatch<SetStateAction<AuthModalState>>;
 };
 
 export default function Registration (props: Props) {
     const { isOpen, registerUser, userRegSession, checkCode, resendCode, setModalState } = props;
-
-    const [step, setStep] = useState<RegistrationSteps>(RegistrationSteps.FillUserData);
+    const [step, setStep] = useState<RegistrationSteps>(RegistrationSteps.FILL_USER_DATA);
     const [registrationData, setRegistrationData] = useState<RegistrationData>({
         email: '',
-        password: ``
+        password: '',
+        phone: '',
+        repeatPassword: '',
+        agreeWithTerms: false
     });
 
 
     const registrationSteps = [
-        { step: RegistrationSteps.FillUserData, text: 'Register' },
-        { step: RegistrationSteps.ConfirmEmail, text: 'Confirm your e-mail' },
+        { step: RegistrationSteps.FILL_USER_DATA, text: 'Register' },
+        { step: RegistrationSteps.CONFIRM_EMAIL, text: 'Confirm your e-mail' },
     ];
 
     const data = {
@@ -43,8 +46,8 @@ export default function Registration (props: Props) {
     return (
         <AuthContainer isOpen={isOpen}>
             <RegistrationContext.Provider value={{registrationData, setRegistrationData, step, setStep}}>
-                <AuthLayout
-                    context={RegistrationContext}
+                <RegistrationLayout
+                    propsStep={{step, setStep}}
                     steps={registrationSteps}
                     data={data}
                     onClick={() => setModalState(AuthModalState.Login)}
@@ -53,15 +56,15 @@ export default function Registration (props: Props) {
                         setAuthModalState(AuthModalState.Login);
                     }}*/
                 >
-                    {step === RegistrationSteps.FillUserData && <RegistrationForm registerUser={registerUser}/>}
-                    {step === RegistrationSteps.ConfirmEmail && <EmailConfirmation
+                    {step === RegistrationSteps.FILL_USER_DATA && <RegistrationForm registerUser={registerUser}/>}
+                    {step === RegistrationSteps.CONFIRM_EMAIL && <EmailConfirmation
                       email={registrationData.email}
                       userRegSession={userRegSession}
                       checkCode={checkCode}
                       resendCode={resendCode}
                       setModalState={setModalState}
                     />}
-                </AuthLayout>
+                </RegistrationLayout>
             </RegistrationContext.Provider>
         </AuthContainer>
     );

@@ -1,12 +1,12 @@
-import {API} from "@freelancer/shared";
-import {AuthDto, SessionDto} from "@freelbee/entities";
+import {API, Endpoint_Enum} from "@freelancer/shared";
+import {AuthDto, RegistrationDto, SessionDto} from "@freelbee/entities";
 
 
 export const authApi = API.injectEndpoints({
   endpoints: (builder) => ({
-    registerFreelancer: builder.mutation<void, AuthDto>({
+    registerFreelancer: builder.mutation<void, RegistrationDto>({
       query: (body) => ({
-        url: `registration/freelancer`,
+        url: Endpoint_Enum.FREELANCER_SIGNUP,
         method: 'POST',
         body,
       }),
@@ -14,30 +14,27 @@ export const authApi = API.injectEndpoints({
     }),
     getFreelancerRegSession: builder.query<SessionDto, { timestamp: number; }>({
       query: () => ({
-        url: `registration/freelancer/session`
+        url: Endpoint_Enum.FREELANCER_REG_SESSION
       }),
       extraOptions: {notAuthorized: true}
     }),
-    sendFreelancerRegConfirmation: builder.mutation<string, string>({
+    sendFreelancerRegConfirmation: builder.mutation<void, string>({
       query: (code) => ({
-        url: `registration/freelancer/email/confirm/${code}`,
+        url: Endpoint_Enum.FREELANCER_REG_CONFIRM.replace('{0}', code),
         method: 'POST'
       }),
       extraOptions: {notAuthorized: true},
-      transformResponse: (apiResponse, meta) => {
-        return meta.response.headers.get('Authorization').replace('Bearer ', '')
-      }
     }),
     resendFreelancerConfirmation: builder.mutation<void, void>({
       query: () => ({
-        url: `registration/freelancer/email/send`,
+        url: Endpoint_Enum.FREELANCER_REG_RESEND_SESSION,
         method: 'POST'
       }),
       extraOptions: {notAuthorized: true}
     }),
     signInFreelancer: builder.mutation<void, AuthDto>({
       query: (body) => ({
-        url: `auth/freelancer`,
+        url: Endpoint_Enum.FREELANCER_SIGNIN,
         method: 'POST',
         body
       }),
@@ -45,23 +42,21 @@ export const authApi = API.injectEndpoints({
     }),
     getFreelancerAuthSession: builder.query<SessionDto, { timestamp: number; }>({
       query: () => ({
-        url: `auth/freelancer/session`
+        url: Endpoint_Enum.FREELANCER_AUTH_SESSION
       }),
       extraOptions: {notAuthorized: true}
     }),
-    sendFreelancerAuthConfirmation: builder.mutation<string, string>({
+
+    sendFreelancerAuthConfirmation: builder.mutation<void, string>({
       query: (code) => ({
-        url: `auth/freelancer/confirm/${code}`,
+        url: Endpoint_Enum.FREELANCER_AUTH_CONFIRM.replace('{0}', code),
         method: 'POST'
       }),
       extraOptions: {notAuthorized: true},
-      transformResponse: (apiResponse, meta) => {
-        return meta.response.headers.get('Authorization').replace('Bearer ', '')
-      }
     }),
     resendFreelancerAuthConfirmation: builder.mutation<void, void>({
       query: () => ({
-        url: `auth/freelancer/send`,
+        url: Endpoint_Enum.FREELANCER_AUTH_RESEND_SESSION,
         method: 'POST'
       }),
       extraOptions: {notAuthorized: true}

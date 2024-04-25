@@ -2,8 +2,10 @@
 import React, {Dispatch, ReactNode, SetStateAction, useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {Breakpoint, Color, mediaBreakpointDown, typography} from "@freelbee/shared/ui-kit";
-import {RegistrationSteps} from "./registration/AuthSteps";
+
 import CheckIcon from '@freelbee/assets/icons/check/roadmapCheck.svg';
+import {RegistrationSteps} from "./registration/RegistrationSteps";
+import {LoginSteps} from "./login/LoginSteps";
 
 
 
@@ -19,9 +21,9 @@ enum AuthStepState {
 }
 
 type Props = {
-    currentStep: RegistrationSteps,
-    setCurrentStep: Dispatch<SetStateAction<RegistrationSteps>>,
-    elementStep: any,
+    currentStep: RegistrationSteps | LoginSteps,
+    setCurrentStep: Dispatch<SetStateAction<RegistrationSteps | LoginSteps>>,
+    elementStep: RegistrationSteps | LoginSteps,
     text: string | ReactNode
     type: AuthStepViewType,
     disabled?: boolean

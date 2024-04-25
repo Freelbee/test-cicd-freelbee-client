@@ -3,23 +3,23 @@ import React, {useContext} from 'react';
 import styled from 'styled-components';
 
 
-import AuthStepView, {AuthStepViewType} from './AuthStepView';
+import AuthStepView, {AuthStepViewType} from '../AuthStepView';
 import {Breakpoint, Color, mediaBreakpointDown, typography} from "@freelbee/shared/ui-kit";
-import {RegistrationSteps} from "./registration/AuthSteps";
 import sidebarBg from '@freelbee/assets/images/authSidebar.png'
+import {RegistrationContext} from "./RegistrationContext";
+import {RegistrationSteps} from "./RegistrationSteps";
 
 type Props = {
-    context: React.Context<any>;
     data: { sidebarTitle: string, sidebarText: string, sidebarLinkText: string };
     onClick: React.MouseEventHandler<HTMLDivElement>
     steps?: { step: RegistrationSteps, text: string }[];
     children?: React.ReactNode;
 };
 
-export default function AuthLayout (props: Props) {
-    const { context, data, onClick, steps, children } = props;
+export default function RegistrationLayout (props: Props) {
+    const { data, onClick, steps, children } = props;
 
-    const { step, setStep } = useContext(context);
+    const { step, setStep } = useContext(RegistrationContext);
 
     return (
         <>

@@ -1,12 +1,11 @@
-
-import {AuthDto, SessionDto} from "@freelbee/entities";
-import {API} from "@company/shared";
+import {AuthDto, RegistrationDto, SessionDto} from "@freelbee/entities";
+import {API, Endpoint_Enum} from "@company/shared";
 
 export const authApi = API.injectEndpoints({
   endpoints: (builder) => ({
-    registerCompany: builder.mutation<void, AuthDto>({
+    registerCompany: builder.mutation<void, RegistrationDto>({
       query: (body) => ({
-        url: `registration/company`,
+        url: Endpoint_Enum.COMPANY_SIGNUP,
         method: 'POST',
         body
       }),
@@ -14,53 +13,47 @@ export const authApi = API.injectEndpoints({
     }),
     getCompanyRegSession: builder.query<SessionDto, { timestamp: number; }>({
       query: () => ({
-        url: `registration/company/session`
+        url: Endpoint_Enum.COMPANY_REG_SESSION
       }),
       extraOptions: { notAuthorized: true}
     }),
     sendCompanyRegConfirmation: builder.mutation<void, string>({
       query: (code) => ({
-        url: `registration/company/email/confirm/${code}`,
+        url: Endpoint_Enum.COMPANY_REG_CONFIRM.replace('{0}', code),
         method: 'POST'
       }),
       extraOptions: { notAuthorized: true},
-      transformResponse: (apiResponse, meta) => {
-        return meta.response.headers.get('Authorization').replace('Bearer ', '')
-      }
     }),
     resendCompanyConfirmation: builder.mutation<void, void>({
       query: () => ({
-        url: `registration/company/email/send`,
+        url: Endpoint_Enum.COMPANY_REG_RESEND_SESSION,
         method: 'POST'
       }),
       extraOptions: { notAuthorized: true}
     }),
     signInCompany: builder.mutation<void, AuthDto>({
       query: (body) => ({
-        url: `auth/company`,
+        url: Endpoint_Enum.COMPANY_SIGNIN,
         method: 'POST',
         body}),
       extraOptions: { notAuthorized: true}
     }),
     getCompanyAuthSession: builder.query<SessionDto, { timestamp: number; }>({
       query: () => ({
-        url: `auth/company/session`
+        url: Endpoint_Enum.COMPANY_AUTH_SESSION
       }),
       extraOptions: { notAuthorized: true}
     }),
-    sendCompanyAuthConfirmation: builder.mutation<string, string>({
+    sendCompanyAuthConfirmation: builder.mutation<void, string>({
       query: (code) => ({
-        url: `auth/company/confirm/${code}`,
+        url: Endpoint_Enum.COMPANY_AUTH_CONFIRM.replace('{0}', code),
         method: 'POST'
       }),
-      transformResponse: (apiResponse, meta) => {
-        return meta.response.headers.get('Authorization').replace('Bearer ', '')
-      },
       extraOptions: { notAuthorized: true}
     }),
     resendCompanyAuthConfirmation: builder.mutation<void, void>({
       query: () => ({
-        url: `auth/company/send`,
+        url: Endpoint_Enum.COMPANY_AUTH_RESEND_SESSION,
         method: 'POST'
       }),
       extraOptions: { notAuthorized: true}

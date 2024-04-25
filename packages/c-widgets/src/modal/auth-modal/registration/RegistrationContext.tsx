@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, {Dispatch, SetStateAction} from 'react';
 import {RegistrationData} from "@freelbee/entities";
-import {RegistrationSteps} from "./AuthSteps";
+import {RegistrationSteps} from "./RegistrationSteps";
+
 
 
 export interface RegistrationContextType {
@@ -14,13 +15,14 @@ export interface RegistrationContextType {
 const RegistrationContext = React.createContext<RegistrationContextType>({
   registrationData: {
     email: '',
-    password: ``,
-    repeatPassword: ``,
+    password: '',
+    phone: '',
+    repeatPassword: '',
     agreeWithTerms: false
   },
   setRegistrationData: () => {
   },
-  step: RegistrationSteps.FillUserData,
+  step: RegistrationSteps.FILL_USER_DATA,
   setStep: () => {
   }
 });
