@@ -21,7 +21,7 @@ import {AuthDto} from "@freelbee/entities";
 import {LoginSteps} from "./LoginSteps";
 
 type Props = {
-  authUser: (AuthDto) => void;
+  authUser: (dto: AuthDto) => Promise<void>;
 };
 
 export default function LoginForm(props: Props) {
@@ -43,14 +43,13 @@ export default function LoginForm(props: Props) {
 
     setButtonLoading(true);
 
-    authUser(loginData).unwrap()
-      .then(() => {
+    authUser(loginData).then(() => {
         setStep(LoginSteps.CHECK_CODE);
       })
       .finally(() => setButtonLoading(false));
   };
 
-  const handleInput = (value, field) => {
+  const handleInput = (value: string, field: string) => {
     setLoginData(prevState => ({
       ...prevState, [field]: value
     }));
@@ -227,7 +226,7 @@ const MapButtonSwitchAuth = styled.div`
   cursor: pointer;
 `;
 
-const ErrorMessage = styled.div`
-  ${typography.body};
-  color: ${Color.DANGER};
-`;
+// const ErrorMessage = styled.div`
+//   ${typography.body};
+//   color: ${Color.DANGER};
+// `;

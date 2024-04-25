@@ -49,7 +49,7 @@ export function CalendarInterval(props: Props) {
 
   const [pickerDate, setPickerDate] = useState<Date>(endDate ?? new Date());
 
-  const [monthsIsOpen, setMonthsIsOpen] = useState<boolean>(false);
+  const [monthsIsOpen] = useState<boolean>(false);
   const [monthsYearsIsOpen, setMonthsYearsIsOpen] = useState<boolean>(false);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -91,7 +91,7 @@ export function CalendarInterval(props: Props) {
         </CalendarIconContainer>
       </Content>
       <PopupContainer
-        isOpen={isOpen}
+        $isOpen={isOpen}
         popupPosition={popupPosition}
         popupPositionMobile={popupPositionMobile}>
         <SelectedDatesContainer>
@@ -225,16 +225,16 @@ const CalendarIconContainer = styled.div`
 `;
 
 const PopupContainer = styled.div<{
-  isOpen: boolean,
+  $isOpen: boolean,
   popupPosition: PopupPosition,
   popupPositionMobile?: PopupPosition
 }>`
   position: absolute;
   transition: visibility 0.2s, opacity 0.2s, top 0.2s;
-  pointer-events: ${({ isOpen }) => isOpen ? 'auto' : 'none'};
-  visibility: ${({ isOpen }) => isOpen ? 'visible' : 'hidden'};
-  opacity: ${({ isOpen }) => isOpen ? '1' : '0'};
-  top: ${({ isOpen }) => isOpen ? 'calc(100% + 5px)' : '100%'};
+  pointer-events: ${({ $isOpen }) => $isOpen ? 'auto' : 'none'};
+  visibility: ${({ $isOpen }) => $isOpen ? 'visible' : 'hidden'};
+  opacity: ${({ $isOpen }) => $isOpen ? '1' : '0'};
+  top: ${({ $isOpen }) => $isOpen ? 'calc(100% + 5px)' : '100%'};
   width: 290px;
   background: #FFFFFF;
   box-shadow: 0px 4px 54px rgba(0, 0, 0, 0.1);

@@ -14,6 +14,10 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
   const {data: user} = useGetUserQuery();
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
 
+
+
+
+
   return (
     <LayoutContext.Provider value={{
       navigationMenuOpened,
@@ -23,6 +27,7 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
         <Suspense fallback={<></>}>
           <FreelancerAuthModal/>
         </Suspense>
+
         <OnboardingModal />
 
         <HeadMenu />

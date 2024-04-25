@@ -83,12 +83,12 @@ export function SelectWithSearch<T> (props: SelectWithInputProps<T>) {
             <InputContainer onClick={toggleOpen} ref={buttonRef} $isError={isError} $isDisabled={isDisabled} $noBorder={noBorder}>
                 {!value && <Text font='body' color={Color.GRAY_500} styles={placeholderStyled}>{placeholder}</Text>}
                 {value && <Text styles={placeholderStyled}>{renderOption(value)}</Text>}
-                <ArrowContainer isOpen={isOpen} isDisabled={false}>
+                <ArrowContainer $isOpen={isOpen} $isDisabled={false}>
                     <ArrowIcon/>
                 </ArrowContainer>
             </InputContainer>
 
-            <ListContainer show={isOpen}>
+            <ListContainer $show={isOpen}>
                 {!hideSearch && (
                     <SearchContainer>
                       <Input
@@ -167,7 +167,7 @@ const InputContainer = styled.div<{
   `}
 `;
 
-const ListContainer = styled.div<{ show: boolean }>`
+const ListContainer = styled.div<{ $show: boolean }>`
   z-index: 10;
   position: absolute;
   top: calc(100% + 10px);
@@ -182,9 +182,9 @@ const ListContainer = styled.div<{ show: boolean }>`
   gap: 8px;
 
   transition: opacity .5s, visibility .5s, top .5s;
-  pointer-events: ${({show}) => show ? 'unset' : 'none'};
-  visibility: ${({show}) => show ? 'visible' : 'hidden'};
-  opacity: ${({show}) => show ? '1' : '0'};
+  pointer-events: ${({$show}) => $show ? 'unset' : 'none'};
+  visibility: ${({$show}) => $show ? 'visible' : 'hidden'};
+  opacity: ${({$show}) => $show ? '1' : '0'};
 `;
 
 const ListContent = styled.div`
@@ -242,7 +242,7 @@ const Item = styled.span<{ $disabledField: boolean }>`
   }
 `;
 
-const ArrowContainer = styled.div<{ isOpen: boolean, isDisabled: boolean }>`
+const ArrowContainer = styled.div<{ $isOpen: boolean, $isDisabled: boolean }>`
   position: absolute;
   right: 15px;
   margin: auto;
@@ -253,12 +253,12 @@ const ArrowContainer = styled.div<{ isOpen: boolean, isDisabled: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: scaleY(${({isOpen}) => isOpen ? -1 : 1});
+  transform: scaleY(${({$isOpen}) => $isOpen ? -1 : 1});
   transition: transform 0.5s;
 
   svg {
     width: 100%;
     height: 100%;
-    stroke: ${({isDisabled}) => isDisabled ? Color.GRAY_400 : Color.GRAY_800};
+    stroke: ${({$isDisabled}) => $isDisabled ? Color.GRAY_400 : Color.GRAY_800};
   }
 `;

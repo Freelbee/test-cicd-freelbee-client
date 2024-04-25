@@ -42,7 +42,9 @@ export default function AuthLayout (props: Props) {
                             <AuthStepView
                                 key={index}
                                 currentStep={step}
-                                setCurrentStep={setStep}
+                                setCurrentStep={(step) =>{
+                                  setStep(step as LoginSteps);
+                                }}
                                 elementStep={oneStep.step}
                                 text={oneStep.text}
                                 type={AuthStepViewType.Desktop}
@@ -67,7 +69,9 @@ export default function AuthLayout (props: Props) {
                                 <AuthStepView
                                     key={index}
                                     currentStep={step}
-                                    setCurrentStep={setStep}
+                                    setCurrentStep={(step) => {
+                                      setStep(step as LoginSteps);
+                                    }}
                                     elementStep={oneStep.step}
                                     text={oneStep.text}
                                     type={AuthStepViewType.Mobile}
@@ -106,7 +110,7 @@ const Map = styled.div`
     height: 100%;
     width: 100%;
     padding: 48px;
-    background: rgba(40, 44, 56, 0.4) url(${sidebarBg.src});
+    background: rgba(40, 44, 56, 0.4) url(${(sidebarBg as unknown as {src: string}).src});
     background-size: cover;
     display: flex;
     flex-direction: column;

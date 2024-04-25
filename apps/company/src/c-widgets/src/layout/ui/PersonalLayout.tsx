@@ -2,38 +2,50 @@
 
 import { HeadMenu, LayoutContext, MobileMenu, NavigationMenu, OnboardingNotification } from "@company/features"
 import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit"
-import { PropsWithChildren, useState } from "react"
+import { PropsWithChildren, useState } from 'react';
 import styled from "styled-components"
 import { OnboardingModal } from "../../onboarding"
-import { useGetCompanyOnboardingStateQuery } from '@company/entities';
-// import { useGetUserQuery } from "@company/entities"
+import {
+  useIsAuthenticatedQuery, useGetCompanyOnboardingStateQuery
+} from '@company/entities';
 import {CompanyAuthModal} from "../../auth/CompanyAuthModal";
 
 export const PersonalLayout = ({children}: PropsWithChildren) => {
 
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
-  const {data: onboardingState, isLoading} = useGetCompanyOnboardingStateQuery();
+
+  const {
+    data: isAuthenticated,
+    isLoading: isAuthenticatedLoading,
+  } = useIsAuthenticatedQuery();
+
+  const {
+    data: onboardingState,
+    isLoading,
+  } = useGetCompanyOnboardingStateQuery(undefined, {skip: !isAuthenticated || isAuthenticatedLoading});
 
   const isOnboardingPassed = () =>{
     return onboardingState?.isUserDataSet && onboardingState?.isCounterpartyCreated && onboardingState?.isPaymentMethodSet;
   }
-
   return (
     <LayoutContext.Provider value={{
       navigationMenuOpened,
       setNavigationMenuOpened,
     }}>
       <Container>
-        <CompanyAuthModal/>
-        <OnboardingModal />
 
-        <HeadMenu />
-        <NavigationMenu />
-        <MobileMenu />
-        <Main>
-          {!isLoading && isOnboardingPassed() && children}
-          {!isLoading && !isOnboardingPassed() && <OnboardingNotification />}
-        </Main>
+        {!isAuthenticated && !isAuthenticatedLoading && <CompanyAuthModal/> }
+
+        {isAuthenticated && <>
+          <OnboardingModal />
+          <HeadMenu />
+          <NavigationMenu />
+          <MobileMenu />
+          <Main>
+            {!isLoading && isOnboardingPassed() && children}
+            {!isLoading && !isOnboardingPassed() && <OnboardingNotification />}
+          </Main>
+        </>}
       </Container>
     </LayoutContext.Provider>
 

@@ -7,16 +7,16 @@ import AuthContainer from "../AuthContainer";
 import LoginForm from "./LoginForm";
 import {LoginContext} from "./LoginContext";
 import EmailConfirmation from "../registration/EmailConfirmation";
-import {AuthDto, SessionDto} from "@freelbee/entities";
+import { AuthDto, SessionDto } from '@freelbee/entities';
 import {AuthModalState} from "@freelbee/widgets";
 import {LoginSteps} from "./LoginSteps";
 
 type Props = {
   isOpen: boolean;
-  authUser: (dto: AuthDto) => void;
-  checkAuthCode: (code: string) => void;
-  resendAuthCode: () => void;
-  userAuthSession: () => void;
+  authUser: (dto: AuthDto) => Promise<void>;
+  checkAuthCode: (code: string) => Promise<void>;
+  resendAuthCode: () => Promise<void>;
+  userAuthSession: () => Promise<SessionDto>;
   setModalState: Dispatch<SetStateAction<AuthModalState>>;
 };
 

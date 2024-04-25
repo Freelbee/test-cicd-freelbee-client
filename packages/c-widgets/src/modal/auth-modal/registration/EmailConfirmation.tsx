@@ -8,8 +8,8 @@ import {AuthModalState} from "@freelbee/widgets";
 type Props = {
   email: string;
   userRegSession: () => Promise<SessionDto>;
-  checkCode: (string) => void;
-  resendCode: () => void;
+  checkCode: (str: string) => Promise<void>;
+  resendCode: () => Promise<void>;
   setModalState: Dispatch<SetStateAction<AuthModalState>>;
 };
 
@@ -21,8 +21,8 @@ export default function EmailConfirmation (props: Props) {
     if (!userRegSession) return Promise.resolve(100);
     return userRegSession().then((response) => {
       const now = new Date();
-      const remainingDate = new Date(response.data.codeCanBeForwardedIn);
-      return (remainingDate.valueOf() - now.valueOf())/1000;
+      const remainingDate = new Date(response.codeCanBeForwardedIn);
+      return Math.round((remainingDate.valueOf() - now.valueOf())/1000);
     })
   }
 

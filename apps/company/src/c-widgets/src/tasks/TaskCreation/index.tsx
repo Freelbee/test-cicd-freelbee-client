@@ -6,7 +6,7 @@ import { StepTwoForm } from './ui/StepTwoForm';
 import { StepThreeForm } from './ui/StepThreeForm';
 import { StepOneTitle } from './ui/StepOneTitle';
 import { StepThreeTitle } from './ui/StepThreeTitle';
-import { useState } from 'react';
+import {  useState } from 'react';
 import {
   BORDER_RADIUS, Breakpoint, CloseBtnSize, CloseButton, Color, FileData, mediaBreakpointDown, ModalWindow
 } from '@freelbee/shared/ui-kit';
@@ -95,6 +95,7 @@ export const TaskCreationModal = () => {
     createOneTask,
     clearTaskCreator,
   };
+
 
   return (
     <ModalWindow

@@ -1,4 +1,5 @@
-import {IRule, RuleMessage} from "@freelbee/features";
+import {IRule} from "@freelbee/features";
+import { RuleMessage } from "packages/f-shared/src/validator/RuleMessage";
 
 export class PasswordRule implements IRule {
   public check(value: string): boolean {

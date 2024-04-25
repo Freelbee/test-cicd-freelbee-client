@@ -6,6 +6,7 @@ export const API = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithAuth,
   tagTypes: [
+    'is-authenticated',
     'zoho-crm',
     'user',
     'counterparty',

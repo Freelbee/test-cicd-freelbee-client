@@ -2,16 +2,17 @@
 
 import {AuthModal, AuthModalState} from "@freelbee/widgets";
 import {
-  authApi,
   useRegisterCompanyMutation,
   useResendCompanyAuthConfirmationMutation,
-  useResendCompanyConfirmationMutation,
+  useResendCompanyRegistrationConfirmationMutation,
   useSendCompanyAuthConfirmationMutation,
   useSendCompanyRegConfirmationMutation,
-  useSignInCompanyMutation
+  useSignInCompanyMutation,
+  useGetCompanyRegSessionMutation,
+  useGetCompanyAuthSessionMutation
 } from "@company/entities";
-import {useDispatch} from "react-redux";
-import {SessionDto} from "@freelbee/entities";
+
+import { AuthDto, RegistrationDto, SessionDto } from '@freelbee/entities';
 import {useQueryParamsNavigation} from "@freelbee/shared/hooks";
 import {useEffect, useState} from "react";
 
@@ -20,27 +21,51 @@ export const CompanyAuthModal = () => {
   const [modalState, setModalState] = useState(AuthModalState.Closed);
 
   const [registerUser] = useRegisterCompanyMutation();
-  const [checkCode] = useSendCompanyRegConfirmationMutation();
-  const [resendCode] = useResendCompanyConfirmationMutation();
+  const [checkRegCode] = useSendCompanyRegConfirmationMutation();
+  const [resendRegCode] = useResendCompanyRegistrationConfirmationMutation();
   const [authUser] = useSignInCompanyMutation();
   const [checkAuthCode] = useSendCompanyAuthConfirmationMutation();
   const [resendAuthCode] = useResendCompanyAuthConfirmationMutation();
 
-  const dispatch = useDispatch();
+  const [getCompanyRegSession] = useGetCompanyRegSessionMutation();
+  const [getCompanyAuthSession] = useGetCompanyAuthSessionMutation();
 
   const userRegSession = async (): Promise<SessionDto> => {
-    return dispatch(authApi.endpoints.getCompanyRegSession.initiate({timestamp: Date.now()}));
+    return getCompanyRegSession().unwrap().then((response) => {
+      return response;
+    });
   }
 
   const userAuthSession = async (): Promise<SessionDto> => {
-    return dispatch(authApi.endpoints.getCompanyAuthSession.initiate({timestamp: Date.now()}));
+    return getCompanyAuthSession().unwrap().then((response) => {
+      return response;
+    });
+  }
+
+  const onAuthUser = async (dto: AuthDto): Promise<void> => {
+    return authUser(dto).unwrap();
+  }
+
+  const onCheckAuthCode = async (str: string): Promise<void> => {
+    return checkAuthCode(str).unwrap();
+  }
+  const onCheckRegCode = async (str: string): Promise<void> => {
+    return checkRegCode(str).unwrap();
+  }
+  const onSendAuthCode = async (): Promise<void> => {
+    return resendAuthCode().unwrap();
+  }
+  const onSendRegCode = async (): Promise<void> => {
+    return resendRegCode().unwrap();
+  }
+
+  const onRegisterUser = async (dto: RegistrationDto): Promise<void> => {
+    return registerUser(dto).unwrap();
   }
 
   useEffect(() => {
     if (searchParams.get('authState')?.includes('start')) {
       setModalState(AuthModalState.Register)
-    } else if (localStorage.getItem('ACCESS_TOKEN') != null) {
-      setModalState(AuthModalState.Closed)
     } else {
       setModalState(AuthModalState.Login)
     }
@@ -51,14 +76,16 @@ export const CompanyAuthModal = () => {
     <AuthModal
       authModalState={modalState}
       setAuthModalState={setModalState}
-      registerUser={registerUser}
-      userRegSession={userRegSession}
-      checkCode={checkCode}
-      resendCode={resendCode}
 
-      authUser={authUser}
-      checkAuthCode={checkAuthCode}
-      resendAuthCode={resendAuthCode}
+      registerUser={onRegisterUser}
+      userRegSession={userRegSession}
+
+      checkCode={onCheckRegCode}
+      resendCode={onSendRegCode}
+
+      authUser={onAuthUser}
+      checkAuthCode={onCheckAuthCode}
+      resendAuthCode={onSendAuthCode}
       userAuthSession={userAuthSession}
     />
   )

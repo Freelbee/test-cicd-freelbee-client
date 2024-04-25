@@ -128,11 +128,10 @@ export default function ConfirmationAuthLayout(props: Props) {
     e.preventDefault();
     if (code.join(``).length !== CODE_LENGTH) return;
     setLoading(true);
-    checkCode(code.join(``)).unwrap()
+    checkCode(code.join(``))
       .then(() => {
           router.replace(`${pathname}`);
           setModalState(AuthModalState.Closed);
-
       })
       .finally(() => {
         timer.stop();
@@ -157,10 +156,8 @@ export default function ConfirmationAuthLayout(props: Props) {
           resendRemain <= 0 &&
           <LinkButton
             as='button'
-            onClick={() => sendCode().unwrap().then(() => {
-              console.log('timer should be restarted')
+            onClick={() => sendCode().then(() => {
               remainingTime().then((time) => {
-                console.log('got session state' + time)
                 setLoading(false);
                 timer.start(time);
               });
@@ -215,9 +212,9 @@ export default function ConfirmationAuthLayout(props: Props) {
           {
             codeInputsRefs.map((ref, index) => (
               <SquareInput
+                type={'text'}
                 inputMode={`numeric`}
                 maxLength={1}
-                type={'number'}
                 name={`code-${index}`}
                 key={index}
                 ref={ref}

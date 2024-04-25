@@ -9,10 +9,11 @@ import sidebarBg from '@freelbee/assets/images/authSidebar.png'
 import {RegistrationContext} from "./RegistrationContext";
 import {RegistrationSteps} from "./RegistrationSteps";
 
+
 type Props = {
     data: { sidebarTitle: string, sidebarText: string, sidebarLinkText: string };
     onClick: React.MouseEventHandler<HTMLDivElement>
-    steps?: { step: RegistrationSteps, text: string }[];
+    steps: { step: RegistrationSteps, text: string }[];
     children?: React.ReactNode;
 };
 
@@ -41,7 +42,9 @@ export default function RegistrationLayout (props: Props) {
                             <AuthStepView
                                 key={index}
                                 currentStep={step}
-                                setCurrentStep={setStep}
+                                setCurrentStep={(step) => {
+                                    setStep(step as RegistrationSteps);
+                                }}
                                 elementStep={oneStep.step}
                                 text={oneStep.text}
                                 type={AuthStepViewType.Desktop}
@@ -66,7 +69,9 @@ export default function RegistrationLayout (props: Props) {
                                 <AuthStepView
                                     key={index}
                                     currentStep={step}
-                                    setCurrentStep={setStep}
+                                    setCurrentStep={(step) => {
+                                      setStep(step as RegistrationSteps);
+                                    }}
                                     elementStep={oneStep.step}
                                     text={oneStep.text}
                                     type={AuthStepViewType.Mobile}
@@ -100,12 +105,13 @@ const MapContainer = styled.div`
 `;
 
 const Map = styled.div`
+  overflow: hidden;
     position: relative;
     border-radius: 14px;
     height: 100%;
     width: 100%;
     padding: 48px;
-    background: rgba(40, 44, 56, 0.4) url(${sidebarBg.src});
+    background: rgba(40, 44, 56, 0.4) url(${(sidebarBg as unknown as {src: string}).src});
     background-size: cover;
     display: flex;
     flex-direction: column;

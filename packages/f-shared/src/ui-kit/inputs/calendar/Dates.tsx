@@ -178,15 +178,15 @@ export function Dates (props: Props)
                             {
                                 !day.disabled &&
 								<DayContent
-								    left={(day.day === 0 || day.date.isSame(selectedSecond)) && !!selectedFirst && !moment(selectedFirst).isSame(selectedSecond)}
-								    right={(day.day === 1 || day.date.isSame(selectedFirst)) && !!selectedSecond && !moment(selectedFirst).isSame(selectedSecond)}
+								    $left={(day.day === 0 || day.date.isSame(selectedSecond)) && !!selectedFirst && !moment(selectedFirst).isSame(selectedSecond)}
+								    $right={(day.day === 1 || day.date.isSame(selectedFirst)) && !!selectedSecond && !moment(selectedFirst).isSame(selectedSecond)}
 								    isSelected={dayIsBetween(day) || dayIsSelected(day)}
 								>
 								    <DayText
-								        isBetween={dayIsBetween(day)}
+								        $isBetween={dayIsBetween(day)}
 									    isSelected={dayIsSelected(day)}
-								        left={dayIsBetween(day) && day.day === 1 && !dayIsSelected(day)}
-								        right={dayIsBetween(day) && day.day === 0 && !dayIsSelected(day)}
+								        $left={dayIsBetween(day) && day.day === 1 && !dayIsSelected(day)}
+								        $right={dayIsBetween(day) && day.day === 0 && !dayIsSelected(day)}
 								    >{day.num}</DayText>
 								</DayContent>
                             }
@@ -241,7 +241,7 @@ const DayContainer = styled.div<{isHide: boolean, color: string}>`
   background: ${props => props.color};
 `;
 
-const DayContent = styled.div<{right: boolean, left:boolean, isSelected: boolean}>`
+const DayContent = styled.div<{$right: boolean, $left:boolean, isSelected: boolean}>`
 	width: 100%;
   	height: 100%;
   	display: flex;
@@ -249,7 +249,7 @@ const DayContent = styled.div<{right: boolean, left:boolean, isSelected: boolean
   	align-items: center;
     position: relative;
 
-  ${props => props.isSelected && props.left &&
+  ${props => props.isSelected && props.$left &&
           css`
             &:before {
               content: '';
@@ -261,7 +261,7 @@ const DayContent = styled.div<{right: boolean, left:boolean, isSelected: boolean
               background: #E5FFF2;
             }
           `}
-  ${props => props.isSelected && props.right &&
+  ${props => props.isSelected && props.$right &&
           css`
             &:after {
               content: '';
@@ -277,7 +277,7 @@ const DayContent = styled.div<{right: boolean, left:boolean, isSelected: boolean
 
 
 `;
-const DayText = styled.div<{ isSelected: boolean, isBetween: boolean, right: boolean, left: boolean }>`
+const DayText = styled.div<{ isSelected: boolean, $isBetween: boolean, $right: boolean, $left: boolean }>`
   position: relative;
   z-index: 1;
   ${typography.bodySmall};
@@ -286,18 +286,18 @@ const DayText = styled.div<{ isSelected: boolean, isBetween: boolean, right: boo
   color: ${Color.GRAY_800};
   height: 20px;
   width: 20px;
-  background: ${props => props.isSelected ? `#B2FFD8` : props.isBetween ? `#E5FFF2` : `transparent`};
+  background: ${props => props.isSelected ? `#B2FFD8` : props.$isBetween ? `#E5FFF2` : `transparent`};
   border-radius: ${props => props.isSelected ? `5px` : `0`};
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  ${props => props.right &&
+  ${props => props.$right &&
           css`
             border-radius: 0 5px 5px 0;
           `}
-  ${props => props.left &&
+  ${props => props.$left &&
           css`
             border-radius: 5px 0 0 5px;
           `}

@@ -5,19 +5,21 @@ import styled from 'styled-components';
 import { ReactComponent as LogoutIcon} from '@freelbee/assets/icons/menu-icons/exit.svg';
 import {  Color, Text, typography } from '@freelbee/shared/ui-kit';
 import { useRouter } from 'next/navigation';
-import { Token_Enum } from '@company/shared';
+import { useLogoutMutation } from '@company/entities';
 
 export const AccountActions = () => {
-
+    const [logout] = useLogoutMutation();
     const router = useRouter();
-    const logout = () =>{
-        localStorage.removeItem(Token_Enum.ACCESS_TOKEN);
-        router.push('/');
+
+    const onLogout = () =>{
+        logout().unwrap().then(()=>{
+          router.push('/');
+        })
     };
 
   return (
     <AccountLinks>
-        <AccountLink onClick={logout}>
+        <AccountLink onClick={onLogout}>
             <LogoutIcon stroke={Color.GRAY_800} />
             <Text font='body'>
                 Exit

@@ -11,14 +11,14 @@ export default function AuthContainer (props: Props) {
     const {isOpen, children} = props;
 
     return (
-        <Container isOpen={isOpen}>
+        <Container $isOpen={isOpen}>
             {children}
         </Container>
     );
 }
 
-const Container = styled.div<{ isOpen: boolean }>`
-  display: ${({ isOpen }) => isOpen ? 'flex' : 'none'};
+const Container = styled.div<{ $isOpen: boolean }>`
+  display: ${({ $isOpen }) => $isOpen ? 'flex' : 'none'};
   justify-content: center;
   align-items: center;
   width: 100%;

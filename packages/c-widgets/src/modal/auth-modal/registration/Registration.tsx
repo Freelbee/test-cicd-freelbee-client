@@ -9,14 +9,14 @@ import {AuthModalState} from "@freelbee/widgets";
 import { RegistrationData, SessionDto} from "@freelbee/entities";
 import RegistrationLayout from "./RegistrationLayout";
 import {RegistrationSteps} from "./RegistrationSteps";
-import {RegistrationDto} from "../../../../../e-entities/src/auth/dto/RegistrationDto";
+import {RegistrationDto} from '@freelbee/entities';
 
 type Props = {
     isOpen: boolean;
-    registerUser: (dto: RegistrationDto) => void;
+    registerUser: (dto: RegistrationDto) => Promise<void>;
     userRegSession: () => Promise<SessionDto>;
-    checkCode: (code: string) => void;
-    resendCode: () => void;
+    checkCode: (code: string) => Promise<void>;
+    resendCode: () => Promise<void>;
     setModalState: Dispatch<SetStateAction<AuthModalState>>;
 };
 
@@ -47,14 +47,10 @@ export default function Registration (props: Props) {
         <AuthContainer isOpen={isOpen}>
             <RegistrationContext.Provider value={{registrationData, setRegistrationData, step, setStep}}>
                 <RegistrationLayout
-                    propsStep={{step, setStep}}
                     steps={registrationSteps}
                     data={data}
                     onClick={() => setModalState(AuthModalState.Login)}
-                    /*onClick={() => {
-                        router.push(router.asPath.replace('sign-up', 'sign-in'));
-                        setAuthModalState(AuthModalState.Login);
-                    }}*/
+
                 >
                     {step === RegistrationSteps.FILL_USER_DATA && <RegistrationForm registerUser={registerUser}/>}
                     {step === RegistrationSteps.CONFIRM_EMAIL && <EmailConfirmation

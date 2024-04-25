@@ -68,7 +68,7 @@ export function Select<T> (props: Props<T>) {
         isValid,
         noBorder
     } = props;
-    
+
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -109,7 +109,7 @@ export function Select<T> (props: Props<T>) {
     }, [watchValue]);
 
     const {handleSpaceOpen, navigateOptions} = useSelectKeyboardNavigation({
-        listboxRef, 
+        listboxRef,
         isSelectOpened: isOpen,
         toggleOpenFn: () => setIsOpen(prev => !prev)
     });
@@ -118,7 +118,7 @@ export function Select<T> (props: Props<T>) {
         <Container>
             {label && <Label
                 forInput={ariaId}
-                label={label} 
+                label={label}
                 isRequired={isRequired} />}
             <SelectBody
                 isDisabled={isDisabled}
@@ -137,24 +137,24 @@ export function Select<T> (props: Props<T>) {
                     onKeyDown={handleSpaceOpen}
                     onClick={() => setIsOpen(prev => !prev)}>
                     {(selected !== null && selected !== undefined) && selectedRender(selected)}
-                    {(selected === null || selected === undefined) && !defaultValue && 
+                    {(selected === null || selected === undefined) && !defaultValue &&
                     <PlaceHolder isDisabled={isDisabled}>{placeholder}</PlaceHolder>}
                     {!selected && defaultValue && selectedRender(defaultValue)}
 
-                    <ArrowContainer isOpen={isOpen} isDisabled={!!isDisabled}>
+                    <ArrowContainer $isOpen={isOpen} $isDisabled={!!isDisabled}>
                         <ArrowIcon />
                     </ArrowContainer>
 
                 </Field>
-                <ListContainer show={isOpen} >
+                <ListContainer $show={isOpen} >
                     <ListContent role='listbox' id={ariaId} ref={listboxRef}>
                         {items?.filter(item => item !== selected)
                             .map((item, index) => (
-                                <Item 
+                                <Item
                                     role='option'
                                     aria-selected={selected === item}
                                     tabIndex={isOpen ? 0 : -1}
-                                    key={index} 
+                                    key={index}
                                     disabledField={checkIfFieldIsDisabled ? checkIfFieldIsDisabled(item) : false}
                                     onClick={() => select(item)}
                                     onKeyDown={(e) => DOMHelper.handleEnterKeydown(e, () => select(item))}>
@@ -164,7 +164,7 @@ export function Select<T> (props: Props<T>) {
                         }
                     </ListContent>
                 </ListContainer>
-            </SelectBody>      
+            </SelectBody>
         </Container>
     );
 }
@@ -203,7 +203,7 @@ const Field = styled.div<{ background: string, hasError: boolean, isDisabled: bo
   width: 100%;
   transition: 0.3s border;
   font-size: 14px;
-  
+
   &::placeholder{
     color: ${Color.GRAY_600};
   }
@@ -227,7 +227,7 @@ const PlaceHolder = styled.div<{isDisabled: boolean}>`
   height: 100%;
   align-items: center;
   padding-right: 20px;
-  
+
   @media screen and (max-width: 480px) {
       max-width: 180px;
       text-overflow: ellipsis;
@@ -236,7 +236,7 @@ const PlaceHolder = styled.div<{isDisabled: boolean}>`
   }
 `;
 
-const ListContainer = styled.div<{show: boolean}>`
+const ListContainer = styled.div<{$show: boolean}>`
   z-index: 10;
   position: absolute;
   top: calc(100% + 10px);
@@ -251,9 +251,9 @@ const ListContainer = styled.div<{show: boolean}>`
   gap: 8px;
 
   transition: opacity .5s, visibility .5s, top .5s;
-  pointer-events: ${({show}) => show ? 'unset' : 'none'};
-  visibility: ${({show}) => show ? 'visible' : 'hidden' };
-  opacity: ${({show}) => show ? '1' : '0'};
+  pointer-events: ${({$show}) => $show ? 'unset' : 'none'};
+  visibility: ${({$show}) => $show ? 'visible' : 'hidden' };
+  opacity: ${({$show}) => $show ? '1' : '0'};
 `;
 
 const ListContent = styled.div`
@@ -311,7 +311,7 @@ const Item = styled.span<{disabledField: boolean}>`
   }
 `;
 
-const ArrowContainer = styled.div<{isOpen: boolean, isDisabled: boolean}>`
+const ArrowContainer = styled.div<{$isOpen: boolean, $isDisabled: boolean}>`
   position: absolute;
   right: 15px;
   margin: auto;
@@ -322,12 +322,12 @@ const ArrowContainer = styled.div<{isOpen: boolean, isDisabled: boolean}>`
    display: flex;
   align-items: center;
   justify-content: center;
-  transform: scaleY(${({isOpen}) => isOpen ? -1 : 1});
+  transform: scaleY(${({$isOpen}) => $isOpen ? -1 : 1});
   transition: transform 0.5s;
 
   svg {
     width: 100%;
     height: 100%;
-    stroke: ${({isDisabled}) => isDisabled ? Color.GRAY_400 : Color.GRAY_800};
+    stroke: ${({$isDisabled}) => $isDisabled ? Color.GRAY_400 : Color.GRAY_800};
   }
 `;

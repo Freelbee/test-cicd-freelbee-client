@@ -1,5 +1,5 @@
 'use client'
-import React, {Dispatch, ReactNode, SetStateAction, useEffect, useState} from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {Breakpoint, Color, mediaBreakpointDown, typography} from "@freelbee/shared/ui-kit";
 
@@ -22,7 +22,8 @@ enum AuthStepState {
 
 type Props = {
     currentStep: RegistrationSteps | LoginSteps,
-    setCurrentStep: Dispatch<SetStateAction<RegistrationSteps | LoginSteps>>,
+    // setCurrentStep: Dispatch<SetStateAction<RegistrationSteps>> | Dispatch<SetStateAction<LoginSteps>>,
+    setCurrentStep: (step: RegistrationSteps | LoginSteps) => void,
     elementStep: RegistrationSteps | LoginSteps,
     text: string | ReactNode
     type: AuthStepViewType,

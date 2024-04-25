@@ -34,14 +34,14 @@ export const CompanySwitcher = forwardRef(function Switcher({companies, selected
     };
 
     return (
-        <Container 
+        <Container
             onKeyDown={(e) => DOMHelper.handleEnterKeydown(e, toggleOpen)}
             tabIndex={0}
-            onClick={toggleOpen} 
+            onClick={toggleOpen}
             ref={ref}
             {...rest}>
-            
-            <CompanyListContainer isOpen={isOpen}>
+
+            <CompanyListContainer $isOpen={isOpen}>
                 <CompanyList role='listbox'>
                     {
                         companies
@@ -51,7 +51,7 @@ export const CompanySwitcher = forwardRef(function Switcher({companies, selected
                                   selected={company.id === selectedCompany.id}
                                   role='option'
                                   aria-selected={false}
-                                  key={company.id} 
+                                  key={company.id}
                                   onClick={() => handleCompanySelect(company.id)}
                                   onKeyDown={(e) => DOMHelper.handleEnterKeydown(e, () => handleCompanySelect(company.id))}
                                   company={company}
@@ -60,11 +60,11 @@ export const CompanySwitcher = forwardRef(function Switcher({companies, selected
                     }
                 </CompanyList>
                 <AddSection>
-                    <IconButton 
+                    <IconButton
                       onClick={() => dispatch(setOnboardingOpened(true))}
-                      label={'Add new company'} 
-                      Icon={<AddIcon />} 
-                      isSmall 
+                      label={'Add new company'}
+                      Icon={<AddIcon />}
+                      isSmall
                       styles={addButtonStyled} />
                     <Text font='bodyMedium' color={Color.GRAY_700}>Add company</Text>
                 </AddSection>
@@ -74,7 +74,7 @@ export const CompanySwitcher = forwardRef(function Switcher({companies, selected
 });
 
 const addButtonStyled = css`
-  max-width: 40px; 
+  max-width: 40px;
   max-height: 40px;
 
   svg {
@@ -92,7 +92,7 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
-const CompanyListContainer = styled.div<{isOpen: boolean}>`
+const CompanyListContainer = styled.div<{$isOpen: boolean}>`
   width: 100%;
   overflow: hidden;
   min-width: 100%;

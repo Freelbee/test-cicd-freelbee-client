@@ -61,12 +61,12 @@ export const StepThreeForm = () => {
 
   const downloadContractPreview = async () => {
     const body: ContractPreviewDto = {
-      companyCounterpartyId: company.id,
-      freelancerEmail: taskCreationData.freelancers[0].email,
-      taskWorkTypeName: taskCreationData.worksType?.name,
+      companyCounterpartyId: company?.id ?? 0,
+      freelancerEmail: taskCreationData?.freelancers?.[0].email ?? '',
+      taskWorkTypeName: taskCreationData?.worksType?.name ?? '',
       taskDeadline: taskCreationData.deadline,
       companyAmount: taskCreationData.price,
-      companyCurrencyId: taskCreationData.currency?.id,
+      companyCurrencyId: taskCreationData.currency?.id ?? 0,
     };
     getContractPreview(body);
   };
