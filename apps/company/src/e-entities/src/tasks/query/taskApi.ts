@@ -73,14 +73,16 @@ export const taskAPI = API.injectEndpoints({
     getPaymentData: builder.query<PaymentDataResponseDto, { taskId: number }>({
       query: ({ taskId }) => ({
         url: Endpoint_Enum.GET_PAYMENT_DATA.replace('{0}', taskId.toString()),
-        method: 'GET'
-      })
+        method: 'GET',
+      }),
+      providesTags: ["payment-data"],
     }),
     createPaymentData: builder.mutation<PaymentResponseDto, { paymentDataId: number }>({
       query: ({ paymentDataId }) => ({
         url: Endpoint_Enum.CREATE_PAYMENT_DATA.replace('{0}', paymentDataId.toString()),
         method: 'POST',
-      })
+      }),
+      invalidatesTags: ['payment-data']
     }),
     eventTransakTaskStatus: builder.mutation<void, string>({
       query: (body) => ({

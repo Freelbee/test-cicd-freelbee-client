@@ -11,7 +11,7 @@ import {
   useGetUserQuery,
   useSetTaskStatusMutation
 } from '@company/entities';
-import { PaymentProviderName, TaskCounterpartyDataDto, TaskStatus } from '@freelbee/entities';
+import { CounterpartyStatus, PaymentProviderName, TaskCounterpartyDataDto, TaskStatus } from '@freelbee/entities';
 import { ActionsContainer } from './ActionsContainer';
 import { Button, ButtonStyleEnum } from '@freelbee/shared/ui-kit';
 import useTransakWidget from '../../logic/hooks/useTransakWidget';
@@ -28,12 +28,12 @@ export default function TaskWaitingForPaymentActions() {
   const { data: taskPaymentData } = useGetPaymentDataQuery({ taskId: displayedTask?.id ?? 0 }, { skip: !displayedTask?.id });
   const [createPaymentData] = useCreatePaymentDataMutation();
 
-  //TODO::: taskPaymentData.payments ? убрать кнопку
+  const isButtonPayHidden = taskPaymentData?.paymentProviderName === PaymentProviderName.NEBEUS && taskPaymentData.payments.length > 0;
+
   const onClickPay = () => {
     if (!taskPaymentData) return;
     if (taskPaymentData.payments.length === 0) {
       createPaymentData({ paymentDataId: taskPaymentData!.id });
-    } else {
       if (taskPaymentData.paymentProviderName !== PaymentProviderName.TRANSAK) return;
         // if (process.env['NEXT_PUBLIC_MODE'] === 'test') { //TODO::: uncomment
         //   handleSetStatus(TaskStatus.PAID)
@@ -102,7 +102,7 @@ export default function TaskWaitingForPaymentActions() {
     <>
       <ActionsContainer>
         <Button
-          disabled={company?.status !== CounterpartyStatus.APPROVED}
+          disabled={company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED || isButtonPayHidden}
           isWide
           styleType={ButtonStyleEnum.GREEN}
           onClick={() => onClickPay()}
