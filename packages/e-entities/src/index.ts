@@ -32,3 +32,4 @@ export * from './task/interface/TaskStatus';
 export * from './task/interface/SwitchTaskStatusDto';
 export * from './task/interface/FileLink';
 export * from './task/interface/TaskFileDto';
+export * from './task/ui/PinnedFiles';

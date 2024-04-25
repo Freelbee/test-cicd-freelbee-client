@@ -4,6 +4,7 @@ import { TaskStatus, UserStatus } from "@freelbee/entities";
 import { useDispatch } from "react-redux";
 import { ActionsContainer } from "./ActionsContainer";
 import { Button, ButtonStyleEnum } from "@freelbee/shared/ui-kit";
+import { FormGrid } from "../FormGrid";
 
 export default function AssignedTaskActions () {
 
@@ -22,23 +23,25 @@ export default function AssignedTaskActions () {
     };
 
     return (
-        <ActionsContainer>
-            <Button
-                disabled={userData.status !== UserStatus.APPROVED}
-                isWide
-                onClick={() => {
-                    dispatch(setAcceptanceStep(TaskAcceptanceStep.CONTRACT))
-                }}>
-                Next
-            </Button>
-            <Button
-                disabled={userData.status !== UserStatus.APPROVED}
-                onClick={()=> handleSetStatus(TaskStatus.CANCELLED)}
-                isWide
-                styleType={ButtonStyleEnum.ROUND_STROKE_WHITE}>
-                Decline
-            </Button>
-        </ActionsContainer>
+        <FormGrid>
+            <ActionsContainer>
+                <Button
+                    disabled={userData.status !== UserStatus.APPROVED}
+                    isWide
+                    onClick={() => {
+                        dispatch(setAcceptanceStep(TaskAcceptanceStep.CONTRACT))
+                    }}>
+                    Next
+                </Button>
+                <Button
+                    disabled={userData.status !== UserStatus.APPROVED}
+                    onClick={()=> handleSetStatus(TaskStatus.CANCELLED)}
+                    isWide
+                    styleType={ButtonStyleEnum.ROUND_STROKE_WHITE}>
+                    Decline
+                </Button>
+            </ActionsContainer>                
+        </FormGrid>
     );
 }
 

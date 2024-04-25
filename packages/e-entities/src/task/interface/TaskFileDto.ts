@@ -9,19 +9,17 @@ export interface TaskFileDto {
     creatorEmail: string;
     fileName: string;
     createdAt: string;
-
-    action?: FileAction;
 }
 
-export enum FileAction {
-    NO_ACTION,
-    DELETE,
-    DOWNLOAD
-}
+// export enum FileAction {
+//     NO_ACTION,
+//     DELETE,
+//     DOWNLOAD
+// }
 
-export type ActionFiles = {
-    action?: FileAction
-};
+// export type ActionFiles = {
+//     action?: FileAction
+// };
 
 export interface NewFile {
     id: number,

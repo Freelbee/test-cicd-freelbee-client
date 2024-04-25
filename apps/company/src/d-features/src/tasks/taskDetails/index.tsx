@@ -7,14 +7,15 @@ import TaskHeadInfo from './ui/TaskHeadInfo';
 import { Description } from './ui/Description';
 import { useAppSelector } from '../../store';
 import { skipToken } from '@reduxjs/toolkit/query';
-import { TaskStatus } from '@freelbee/entities';
-import { useGetContractLinkQuery, useGetInvoiceLinkQuery } from '@company/entities';
+import { TaskStatus, UserRole } from '@freelbee/entities';
+import { useGetContractLinkQuery, useGetInvoiceLinkQuery, useGetTaskFilesQuery } from '@company/entities';
 import AssignedTaskActions from './ui/taskActions/AssignedTaskActions';
 import TaskNewActions from './ui/taskActions/TaskNewActions';
 import TaskInReviewActions from './ui/taskActions/TaskInReviewActions';
 import TaskWaitingForPaymentActions from './ui/taskActions/TaskWaitingForPaymentActions';
 import React, { useState } from 'react';
 import { FileDownload } from '../../../../c-widgets/src/tasks/TaskDetails/ui/FileDownload';
+import { PinnedFiles } from "@freelbee/entities";
 
 const invoiceAllowedStatuses = [
   TaskStatus.WAITING_FOR_PAYMENT,
@@ -31,6 +32,7 @@ export const TaskDetails = () => {
   const shouldDisplayContractDownload = displayedTask?.status &&  displayedTask.status !== TaskStatus.NEW;
   const shouldDisplayInvoiceDownload = displayedTask?.status && invoiceAllowedStatuses.includes(displayedTask.status);
 
+  const { data: files } = useGetTaskFilesQuery(displayedTask?.taskId ?? skipToken);
   const { data: linkContract } = shouldDisplayContractDownload
     ? useGetContractLinkQuery(displayedTask?.contractId ?? skipToken)
     : { data: undefined };
@@ -57,6 +59,9 @@ export const TaskDetails = () => {
       <Description task={displayedTask} />
       {shouldDisplayContractDownload && <FileDownload text='Contract:' link={linkContract?.downloadLink!} />}
       {shouldDisplayInvoiceDownload && <FileDownload text='Invoice:' link={linkInvoice?.downloadLink!} />}
+      <PinnedFiles
+        userRole={UserRole.COMPANY}
+        files={files ?? []} />
       {displayedTask?.status === TaskStatus.REVIEWING && (
         <TermsAgreementContainer>
           <Checkbox isCheck={isBoxChecked} onChange={() => setBoxChecked((isBoxChecked) => !isBoxChecked)} />
