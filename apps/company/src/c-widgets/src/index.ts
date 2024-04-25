@@ -6,3 +6,4 @@ export * from './tasks/TaskTable/index';
 export * from './tasks/TaskCreation/index';
 export * from './tasks/TaskDetails/index';
 export * from './freelancer/FreelancersHeading/index';
+export * from './freelancer/FreelancerInvitation/index'

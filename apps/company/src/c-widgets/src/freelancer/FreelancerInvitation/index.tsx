@@ -72,7 +72,12 @@ export const FreelancerInvitationModal = () => {
           setValue={value => handleChange(value)}
           isError={validatorResult.hasError('freelancerEmail')}
           errorMessage={validatorResult.getMessageByLanguage('freelancerEmail', LanguageType.EN)}/>
-        <Button styles={sendBtnStyle} styleType={ButtonStyleEnum.GREEN} onClick={sendInvitation}>Send invitation</Button>
+        <Button
+          styles={sendBtnStyle}
+          styleType={ButtonStyleEnum.GREEN}
+          onClick={sendInvitation}
+          isLoading={buttonLoading}
+        >Send invitation</Button>
       </Container>
     </ModalWindow>
   )
