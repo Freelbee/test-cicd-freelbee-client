@@ -6,7 +6,7 @@ import { ReactComponent as CryptoIcon } from '@freelbee/assets/icons/payment-met
 import { ReactComponent as CardIcon } from '@freelbee/assets/icons/payment-method/card.svg';
 import { ReactComponent as BankIcon } from '@freelbee/assets/icons/payment-method/bank.svg';
 import { ActionsContainer, FormGrid, useAppSelector } from "@freelancer/features";
-import { PaymentMethodType } from "@freelbee/entities";
+import { PaymentMethodPropType, PaymentMethodType } from "@freelbee/entities";
 import { CryptoTips } from "./PaymentMethosTips/CryptoTips";
 import { BancAccountTips } from "./PaymentMethosTips/BancAccountTips";
 import { useDispatch } from "react-redux";
@@ -27,6 +27,7 @@ import { PropsHelper } from "@freelbee/shared/helpers";
 import { BankFormValidator } from "./util/BankFormValidator";
 import { CardFormValidator } from "./util/CardFormValidator";
 import { CryptoFormValidator } from "./util/CryptoFormValidator";
+import { AbstractValidator } from "@freelbee/features";
 
 const TIPS_BY_PAYMENT_METHOD: Record<PaymentMethodType, JSX.Element> = {
     [PaymentMethodType.BANK_ACCOUNT]: <BancAccountTips />,
@@ -52,11 +53,17 @@ const PAYMENT_METHOD_NAMES: Record<PaymentMethodType, string> = {
     [PaymentMethodType.CARD]: 'Card'
 }
 
+const PAYMENT_METHOD_VALIDATORS: Record<PaymentMethodType, AbstractValidator<Partial<{[K in PaymentMethodPropType]: string}>>> = {
+    [PaymentMethodType.BANK_ACCOUNT]: new BankFormValidator(),
+    [PaymentMethodType.CRYPTO_WALLET]: new CryptoFormValidator(),
+    [PaymentMethodType.CARD]: new CardFormValidator()
+}
+
 export const PaymentStep = () => {
 
     const dispatch = useDispatch();
     const {displayedTask} = useAppSelector(state => state.taskSliceReducer);
-    const [acceptTask] = useAcceptTaskMutation();
+    const [acceptTask, {isLoading}] = useAcceptTaskMutation();
     const {data: freelancer} = useGetFreelancerCounterpartyQuery();
     const {formData,
         setFormData,
@@ -65,22 +72,11 @@ export const PaymentStep = () => {
         resetFormData,
         setValidatorResult} = useContext(TaskAcceptanceContext);
 
-    const bankFormFalidator = new BankFormValidator();
-    const cardFormValidator = new CardFormValidator();
-    const cryptoFormvalidator = new CryptoFormValidator();
-
     const validatePaymentData = () => {
-        let validationResult = null;
+        if(!formData.paymentMethodType) return;
 
-        if(formData.paymentMethodType === PaymentMethodType.CRYPTO_WALLET) {
-            validationResult = cryptoFormvalidator.validate(paymentFormData);
-        }
-        if(formData.paymentMethodType === PaymentMethodType.BANK_ACCOUNT) {
-            validationResult = bankFormFalidator.validate(paymentFormData);
-        }
-        if(formData.paymentMethodType === PaymentMethodType.CARD) {
-            validationResult = cardFormValidator.validate(paymentFormData);
-        }
+        const validationResult = PAYMENT_METHOD_VALIDATORS[formData.paymentMethodType]
+        .validate(paymentFormData);
 
         setValidatorResult(validationResult);
         return validationResult;
@@ -163,6 +159,7 @@ export const PaymentStep = () => {
 
         <ActionsContainer>
             <Button
+                isLoading={isLoading}
                 disabled={!formData.paymentMethodType}
                 isWide
                 onClick={handleAccept}

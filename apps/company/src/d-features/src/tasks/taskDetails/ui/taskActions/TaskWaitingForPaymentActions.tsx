@@ -25,7 +25,7 @@ export default function TaskWaitingForPaymentActions() {
   const { data: user } = useGetUserQuery();
   const { data: company } = useGetCompanyCounterpartyQuery();
   const [setTaskStatus] = useSetTaskStatusMutation();
-  const { data: taskPaymentData } = useGetPaymentDataQuery({ taskId: displayedTask?.id ?? 0 }, { skip: !displayedTask?.id });
+  const { data: taskPaymentData } = useGetPaymentDataQuery({ taskId: displayedTask?.taskId ?? 0 }, { skip: !displayedTask?.taskId });
   const [createPaymentData] = useCreatePaymentDataMutation();
 
   const isButtonPayHidden = taskPaymentData?.paymentProviderName === PaymentProviderName.NEBEUS && taskPaymentData.payments.length > 0;
@@ -45,7 +45,7 @@ export default function TaskWaitingForPaymentActions() {
 
   const handleSetStatus = (status: TaskStatus) => {
     if (!displayedTask) return
-    setTaskStatus({ taskId: displayedTask.id, status })
+    setTaskStatus({ taskId: displayedTask.taskId, status })
       .unwrap()
       .then(() => dispatch(setDetailsOpen(false)));
   };

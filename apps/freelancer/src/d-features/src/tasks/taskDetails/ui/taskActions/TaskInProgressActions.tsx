@@ -50,7 +50,7 @@ export default function TaskInProgressActions () {
         if(!displayedTask) return;
 
         setTaskStatus({
-            taskId: displayedTask.id,
+            taskId: displayedTask.taskId,
             status: TaskStatus.REVIEWING
         }).unwrap().then(()=>{
             dispatch(setDetailsOpen(false));
@@ -91,7 +91,6 @@ export default function TaskInProgressActions () {
                     </Button>}
 
                 {hasActionsForUpload() && <Button
-                    isLoading={isLoading}
                     disabled={isLoading}
                     onClick={cancelActions}
                     isWide styleType={ButtonStyleEnum.ROUND_STROKE_WHITE}>
