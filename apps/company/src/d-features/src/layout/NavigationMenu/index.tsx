@@ -45,17 +45,17 @@ export function NavigationMenu () {
                         <CloseIcon stroke={Color.GRAY_600} />
                     </button>
                 </NavigationLogo>
-                    
+
 
                     <div>
                         {links.map((link) => (
-                            <NavigationLink 
-                            key={link.title} 
+                            <NavigationLink
+                            key={link.title}
                             isActive={isRouteActive(link.link)}
                             {...link} />
                         ))}
                     </div>
-                    
+
                 </Links>
 
             </NavigationContent>
@@ -67,6 +67,7 @@ const NavigationWrapper = styled.div<{ $isOpen: boolean}>`
   position: relative;
   overflow-x: hidden;
   width: 100%;
+  min-width: 200px;
 
   ${mediaBreakpointDown(Breakpoint.Medium)} {
     position: fixed;

@@ -102,7 +102,7 @@ export const StepThreeForm = () => {
           <Heading3 color={Color.GRAY_900}>Agreement</Heading3>
           <DownloadContainer onClick={downloadContractPreview}>
             <DownloadIconStyled />
-            <Text font={'body'} color={Color.BLUE}>Download agreement</Text>
+            <Text font={'body'} color={Color.BLUE}>Download</Text>
           </DownloadContainer>
         </AgreementFileContainer>
       )}

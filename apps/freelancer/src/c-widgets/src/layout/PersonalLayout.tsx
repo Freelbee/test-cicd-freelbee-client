@@ -9,19 +9,12 @@ import { OnboardingModal } from "../onboarding"
 import { useGetUserQuery, useIsAuthenticatedQuery } from '@freelancer/entities';
 import {FreelancerAuthModal} from "../auth/FreelancerAuthModal";
 
-export const PersonalLayout = ({children}: PropsWithChildren) => {
-
+export const PersonalLayout = ({ children }: PropsWithChildren) => {
 
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
 
-  const {
-    data: isAuthenticated,
-    isLoading: isAuthenticatedLoading,
-  } = useIsAuthenticatedQuery();
-
-  const {data: user, refetch} = useGetUserQuery(undefined, {
-    skip: !isAuthenticated,
-  });
+  const { data: isAuthenticated, isLoading: isAuthenticatedLoading } = useIsAuthenticatedQuery();
+  const { data: user, isLoading: isUserLoading, refetch } = useGetUserQuery(undefined, { skip: !isAuthenticated });
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -33,31 +26,25 @@ export const PersonalLayout = ({children}: PropsWithChildren) => {
   return (
     <LayoutContext.Provider value={{
       navigationMenuOpened,
-      setNavigationMenuOpened,
+      setNavigationMenuOpened
     }}>
       <Container>
-        {
-          !isAuthenticated &&
-          !isAuthenticatedLoading &&
-          <FreelancerAuthModal/>
-        }
-        {
-          isAuthenticated && <>
+        {!isAuthenticated && !isAuthenticatedLoading && <FreelancerAuthModal />}
+        {isAuthenticated && (
+          <>
             <OnboardingModal />
-
             <HeadMenu />
             <NavigationMenu />
             <MobileMenu />
             <Main>
-              {!user?.userData ? <OnboardingNotification /> : children}
+              {!isUserLoading && user?.userData && children}
+              {!isUserLoading && !user?.userData && <OnboardingNotification />}
             </Main>
           </>
-        }
-
+        )}
       </Container>
     </LayoutContext.Provider>
-
-  )
+  );
 }
 
 const Container = styled.div`

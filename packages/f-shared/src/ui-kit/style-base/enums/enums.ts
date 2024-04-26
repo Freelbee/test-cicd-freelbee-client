@@ -34,6 +34,7 @@ export enum Color {
   DEFAULT_BLUE = '#7696E7',
   NEW = '#25A7D0',
   PEN_BLUE = '#04103D',
+  ORANGE = '#E56000',
 
   //Status:
   ERROR = '#FD6A6A',
@@ -58,11 +59,11 @@ export enum Color {
   GRADIENT_IP = 'linear-gradient(341deg, #0D5A7B 0%, #2D74DF 100%)',
   GRADIENT_CYAN = 'linear-gradient(135deg, #59F0DE 0%, #093248 100%)',
   GRADIENT_GREENBLUE = 'linear-gradient(165deg, #3DE297 2.5%, #0D76E9 109.38%)',
-  
+
   VIOLET = '#7B61FF',
   VIOLET_TRANSPARENT = 'rgb(229 221 248 / 30%)',
   TRANSPARENT = 'transparent'
-  
+
 }
 
 export enum Z_INDEX {
