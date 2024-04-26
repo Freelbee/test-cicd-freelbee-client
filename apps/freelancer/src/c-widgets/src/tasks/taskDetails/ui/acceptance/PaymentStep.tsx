@@ -6,7 +6,7 @@ import { ReactComponent as CryptoIcon } from '@freelbee/assets/icons/payment-met
 import { ReactComponent as CardIcon } from '@freelbee/assets/icons/payment-method/card.svg';
 import { ReactComponent as BankIcon } from '@freelbee/assets/icons/payment-method/bank.svg';
 import { ActionsContainer, FormGrid, useAppSelector } from "@freelancer/features";
-import { PaymentMethodPropType, PaymentMethodType } from "@freelbee/entities";
+import { PaymentMethodPropType, PaymentMethodType, PaymentProviderName } from "@freelbee/entities";
 import { CryptoTips } from "./PaymentMethosTips/CryptoTips";
 import { BancAccountTips } from "./PaymentMethosTips/BancAccountTips";
 import { useDispatch } from "react-redux";
@@ -57,6 +57,11 @@ const PAYMENT_METHOD_VALIDATORS: Record<PaymentMethodType, AbstractValidator<Par
     [PaymentMethodType.BANK_ACCOUNT]: new BankFormValidator(),
     [PaymentMethodType.CRYPTO_WALLET]: new CryptoFormValidator(),
     [PaymentMethodType.CARD]: new CardFormValidator()
+}
+
+const PAYMENT_METHODS_BY_PROVIDER: Record<PaymentProviderName, Array<PaymentMethodType>> = {
+    [PaymentProviderName.NEBEUS]: [PaymentMethodType.CRYPTO_WALLET, PaymentMethodType.CARD],
+    [PaymentProviderName.TRANSAK]: [PaymentMethodType.CRYPTO_WALLET]
 }
 
 export const PaymentStep = () => {
@@ -129,7 +134,7 @@ export const PaymentStep = () => {
             <SelectWithSearch<PaymentMethodType>
                 label='Payment method*'
                 placeholder='Select from the dropdown list'
-                items={Object.values(PaymentMethodType)}
+                items={PAYMENT_METHODS_BY_PROVIDER[displayedTask!.paymentProviderName]}
                 value={formData.paymentMethodType}
                 setValue={(item) => {
                     setFormData('paymentMethodType', item);

@@ -29,8 +29,6 @@ const [data, setData] = useDataStateUpdater<AcceptanceData>(DEFAULT_ACCEPTANCE_D
 const [validatorResult, setValidatorResult] = useState<ValidatorResult<PaymentFormData> | null>(null);
 const [paymentData, setPaymentData, resetPaymentForm] = useDataStateUpdater<PaymentFormData>({});
 
-const closeModalWindow = () => dispatch(setDetailsOpen(false));
-
 const resetForm = () => {
     resetPaymentForm({});
     setData('freelancerCurrency', null);
@@ -38,6 +36,11 @@ const resetForm = () => {
     setData('freelancerSignature', '');
     setData('paymentMethodType', null);
 }
+
+const closeModalWindow = () => {
+    dispatch(setDetailsOpen(false));
+    resetForm();
+};
 
 if(!displayedTask) return <></>;
 

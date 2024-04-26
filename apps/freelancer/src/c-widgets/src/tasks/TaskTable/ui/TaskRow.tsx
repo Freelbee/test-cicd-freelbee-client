@@ -31,9 +31,9 @@ export const TaskRow = ({task}: Props) => {
         </TaskName>
 
         <MobileTitle>Company</MobileTitle>
-        <a href={`mailto:${task.customerEmail}`} onClick={e => e.stopPropagation()}>
+        <MailLink href={`mailto:${task.customerEmail}`} onClick={e => e.stopPropagation()}>
          <Text font='bodySmall' color={Color.GRAY_600}>{task.customerEmail}</Text>   
-        </a>
+        </MailLink>
 
         <MobileTitle>Amount</MobileTitle>
         <Text font='bodySmall'>{`${task.price} ${task?.customerCurrency || ''}`}</Text>
@@ -101,4 +101,8 @@ const MobileTitle = styled.div`
   ${mediaBreakpointDown(Breakpoint.Tablet)} {
     display: block;
   }
+`;
+
+const MailLink = styled.a`
+  width: fit-content;
 `;

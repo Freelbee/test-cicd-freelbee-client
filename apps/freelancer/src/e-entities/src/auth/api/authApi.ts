@@ -30,7 +30,7 @@ export const authApi = API.injectEndpoints({
         method: 'POST'
       }),
       extraOptions: {notAuthorized: true},
-      invalidatesTags: ['is-authenticated']
+      invalidatesTags: ['is-authenticated', 'counterparty', 'user']
     }),
     resendFreelancerConfirmation: builder.mutation<void, void>({
       query: () => ({
@@ -60,7 +60,7 @@ export const authApi = API.injectEndpoints({
         method: 'POST'
       }),
       extraOptions: {notAuthorized: true},
-      invalidatesTags: ['is-authenticated']
+      invalidatesTags: ['is-authenticated', 'counterparty', 'user']
     }),
     resendFreelancerAuthConfirmation: builder.mutation<void, void>({
       query: () => ({
