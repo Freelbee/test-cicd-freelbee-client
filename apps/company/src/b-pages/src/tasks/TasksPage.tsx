@@ -1,5 +1,12 @@
 import { PageContainer, PageTitle } from "@company/entities"
-import { TaskTable, TasksCounter, TaskCreationModal, TaskDetailsModal } from "@company/widgets";
+import {
+  TaskTable,
+  TasksCounter,
+  TaskCreationModal,
+  TaskDetailsModal,
+  FreelancerInvitationModal
+} from "@company/widgets";
+import React from "react";
 
 export const TasksPage = () => {
 
@@ -14,6 +21,7 @@ export const TasksPage = () => {
       </PageContainer>
       <TaskCreationModal />
       <TaskDetailsModal />
+      <FreelancerInvitationModal />
     </>
   )
 }
