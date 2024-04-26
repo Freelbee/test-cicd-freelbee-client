@@ -32,7 +32,6 @@ const onboardingTitle: Record<Onboarding_Step, JSX.Element> = {
 export const OnboardingModal = () => {
 
     const {data: onboardingState, isLoading} = useGetCompanyOnboardingStateQuery();
-    // To-do: query
     const {data: company} = useGetCompanyCounterpartyQuery();
     const [step, setStep] = useState<Onboarding_Step>(Onboarding_Step.USER_DATA);
     const dispatch = useDispatch();

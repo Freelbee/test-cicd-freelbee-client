@@ -27,7 +27,7 @@ export const userAPI = API.injectEndpoints({
           method: 'POST',
           body
       }),
-      invalidatesTags: ['user']
+      invalidatesTags: ['user', 'counterparty']
     })
   })
 });

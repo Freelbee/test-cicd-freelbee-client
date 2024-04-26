@@ -26,10 +26,5 @@ export const useUserData = (): [UserData, QueryStatus] => {
     const {data, status} = useGetUserQuery();
     const user = data || DEFAULT;
 
-    // To-Do убрать когда все будет работать со статусами и показом онбоардинга
-    if(!user.userData) {
-        user.userData = DEFAULT.userData
-    }
-
     return [user, status];
 }

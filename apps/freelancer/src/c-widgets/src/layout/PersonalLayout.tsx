@@ -14,7 +14,8 @@ export const PersonalLayout = ({ children }: PropsWithChildren) => {
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
 
   const { data: isAuthenticated, isLoading: isAuthenticatedLoading } = useIsAuthenticatedQuery();
-  const { data: user, isLoading: isUserLoading, refetch } = useGetUserQuery(undefined, { skip: !isAuthenticated });
+  const { data: user, isLoading: isUserLoading, refetch } = useGetUserQuery(undefined, { skip: !isAuthenticated || isAuthenticatedLoading });
+
 
   useEffect(() => {
     if (isAuthenticated) {

@@ -29,7 +29,7 @@ export const authApi = API.injectEndpoints({
         method: 'POST'
       }),
       extraOptions: { notAuthorized: true},
-      invalidatesTags: ['is-authenticated']
+      invalidatesTags: ['is-authenticated', 'user', 'counterparty', 'company-onboarding-state']
     }),
     resendCompanyRegistrationConfirmation: builder.mutation<void, void>({
       query: () => ({
@@ -58,7 +58,7 @@ export const authApi = API.injectEndpoints({
         method: 'POST'
       }),
       extraOptions: { notAuthorized: true},
-      invalidatesTags: ['is-authenticated']
+      invalidatesTags: ['is-authenticated', 'user', 'counterparty', 'company-onboarding-state']
     }),
     resendCompanyAuthConfirmation: builder.mutation<void, void>({
       query: () => ({
