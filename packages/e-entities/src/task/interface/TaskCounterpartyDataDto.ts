@@ -3,7 +3,7 @@ import { FileData } from '@freelbee/shared/ui-kit';
 import { PaymentProviderName } from '../../payment/interface/PaymentProviderName';
 
 export interface TaskCounterpartyDataDto {
-  id: number,
+  // id: number, ЭТО НЕ ID ЗАДАЧИ!
   taskId: number,
   title: string,
   status: TaskStatus,
@@ -13,6 +13,7 @@ export interface TaskCounterpartyDataDto {
   payedAt: string | null,
   description: string,
   customerId: number,
+  customerEmail: string,
   executorId: number,
   workTypeId: number | null,
   price: number | null,

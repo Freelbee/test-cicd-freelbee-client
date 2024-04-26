@@ -15,6 +15,7 @@ export enum StatusColor {
     PAID = Color.SWAMPY,
     IN_REVIVING = Color.CHECKING,
     CANCELLED = Color.ERROR,
+    WAITING_FOR_PAYMENT = Color.CHECKING,
 }
 
 export enum StatusBackground {
@@ -24,6 +25,7 @@ export enum StatusBackground {
     IN_PROCESS = Color.BG_YELLOW,
     IN_REVIVING = Color.BG_YELLOW,
     CANCELLED = Color.BG_RED,
+    WAITING_FOR_PAYMENT = Color.BG_YELLOW,
 }
 
 export type Params = {
@@ -102,6 +104,17 @@ export function Status (props: Props) {
                         <ArrowIcon />
                     </Pill>
                 );
+            case TaskStatus.WAITING_FOR_PAYMENT:
+                return (
+                    <Pill
+                        ref={buttonRef}
+                        color={StatusColor.WAITING_FOR_PAYMENT}
+                        background={StatusBackground.WAITING_FOR_PAYMENT}
+                    >
+                        To pay
+                        <ArrowIcon />
+                    </Pill>
+            );
             case TaskStatus.PAID:
                 return (
                     <Pill
