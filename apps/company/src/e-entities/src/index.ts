@@ -18,6 +18,7 @@ export * from './tasks/dto/ContractPreviewDto';
 export * from './tasks/dto/WorksCategory';
 export * from './tasks/dto/TaskFreelancerData';
 export * from './tasks/hooks/UseTasksData';
+export * from './tasks/hooks/useTransakWidget';
 export * from './tasks/query/taskApi';
 export * from './tasks/store/taskCreationSlice';
 

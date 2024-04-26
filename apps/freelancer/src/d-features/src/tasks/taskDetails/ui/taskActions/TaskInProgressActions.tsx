@@ -3,63 +3,54 @@
 import {ReactComponent as AttentionIcon} from "@freelbee/assets/icons/alert-icons/alert_icon.svg";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../../store";
-import { setDetailsOpen, useGetTaskFilesQuery, useSetTaskStatusMutation } from "@freelancer/entities";
-import { Button, ButtonStyleEnum, InfoWithIcon } from "@freelbee/shared/ui-kit";
+import { setDetailsOpen, useGetTaskFilesQuery, useSetTaskStatusMutation, useUpdateTaskFilesMutation } from "@freelancer/entities";
+import { Button, ButtonStyleEnum, Color, FileData, InfoWithIcon } from "@freelbee/shared/ui-kit";
 import { FormGrid } from "../FormGrid";
 import { ActionsContainer } from "./ActionsContainer";
-import { FileAction, NewFile, TaskStatus } from "@freelbee/entities";
+import { TaskStatus } from "@freelbee/entities";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useState } from "react";
+import { css } from "styled-components";
+import FileLoader from "packages/f-shared/src/ui-kit/inputs/fileLoader/FileLoader";
 
 export default function TaskInProgressActions () {
 
     const dispatch = useDispatch();
     const {displayedTask} = useAppSelector(state => state.taskSliceReducer);
-    const [setTaskStatus] = useSetTaskStatusMutation();
-
-    const [newFiles, setNewFiles] = useState<Array<NewFile>>([]);
-    const {data: files, refetch} = useGetTaskFilesQuery(displayedTask?.id ?? skipToken);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [setTaskStatus, {isLoading: statusLoading}] = useSetTaskStatusMutation();
+    const [updateTaskFiles, {isLoading}] = useUpdateTaskFilesMutation();
+    const [attachedFiles, setAttachedFiles] = useState<Array<FileData>>([]);
+    const {refetch} = useGetTaskFilesQuery(displayedTask?.taskId ?? skipToken);
 
     const cancelActions = () => {
-        setNewFiles([]);
-        refetch();
+        setAttachedFiles([]);
     };
 
     const upLoadFiles = () => {
-        // if(!displayedTask || loading) {
-        //     return;
-        // }
-        setLoading(true);
-        // const body: UploadTaskFilesRequest = {
-        //     addFiles: newFiles.map(file => ({
-        //         name: file.name,
-        //         payload: file.payload.replace(/^[^,]*,/, ''),
-        //     })),
-        //     deleteFileIds: files.filter(file => file.action === FileAction.DELETE && file.canRemove).map(file => file.file.id),
-        // };
+        if(!displayedTask) return;
 
-        // taskApiService.putFilesByTaskId(displayedTask.id, body)
-        //     .then((response) => {
-        //         if(response.isSuccess()) {
-        //             setFiles(prev => [...prev, ...response.getData()].filter(file => !body.deleteFileIds.includes(file.file.id)));
-        //             setNewFiles([]);
-        //         }
-        //     })
-        //     .finally(() => setLoading(false));
-
-        refetch();
+        const formData = new FormData();
+        attachedFiles.forEach(fileData => formData.append('addFiles', fileData.file));
+        
+        updateTaskFiles({
+            taskId: displayedTask?.taskId,
+            files: formData
+        }).unwrap()
+        .then(() => {
+            setAttachedFiles([]);
+            refetch();  
+        });
     };
 
     const hasActionsForUpload = () => {
-        return newFiles.length !== 0 
-            || files?.filter(file => file?.action === FileAction.DELETE 
-            && file.canRemove).map(file => file?.id).length !== 0
+        return attachedFiles.length !== 0;
     } 
 
     const onSetStatus = () => {
+        if(!displayedTask) return;
+
         setTaskStatus({
-            taskId: displayedTask!.id!,
+            taskId: displayedTask.id,
             status: TaskStatus.REVIEWING
         }).unwrap().then(()=>{
             dispatch(setDetailsOpen(false));
@@ -68,35 +59,40 @@ export default function TaskInProgressActions () {
 
     return (
         <FormGrid>
+            <FileLoader
+                label={'Attach files'}
+                files={attachedFiles ?? []}
+                setFiles={setAttachedFiles}
+                fileContainerStyles={[css`max-height: 250px;`]}
+                text={'Attach a file'}
+                maxSizeText={'Max. file size: 5 MB'}
+                borderColor={attachedFiles.length === 0 ? undefined : attachedFiles.some(file => file.isError) ? Color.DANGER : Color.EMERALD}
+            />
             <InfoWithIcon
+                textColor={Color.BLUE}
                 align='flex-start'
                 Icon={AttentionIcon}>
-                    After you submit the task for review, you will not be able to delete the newly added files
+                    Once you save your changes, you will not be able to delete the files you just added
                 </InfoWithIcon>
             <ActionsContainer>
-                {
-                    !hasActionsForUpload() && <Button
-                        isLoading={loading}
-                        disabled={loading}
+                {!hasActionsForUpload() && <Button
+                        isLoading={statusLoading}
+                        disabled={statusLoading}
                         onClick={onSetStatus}
                         isWide>
                         To check
-                    </Button>
-                }
-                {
-                    hasActionsForUpload() && <Button
-                        isLoading={loading}
-                        disabled={loading}
+                    </Button>}
+                {hasActionsForUpload() && <Button
+                        isLoading={isLoading}
+                        disabled={isLoading}
                         onClick={upLoadFiles}
-                        isWide
-                    >
+                        isWide>
                         Save
-                    </Button>
-                }
+                    </Button>}
 
-                { hasActionsForUpload() && <Button
-                    isLoading={loading}
-                    disabled={loading}
+                {hasActionsForUpload() && <Button
+                    isLoading={isLoading}
+                    disabled={isLoading}
                     onClick={cancelActions}
                     isWide styleType={ButtonStyleEnum.ROUND_STROKE_WHITE}>
                     Cancel actions

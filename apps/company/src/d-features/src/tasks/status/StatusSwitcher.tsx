@@ -11,19 +11,21 @@ import { useOnClickOutside } from '@freelbee/shared/hooks';
 export enum StatusColor {
     NEW = Color.BLUE,
     ASSIGNED = Color.PLAN,
-    IN_PROCESS = Color.PROCESSING,
-    PAID = Color.SWAMPY,
-    IN_REVIVING = Color.CHECKING,
     CANCELLED = Color.ERROR,
+    IN_PROGRESS = Color.PROCESSING,
+    REVIEWING = Color.CHECKING,
+    WAITING_FOR_PAYMENT = Color.CHECKING,
+    PAID = Color.SWAMPY,
 }
 
 export enum StatusBackground {
     NEW = Color.BG_BLUE,
     ASSIGNED = '#F4F0FF',
-    PAID = Color.BG_SWAMPY,
-    IN_PROCESS = Color.BG_YELLOW,
-    IN_REVIVING = Color.BG_YELLOW,
     CANCELLED = Color.BG_RED,
+    IN_PROGRESS = Color.BG_YELLOW,
+    REVIEWING = Color.BG_YELLOW,
+    WAITING_FOR_PAYMENT = Color.BG_YELLOW,
+    PAID = Color.BG_SWAMPY,
 }
 
 export type Params = {
@@ -34,46 +36,6 @@ export type Params = {
         hoverBackground?: StatusBackground,
         onSetStatus?: () => void
     }>
-};
-
-const params: Params = {
-    [TaskStatus.NEW]: [
-        {
-            toStatus: TaskStatus.ASSIGNED,
-            text: 'To Assign',
-            hoverColor: StatusColor.ASSIGNED,
-            hoverBackground: StatusBackground.ASSIGNED,
-
-        },
-        {
-            toStatus: TaskStatus.CANCELLED,
-            text: 'Cancel',
-            hoverColor: StatusColor.CANCELLED,
-            hoverBackground: StatusBackground.CANCELLED,
-        },
-    ],
-    [TaskStatus.ASSIGNED]: [
-        {
-            toStatus: TaskStatus.CANCELLED,
-            text: 'Cancel',
-            hoverColor: StatusColor.CANCELLED,
-            hoverBackground: StatusBackground.CANCELLED,
-        }
-
-    ],
-    [TaskStatus.REVIEWING]: [{
-        toStatus: TaskStatus.PAID,
-        text: 'To Pay',
-        hoverColor: StatusColor.PAID,
-        hoverBackground: StatusBackground.PAID,
-    },
-    {
-        toStatus: TaskStatus.IN_PROGRESS,
-        text: 'To Refine',
-        hoverColor: StatusColor.CANCELLED,
-        hoverBackground: StatusBackground.CANCELLED,
-    },
-    ]
 };
 
 type Props = {
@@ -135,11 +97,20 @@ export function Status (props: Props) {
                         <ArrowIcon />
                     </Pill>
                 );
+            case TaskStatus.CANCELLED:
+                return (
+                    <Pill
+                        color={StatusColor.CANCELLED}
+                        background={StatusBackground.CANCELLED}>
+                            Cancelled
+                        <ArrowIcon />
+                    </Pill>
+                );
             case TaskStatus.IN_PROGRESS:
                 return (
                     <Pill
-                        color={StatusColor.IN_PROCESS}
-                        background={StatusBackground.IN_PROCESS}
+                        color={StatusColor.IN_PROGRESS}
+                        background={StatusBackground.IN_PROGRESS}
                         ref={buttonRef}>
                        In progress
                         <ArrowIcon />
@@ -149,12 +120,24 @@ export function Status (props: Props) {
                 return (
                     <Pill
                         ref={buttonRef}
-                        color={StatusColor.IN_REVIVING}
-                        background={StatusBackground.IN_REVIVING}>
+                        color={StatusColor.REVIEWING}
+                        background={StatusBackground.REVIEWING}
+                    >
                         Reviewing
                         <ArrowIcon />
                     </Pill>
                 );
+            case TaskStatus.WAITING_FOR_PAYMENT:
+                return (
+                    <Pill
+                        ref={buttonRef}
+                        color={StatusColor.WAITING_FOR_PAYMENT}
+                        background={StatusBackground.WAITING_FOR_PAYMENT}
+                    >
+                        To pay
+                        <ArrowIcon />
+                    </Pill>
+            );
             case TaskStatus.PAID:
                 return (
                     <Pill
@@ -164,20 +147,11 @@ export function Status (props: Props) {
                         <ArrowIcon />
                     </Pill>
                 );
-            case TaskStatus.CANCELLED:
-                return (
-                    <Pill
-                        color={StatusColor.CANCELLED}
-                        background={StatusBackground.CANCELLED}>
-                        CANCELLED
-                        <ArrowIcon />
-                    </Pill>
-                );
             case TaskStatus.PAYMENT_IN_PROGRESS:
                 return (
                     <Pill
-                        color={StatusColor.IN_PROCESS}
-                        background={StatusBackground.IN_PROCESS}
+                        color={StatusColor.IN_PROGRESS}
+                        background={StatusBackground.IN_PROGRESS}
                         ref={buttonRef}>
                         Processing
                         <ArrowIcon />
@@ -202,8 +176,56 @@ export function Status (props: Props) {
         });
     };
 
+    const params: Params = {
+        [TaskStatus.NEW]: [
+            {
+                toStatus: TaskStatus.ASSIGNED,
+                text: 'To Assign',
+                hoverColor: StatusColor.ASSIGNED,
+                hoverBackground: StatusBackground.ASSIGNED,
+            },
+            {
+                toStatus: TaskStatus.CANCELLED,
+                text: 'Cancel',
+                hoverColor: StatusColor.CANCELLED,
+                hoverBackground: StatusBackground.CANCELLED,
+            },
+        ],
+        [TaskStatus.ASSIGNED]: [
+            {
+                toStatus: TaskStatus.CANCELLED,
+                text: 'Cancel',
+                hoverColor: StatusColor.CANCELLED,
+                hoverBackground: StatusBackground.CANCELLED,
+            }
+        ],
+        [TaskStatus.REVIEWING]: [
+            {
+                toStatus: TaskStatus.WAITING_FOR_PAYMENT,
+                text: 'Approve',
+                hoverColor: StatusColor.WAITING_FOR_PAYMENT,
+                hoverBackground: StatusBackground.WAITING_FOR_PAYMENT,
+                onSetStatus: openTask,
+            },
+            {
+                toStatus: TaskStatus.IN_PROGRESS,
+                text: 'Refine',
+                hoverColor: StatusColor.CANCELLED,
+                hoverBackground: StatusBackground.CANCELLED,
+            },
+        ],
+        [TaskStatus.WAITING_FOR_PAYMENT]: [
+            {
+                toStatus: TaskStatus.PAID,
+                text: 'To pay',
+                hoverColor: StatusColor.PAID,
+                hoverBackground: StatusBackground.PAID,
+            },
+        ]
+    };
+
     const getParams = (status: TaskStatus) => {
-        
+
         const ourParams = params[status];
 
         return <StatusPopup ref={modalRef} $isOpen={menuStatusIsOpen}>
@@ -213,7 +235,7 @@ export function Status (props: Props) {
             >
                 Open
             </StatusNamePopupTextBlack>
-            
+
             {ourParams?.map(({hoverBackground, hoverColor, text, toStatus, onSetStatus}, i) => (
                 <StatusNamePopupText
                     key={i}
@@ -254,7 +276,7 @@ export function Status (props: Props) {
                 setMenuStatusIsOpen(prev => !prev);
             }}>
             {getNameByStatus(task.status)}
-            
+
             {/* {userData.status === UserStatus.APPROVED && getParams(task.status)} */}
             {getParams(task.status)}
         </Container>

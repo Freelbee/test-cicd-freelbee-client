@@ -20,7 +20,7 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "jest.config.ts"  
-, "src/language/interface/MessageWithLanguages.ts"  ],
+, "src/language/interface/MessageWithLanguages.ts", "../d-features/src/tasks/StaticFileBadge.tsx"  ],
     "exclude": [
       "jest.setup.ts"
     ],

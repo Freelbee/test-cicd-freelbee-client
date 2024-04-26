@@ -29,7 +29,6 @@ export const ContractDownload = ({taskId}: Props) => {
 
 const DownloadContainer = styled.div`
     display: flex;
-    justify-content: space-between;
     gap: 8px;
     align-items: center;
 `;

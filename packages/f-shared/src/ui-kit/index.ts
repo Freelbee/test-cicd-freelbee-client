@@ -29,6 +29,7 @@ export * from "./inputs/checkbox/checkbox";
 export * from "./inputs/date/DateInput";
 export * from "./inputs/calendar/Calendar";
 export * from "./inputs/fileLoader/FileLoader";
+export * from "./inputs/fileLoader/FileBadge";
 export * from './select/TabsSelect/TabsSelect';
 export * from './select/SelectWithSearch/SelectWithSearch';
 export * from './select/Select/Select';

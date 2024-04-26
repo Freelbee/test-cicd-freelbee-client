@@ -10,7 +10,13 @@ import { PaymentMethodType } from "@freelbee/entities";
 import { CryptoTips } from "./PaymentMethosTips/CryptoTips";
 import { BancAccountTips } from "./PaymentMethosTips/BancAccountTips";
 import { useDispatch } from "react-redux";
-import { TaskAcceptanceStep, setAcceptanceStep, setDetailsOpen, useAcceptTaskMutation, useGetFreelancerCounterpartyQuery} from "@freelancer/entities";
+import {
+  TaskAcceptanceStep,
+  setAcceptanceStep,
+  setDetailsOpen,
+  useAcceptTaskMutation,
+  useGetFreelancerCounterpartyQuery
+} from '@freelancer/entities';
 import { BankPaymentDataForm } from "./PaymentMethodForms/BankPaymentDataForm";
 import { CryptoPaymentDataForm } from "./PaymentMethodForms/CryptoPaymentDataForm";
 import { CardPaymentDataForm } from "./PaymentMethodForms/CardPaymentDataForm";

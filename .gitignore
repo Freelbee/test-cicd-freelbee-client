@@ -4,7 +4,7 @@
 drafts/*
 
 
-.env
+apps/company/.env
 # compiled output
 dist
 tmp
