@@ -16,25 +16,15 @@ import TaskWaitingForPaymentActions from './ui/taskActions/TaskWaitingForPayment
 import React, { useState } from 'react';
 import { PinnedFiles } from "@freelbee/entities";
 import { FileDownload } from './ui/FileDownload';
+import { DownloadTaskDocuments } from './ui/taskActions/DownloadTaskDocuments';
 
-const invoiceAllowedStatuses = [
-  TaskStatus.WAITING_FOR_PAYMENT,
-  TaskStatus.PAYMENT_IN_PROGRESS,
-  TaskStatus.PAYMENT_ERROR,
-  TaskStatus.PAID
-]
 
 export const TaskDetails = () => {
 
   const { displayedTask } = useAppSelector(state => state.taskSliceReducer);
   const [isBoxChecked, setBoxChecked] = useState(false);
 
-  const shouldDisplayContractDownload = displayedTask?.status &&  displayedTask.status !== TaskStatus.NEW;
-  const shouldDisplayInvoiceDownload = displayedTask?.status && invoiceAllowedStatuses.includes(displayedTask.status);
-
   const { data: files } = useGetTaskFilesQuery(displayedTask?.taskId ?? skipToken);
-  const { data: linkContract } = useGetContractLinkQuery(displayedTask?.contractId ?? skipToken, { skip: !shouldDisplayContractDownload });
-  const { data: linkInvoice } = useGetInvoiceLinkQuery(displayedTask?.taskId ?? skipToken, { skip: !shouldDisplayInvoiceDownload });
 
   const ACTIONS_BY_STATUS: Record<TaskStatus, JSX.Element> = {
     [TaskStatus.NEW]: <TaskNewActions />,
@@ -53,8 +43,7 @@ export const TaskDetails = () => {
       <Heading2 style={{ maxWidth: '90%' }}>{displayedTask?.title}</Heading2>
       <TaskHeadInfo task={displayedTask} />
       <Description task={displayedTask} />
-      {shouldDisplayContractDownload && <FileDownload text='Contract:' link={linkContract?.downloadLink} />}
-      {shouldDisplayInvoiceDownload && <FileDownload text='Invoice:' link={linkInvoice?.downloadLink} />}
+      {displayedTask && <DownloadTaskDocuments task={displayedTask} />}
       <PinnedFiles userRole={UserRole.COMPANY} files={files ?? []} />
       {displayedTask?.status === TaskStatus.REVIEWING && (
         <TermsAgreementContainer>

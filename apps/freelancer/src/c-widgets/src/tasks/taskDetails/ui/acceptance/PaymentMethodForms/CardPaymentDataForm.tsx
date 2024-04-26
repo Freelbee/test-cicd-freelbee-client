@@ -23,7 +23,7 @@ export const CardPaymentDataForm = () => {
 
     if(!displayedTask) return <></>;
 
-    console.log('V FROM CARD', validatorResult)
+    console.log('V FROM CARD', paymentFormData)
     
   return (
     <Container>
@@ -46,9 +46,9 @@ export const CardPaymentDataForm = () => {
             isRequired
             placeholder="0000 0000 0000 0000 0000" 
             maxLength={19}
-            value={paymentFormData?.CRYPTO_WALLET_ADDRESS ?? ''} 
+            value={paymentFormData?.CARD_NUMBER ?? ''} 
             setValue={(v) => {
-              setPaymentFormData(PaymentMethodPropType.CRYPTO_WALLET_ADDRESS, v)
+              setPaymentFormData(PaymentMethodPropType.CARD_NUMBER, v)
               setFormData('freelancerPaymentDetails', v)}
             }/>   
             

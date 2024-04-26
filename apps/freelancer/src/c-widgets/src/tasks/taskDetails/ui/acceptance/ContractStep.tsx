@@ -1,7 +1,7 @@
 'use client';
 
 import { TaskAcceptanceStep, setAcceptanceStep } from "@freelancer/entities";
-import { ActionsContainer, ContractDownload, FormGrid, useAppSelector } from "@freelancer/features";
+import { ActionsContainer, DownloadTaskDocuments, FormGrid, useAppSelector } from "@freelancer/features";
 import { Button, ButtonStyleEnum, Checkbox, Heading1, Input, Text } from "@freelbee/shared/ui-kit";
 import { useContext, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -21,7 +21,7 @@ export const ContractStep = () => {
     <FormGrid>
         <FormGrid>
             <Heading1>Signing the contract</Heading1>   
-            <ContractDownload taskId={displayedTask.taskId} />
+            <DownloadTaskDocuments task={displayedTask} />
         </FormGrid>
         <Input
             label="Signature"

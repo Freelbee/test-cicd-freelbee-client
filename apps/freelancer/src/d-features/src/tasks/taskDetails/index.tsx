@@ -9,9 +9,9 @@ import { useAppSelector } from "../../store";
 import { PinnedFiles, TaskStatus, UserRole } from "@freelbee/entities";
 import AssignedTaskActions from "./ui/taskActions/AssignedTaskActions";
 import TaskInProgressActions from "./ui/taskActions/TaskInProgressActions";
-import { ContractDownload } from "./ui/taskActions/ContractDownload";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useGetTaskFilesQuery } from "@freelancer/entities";
+import { DownloadTaskDocuments } from './ui/taskActions/DownloadTaskDocuments';
 
 const ACTIONS_BY_STATUS: Record<TaskStatus, JSX.Element> = {
     [TaskStatus.NEW]: <></>,
@@ -37,7 +37,7 @@ export const TaskDetails = () => {
             </Heading2>
             <TaskHeadInfo task={displayedTask}/>
             <Description task={displayedTask}/>
-            {displayedTask && <ContractDownload taskId={displayedTask.taskId} />}
+            {displayedTask && <DownloadTaskDocuments task={displayedTask} />}
             <PinnedFiles
                 userRole={UserRole.FREELANCER}
                 files={files ?? []} />

@@ -15,7 +15,7 @@ export default function AssignedTaskActions () {
 
     const handleSetStatus = (status: TaskStatus) => {
         setTaskStatus({
-            taskId: displayedTask!.id!,
+            taskId: displayedTask!.taskId,
             status
         }).unwrap().then(()=>{
             dispatch(setDetailsOpen(false));
