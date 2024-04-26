@@ -14,8 +14,8 @@ import TaskNewActions from './ui/taskActions/TaskNewActions';
 import TaskInReviewActions from './ui/taskActions/TaskInReviewActions';
 import TaskWaitingForPaymentActions from './ui/taskActions/TaskWaitingForPaymentActions';
 import React, { useState } from 'react';
-import { FileDownload } from '../../../../c-widgets/src/tasks/TaskDetails/ui/FileDownload';
 import { PinnedFiles } from "@freelbee/entities";
+import { FileDownload } from './ui/FileDownload';
 
 const invoiceAllowedStatuses = [
   TaskStatus.WAITING_FOR_PAYMENT,
@@ -33,12 +33,8 @@ export const TaskDetails = () => {
   const shouldDisplayInvoiceDownload = displayedTask?.status && invoiceAllowedStatuses.includes(displayedTask.status);
 
   const { data: files } = useGetTaskFilesQuery(displayedTask?.taskId ?? skipToken);
-  const { data: linkContract } = shouldDisplayContractDownload
-    ? useGetContractLinkQuery(displayedTask?.contractId ?? skipToken)
-    : { data: undefined };
-  const { data: linkInvoice } = shouldDisplayInvoiceDownload
-    ? useGetInvoiceLinkQuery(displayedTask?.taskId ?? skipToken)
-    : { data: undefined };
+  const { data: linkContract } = useGetContractLinkQuery(displayedTask?.contractId ?? skipToken, { skip: !shouldDisplayContractDownload });
+  const { data: linkInvoice } = useGetInvoiceLinkQuery(displayedTask?.taskId ?? skipToken, { skip: !shouldDisplayInvoiceDownload });
 
   const ACTIONS_BY_STATUS: Record<TaskStatus, JSX.Element> = {
     [TaskStatus.NEW]: <TaskNewActions />,
@@ -57,15 +53,13 @@ export const TaskDetails = () => {
       <Heading2 style={{ maxWidth: '90%' }}>{displayedTask?.title}</Heading2>
       <TaskHeadInfo task={displayedTask} />
       <Description task={displayedTask} />
-      {shouldDisplayContractDownload && <FileDownload text='Contract:' link={linkContract?.downloadLink!} />}
-      {shouldDisplayInvoiceDownload && <FileDownload text='Invoice:' link={linkInvoice?.downloadLink!} />}
-      <PinnedFiles
-        userRole={UserRole.COMPANY}
-        files={files ?? []} />
+      {shouldDisplayContractDownload && <FileDownload text='Contract:' link={linkContract?.downloadLink} />}
+      {shouldDisplayInvoiceDownload && <FileDownload text='Invoice:' link={linkInvoice?.downloadLink} />}
+      <PinnedFiles userRole={UserRole.COMPANY} files={files ?? []} />
       {displayedTask?.status === TaskStatus.REVIEWING && (
         <TermsAgreementContainer>
           <Checkbox isCheck={isBoxChecked} onChange={() => setBoxChecked((isBoxChecked) => !isBoxChecked)} />
-          <Text font="body">By checking the box, I agree with the terms and conditions of the Contract. All the data I've provided is correct. I understand that when I click the "I agree" button, I am entering into a Contract with Contractor as a Client on the terms and conditions described</Text>
+          <Text font="body">{`By checking the box, I agree with the terms and conditions of the Contract. All the data I've provided is correct. I understand that when I click the "I agree" button, I am entering into a Contract with Contractor as a Client on the terms and conditions described`}</Text>
         </TermsAgreementContainer>
       )}
       {displayedTask && ACTIONS_BY_STATUS[displayedTask?.status]}

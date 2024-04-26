@@ -1,13 +1,11 @@
 import { API, Endpoint_Enum } from '@company/shared';
 import { WorksCategory } from '../dto/WorksCategory';
 import { TaskFreelancerData } from '../dto/TaskFreelancerData';
-import {
-  Currency, FileLink, PaymentProviderName, TaskCounterpartyDataDto, TaskFileDto, TaskStatus
-} from '@freelbee/entities';
+import { Currency, FileLink, PaymentProviderName, TaskCounterpartyDataDto, TaskFileDto, TaskStatus } from '@freelbee/entities';
 import { ContractPreviewDto } from '../dto/ContractPreviewDto';
 import { FileDownloadHelper } from 'packages/f-shared/src/helpers/FileDownloadHelper';
-import { PaymentDataResponseDto } from '../../../../d-features/src/tasks/taskDetails/logic/interface/PaymentDataResponseDto';
-import { PaymentResponseDto } from 'apps/company/src/d-features/src/tasks/taskDetails/logic/interface/PaymentResponseDto';
+import { PaymentDataResponseDto } from '../dto/PaymentDataDto';
+import { PaymentResponseDto } from '../dto/PaymentDto';
 
 export const taskAPI = API.injectEndpoints({
   endpoints: (builder) => ({

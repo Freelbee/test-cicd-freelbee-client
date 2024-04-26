@@ -9,12 +9,12 @@ import {
   useGetCompanyCounterpartyQuery,
   useGetPaymentDataQuery,
   useGetUserQuery,
-  useSetTaskStatusMutation
+  useSetTaskStatusMutation,
+  useTransakWidget
 } from '@company/entities';
 import { CounterpartyStatus, PaymentProviderName, TaskCounterpartyDataDto, TaskStatus } from '@freelbee/entities';
 import { ActionsContainer } from './ActionsContainer';
 import { Button, ButtonStyleEnum } from '@freelbee/shared/ui-kit';
-import useTransakWidget from '../../logic/hooks/useTransakWidget';
 import { useEffect, useState } from 'react';
 import { Transak, TransakConfig } from '@transak/transak-sdk';
 

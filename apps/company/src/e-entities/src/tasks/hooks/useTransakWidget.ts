@@ -14,7 +14,7 @@ const transakConfig: TransakConfig = {
   hideMenu: true
 };
 
-export default function useTransakWidget() {
+export function useTransakWidget() {
   return (confData: TransakConfig) => {
     const conf = {
       ...transakConfig,
@@ -23,5 +23,3 @@ export default function useTransakWidget() {
     return new Transak(conf);
   };
 }
-
-

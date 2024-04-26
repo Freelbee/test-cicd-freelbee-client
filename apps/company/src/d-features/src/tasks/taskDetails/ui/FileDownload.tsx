@@ -5,7 +5,7 @@ import { ReactComponent as DownloadIcon } from '@freelbee/assets/icons/download/
 
 interface Props {
   text: string;
-  link: string;
+  link: string | undefined;
 }
 
 export const FileDownload = (props: Props) => {

@@ -2,10 +2,9 @@
 
 import { BORDER_RADIUS, Breakpoint, CloseBtnSize, CloseButton, Color, ModalWindow, mediaBreakpointDown } from "@freelbee/shared/ui-kit"
 import { useDispatch } from "react-redux";
-import { TaskDescription } from "./ui/TaskDescription";
 import styled, { css } from "styled-components";
 import { setDetailsOpen } from "@company/entities";
-import { useAppSelector } from "@company/features";
+import { TaskDetails, useAppSelector } from '@company/features';
 
 export const TaskDetailsModal = () => {
 
@@ -17,21 +16,21 @@ const closeModalWindow = () => dispatch(setDetailsOpen(false));
 if(!displayedTask) return <></>;
 
 const getWindowContent = () => {
-    return <TaskDescription/>;
+    return <TaskDetails />;
 }
 
 return (
-    <ModalWindow 
-        isOpen={detailsOpen} 
+    <ModalWindow
+        isOpen={detailsOpen}
         onClose={closeModalWindow}>
         <Container>
-            <CloseButton 
+            <CloseButton
                 size={CloseBtnSize.M}
                 styles={closeBtnStyle}
                 clickHandler={closeModalWindow} />
-            {getWindowContent()}                
+            {getWindowContent()}
         </Container>
-    </ModalWindow> 
+    </ModalWindow>
   )
 }
 
@@ -55,15 +54,15 @@ const Container = styled.div`
 const closeBtnStyle = css`
   position: absolute;
   top: 32px;
-  right: 32px;  
+  right: 32px;
 
     ${mediaBreakpointDown(Breakpoint.Tablet)} {
-        top: 24px;
-        right: 24px;  
+      top: 24px;
+      right: 24px;
     }
 
     ${mediaBreakpointDown(Breakpoint.xMobile)} {
-        top: 16px;
-        right: 16px;  
+      top: 16px;
+      right: 16px;
     }
 `;

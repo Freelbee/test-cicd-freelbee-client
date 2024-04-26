@@ -8,7 +8,7 @@ import { StaticFileBadge } from "./StaticFileBadge";
 interface Props {
     userRole: UserRole
     files: Array<TaskFileDto>,
-} 
+}
 
 export const PinnedFiles = ({files, userRole}: Props) => {
 
@@ -29,7 +29,7 @@ export const PinnedFiles = ({files, userRole}: Props) => {
 
     {files.filter(f => f.userRole === UserRole.FREELANCER).length !== 0 && (
         <Container>
-            <Text font='heading3' color={Color.GRAY_800}>
+            <Text font='bodyMedium' color={Color.GRAY_800}>
                 {userRole === UserRole.FREELANCER ? 'Files attached by you' :' Files attached by Freelancer'}
             </Text>
             <PinedFiles>
@@ -50,7 +50,7 @@ const Container = styled.div`
 `
 
 const PinedFiles = styled.div<{isHide?: boolean}>`
-  max-width: 100%;  
+  max-width: 100%;
   display: ${({isHide}) => isHide ? 'none' : 'flex'};
   flex-wrap: wrap;
   gap: 5px;

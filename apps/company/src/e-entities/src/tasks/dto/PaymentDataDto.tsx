@@ -1,4 +1,5 @@
 import { Currency, PaymentMethod, PaymentProviderName } from '@freelbee/entities';
+import { PaymentDto } from './PaymentDto';
 
 export interface PaymentDataResponseDto {
   id: number,
@@ -18,31 +19,13 @@ export interface PaymentDataResponseDto {
   receiverAmount: string,
   receiverCurrency: Currency,
 
-  createdAt: string, //TODO::: or number
-  updatedAt: string, //TODO::: or number
-  endedAt: string, //TODO::: or number
+  createdAt: string,
+  updatedAt: string,
+  endedAt: string,
 }
 
 export enum PaymentDataStatus {
   NOT_PAID = 'NOT_PAID',
   PARTIALLY_PAID = 'PARTIALLY_PAID',
   FULLY_PAID = 'FULLY_PAID',
-}
-
-export interface PaymentDto {
-  id: number,
-  status: PaymentStatus,
-  providerTransactionId: string,
-  amount: string,
-  currency: Currency,
-  createdAt: string,
-  updatedAt: string,
-  endedAt: string,
-}
-
-export enum PaymentStatus {
-  NOT_STARTED = 'NOT_STARTED',
-  IN_PROGRESS = 'IN_PROGRESS',
-  ERROR = 'ERROR',
-  PAID = 'PAID',
 }
