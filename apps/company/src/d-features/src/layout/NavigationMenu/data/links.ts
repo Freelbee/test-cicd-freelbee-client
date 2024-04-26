@@ -10,16 +10,16 @@ export const links: Array<NavLink> = [
         title: 'Tasks',
         Icon: TasksIcon
     },
-    {
-        link: `/freelancers`,
-        title: 'Freelancers',
-        Icon: PeopleIcon
-    },
-    {
-        link: `/documents`,
-        title: 'Documents',
-        Icon: DocsIcon
-    },
+    // {
+    //     link: `/freelancers`,
+    //     title: 'Freelancers',
+    //     Icon: PeopleIcon
+    // },
+    // {
+    //     link: `/documents`,
+    //     title: 'Documents',
+    //     Icon: DocsIcon
+    // },
     {
         link: `/settings`,
         title: 'Settings',

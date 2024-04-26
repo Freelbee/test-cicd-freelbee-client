@@ -16,7 +16,7 @@ export enum Endpoint_Enum {
   ADD_TASK = '/company/tasks',
   GENERATE_AND_DOWNLOAD_CONTRACT_PREVIEW = '/contract-preview',
   GET_CONTRACT_LINK = '/contract/{0}/download-link',
-  GET_INVOICE_LINK = '/invoice/{0}/download-link', //TODO::: correct
+  GET_INVOICE_LINK = '/contract/{0}/invoice/COMMERCIAL/download-link',
   GET_TASK_FILES = '/task/{0}/files',
   SET_STATUS = '/task/{0}/set-status',
   FREELANCER_INVITATION = '/invitations/from-company/to-freelancer',

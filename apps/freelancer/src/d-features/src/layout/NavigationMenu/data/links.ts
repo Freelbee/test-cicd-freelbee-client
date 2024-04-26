@@ -9,11 +9,11 @@ export const links: Array<NavLink> = [
         title: 'Tasks',
         Icon: TasksIcon
     },
-    {
-        link: `/companies`,
-        title: 'Companies',
-        Icon: CompanyIcon
-    },
+    // {
+    //     link: `/companies`,
+    //     title: 'Companies',
+    //     Icon: CompanyIcon
+    // },
     {
         link: `/settings`,
         title: 'Settings',

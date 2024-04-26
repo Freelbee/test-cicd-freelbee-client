@@ -10,46 +10,41 @@ import {
 } from '@company/entities';
 import {CompanyAuthModal} from "../../auth/CompanyAuthModal";
 
-export const PersonalLayout = ({children}: PropsWithChildren) => {
+export const PersonalLayout = ({ children }: PropsWithChildren) => {
 
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
 
-  const {
-    data: isAuthenticated,
-    isLoading: isAuthenticatedLoading,
-  } = useIsAuthenticatedQuery();
-
+  const { data: isAuthenticated, isLoading: isAuthenticatedLoading } = useIsAuthenticatedQuery();
   const {
     data: onboardingState,
-    isLoading,
-  } = useGetCompanyOnboardingStateQuery(undefined, {skip: !isAuthenticated || isAuthenticatedLoading});
+    isLoading
+  } = useGetCompanyOnboardingStateQuery(undefined, { skip: !isAuthenticated || isAuthenticatedLoading });
 
-  const isOnboardingPassed = () =>{
+  const isOnboardingPassed = () => {
     return onboardingState?.isUserDataSet && onboardingState?.isCounterpartyCreated && onboardingState?.isPaymentMethodSet;
-  }
+  };
   return (
     <LayoutContext.Provider value={{
       navigationMenuOpened,
-      setNavigationMenuOpened,
+      setNavigationMenuOpened
     }}>
       <Container>
-
-        {!isAuthenticated && !isAuthenticatedLoading && <CompanyAuthModal/> }
-
-        {isAuthenticated && <>
-          <OnboardingModal />
-          <HeadMenu />
-          <NavigationMenu />
-          <MobileMenu />
-          <Main>
-            {!isLoading && isOnboardingPassed() && children}
-            {!isLoading && !isOnboardingPassed() && <OnboardingNotification />}
-          </Main>
-        </>}
+        {!isAuthenticated && !isAuthenticatedLoading && <CompanyAuthModal />}
+        {isAuthenticated && (
+          <>
+            <OnboardingModal />
+            <HeadMenu />
+            <NavigationMenu />
+            <MobileMenu />
+            <Main>
+              {!isLoading && isOnboardingPassed() && children}
+              {!isLoading && !isOnboardingPassed() && <OnboardingNotification />}
+            </Main>
+          </>
+        )}
       </Container>
     </LayoutContext.Provider>
-
-  )
+  );
 }
 
 const Container = styled.div`
