@@ -1,79 +1,73 @@
 'use client';
 
-import styled from "styled-components";
-import {ReactComponent as DownloadIcon } from "@freelbee/assets/icons/download/download.svg";
-import { FormGrid } from "./ui/FormGrid";
-import { Color, Heading2, Text } from "@freelbee/shared/ui-kit";
-import TaskHeadInfo from "./ui/TaskHeadInfo";
-import {Description} from "./ui/Description";
-import { useAppSelector } from "../../store";
-import { skipToken } from "@reduxjs/toolkit/query";
-import { TaskStatus, UserRole } from "@freelbee/entities";
-import { useGetContractLinkQuery, useGetTaskFilesQuery } from "@company/entities";
-import AssignedTaskActions from "./ui/taskActions/AssignedTaskActions";
-import TaskNewActions from "./ui/taskActions/TaskNewActions";
-import TaskInReviewActions from "./ui/taskActions/TaskInReviewActions";
+import styled from 'styled-components';
+import { FormGrid } from './ui/FormGrid';
+import { Checkbox, Heading2, Text } from '@freelbee/shared/ui-kit';
+import TaskHeadInfo from './ui/TaskHeadInfo';
+import { Description } from './ui/Description';
+import { useAppSelector } from '../../store';
+import { skipToken } from '@reduxjs/toolkit/query';
+import { TaskStatus, UserRole } from '@freelbee/entities';
+import { useGetContractLinkQuery, useGetInvoiceLinkQuery, useGetTaskFilesQuery } from '@company/entities';
+import AssignedTaskActions from './ui/taskActions/AssignedTaskActions';
+import TaskNewActions from './ui/taskActions/TaskNewActions';
+import TaskInReviewActions from './ui/taskActions/TaskInReviewActions';
+import TaskWaitingForPaymentActions from './ui/taskActions/TaskWaitingForPaymentActions';
+import React, { useState } from 'react';
 import { PinnedFiles } from "@freelbee/entities";
+import { FileDownload } from './ui/FileDownload';
 
-const ACTIONS_BY_STATUS: Record<TaskStatus, JSX.Element> = {
-    [TaskStatus.ASSIGNED]: <AssignedTaskActions />,
-    [TaskStatus.IN_PROGRESS]: <></>,
-    [TaskStatus.NEW]: <TaskNewActions />,
-    [TaskStatus.CANCELLED]: <></>,
-    [TaskStatus.REVIEWING]: <TaskInReviewActions />,
-    [TaskStatus.PAYMENT_IN_PROGRESS]: <></>,
-    [TaskStatus.PAYMENT_ERROR]: <></>,
-    [TaskStatus.PAID]: <></>
-}
+const invoiceAllowedStatuses = [
+  TaskStatus.WAITING_FOR_PAYMENT,
+  TaskStatus.PAYMENT_IN_PROGRESS,
+  TaskStatus.PAYMENT_ERROR,
+  TaskStatus.PAID
+]
 
 export const TaskDetails = () => {
 
-    const {displayedTask} = useAppSelector(state => state.taskSliceReducer);
-    const {data: link } = useGetContractLinkQuery(displayedTask?.contractId ?? skipToken);
-    const {data: files} = useGetTaskFilesQuery(displayedTask?.taskId ?? skipToken);
+  const { displayedTask } = useAppSelector(state => state.taskSliceReducer);
+  const [isBoxChecked, setBoxChecked] = useState(false);
 
-    return (
-        <FormGrid>
-            <Heading2 style={{maxWidth: '90%'}}>
-                {displayedTask?.title}
-            </Heading2>
-            <TaskHeadInfo task={displayedTask}/>
-            <Description task={displayedTask}/>
-            <DownloadContainer>
-                <Text font='bodyMedium'>Contract:</Text>
-                {link && 
-                <DownLoadContent href={link?.downloadLink}>
-                    <DownloadIcon/>
-                    <Text font={'body'} color={Color.BLUE}>Download</Text>
-                </DownLoadContent>
-                }
-            </DownloadContainer>
-            <PinnedFiles 
-                userRole={UserRole.COMPANY}
-                files={files ?? []} />
-            {displayedTask && ACTIONS_BY_STATUS[displayedTask?.status]}
-        </FormGrid>
-    );
-}
+  const shouldDisplayContractDownload = displayedTask?.status &&  displayedTask.status !== TaskStatus.NEW;
+  const shouldDisplayInvoiceDownload = displayedTask?.status && invoiceAllowedStatuses.includes(displayedTask.status);
 
-const DownloadContainer = styled.div`
-    display: flex;
-    justify-content: flex-start;
-    gap: 16px;
-    align-items: center;
-`;
-const DownLoadContent = styled.a`
-    display: block;
-    width: max-content;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
+  const { data: files } = useGetTaskFilesQuery(displayedTask?.taskId ?? skipToken);
+  const { data: linkContract } = useGetContractLinkQuery(displayedTask?.contractId ?? skipToken, { skip: !shouldDisplayContractDownload });
+  const { data: linkInvoice } = useGetInvoiceLinkQuery(displayedTask?.taskId ?? skipToken, { skip: !shouldDisplayInvoiceDownload });
 
-    svg {
-        width: 18px;
-        height: 18px;
-        fill: ${Color.BLUE};
-    }
+  const ACTIONS_BY_STATUS: Record<TaskStatus, JSX.Element> = {
+    [TaskStatus.NEW]: <TaskNewActions />,
+    [TaskStatus.ASSIGNED]: <AssignedTaskActions />,
+    [TaskStatus.CANCELLED]: <></>,
+    [TaskStatus.IN_PROGRESS]: <></>,
+    [TaskStatus.REVIEWING]: <TaskInReviewActions isBoxChecked={isBoxChecked} />,
+    [TaskStatus.WAITING_FOR_PAYMENT]: <TaskWaitingForPaymentActions />,
+    [TaskStatus.PAYMENT_IN_PROGRESS]: <></>,
+    [TaskStatus.PAYMENT_ERROR]: <></>,
+    [TaskStatus.PAID]: <></>
+  };
+
+  return (
+    <FormGrid>
+      <Heading2 style={{ maxWidth: '90%' }}>{displayedTask?.title}</Heading2>
+      <TaskHeadInfo task={displayedTask} />
+      <Description task={displayedTask} />
+      {shouldDisplayContractDownload && <FileDownload text='Contract:' link={linkContract?.downloadLink} />}
+      {shouldDisplayInvoiceDownload && <FileDownload text='Invoice:' link={linkInvoice?.downloadLink} />}
+      <PinnedFiles userRole={UserRole.COMPANY} files={files ?? []} />
+      {displayedTask?.status === TaskStatus.REVIEWING && (
+        <TermsAgreementContainer>
+          <Checkbox isCheck={isBoxChecked} onChange={() => setBoxChecked((isBoxChecked) => !isBoxChecked)} />
+          <Text font="body">{`By checking the box, I agree with the terms and conditions of the Contract. All the data I've provided is correct. I understand that when I click the "I agree" button, I am entering into a Contract with Contractor as a Client on the terms and conditions described`}</Text>
+        </TermsAgreementContainer>
+      )}
+      {displayedTask && ACTIONS_BY_STATUS[displayedTask?.status]}
+    </FormGrid>
+  );
+};
+
+const TermsAgreementContainer = styled.div`
+  display: flex;
+  gap: 8px;
 `;

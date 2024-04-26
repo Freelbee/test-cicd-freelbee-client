@@ -1,7 +1,7 @@
 import { API, Endpoint_Enum } from '@company/shared';
 import { CompanyOnboardingStateDto } from '../dto/CompanyOnboardingStateDto';
 import { CreateCounterpartyRequestDto } from '../dto/CreateCounterpatyRequestDto';
-import { PaymentMethodDto } from '@freelbee/entities';
+import { CreatePaymentMethodDto } from '@freelbee/entities';
 import { PropsHelper } from '@freelbee/shared/helpers';
 import { CompanyData, CompanyResponse } from '../dto/CompanyResponse';
 
@@ -27,7 +27,7 @@ export const companyAPI = API.injectEndpoints({
       }),
       invalidatesTags: ['counterparty', 'company-onboarding-state']
     }),
-    createPaymentData: builder.mutation<void, PaymentMethodDto>({
+    createPaymentMethod: builder.mutation<void, CreatePaymentMethodDto>({
       query: (body) => ({
         url: Endpoint_Enum.CREATE_PAYMENT_METHODS,
         method: 'POST',
@@ -43,5 +43,5 @@ export const {
     useGetCompanyOnboardingStateQuery,
     useLazyGetCompanyOnboardingStateQuery,
     useCreateCompanyMutation,
-    useCreatePaymentDataMutation
+    useCreatePaymentMethodMutation
 } = companyAPI;

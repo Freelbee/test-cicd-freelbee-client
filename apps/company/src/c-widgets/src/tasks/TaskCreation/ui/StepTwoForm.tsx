@@ -89,28 +89,28 @@ export const StepTwoForm = () => {
         align="flex-start"
         font="body"
       >
-        {paymentDetailsMapping[taskCreationData?.paymentProviderName].infoText}
+        {paymentDetailsMapping[taskCreationData.paymentProviderName as PaymentProviderName].infoText}
       </InfoWithIcon>
 
       <Heading1>Payment receivers:</Heading1>
       <FreelancerBlock>
         <FreelancerAvatarBlock>
-          <Text font={'body'} color={Color.GRAY_900}>{taskCreationData!.freelancers![0].email[0]}</Text>
+          <Text font={'body'} color={Color.GRAY_900}>{taskCreationData.freelancers![0].email[0]}</Text>
         </FreelancerAvatarBlock>
         <FreelancerDetailBlock>
           {
-            taskCreationData!.freelancers![0]?.lastName && taskCreationData!.freelancers![0]?.firstName && (
-              <Text font={'medium'}>{taskCreationData!.freelancers![0]?.firstName ?? ''} {taskCreationData!.freelancers![0]?.lastName ?? ''}</Text>
+            taskCreationData.freelancers![0]?.lastName && taskCreationData.freelancers![0]?.firstName && (
+              <Text font={'medium'}>{taskCreationData.freelancers![0]?.firstName ?? ''} {taskCreationData.freelancers![0]?.lastName ?? ''}</Text>
             )
           }
-          <Text font={'bodySmall'} color={Color.GRAY_600}>{taskCreationData!.freelancers![0].email}</Text>
+          <Text font={'bodySmall'} color={Color.GRAY_600}>{taskCreationData.freelancers![0].email}</Text>
         </FreelancerDetailBlock>
       </FreelancerBlock>
       <PaymentContainer>
         <InputWithSelect<Currency>
           label='Reward amount'
-          placeholder={paymentDetailsMapping[taskCreationData.paymentProviderName].rewardAmountPlaceholder}
-          items={paymentDetailsMapping[taskCreationData.paymentProviderName].currencies}
+          placeholder={paymentDetailsMapping[taskCreationData.paymentProviderName as PaymentProviderName].rewardAmountPlaceholder}
+          items={paymentDetailsMapping[taskCreationData.paymentProviderName as PaymentProviderName].currencies}
           value={taskCreationData.price}
           defaultItem={taskCreationData.currency}
           watchValue={taskCreationData.currency}

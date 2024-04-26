@@ -5,7 +5,7 @@ export const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NODE_ENV === `development` ? `http://localhost:8080/` : process.env.NEXT_PUBLIC_URL ?? '',
   credentials: 'include',
   prepareHeaders: (headers) => {
-    headers.set('Content-Type', 'application/json;charset=UTF-8');
+    // headers.set('Content-Type', 'application/json;charset=UTF-8');
     return headers;
   },
   responseHandler: async (response) => {
@@ -14,7 +14,6 @@ export const baseQuery = fetchBaseQuery({
       const token = tokenBearer?.replace('Bearer ', '');
       localStorage.setItem(Token_Enum.ACCESS_TOKEN, token);
     }
-
     try {
       return await response.json();
     } catch (error) {

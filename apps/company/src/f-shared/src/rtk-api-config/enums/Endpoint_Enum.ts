@@ -16,8 +16,13 @@ export enum Endpoint_Enum {
   ADD_TASK = '/company/tasks',
   GENERATE_AND_DOWNLOAD_CONTRACT_PREVIEW = '/contract-preview',
   GET_CONTRACT_LINK = '/contract/{0}/download-link',
+  GET_INVOICE_LINK = '/invoice/{0}/download-link', //TODO::: correct
   GET_TASK_FILES = '/task/{0}/files',
   SET_STATUS = '/task/{0}/set-status',
+
+  GET_PAYMENT_DATA = '/tasks/{0}/payment-data',
+  CREATE_PAYMENT_DATA = '/payment-data/{0}/payment',
+  WEBHOOK_TRANSAK_EVENT = '/webhook/transak/event-from-widget',
 
   //sign-up
   COMPANY_SIGNUP = '/registration/company',

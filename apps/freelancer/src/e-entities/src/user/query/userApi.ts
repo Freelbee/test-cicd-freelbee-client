@@ -33,7 +33,7 @@ export const userAPI = API.injectEndpoints({
 });
 
 export const {
-    useGetUserQuery,
-    useSaveUserDataMutation,
-    useGetFreelancerCounterpartyQuery
+  useGetUserQuery,
+  useSaveUserDataMutation,
+  useGetFreelancerCounterpartyQuery
 } = userAPI;
