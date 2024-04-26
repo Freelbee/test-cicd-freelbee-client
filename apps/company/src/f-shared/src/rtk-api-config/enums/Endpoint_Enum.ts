@@ -19,6 +19,7 @@ export enum Endpoint_Enum {
   GET_INVOICE_LINK = '/contract/{0}/invoice/COMMERCIAL/download-link',
   GET_TASK_FILES = '/task/{0}/files',
   SET_STATUS = '/task/{0}/set-status',
+  FREELANCER_INVITATION = '/invitations/from-company/to-freelancer',
 
   GET_PAYMENT_DATA = '/tasks/{0}/payment-data',
   CREATE_PAYMENT_DATA = '/payment-data/{0}/payment',
