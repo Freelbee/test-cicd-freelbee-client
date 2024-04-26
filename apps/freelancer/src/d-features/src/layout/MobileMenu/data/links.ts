@@ -9,11 +9,11 @@ export const visibleMenuItems: Array<MobileMenuLink> = [
         title: 'Tasks',
         Icon: TasksIcon
     },
-    {
-        link: `companies`,
-        title: 'Companies',
-        Icon: CompanyIcon
-    },
+    // {
+    //     link: `companies`,
+    //     title: 'Companies',
+    //     Icon: CompanyIcon
+    // },
 ];
 
 export const hiddenMenuItems: Array<MobileMenuLink> = [
