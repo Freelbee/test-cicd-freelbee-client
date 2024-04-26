@@ -17,9 +17,10 @@ export default function TaskInReviewActions () {
     const {data: company} = useGetCompanyCounterpartyQuery();
     const [isBoxChecked, setBoxChecked] = useState(false);
 
-    const isNebeusAccountCreated = false; //TODO::: add request and uncomment
+    const isNebeusAccountCreated = false; //TODO::: change to request and uncomment
+    const isNebeusAndNebeusNotAccountCreated = displayedTask?.paymentProviderName === PaymentProviderName.NEBEUS && !isNebeusAccountCreated;
 
-    const isButtonApproveDisabled = !isBoxChecked || company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED || !isNebeusAccountCreated;
+    const isButtonApproveDisabled = !isBoxChecked || company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED || isNebeusAndNebeusNotAccountCreated;
     const isButtonRefineDisabled = company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED;
 
     const handleSetStatus = (status: TaskStatus) => {
@@ -40,7 +41,7 @@ export default function TaskInReviewActions () {
                 <Text font="body">{`By checking the box, I agree with the terms and conditions of the Contract. All the data I've provided is correct. I understand that when I click the "I agree" button, I am entering into a Contract with Contractor as a Client on the terms and conditions described`}</Text>
             </TermsAgreementContainer>
 
-            {displayedTask?.paymentProviderName === PaymentProviderName.NEBEUS && !isNebeusAccountCreated && (
+            {isNebeusAndNebeusNotAccountCreated && (
                 <InfoWithIcon
                     Icon={AlertIcon}
                     textColor={Color.ORANGE}

@@ -35,11 +35,11 @@ export default function TaskWaitingForPaymentActions() {
     if (taskPaymentData.payments.length === 0) {
       createPaymentData({ paymentDataId: taskPaymentData!.id });
       if (taskPaymentData.paymentProviderName !== PaymentProviderName.TRANSAK) return;
-        // if (process.env['NEXT_PUBLIC_MODE'] === 'test') { //TODO::: uncomment
-        //   handleSetStatus(TaskStatus.PAID)
-        // } else {
-        setTaskForPayment(displayedTask);
-        // }
+        if (process.env['NEXT_PUBLIC_MODE'] === 'test') {
+          handleSetStatus(TaskStatus.PAID)
+        } else {
+          setTaskForPayment(displayedTask);
+        }
     }
   }
 
