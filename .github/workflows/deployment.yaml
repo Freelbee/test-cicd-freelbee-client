@@ -73,6 +73,7 @@ jobs:
       # static secrets and vars app
       NEXT_PUBLIC_BOT_TOKEN: "${{ secrets.NEXT_PUBLIC_BOT_TOKEN }}"
       NEXT_PUBLIC_EMAIL: "${{ vars.NEXT_PUBLIC_EMAIL }}"
+      NEXT_PUBLIC_URL: "${{ vars.NEXT_PUBLIC_URL }}"
       NEXT_PUBLIC_MODE: "${{ inputs.environment }}"
 
       # dynamic secrets and vars app
