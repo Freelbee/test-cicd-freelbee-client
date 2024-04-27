@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Color, Text } from '@freelbee/shared/ui-kit';
-import { TaskFreelancerData, UserDataStatus } from '@company/entities';
+import { TaskFreelancerData } from '@company/entities';
 
 type Props = {
   freelancer: TaskFreelancerData
@@ -52,8 +52,8 @@ const email = css`
   margin-right: 15px;
 `;
 
-const FreelancerState = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-`;
+// const FreelancerState = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: flex-end;
+// `;
