@@ -93,7 +93,8 @@ export const StepTwoForm = () => {
       <SelectWithSearch<PaymentProviderName>
         label='Payment method'
         placeholder='Select from the dropdown list'
-        items={Object.values(PaymentProviderName)}
+        // items={Object.values(PaymentProviderName)}
+        items={[PaymentProviderName.TRANSAK]}
         value={taskCreationData?.paymentProviderName}
         setValue={(item) => {
           setData('paymentProviderName', item);
