@@ -6,6 +6,7 @@ import companyImage from '@landing/assets/icons/roles/company.svg';
 import freelancerImage from '@landing/assets/icons/roles/freelancer.svg';
 import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
 import { ModalQueryValue } from "@landing/entities";
+import { useEffect } from 'react';
 
 interface Props {
     modal: ModalQueryValue;
@@ -14,6 +15,11 @@ interface Props {
 export const Roles = ({modal}: Props) => {
 
     const getPath = () => modal === ModalQueryValue.START ? '/?authState=start' : '/';
+
+  useEffect(() => {
+    console.log("process.env.NEXT_PUBLIC_FREELANCER_URL, process.env.NEXT_PUBLIC_COMPANY_URL")
+    console.log(process.env.NEXT_PUBLIC_FREELANCER_URL, process.env.NEXT_PUBLIC_COMPANY_URL)
+  }, []);
 
     return (
         <Container>
