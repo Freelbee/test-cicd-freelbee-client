@@ -8,6 +8,7 @@ export enum Endpoint_Enum {
   CREATE_COMPANY = `/counterparties/company`,
   COMPANY = `/counterparties/company`,
   CREATE_PAYMENT_METHODS = '/payment-methods',
+  GET_PAYMENT_METHODS = '/payment-methods/{0}',
 
   GET_COMPANY_TASKS_PAGE = '/search/{0}/tasks',
   FIND_FREELANCERS = '/freelancers',

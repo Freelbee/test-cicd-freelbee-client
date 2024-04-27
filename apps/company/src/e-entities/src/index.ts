@@ -1,4 +1,6 @@
 export * from './company/query/companyApi';
+export * from './payment/query/paymentAPI';
+
 export * from './freelancer/query/freelansersApi';
 export * from './zoho-crm/index';
 export * from './freelancer/dto/CompanyFreelancerDto';
