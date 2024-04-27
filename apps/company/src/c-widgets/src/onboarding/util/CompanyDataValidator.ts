@@ -11,6 +11,7 @@ export class CompanyDataValidator extends AbstractValidator<CompanyFormData>
             [CounterpartyDetailsPropsType.NAME]: [ new RequiredRule()],
             [CounterpartyDetailsPropsType.TAX_NUMBER]: [new RequiredRule()],
             [CounterpartyDetailsPropsType.TIN]: [new RequiredRule()],
+            [CounterpartyDetailsPropsType.OGRN]: [new RequiredRule()],
             [CounterpartyDetailsPropsType.ZIP_CODE]: [new RequiredRule()]
         };
     }
