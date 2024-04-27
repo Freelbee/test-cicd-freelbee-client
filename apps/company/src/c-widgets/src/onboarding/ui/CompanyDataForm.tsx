@@ -21,6 +21,7 @@ const initialData: CompanyFormData = {
     [CounterpartyDetailsPropsType.ADDRESS]: "",
     [CounterpartyDetailsPropsType.ZIP_CODE]: "",
     [CounterpartyDetailsPropsType.TAX_NUMBER]: "",
+    [CounterpartyDetailsPropsType.OGRN]: "",
     [CounterpartyDetailsPropsType.TIN]: ""
 }
 
@@ -90,6 +91,14 @@ export const CompanyDataForm = () => {
             placeholder="Enter the TIN"
             value={data?.TIN ?? ''}
             setValue={(v) => setData(CounterpartyDetailsPropsType.TIN, v)} />
+        <Input
+            isRequired
+            isError={validationResult.hasError(CounterpartyDetailsPropsType.OGRN)}
+            errorMessage={validationResult.getMessageByLanguage(CounterpartyDetailsPropsType.OGRN, LanguageType.EN)}
+            label="Registry code"
+            placeholder="Enter the registry code"
+            value={data?.OGRN ?? ''}
+            setValue={(v) => setData(CounterpartyDetailsPropsType.OGRN, v)} />
 
         <Input
             isRequired

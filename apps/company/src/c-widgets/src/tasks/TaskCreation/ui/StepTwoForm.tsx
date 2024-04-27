@@ -9,7 +9,7 @@ import { useDataStateUpdater } from '@freelbee/shared/hooks';
 import { ReactComponent as TransakIcon } from '@freelbee/assets/icons/payment-method/transak.svg';
 import { ReactComponent as NebeusIcon } from '@freelbee/assets/icons/payment-method/nebeus.svg';
 import { useGetCompanyCounterpartyQuery, useGetCurrenciesQuery, useGetPaymentMethodsQuery } from '@company/entities';
-import { Currency, PaymentProviderName } from '@freelbee/entities';
+import { Currency, CurrencyType, PaymentProviderName } from '@freelbee/entities';
 
 
 export const StepTwoForm = () => {
@@ -20,8 +20,8 @@ export const StepTwoForm = () => {
   } = useContext(TaskCreationContext);
 
   const { data: company } = useGetCompanyCounterpartyQuery();
-  const { data: currenciesNebeus = [] } = useGetCurrenciesQuery(PaymentProviderName.NEBEUS);
-  const { data: currenciesTransak = [] } = useGetCurrenciesQuery(PaymentProviderName.TRANSAK);
+  const { data: currenciesNebeus = [] } = useGetCurrenciesQuery({provider: PaymentProviderName.NEBEUS, type: CurrencyType.CRYPTO});
+  const { data: currenciesTransak = [] } = useGetCurrenciesQuery({provider: PaymentProviderName.TRANSAK, type: CurrencyType.FIAT});
   const { data: paymentMethod } = useGetPaymentMethodsQuery(company?.id ?? 0, {
     skip: !company,
   });

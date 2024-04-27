@@ -2,24 +2,19 @@
 
 import { useGetCurrenciesQuery } from "@freelancer/entities";
 import { FormGrid, useAppSelector } from "@freelancer/features";
-import { Currency, PaymentMethodPropType, PaymentProviderName } from "@freelbee/entities";
-import { Input, SelectWithSearch, Text } from "@freelbee/shared/ui-kit";
+import { Currency, CurrencyType, PaymentMethodPropType, PaymentProviderName } from "@freelbee/entities";
+import { Input, SelectWithSearch } from "@freelbee/shared/ui-kit";
 import { useContext } from "react";
 import styled from "styled-components";
 import { TaskAcceptanceContext } from "../context/TaskAcceptanceContext";
 import { LanguageType } from "@freelbee/shared/language";
+import { CurrencySelectItem } from "./CurrencySelectItem";
 
 export const CardPaymentDataForm = () => {
 
     const {displayedTask} = useAppSelector(state => state.taskSliceReducer);
-    const { data: currenciesNebeus = [] } = useGetCurrenciesQuery({provider: PaymentProviderName.NEBEUS});
+    const { data: currenciesNebeus = [] } = useGetCurrenciesQuery({provider: PaymentProviderName.NEBEUS, type: CurrencyType.FIAT});
     const {formData, setFormData, paymentFormData, setPaymentFormData, validatorResult} = useContext(TaskAcceptanceContext);
-
-    const renderCurrency = (item: Currency) => {
-      return <Text font='body'>
-        {item?.code?.toUpperCase() ?? ''}
-        </Text>;
-    } 
 
     if(!displayedTask) return <></>;
 
@@ -33,7 +28,7 @@ export const CardPaymentDataForm = () => {
               items={currenciesNebeus}
               value={formData.freelancerCurrency}
               setValue={(item) => setFormData('freelancerCurrency', item)}
-              renderOption={(item) => renderCurrency(item)}
+              renderOption={(item) => <CurrencySelectItem currency={item} />}
               getStringValue={v => v.code}
               hideSearch={true}
           />  
