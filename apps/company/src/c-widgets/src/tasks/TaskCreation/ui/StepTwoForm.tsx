@@ -8,8 +8,9 @@ import { ReactComponent as AlertIcon } from '@freelbee/assets/icons/alert-icons/
 import { useDataStateUpdater } from '@freelbee/shared/hooks';
 import { ReactComponent as TransakIcon } from '@freelbee/assets/icons/payment-method/transak.svg';
 import { ReactComponent as NebeusIcon } from '@freelbee/assets/icons/payment-method/nebeus.svg';
-import { useGetCompanyCounterpartyQuery, useGetCurrenciesQuery } from '@company/entities';
+import { useGetCompanyCounterpartyQuery, useGetCurrenciesQuery, useGetPaymentMethodsQuery } from '@company/entities';
 import { Currency, PaymentProviderName } from '@freelbee/entities';
+
 
 export const StepTwoForm = () => {
   const {
@@ -21,6 +22,9 @@ export const StepTwoForm = () => {
   const { data: company } = useGetCompanyCounterpartyQuery();
   const { data: currenciesNebeus = [] } = useGetCurrenciesQuery(PaymentProviderName.NEBEUS);
   const { data: currenciesTransak = [] } = useGetCurrenciesQuery(PaymentProviderName.TRANSAK);
+  const { data: paymentMethod } = useGetPaymentMethodsQuery(company?.id ?? 0, {
+    skip: !company,
+  });
   const [, setData] = useDataStateUpdater<TaskCreationData>(taskCreationData, setTaskCreationData);
   const [isBoxChecked, setBoxChecked] = useState(false);
 
@@ -64,7 +68,7 @@ export const StepTwoForm = () => {
         label="IBAN"
         placeholder=""
         tipsText="There is the IBAN you entered during registration. Funds will be debited from this bank account"
-        value={company!.counterpartyDetail.props.IBAN}
+        value={paymentMethod?.props?.IBAN ?? ''}
         setValue={() => null}
         disabled
       />

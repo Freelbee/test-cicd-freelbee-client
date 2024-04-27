@@ -1,7 +1,7 @@
 import { API, Endpoint_Enum } from '@company/shared';
 import { WorksCategory } from '../dto/WorksCategory';
 import { TaskFreelancerData } from '../dto/TaskFreelancerData';
-import { Currency, FileLink, PaymentProviderName, TaskCounterpartyDataDto, TaskFileDto, TaskStatus } from '@freelbee/entities';
+import { FileLink, TaskCounterpartyDataDto, TaskFileDto, TaskStatus } from '@freelbee/entities';
 import { ContractPreviewDto } from '../dto/ContractPreviewDto';
 import { FileDownloadHelper } from 'packages/f-shared/src/helpers/FileDownloadHelper';
 import { PaymentDataResponseDto } from '../dto/PaymentDataDto';
@@ -44,13 +44,13 @@ export const taskAPI = API.injectEndpoints({
         method: 'GET'
       })
     }),
-    getCurrencies: builder.query<Currency[], PaymentProviderName>({
-      query: (paymentProviderName: PaymentProviderName) => ({
-        url: Endpoint_Enum.GET_CURRENCIES,
-        method: 'GET',
-        params: { provider: paymentProviderName }
-      })
-    }),
+    // getCurrencies: builder.query<Currency[], PaymentProviderName>({
+    //   query: (paymentProviderName: PaymentProviderName) => ({
+    //     url: Endpoint_Enum.GET_CURRENCIES,
+    //     method: 'GET',
+    //     params: { provider: paymentProviderName }
+    //   })
+    // }),
     generateAndDownloadContractPreview: builder.mutation<string, ContractPreviewDto>({
       query: (body) => ({
         url: Endpoint_Enum.GENERATE_AND_DOWNLOAD_CONTRACT_PREVIEW,
@@ -99,7 +99,7 @@ export const {
   useFindFreelancersQuery,
   useSetTaskStatusMutation,
   useGetWorksCategoriesQuery,
-  useGetCurrenciesQuery,
+  // useGetCurrenciesQuery,
   useGenerateAndDownloadContractPreviewMutation,
   useGetContractLinkQuery,
   useGetInvoiceLinkQuery,

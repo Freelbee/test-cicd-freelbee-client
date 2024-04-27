@@ -21,6 +21,7 @@ import DateUtil from 'packages/f-shared/src/utils/date/DateUtil';
 import { useGetUserQuery } from "@company/entities"
 import moment from "moment";
 
+
 const taskCreationContent: Record<TaskCreation_Step, JSX.Element> = {
   [TaskCreation_Step.GENERAL_INFO]: <StepOneForm />,
   [TaskCreation_Step.PAYMENT_INFO]: <StepTwoForm />,
@@ -43,6 +44,9 @@ export const TaskCreationModal = () => {
 
   const { data: user } = useGetUserQuery();
   const { data: company } = useGetCompanyCounterpartyQuery();
+
+
+
   const [createTask] = useCreateTaskMutation();
 
   const [ taskCreationData, setTaskCreationData ] = useState<TaskCreationData>({
