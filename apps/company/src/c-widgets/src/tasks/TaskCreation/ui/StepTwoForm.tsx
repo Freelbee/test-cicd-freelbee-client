@@ -58,9 +58,27 @@ export const StepTwoForm = () => {
     </PaymentMethodContainer>
   );
 
-  const isButtonDisabled = !taskCreationData.price || !taskCreationData.currency || !isBoxChecked;
-
   const renderCurrency = (item: Currency) => <Text font='body'>{item?.code?.toUpperCase() ?? ''}</Text>;
+
+  const getMinAmount = () => {
+    if (!taskCreationData.currency?.minAmount) {
+      return 1;
+    }
+    return Number(taskCreationData!.currency.minAmount);
+  };
+
+  const getMaxAmount = () => {
+    if (!taskCreationData.currency?.maxAmount) {
+      return null;
+    }
+    return Number(taskCreationData!.currency.maxAmount);
+  };
+
+  const maxAmount = getMaxAmount();
+  const isRewardAmountLow = Number(taskCreationData.price) < getMinAmount();
+  const isRewardAmountHigh = maxAmount !== null && Number(taskCreationData.price) > maxAmount;
+
+  const isButtonDisabled = !taskCreationData.price || !taskCreationData.currency || !isBoxChecked || isRewardAmountLow || isRewardAmountHigh;
 
   return (
     <Content>
@@ -123,7 +141,30 @@ export const StepTwoForm = () => {
           renderItem={renderCurrency}
           search={(item, value) => item.code.toUpperCase().includes(value.toUpperCase())}
           searchStringValue={(item) => item.code}
+          isValid={false}
         />
+        {taskCreationData.price && taskCreationData.currency && isRewardAmountLow && (
+              <InfoWithIcon
+                Icon={AlertIcon}
+                textColor={Color.ORANGE}
+                background={Color.BG_ORANGE}
+                align="flex-start"
+                font="body"
+              >
+                  Min amount for this currency is {getMinAmount()} {taskCreationData.currency?.code.toUpperCase()} <br/>
+              </InfoWithIcon>
+        )}
+        {taskCreationData.price && taskCreationData.currency && isRewardAmountHigh && (
+          <InfoWithIcon
+            Icon={AlertIcon}
+            textColor={Color.ORANGE}
+            background={Color.BG_ORANGE}
+            align="flex-start"
+            font="body"
+          >
+            Max amount for this currency is {getMaxAmount()} {taskCreationData.currency?.code.toUpperCase()} <br/>
+          </InfoWithIcon>
+        )}
         <InfoWithIcon
           Icon={AlertIcon}
           textColor={Color.BLUE}
