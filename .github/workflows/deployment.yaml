@@ -109,6 +109,9 @@ jobs:
           echo "NEXT_PUBLIC_COMPANY_URL=${{ vars[env.NEXT_PUBLIC_COMPANY_URL] }}" >> $GITHUB_ENV
           echo "NEXT_PUBLIC_FREELANCER_URL=${{ vars[env.NEXT_PUBLIC_FREELANCER_URL] }}" >> $GITHUB_ENV
 
+          echo "vars fr: ${{ vars[env.NEXT_PUBLIC_FREELANCER_URL] }}"" >> $GITHUB_STEP_SUMMARY
+          echo "vars fr: ${{ vars['TEST_NEXT_PUBLIC_COMPANY_URL'] }}"" >> $GITHUB_STEP_SUMMARY
+
       - name: Checkout
         uses: actions/checkout@v4
 
