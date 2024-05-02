@@ -1,5 +1,6 @@
-'use client'
-import React, { ReactNode, useEffect, useState } from 'react';
+'use client';
+
+import { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {Breakpoint, Color, mediaBreakpointDown, typography} from "@freelbee/shared/ui-kit";
 
@@ -119,6 +120,7 @@ const Step = styled.div`
         &.step_ourLevel {
             background: ${Color.EMERALD};
         }
+    }
 `;
 
 const StepNumber = styled.div`

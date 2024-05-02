@@ -43,6 +43,7 @@ export default function LoginForm(props: Props) {
 
     setButtonLoading(true);
 
+    loginData.email = loginData.email.toLowerCase();
     authUser(loginData).then(() => {
         setStep(LoginSteps.CHECK_CODE);
       })
