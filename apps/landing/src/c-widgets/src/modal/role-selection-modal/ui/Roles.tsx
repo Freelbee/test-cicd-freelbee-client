@@ -19,6 +19,7 @@ export const Roles = ({modal}: Props) => {
   useEffect(() => {
     console.log("process.env.NEXT_PUBLIC_FREELANCER_URL, process.env.NEXT_PUBLIC_COMPANY_URL")
     console.log(process.env.NEXT_PUBLIC_FREELANCER_URL, process.env.NEXT_PUBLIC_COMPANY_URL)
+    console.log(process.env.TEST_NEXT_PUBLIC_FREELANCER_URL, process.env.TEST_TEST_NEXT_PUBLIC_FREELANCER_URL)
   }, []);
 
     return (
