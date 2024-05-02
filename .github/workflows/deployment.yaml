@@ -197,7 +197,7 @@ jobs:
             cd /mnt/freelbee/client
             chmod +x generate-docker-compose.sh
             chmod +x remove-old-images.sh
-            bash generate-docker-compose.sh ${{ env.DEPLOY_PROJECTS }} ${{ env.IMAGE_TAG }}
+            bash generate-docker-compose.sh ${{ env.DEPLOY_PROJECTS }} ${{ env.IMAGE_TAG }} $NUMBER_OF_SAVED_IMAGES ${{ inputs.old-images }}
             chmod +x deploy.sh
             NUMBER_OF_SAVED_IMAGES=2
             bash deploy.sh ${{ env.DEPLOY_PROJECTS }} ${{ env.IMAGE_TAG }} $NUMBER_OF_SAVED_IMAGES ${{ inputs.old-images }}
