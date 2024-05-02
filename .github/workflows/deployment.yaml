@@ -49,6 +49,8 @@ jobs:
         run: |
           echo "### PROJECTS DEPLOY INFO" >> $GITHUB_STEP_SUMMARY
           echo "Project: ${{ github.event.inputs.project }}" >> $GITHUB_STEP_SUMMARY
+          echo "Environment: ${{ github.event.inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+          echo "Old images action: ${{ github.event.inputs.old-images }}" >> $GITHUB_STEP_SUMMARY
 
   build-and-push:
     needs: check-branch-and-env
