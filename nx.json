@@ -64,8 +64,16 @@
       }
     }
   },
-  "nxCloudAccessToken": "OGNkYjJmYTgtM2MwOS00N2M2LWI3NGUtNDM0MTdlMGFiN2Y3fHJlYWQtd3JpdGU=",
   "affected": {
     "defaultBase": "main"
+  },
+  "neverConnectToCloud": true,  
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "test"]
+      }
+    }
   }
 }

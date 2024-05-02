@@ -2,8 +2,8 @@ import { SectionId } from "../interface/SectionId";
 
 export const sectionSeoText: Record<SectionId, string> = {
     [SectionId.MAIN_BANNER]: "Start banner 'Book a demo' button",
-    [SectionId.BENEFITS]: "Leave all contractor payment challenges behind 'Try Now' button",
-    [SectionId.WHO_NEED]: "Who needs us",
+    [SectionId.BENEFITS]: "Overcome these contractor payment challenges 'Solve by one click' button",
+    [SectionId.WHO_NEED]: "Your team will enjoy our solutions",
     [SectionId.STEPS]: "",
     [SectionId.TABLE]: "Reasons to choose Freelbee, 'Book a demo' button",
     [SectionId.COUNTRIES]: "",

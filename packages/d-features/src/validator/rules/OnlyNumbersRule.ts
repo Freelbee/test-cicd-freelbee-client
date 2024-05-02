@@ -1,5 +1,5 @@
+import { RuleMessage } from "packages/f-shared/src/validator/RuleMessage";
 import { IRule } from "../interface/IRule";
-import { RuleMessage } from "../interface/RuleMessage";
 
 export default class OnlyNumbersRule implements IRule
 {
@@ -11,7 +11,7 @@ export default class OnlyNumbersRule implements IRule
     public message () : RuleMessage
     {
         return {
-            en: `The field is filled in incorrectly!`,
+            en: `The field is filled in incorrectly`,
         };
     }
 }

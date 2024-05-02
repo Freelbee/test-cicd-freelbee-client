@@ -11,78 +11,103 @@ import { baseQuery } from './baseQuery';
 import { Endpoint_Enum, Token_Enum, TokensDto } from '@landing/shared';
 import { redirect } from 'next/navigation';
 import { QueryReturnValue } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
+import { ErrorResponse } from '@freelbee/shared/error';
 
 const mutex = new Mutex();
 
+interface ExtraOptions {
+    notAuthorized?: boolean,
+    crmQuery?: boolean
+}
+
 export const baseQueryWithAuth: BaseQueryFn<
-  string | FetchArgs,
-  unknown,
-  FetchBaseQueryError
-> = async (args, api) => {
-  const getArgsConfig = () => getAuthorizedArgsConfig(args);
-  const result = await baseQuery(getArgsConfig(), api, {});
+string | FetchArgs,
+unknown,
+FetchBaseQueryError | ErrorResponse,
+ExtraOptions
+> = async (args, api, extraOptions) => {
 
-  if (result.error?.status !== 401) return result;
+    const notAuthorizedRequest = extraOptions?.notAuthorized;
+    const crmQuery = extraOptions?.crmQuery;
 
-  if (!mutex.isLocked()) {
-    const release = await mutex.acquire();
-    try {
-      return refreshTokensQuery(args, api);
-    } finally {
-      release();
+    const getArgsConfig = () => notAuthorizedRequest ? args : getAuthorizedArgsConfig(args);
+    
+    let result = await baseQuery(
+        getArgsConfig(),
+        api, 
+        extraOptions);
+    
+    if (result?.error && result.error?.status === 401 && !crmQuery) {
+        if (!mutex.isLocked()) {
+            const release = await mutex.acquire();
+            
+            try {
+                const res = await refreshTokensQuery(args, api, extraOptions);
+                result = res ? res : result;
+            } finally {
+                release();
+            }
+        } else {
+            await mutex.waitForUnlock();
+            result = await baseQuery(
+                getArgsConfig(),
+                api, 
+                extraOptions);
+        }
     }
-  }
-  await mutex.waitForUnlock();
-  return baseQuery(getArgsConfig(), api, {});
+
+    return result;
 };
 
-const refreshTokensQuery = async (
-  args: string | FetchArgs,
-  api: BaseQueryApi
-) => {
-  const body = {
-    refreshToken: localStorage.getItem(Token_Enum.REFRESH_TOKEN)!,
-    accessToken: localStorage.getItem(Token_Enum.ACCESS_TOKEN)!,
-  };
+const refreshTokensQuery = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: ExtraOptions) => {
+    const body = {
+        refreshToken: localStorage.getItem(Token_Enum.REFRESH_TOKEN)!,
+        accessToken: localStorage.getItem(Token_Enum.ACCESS_TOKEN)!
+    };
 
-  const refreshResult = (await baseQuery(
-    {
-      url: Endpoint_Enum.REFRESH_TOKEN,
-      method: 'POST',
-      body,
-    },
-    api,
-    {}
-  )) as QueryReturnValue<TokensDto, FetchBaseQueryError>;
+    const refreshResult = (await baseQuery(
+        {
+            url: Endpoint_Enum.REFRESH_TOKEN,
+            method: 'POST',
+            body
+        },
+        api,
+        extraOptions,
+    )) as QueryReturnValue<TokensDto, FetchBaseQueryError>;
 
-  if (refreshResult.data) {
-    const refreshToken = refreshResult.data?.refreshToken;
-    const accessToken = refreshResult.data?.accessToken;
+    if (refreshResult.data) {
+      const refreshToken = refreshResult.data?.refreshToken;
+      const accessToken = refreshResult.data?.accessToken;
+  
+      localStorage.setItem(Token_Enum.REFRESH_TOKEN, refreshToken);
+      localStorage.setItem(Token_Enum.ACCESS_TOKEN, accessToken);
 
-    localStorage.setItem(Token_Enum.REFRESH_TOKEN, refreshToken);
-    localStorage.setItem(Token_Enum.ACCESS_TOKEN, accessToken);
-
-    return baseQueryWithAuth(getAuthorizedArgsConfig(args), api, {});
-  }
-  localStorage.removeItem(Token_Enum.REFRESH_TOKEN);
-  localStorage.removeItem(Token_Enum.ACCESS_TOKEN);
-  redirect('/sign-in');
+        // retry the initial query
+        return await baseQuery(
+            getAuthorizedArgsConfig(args),
+            api, 
+            extraOptions);
+    } else {
+        localStorage.removeItem(Token_Enum.REFRESH_TOKEN);
+        localStorage.removeItem(Token_Enum.ACCESS_TOKEN);
+        redirect('/sign-in');
+    }
 };
 
-/* For a request without authorization headers, you need to set for an endpoint definition -
+/* For a request without authorization headers, you need to set for an endpoint definition -  
     extraOptions: { notAuthorized: true}
     */
 const getAuthorizedArgsConfig = (args: string | FetchArgs) => {
-  const token = localStorage.getItem(Token_Enum.ACCESS_TOKEN);
-  if (!token) {
-    return args;
-  }
-  const argsConfig = typeof args === 'string' ? { url: args } : args;
-  return {
-    ...argsConfig,
-    headers: {
-      ...argsConfig?.headers,
-      Authorization: `Bearer ${token}`,
-    },
-  };
+    const token = localStorage.getItem(Token_Enum.ACCESS_TOKEN);
+    if (!token) {
+        return args;
+    }
+    const argsConfig = typeof args === 'string' ? { url: args } : args;
+    return {
+        ...argsConfig,
+        headers: {
+            ...argsConfig?.headers,
+            'Authorization': `Bearer ${token}`
+        }
+    };
 };

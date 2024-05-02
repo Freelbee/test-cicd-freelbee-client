@@ -1,13 +1,7 @@
-'use client';
-
-import { TestCompant, Component } from '@company/widgets';
-
+import { TasksPage } from "@company/pages";
 
 export default function Index() {
   return (
-    <>
-        <TestCompant />
-        <Component />
-    </>
+    <TasksPage />
   );
 }

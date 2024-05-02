@@ -5,18 +5,18 @@ import { styled } from "styled-components";
 import { METHODS } from "../data/methodsData";
 import { LoopSlider } from "@landing/entities";
 import { Icon } from "../interface/Icon";
-
+import Image from "next/image";
 
 export const MethodsSlider = () => {
 
     const renderMethod = ({alt, Icon}: Icon) => (
         <IconContainer key={alt}>
-            <Icon/>
+            <Image src={Icon} alt={alt} width={112} height={61}/>
         </IconContainer>
     );
 
     return (
-        <LoopSlider<Icon> items={METHODS} renderSlide={renderMethod} direction='left' speed={22}/>
+        <LoopSlider<Icon> items={METHODS} renderSlide={renderMethod} direction='left' speed={50}/>
     );
 };
 

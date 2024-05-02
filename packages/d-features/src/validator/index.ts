@@ -1,12 +1,9 @@
 export * from './AbstractValidator';
 
-export * from './interface/RuleMessage';
 export * from './interface/IRule';
 
 export * from './result/ValidatorResult';
 
-export * from './rules/BICRule';
-export * from './rules/BICRule';
 export * from './rules/CheckedRule';
 export * from './rules/CirilycRule';
 export * from './rules/EmailRule';
@@ -28,5 +25,6 @@ export * from './rules/PhoneRuleLazy';
 export * from './rules/RequiredRule';
 export * from './rules/RequiredRuleWidthSpecialChars';
 export * from './rules/Task/WorksNameRule';
-
-
+export * from './rules/CompanyEmailRule';
+export * from './rules/MaximumNumberRule';
+export * from './rules/PasswordRule';

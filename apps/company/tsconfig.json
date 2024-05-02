@@ -19,7 +19,7 @@
     "types": [
       "jest",
       "node"
-    ],
+    ]
   },
   "include": [
     "**/*.ts",
@@ -30,7 +30,7 @@
     "../../dist/apps/company/.next/types/**/*.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts"
-  ],
+, "../../packages/c-widgets/src/user/settings/userDetails/AvatarWidget.tsx", "../../packages/e-entities/src/payment/interface/Currency.ts"  ],
   "exclude": [
     "node_modules",
     "jest.config.ts",

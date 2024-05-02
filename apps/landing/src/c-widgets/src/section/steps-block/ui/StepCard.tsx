@@ -15,11 +15,10 @@ export const StepCard = ({data}: Props) => (
     <Container>
         <ImageContainer>
             <Image
-
               src={data.image} alt={data.title} fill />
         </ImageContainer>
         <Heading1 $align='center' as='p'>{data.title}</Heading1>
-        <Text align='center' font='body' color={Color.GRAY_600}>{data.description}</Text>
+        <Text align='center' font='body' color={Color.GRAY_800}>{data.description}</Text>
     </Container>
 );
 
@@ -34,6 +33,20 @@ const Container = styled.div`
     justify-content: center;
     gap: 8px;
     border: 1px solid ${Color.GRAY_300};
+    margin-top: 24px;
+
+    &:nth-child(2) {
+        margin-top: 0px;
+        margin-bottom: 24px;
+    }
+
+    ${mediaBreakpointDown(Breakpoint.Tablet)} {
+        margin-top:0;
+
+        &:nth-child(2) {
+            margin-bottom: 0;
+        }
+    }
 `;
 
 const ImageContainer = styled.div`

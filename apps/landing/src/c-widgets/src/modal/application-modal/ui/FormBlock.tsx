@@ -1,28 +1,28 @@
 
 import { SectionTitle } from '@landing/shared';
 import { ModalBody } from './ModalBody';
-import { Color, Heading1, Text } from '@freelbee/shared/ui-kit';
-import { LinkButton, LinkStyle } from '@freelbee/features/common';
-import { ApplicationForm } from '@landing/features';
+import { Color, Title2, Text } from '@freelbee/shared/ui-kit';
+import { LinkButton, LinkStyle } from "@freelbee/shared/ui-kit";
+import { ApplicationModalForm } from '@landing/features';
 
 export const FormBlock = () => (
     <ModalBody data-testid={'application-modal'}>
         <SectionTitle>
-            <Heading1 $align='center' as='h2'>
+            <Title2 as='h2'>
                 See Freelbee in Action
-            </Heading1>
-            <Text align='center' font='body' color={Color.GRAY_600}>Schedule a&nbsp;30-minute product demo with expert Q&amp;A</Text>
+            </Title2>
+            <Text font='body' color={Color.GRAY_900}>Schedule a&nbsp;30-minute product demo with expert Q&amp;A</Text>
         </SectionTitle>
-        <ApplicationForm/>
-        <Text as='p' align='center' font='body' color={Color.GRAY_600}>
+        <ApplicationModalForm />      
+        <Text as='p' align='center' font='body' color={Color.GRAY_500}>
             By&nbsp;clicking the button, you agree to&nbsp;the processing of
-            <LinkButton
+            <LinkButton 
                 linkStyle={LinkStyle.BLUE}
-                as='Link'
-                href={'/privacy-policy'}
-                target={'_blank'}>
+                as='Link' 
+                href={'/privacy-policy'} 
+                target={'_blank'}> 
                  &nbsp;personal data
             </LinkButton>
-        </Text>
+        </Text>  
     </ModalBody>
 );

@@ -3,7 +3,7 @@
 import { Suspense } from 'react';
 import styled from 'styled-components';
 
-import { ReactComponent as Logo} from '@landing/assets/icons/logo/freelbee-logo.svg';
+import { ReactComponent as Logo} from '@freelbee/assets/icons/logo/freelbee-logo.svg';
 
 import { Breakpoint, Color, mediaBreakpointDown, typography } from '@freelbee/shared/ui-kit';
 
@@ -41,11 +41,11 @@ export const FullTable = () => {
                     </tr>
 
                     <tr>
-                        <th>{CellTitle['One-step solution']}</th>
-                        <td>{renderItems(freelbeeTable['One-step solution'])}</td>
-                        <td>{renderItems(bankTransfer['One-step solution'])}</td>
-                        <td>{renderItems(moneyTransfer['One-step solution'])}</td>
-                        <td>{renderItems(contractorsManagement['One-step solution'])}</td>
+                        <th>{CellTitle['One-stop solution']}</th>
+                        <td>{renderItems(freelbeeTable['One-stop solution'])}</td>
+                        <td>{renderItems(bankTransfer['One-stop solution'])}</td>
+                        <td>{renderItems(moneyTransfer['One-stop solution'])}</td>
+                        <td>{renderItems(contractorsManagement['One-stop solution'])}</td>
                     </tr>
 
                     <tr>

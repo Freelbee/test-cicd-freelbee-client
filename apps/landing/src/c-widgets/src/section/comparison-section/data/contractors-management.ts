@@ -6,7 +6,7 @@ export const contractorsManagement: Record<CellTitle, string[]> = {
         'Monthly service fee per contractor',
         'Hidden transaction costs are pretty common',
     ],
-    [CellTitle["One-step solution"]]: [
+    [CellTitle["One-stop solution"]]: [
         'Too many excessive features, with no customization options for pricing and user experience',
         'One tool for payment processing, document management, and contractor administration'
     ],

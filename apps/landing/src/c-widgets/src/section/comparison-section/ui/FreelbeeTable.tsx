@@ -2,7 +2,7 @@
 
 import styled from 'styled-components';
 
-import { ReactComponent as Logo} from '@landing/assets/icons/logo/freelbee-logo.svg';
+import { ReactComponent as Logo} from '@freelbee/assets/icons/logo/freelbee-logo.svg';
 
 import { Breakpoint, Color, mediaBreakpointDown, mediaBreakpointUp, typography } from '@freelbee/shared/ui-kit';
 
@@ -23,8 +23,8 @@ export const FreelbeeTable = () => {
                         <td>{renderItems(freelbeeTable['Budget-friendly'])}</td>
                     </tr>
                     <tr>
-                        <th>{CellTitle['One-step solution']}</th>
-                        <td>{renderItems(freelbeeTable['One-step solution'])}</td>
+                        <th>{CellTitle['One-stop solution']}</th>
+                        <td>{renderItems(freelbeeTable['One-stop solution'])}</td>
                     </tr>
                     <tr>
                         <th>{CellTitle['No borders']}</th>

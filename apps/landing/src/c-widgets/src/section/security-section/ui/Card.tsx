@@ -3,17 +3,17 @@
 import styled from "styled-components";
 
 import { Heading2, Text, Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
+import Image from "next/image";
 
 interface Props {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Icon: any;
+    icon: string;
     title: string;
     text: string;
 }
 
-export const Card = ({Icon, text, title}: Props) => (
+export const Card = ({icon, text, title}: Props) => (
     <Container>
-        <Icon />
+        <Image src={icon} alt='icon' width={80} height={80}/>
         <Heading2 as='p'>{title}</Heading2>
         <Text color={Color.GRAY_700} font='body'>{text}</Text>
     </Container>

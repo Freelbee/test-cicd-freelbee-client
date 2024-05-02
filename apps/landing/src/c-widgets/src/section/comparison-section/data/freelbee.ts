@@ -6,7 +6,7 @@ export const freelbeeTable: Record<CellTitle, string[]> = {
         'No surplus fee per contractor',
         'No hidden costs'
     ],
-    [CellTitle["One-step solution"]]: [
+    [CellTitle["One-stop solution"]]: [
         'One tool for payment processing, document management, and contractor administration',
         'A simple solution to handle tasks related to contractor payments.'
     ],

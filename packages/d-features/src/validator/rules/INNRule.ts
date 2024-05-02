@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
+import { RuleMessage } from "packages/f-shared/src/validator/RuleMessage";
 import {IRule} from "../interface/IRule";
-import { RuleMessage } from "../interface/RuleMessage";
 
 export class INNRule implements IRule
 {

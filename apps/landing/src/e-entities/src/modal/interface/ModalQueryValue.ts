@@ -1,3 +1,5 @@
 export enum ModalQueryValue {
-    APPLICATION = 'application'
+    APPLICATION = 'application',
+    LOGIN = 'login',
+    START = 'start',
 }

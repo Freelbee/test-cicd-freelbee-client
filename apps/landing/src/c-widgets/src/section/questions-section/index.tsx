@@ -15,10 +15,10 @@ export const FAQSection = () => (
             <Title1 as='h2' $align='center'>FAQ</Title1>
         </SectionTitle>
         <ContactsGrid>
-            <div>
+            <div itemScope itemType="https://schema.org/FAQPage">
                 {FAQ.map(q => (
                     <Tab key={q.title} title={q.title}>
-                        <Text as='p' font='body' styles={css`max-width: 90%;`}><br/>{q.text}</Text>
+                        <Text itemProp="text" as='p' font='body' styles={css`max-width: 90%;`}><br/>{q.text}</Text>
                     </Tab>
                 ))}
             </div>

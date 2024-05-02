@@ -11,7 +11,7 @@ export const TextContent = () => (
     <Content>
         <SectionTitle>
             <Title1 as='h2'>Anywhere <Title1 as='span' $gradient={Color.GRADIENT_GREENBLUE}>Anytime</Title1></Title1>
-            <Text font="body">Work with the platform from any device thanks to convenient interface adaptation</Text>
+            <Text font="body">Work with the platform from any device thanks to convenient interface</Text>
         </SectionTitle>
         <Suspense fallback={<></>}>
             <ActionButton />

@@ -13,7 +13,8 @@ export default {
   moduleNameMapper: {
     '@landing/assets/(.*)$': '<rootDir>/src/f-shared/src/assets/$1',
     '@freelbee/assets/(.*)$': '<rootDir>/../../packages/f-shared/src/assets/$1',
-    '^next/font/local$': '<rootDir>/../../packages/f-shared/src/tests/__mocks__/localfont.ts',
+    '^next/font/google$': '<rootDir>/../../packages/f-shared/src/tests/__mocks__/next/google-fonts.ts',
+    '^next/font/local$': '<rootDir>/../../packages/f-shared/src/tests/__mocks__/next/localfont.ts',
     '^swiper/(.*)$': '<rootDir>/src/f-shared/src/tests/__mocks__/swiper.ts',
   },
   // transformIgnorePatterns: [

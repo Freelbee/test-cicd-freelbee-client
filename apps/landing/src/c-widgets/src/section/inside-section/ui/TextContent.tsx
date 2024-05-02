@@ -3,7 +3,7 @@
 import { Suspense } from 'react';
 import styled from 'styled-components';
 
-import { ReactComponent as Logo} from '@landing/assets/icons/logo/freelbee-icon.svg';
+import { ReactComponent as Logo} from '@freelbee/assets/icons/logo/freelbee-icon.svg';
 
 import { Breakpoint, mediaBreakpointDown, Text, Title1} from '@freelbee/shared/ui-kit';
 import { ReactComponent as ListIcon }from '../assets/icon.svg';

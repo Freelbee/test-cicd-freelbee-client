@@ -4,7 +4,7 @@ import Image from "next/image";
 import styled from "styled-components";
 
 import { Breakpoint, mediaBreakpointDown, vw } from "@freelbee/shared/ui-kit";
-import personSrc from "@landing/assets/images/main/start-section/person.png";
+import personSrc from "@landing/assets/images/main/start-section/person.svg";
 
 export const BannerImage = () => (
     <ImageContainer>
@@ -41,13 +41,12 @@ const ImageContainer = styled.div`
         width: 665px;
         height: 477px;
         margin-right: -80px;
-        margin-top: -60px;
+        margin-top: 10px;
     }
 
     ${mediaBreakpointDown(Breakpoint.xMobile)} {
         width: 550px;
         height: 394px;
         margin-right: 0;
-        margin-top: -10px;
     }
 `;

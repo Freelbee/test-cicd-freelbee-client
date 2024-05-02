@@ -7,7 +7,7 @@ import { Title1 } from "@freelbee/shared/ui-kit";
 export const WhoNeedsSection = () => (
     <BaseSectionBlock id={SectionId.WHO_NEED}>
         <SectionTitle>
-            <Title1 as='h2' $align='center'>Who needs us</Title1>
+            <Title1 as='h2' $align='center'>Your team will enjoy our solutions</Title1>
         </SectionTitle>
         <CardsBlock />
     </BaseSectionBlock>

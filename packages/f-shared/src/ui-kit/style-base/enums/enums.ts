@@ -34,13 +34,14 @@ export enum Color {
   DEFAULT_BLUE = '#7696E7',
   NEW = '#25A7D0',
   PEN_BLUE = '#04103D',
+  ORANGE = '#E56000',
 
   //Status:
   ERROR = '#FD6A6A',
   CHECKING = '#FF6B00',
   PROCESSING = '#D89B00',
   PAID = '#30D42C',
-  BLUE = '#3D6BE2',
+  BLUE = '#0D76E9',
   PLAN = '#6A25AE',
 
   //Backgroud:
@@ -58,16 +59,25 @@ export enum Color {
   GRADIENT_IP = 'linear-gradient(341deg, #0D5A7B 0%, #2D74DF 100%)',
   GRADIENT_CYAN = 'linear-gradient(135deg, #59F0DE 0%, #093248 100%)',
   GRADIENT_GREENBLUE = 'linear-gradient(165deg, #3DE297 2.5%, #0D76E9 109.38%)',
-  
+
   VIOLET = '#7B61FF',
   VIOLET_TRANSPARENT = 'rgb(229 221 248 / 30%)',
+  TRANSPARENT = 'transparent'
 
-  
 }
 
 export enum Z_INDEX {
   'header' = 9,
+  'navigationMenu' = 8,
   'modal' = 10,
   'popupErrors' = 11,
   'globalLoader' = 1000,
+}
+
+export enum BORDER_RADIUS {
+  'XXS' = '2px',
+  'S' = '8px',
+  'M' = '14px',
+  'L' = '20px',
+  'XL' = '24px',
 }

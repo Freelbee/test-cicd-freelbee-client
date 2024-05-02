@@ -49,6 +49,8 @@ jobs:
         run: |
           echo "### PROJECTS DEPLOY INFO" >> $GITHUB_STEP_SUMMARY
           echo "Project: ${{ github.event.inputs.project }}" >> $GITHUB_STEP_SUMMARY
+          echo "Environment: ${{ github.event.inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+          echo "Old images action: ${{ github.event.inputs.old-images }}" >> $GITHUB_STEP_SUMMARY
 
   build-and-push:
     needs: check-branch-and-env
@@ -73,11 +75,17 @@ jobs:
       # static secrets and vars app
       NEXT_PUBLIC_BOT_TOKEN: "${{ secrets.NEXT_PUBLIC_BOT_TOKEN }}"
       NEXT_PUBLIC_EMAIL: "${{ vars.NEXT_PUBLIC_EMAIL }}"
+      NEXT_PUBLIC_URL: "${{ vars.NEXT_PUBLIC_URL }}"
       NEXT_PUBLIC_MODE: "${{ inputs.environment }}"
+
+
 
       # dynamic secrets and vars app
       NEXT_PUBLIC_TG_CHANNEL_ID: "${{ inputs.environment }}_NEXT_PUBLIC_TG_CHANNEL_ID"
       NEXT_PUBLIC_PERSONAL_URL: "${{ inputs.environment }}_NEXT_PUBLIC_PERSONAL_URL"
+
+      NEXT_PUBLIC_COMPANY_URL: "${{ inputs.environment }}_NEXT_PUBLIC_COMPANY_URL"
+      NEXT_PUBLIC_FREELANCER_URL: "${{ inputs.environment }}_NEXT_PUBLIC_FREELANCER_URL"
 
     steps:
       - name: Prepare image tag
@@ -98,6 +106,12 @@ jobs:
         run: |
           echo "NEXT_PUBLIC_TG_CHANNEL_ID=${{ vars[env.NEXT_PUBLIC_TG_CHANNEL_ID] }}" >> $GITHUB_ENV
           echo "NEXT_PUBLIC_PERSONAL_URL=${{ vars[env.NEXT_PUBLIC_PERSONAL_URL] }}" >> $GITHUB_ENV
+
+          echo "NEXT_PUBLIC_COMPANY_URL=${{ vars[env.NEXT_PUBLIC_COMPANY_URL] }}" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_FREELANCER_URL=${{ vars[env.NEXT_PUBLIC_FREELANCER_URL] }}" >> $GITHUB_ENV
+          echo "TEST_NEXT_PUBLIC_FREELANCER_URL=${{ vars[env.NEXT_PUBLIC_FREELANCER_URL] }}" >> $GITHUB_ENV
+          echo "TEST_TEST_NEXT_PUBLIC_FREELANCER_URL=${{ vars.TEST_NEXT_PUBLIC_FREELANCER_URL }}" >> $GITHUB_ENV
+
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -171,7 +185,7 @@ jobs:
           key: ${{ secrets[env.SSH_PRIVATE_KEY_ENV] }}
           passphrase: ${{ secrets[env.SSH_PASSPHRASE_ENV] }}
           source: "generate-docker-compose.sh,remove-old-images.sh"
-          target: /mnt/freelbee/client
+          target: /mnt/freelbee.com/client
 
       - name: Set up SSH connection
         uses: appleboy/ssh-action@v1.0.3
@@ -184,10 +198,10 @@ jobs:
             echo "Deploying ${ENVIRONMENT} environment"
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-            cd /mnt/freelbee/client
+            cd /mnt/freelbee.com/client
             chmod +x generate-docker-compose.sh
             chmod +x remove-old-images.sh
-            bash generate-docker-compose.sh ${{ env.DEPLOY_PROJECTS }} ${{ env.IMAGE_TAG }}
+            bash generate-docker-compose.sh ${{ env.DEPLOY_PROJECTS }} ${{ env.IMAGE_TAG }} $NUMBER_OF_SAVED_IMAGES ${{ inputs.old-images }}
             chmod +x deploy.sh
             NUMBER_OF_SAVED_IMAGES=2
             bash deploy.sh ${{ env.DEPLOY_PROJECTS }} ${{ env.IMAGE_TAG }} $NUMBER_OF_SAVED_IMAGES ${{ inputs.old-images }}

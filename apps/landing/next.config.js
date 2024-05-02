@@ -2,6 +2,9 @@
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { composePlugins, withNx } = require('@nx/next');
+// const withBundleAnalyzer = require('@next/bundle-analyzer')({
+//   enabled: process.env.ANALYZE === 'true',
+// })
 // const { NxWebpackPlugin } = require('@nrwl/webpack');
 
 
@@ -51,7 +54,9 @@ const plugins = [
   withNx,
 ];
 
-
+// if (process.env.ANALYZE === 'true') {
+//   plugins.push(withBundleAnalyzer);
+// }
 module.exports = composePlugins(...plugins)(nextConfig);
 
 // module.exports = async (/** @type {string} */ phase, /** @type {any} */ context) => {

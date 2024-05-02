@@ -1,16 +1,18 @@
 'use client';
 
-import React, {useEffect, useRef} from 'react';
+import React, {Suspense, useEffect, useRef} from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import { motion, useCycle } from 'framer-motion';
 
-import {Color, Z_INDEX, mediaBreakpointDown, mediaBreakpointUp, Breakpoint, typography } from '@freelbee/shared/ui-kit';
+import {Color, Z_INDEX, mediaBreakpointDown, mediaBreakpointUp, Breakpoint, typography} from '@freelbee/shared/ui-kit';
 import { useDimensions, useMatchMedia, useOnClickOutside } from "@freelbee/shared/hooks";
 
 import { NAV_LINKS } from './data/links';
-import { LoginButton } from './ui/LoginButton';
 import { LogoLink } from './ui/LogoLink';
+import { RoleSelectionModal } from '../../modal';
+import { GetStartedButton } from './ui/GetStartedButton';
+import { SignInButton } from './ui/SignInButton';
 
 
 const SWITCH_TO_BURGER_BREAKPOINT = 1080;
@@ -122,12 +124,20 @@ export const Header = () => {
                             {renderLinks()}
                         </Links>
                         <LoginMobile variants={item} key='login'>
-                            <LoginButton data-testid={'login-mobile-button'}/>
+
+                        <Suspense fallback={<></>}>
+                            <GetStartedButton />   
+                            <SignInButton />                             
+                        </Suspense>
+                
                         </LoginMobile>
                     </LinksContainer>
 
                     <LoginDesktop>
-                        <LoginButton />
+                      <Suspense fallback={<></>}>
+                        <GetStartedButton />   
+                        <SignInButton />                          
+                     </Suspense>
                     </LoginDesktop>
 
                     <BurgerButton
@@ -138,6 +148,10 @@ export const Header = () => {
                         onClick={() => toggleOpen()}>
                     </BurgerButton>
                 </Content>
+
+                <Suspense fallback={<></>}>
+                    <RoleSelectionModal />
+                </Suspense>
             </Container>
         </>
     );
@@ -153,45 +167,52 @@ const Container = styled(motion.div)<{$isOnTop: boolean}>`
   border-bottom-left-radius: 18px;
   border-bottom-right-radius: 18px;
   width: 100%;
-  height: 80px;
+  height: 100px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center;  
   padding: 0 48px;
-  transition: background-color .3s, box-shadow .3s, height .3s;
+  transition: background-color .3s, box-shadow .3s, height .3s; 
 
-  @media (max-width: 750px) {
+  ${mediaBreakpointDown(Breakpoint.xMedium)}{
+    height: 80px;
+  }
+  
+  ${mediaBreakpointDown(Breakpoint.Tablet)}{
     padding: 0 24px;
   }
 
-  @media (max-width: 375px) {
+  ${mediaBreakpointDown(Breakpoint.xMobile)}{
     padding: 0 16px;
+    height: 60px;
   }
 `;
 
 const HeaderVoid = styled.div`
   min-height: 80px;
   width: 100%;
+
+  ${mediaBreakpointDown(Breakpoint.xMobile)}{
+    min-height: 60px;
+  }
 `;
 
 const LoginDesktop = styled.div`
+    display: flex;
+    gap: 16px;
     ${mediaBreakpointDown(SWITCH_TO_BURGER_BREAKPOINT)}{
       display: none;
     }
 `;
 
 const LoginMobile = styled(motion.div)`
-  display: none;
-
-  ${mediaBreakpointDown(SWITCH_TO_BURGER_BREAKPOINT)} {
-    padding-top: 64px;
-    padding-bottom: 16px;
-    display: block;
-
-    ${mediaBreakpointDown(Breakpoint.xMobile)} {
-      padding-top: 0;
+    display: none;
+    ${mediaBreakpointDown(SWITCH_TO_BURGER_BREAKPOINT)}{
+      padding-bottom: 16px;
+      display: flex;
+      width: 100%;
+      gap: 16px;
     }
-  }
 `;
 
 const Content = styled.div`
@@ -202,6 +223,10 @@ const Content = styled.div`
   justify-content: space-between;
   gap: 15px;
   height: 44px;
+
+      ${mediaBreakpointDown(1130)} {
+        gap: 8px;
+    }
 `;
 
 const BurgerButton = styled.button<{$isOpen: boolean}>`
@@ -228,23 +253,38 @@ const BurgerButton = styled.button<{$isOpen: boolean}>`
     display: flex;
   }
 
+  ${mediaBreakpointDown(Breakpoint.xMobile)} {
+    top: 13px;
+    width: 34px;
+    height: 34px;
+  }
+
     &::before , &::after{
       content: '';
       position: absolute;
       width: 60%;
-      height: 1px;
+      height: 2px;
       background-color: ${Color.GRAY_900};
-      transition: transform 0.3s;
+      transition: transform 0.3s; 
     }
 
     &::after {
       top: 16px;
-      transform: ${({$isOpen}) => $isOpen && 'translateY(2.5px) rotate(136deg)'};
+      transform: ${({$isOpen}) => $isOpen && 'translateY(2.5px) rotate(136deg)'}; 
+
+      ${mediaBreakpointDown(Breakpoint.xMobile)} {
+        top: 12px;
+      }
     }
 
     &::before {
       top: 22.5px;
       transform: ${({$isOpen}) => $isOpen && 'translateY(-3.5px) rotate(46deg)'};
+
+      ${mediaBreakpointDown(Breakpoint.xMobile)} {
+        top: 19px;
+        transform: ${({$isOpen}) => $isOpen && 'translateY(-4.5px) rotate(46deg)'};
+      }
     }
 `;
 
@@ -256,6 +296,7 @@ const LinksContainer = styled(motion.nav)<{$isOpen: boolean, $isDesktop: boolean
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    flex-direction: column;
     gap: 16px;
     padding: 23px;
     top: 0;
@@ -266,15 +307,15 @@ const LinksContainer = styled(motion.nav)<{$isOpen: boolean, $isDesktop: boolean
 
     transform: translate3d(0,0,0);
   }
-
-  ${mediaBreakpointDown(Breakpoint.xMobile)} {
-    flex-direction: column;
-  }
 `;
 
 const Links = styled(motion.ul)`
   display: flex;
   gap: 8px;
+
+  ${mediaBreakpointDown(1130)} {
+      gap: 6px;
+  }
 
   ${mediaBreakpointDown(SWITCH_TO_BURGER_BREAKPOINT)}{
     flex-direction: column;

@@ -26,5 +26,9 @@ export const FAQ = [
     {
         title: 'Do you comply with international laws?',
         text: 'Our platform complies with GDPR. Our default contracts are designed to suit nearly any jurisdiction, and equally protect you and your contractors.',
+    },    
+    {
+        title: 'How do we integrate your platform with our current systems?',
+        text: 'We have Freelbee’s API that you can integrate into any of your systems. Contact us for help and more information.',
     },
 ];

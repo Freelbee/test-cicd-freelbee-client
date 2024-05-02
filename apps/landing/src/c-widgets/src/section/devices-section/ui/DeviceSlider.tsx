@@ -9,12 +9,12 @@ import { ReactComponent as TabletIcon} from '../assets/desktop.svg';
 import { ReactComponent as MobileIcon} from '../assets/mobile.svg';
 import{ ReactComponent as  DeskIcon }from '../assets/tablet.svg';
 import { DeviceType } from "../interface/DeviceType";
-import { Breakpoint, ButtonStyleEnum, mediaBreakpointDown, vw } from "@freelbee/shared/ui-kit";
-import { IconButton } from '@freelbee/features/common';
+import { Breakpoint, ButtonStyleEnum, Color, mediaBreakpointDown, vw } from "@freelbee/shared/ui-kit";
+import { IconButton } from "@freelbee/shared/ui-kit";
 
 import desktopSrc from "@landing/assets/images/main/devices/desktop.png";
 import tabletSrc from "@landing/assets/images/main/devices/tablet.png";
-import mobileSrc from "@landing/assets/images/main/devices/mobile2.png";
+import mobileSrc from "@landing/assets/images/main/devices/phone.png";
 
 const appearence = {
     initial: { opacity: 0, x: '100px' },
@@ -43,20 +43,20 @@ export const DeviceSlider = () => {
     return (
         <Container>
             <NavContainer>
-                <IconButton
+                <IconButton 
                     onClick={() => setCurrent(DeviceType.DESKTOP)}
-                    styleType={ButtonStyleEnum.ROUND_STROKE_WHITE}
-                    Icon={<DeskIcon/>}
+                    styleType={ButtonStyleEnum.ROUND_STROKE_WHITE} 
+                    Icon={<DeskIcon stroke={current === DeviceType.DESKTOP ? Color.EMERALD : Color.GRAY_600}/>} 
                     label="desktop image" />
-                <IconButton
+                <IconButton 
                     onClick={() => setCurrent(DeviceType.TABLET)}
-                    styleType={ButtonStyleEnum.ROUND_STROKE_WHITE}
-                    Icon={<TabletIcon/>}
+                    styleType={ButtonStyleEnum.ROUND_STROKE_WHITE} 
+                    Icon={<TabletIcon stroke={current === DeviceType.TABLET ? Color.EMERALD : Color.GRAY_600}/>} 
                     label="tablet image" />
-                <IconButton
+                <IconButton 
                     onClick={() => setCurrent(DeviceType.MOBILE)}
-                    styleType={ButtonStyleEnum.ROUND_STROKE_WHITE}
-                    Icon={<MobileIcon/>}
+                    styleType={ButtonStyleEnum.ROUND_STROKE_WHITE} 
+                    Icon={<MobileIcon stroke={current === DeviceType.MOBILE ? Color.EMERALD : Color.GRAY_600}/>} 
                     label="mobile image" />
             </NavContainer>
 
@@ -70,28 +70,29 @@ export const DeviceSlider = () => {
 };
 
 const Container = styled.div`
-    height: 730px;
+    height: 700px;
+
+    ${mediaBreakpointDown(Breakpoint.xMedium)} {
+        height: ${(vw(705, Breakpoint.xMedium))};
+    }
 
     ${mediaBreakpointDown(Breakpoint.Medium)} {
-        height: ${(vw(700, Breakpoint.Medium))};
+        height: ${(vw(600, Breakpoint.Medium))};
     }
 
     ${mediaBreakpointDown(Breakpoint.Tablet)} {
-        height: ${(vw(730, Breakpoint.Tablet))};
+        height: ${(vw(700, Breakpoint.Tablet))};
         width: 100%;
-        overflow: hidden;
     }
 
     ${mediaBreakpointDown(Breakpoint.xMobile)} {
-        height: ${(vw(730, Breakpoint.xMobile))};
+        height: ${(vw(600, Breakpoint.xMobile))};
     }
 `;
-
 
 const SliderWrapper = styled.div`
     position: relative;
 `;
-
 
 const NavContainer = styled.div`
   display: flex;
@@ -99,10 +100,14 @@ const NavContainer = styled.div`
   justify-content: flex-start;
   gap: 8px;
   margin-bottom: 40px;
-  margin-left: 370px;
+  margin-left: 300px;
 
     ${mediaBreakpointDown(Breakpoint.Large)} {
-        margin-left: ${vw(370, Breakpoint.Large)};
+        margin-left: ${vw(300, Breakpoint.Large)};
+    }
+
+    ${mediaBreakpointDown(Breakpoint.xMedium)} {
+        margin-left: ${vw(250, Breakpoint.xMedium)};
     }
 
   ${mediaBreakpointDown(Breakpoint.Tablet)} {
@@ -113,13 +118,13 @@ const NavContainer = styled.div`
 `;
 
 const DesktopWrapper = styled(motion.div)`
-  position: absolute;
-  width: 953px;
-  height: 574px;
+  position: absolute;  
+  width: 815px;
+  height: 489px;
 
   ${mediaBreakpointDown(Breakpoint.xMedium)} {
-    width: ${vw(953, Breakpoint.xMedium)};
-    height: ${vw(574, Breakpoint.xMedium)};
+    width: ${vw(815, Breakpoint.xMedium)};
+    height: ${vw(489, Breakpoint.xMedium)};
   }
 
   ${mediaBreakpointDown(Breakpoint.Tablet)} {
@@ -129,19 +134,19 @@ const DesktopWrapper = styled(motion.div)`
 `;
 
 const TabletWrapper = styled(motion.div)`
-  position: absolute;
-  width: 699px;
-  height: 484px;
-  right: -100px;
+  position: absolute; 
+  width: 674px;
+  height: 466px;
+  right: 30px;
 
   ${mediaBreakpointDown(Breakpoint.Large)} {
-    right: -${vw(100, Breakpoint.Large)};
+    right: ${vw(10, Breakpoint.Large)};
   }
 
   ${mediaBreakpointDown(Breakpoint.xMedium)} {
-    width: ${vw(699, Breakpoint.xMedium)};
-    height: ${vw(484, Breakpoint.xMedium)};
-    right: -${vw(80, Breakpoint.xMedium)};
+    width: ${vw(674, Breakpoint.xMedium)};
+    height: ${vw(466, Breakpoint.xMedium)};
+    right: -${vw(30, Breakpoint.xMedium)};
   }
 
   ${mediaBreakpointDown(Breakpoint.Tablet)} {
@@ -152,24 +157,24 @@ const TabletWrapper = styled(motion.div)`
 `;
 
 const MobileWrapper = styled(motion.div)`
-  position: absolute;
-  width: 595px;
-  height: 631px;
-  right: -50px;
+  position: absolute; 
+  width: 561px;
+  height: 603px;
+  right: 10%;
 
     ${mediaBreakpointDown(Breakpoint.Large)} {
-    right: -${vw(50, Breakpoint.Large)};
+    right: ${vw(65, Breakpoint.Large)};
     }
 
   ${mediaBreakpointDown(Breakpoint.xMedium)} {
-    width: ${vw(595, Breakpoint.xMedium)};
-    height: ${vw(631, Breakpoint.xMedium)};
-    right: -${vw(30, Breakpoint.xMedium)};
+    width: ${vw(561, Breakpoint.xMedium)};
+    height: ${vw(603, Breakpoint.xMedium)};
+    right: ${vw(25, Breakpoint.Large)};
   }
 
   ${mediaBreakpointDown(Breakpoint.Tablet)} {
-    width: ${vw(595, Breakpoint.Tablet)};
-    height: ${vw(631, Breakpoint.Tablet)};
-    right: 6%;
+    width: ${vw(561, Breakpoint.Tablet)};
+    height: ${vw(603, Breakpoint.Tablet)};
+    right: 7%;
   }
 `;
