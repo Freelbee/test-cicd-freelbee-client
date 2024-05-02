@@ -23,6 +23,21 @@ describe('landing-e2e', () => {
     .and('have.attr', 'href', Cypress.env().NEXT_PUBLIC_FREELANCER_URL);
   });
 
+  it('should open start modal window', () => {
+    cy.getDataTest('header-menu-button').click();
+    cy.getDataTest('start-mobile-button').should('be.visible').click();
+
+    cy.url().should('contain', '/?modal=start');
+
+    cy.getDataTest('company-login')
+    .should('be.visible')
+    .and('have.attr', 'href', Cypress.env().NEXT_PUBLIC_COMPANY_URL + '/?authState=start');
+
+    cy.getDataTest('freelancer-login')
+    .should('be.visible')
+    .and('have.attr', 'href', Cypress.env().NEXT_PUBLIC_FREELANCER_URL + '/?authState=start');
+  });
+
   it('should open application modal with searchParams on button click', () => {
     cy.getDataTest('main-banner-btn').click();
     cy.getDataTest('application-modal').should('be.visible');

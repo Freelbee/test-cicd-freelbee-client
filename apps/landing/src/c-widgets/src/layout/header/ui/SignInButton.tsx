@@ -5,8 +5,11 @@ import { SquareButton } from "@freelbee/shared/ui-kit";
 import { useQueryParamsNavigation } from '@freelbee/shared/hooks';
 import { Breakpoint, SquareButtonStyle } from '@freelbee/shared/ui-kit';
 import { ModalQueryValue } from '@landing/entities';
+import { HTMLAttributes } from 'react';
 
-export const SignInButton = () => {
+interface Props extends HTMLAttributes<HTMLButtonElement> {};
+
+export const SignInButton = (props: Props) => {
 
     const [, navigateWithParam] = useQueryParamsNavigation();
     
@@ -16,6 +19,7 @@ export const SignInButton = () => {
         styleType={SquareButtonStyle.STROKE_BLACK}
         wideOnBreakPoint={Breakpoint.xMobile}
         as='button'
+        {...props}
         onClick={() => navigateWithParam('modal', ModalQueryValue.LOGIN)}
         data-crmid={`header_login`}>Sign in</SquareButton>      
   )
