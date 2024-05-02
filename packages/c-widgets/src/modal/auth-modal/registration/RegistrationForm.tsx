@@ -50,7 +50,7 @@ export default function RegistrationForm(props: Props) {
     setLoading(true);
 
     const body = {
-      email: registrationData.email,
+      email: registrationData.email.toLowerCase(),
       password: registrationData.password,
       phone: registrationData.phone
     };
