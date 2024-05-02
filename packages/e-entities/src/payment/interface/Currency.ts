@@ -12,6 +12,6 @@ export interface Currency {
   isPopular?: boolean,
   name?: string,
   iconUrl?: string,
-  minAmount?: string, //TODO::: or number, not supported on frontend yet
-  maxAmount?: string, //TODO::: or number, not supported on frontend yet
+  minAmount?: string,
+  maxAmount?: string,
 }

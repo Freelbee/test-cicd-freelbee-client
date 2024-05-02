@@ -33,7 +33,7 @@ export const taskCreationDataInit: TaskCreationData = {
   price: '',
   signature: '',
   deadline: moment().add(1, 'd').format(DateUtil.EUROPEAN_DATE_FORMAT),
-  paymentProviderName: PaymentProviderName.NEBEUS,
+  paymentProviderName: PaymentProviderName.TRANSAK,
 };
 
 export interface ITaskCreationContext {
