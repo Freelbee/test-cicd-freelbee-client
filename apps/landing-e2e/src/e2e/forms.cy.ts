@@ -1,5 +1,5 @@
 describe('forms-e2e', () => {
-    it('should send massage in questions form on the main page', () => {
+    it('should send message in questions form on the main page', () => {
       cy.visit('/');
       cy.setCookieOk();
     });
