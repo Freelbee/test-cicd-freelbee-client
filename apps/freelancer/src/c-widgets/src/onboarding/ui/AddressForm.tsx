@@ -5,21 +5,19 @@ import { FormEventHandler, useContext, useState} from "react";
 import styled from "styled-components";
 import { OnboardingContext } from "../context/OnboardingContext";
 import { Onboarding_Step } from "../interface/OnboardingStep";
-import { useGetCountriesQuery } from "@freelancer/entities";
 import { CountrySelect, ValidatorResult } from "@freelbee/features";
 import {ReactComponent as AlertIcon} from '@freelbee/assets/icons/alert-icons/alert_icon.svg';
 import { FormData } from "../interface/FormData";
 import { AddressFormValidator } from "../util/AddressFormValidator";
 import { LanguageType } from "@freelbee/shared/language";
-import { Country, UserDataPropsType } from "@freelbee/entities";
+import { UserDataPropsType } from "@freelbee/entities";
+import countries from "i18n-iso-countries";
 
 export const AddressForm = () => {
 
     const {setStep, formData, setFormData} = useContext(OnboardingContext);
-    const {data} = useGetCountriesQuery();
     const [validationResult, setValidationResult] = useState(new ValidatorResult<FormData>());
     const validator = new AddressFormValidator();
-    const [country, setCountry] = useState<Country | null>(null);
 
     const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
@@ -36,11 +34,9 @@ export const AddressForm = () => {
     <Form onSubmit={submitHandler}>
         <CountrySelect 
             isError={validationResult.hasError(UserDataPropsType.COUNTRY)}
-            countries={data ?? []} 
-            selectedCountry={country ?? null} 
+            defaultCountryCode="AE"
             onSelect={(c) => {
-                setCountry(c)
-                setFormData(UserDataPropsType.COUNTRY, c.alpha2Code);
+                setFormData(UserDataPropsType.COUNTRY, countries.getAlpha2Code(c, "en"));
             }} />
         <Input 
             isRequired
