@@ -181,7 +181,7 @@ jobs:
           key: ${{ secrets[env.SSH_PRIVATE_KEY_ENV] }}
           passphrase: ${{ secrets[env.SSH_PASSPHRASE_ENV] }}
           source: "generate-docker-compose.sh,remove-old-images.sh"
-          target: /mnt/freelbee/client
+          target: /mnt/freelbee.com/client
 
       - name: Set up SSH connection
         uses: appleboy/ssh-action@v1.0.3
