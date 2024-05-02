@@ -6,7 +6,6 @@ import companyImage from '@landing/assets/icons/roles/company.svg';
 import freelancerImage from '@landing/assets/icons/roles/freelancer.svg';
 import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
 import { ModalQueryValue } from "@landing/entities";
-import { useEffect } from 'react';
 
 interface Props {
     modal: ModalQueryValue;

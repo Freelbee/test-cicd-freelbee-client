@@ -132,8 +132,10 @@ jobs:
           {
             echo '  NEXT_PUBLIC_BOT_TOKEN=${{ secrets.TEST_NEXT_PUBLIC_BOT_TOKEN }}'
             echo '  NEXT_PUBLIC_TG_CHANNEL_ID=${{ vars.TEST_NEXT_PUBLIC_TG_CHANNEL_ID }}'
-            echo '  NEXT_PUBLIC_PERSONAL_URL=${{ vars.TEST_NEXT_PUBLIC_PERSONAL_URL }}'
+            echo '  NEXT_PUBLIC_COMPANY_URL=${{ vars.TEST_NEXT_PUBLIC_COMPANY_URL }}'
+            echo '  NEXT_PUBLIC_FREELANCER_URL=${{ vars.TEST_NEXT_PUBLIC_FREELANCER_URL }}'
           } >> apps/landing/.env
+          cat apps/landing/.env
 
       - name: run lint landing
         run: yarn lint:landing
