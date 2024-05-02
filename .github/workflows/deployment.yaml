@@ -78,13 +78,14 @@ jobs:
       NEXT_PUBLIC_URL: "${{ vars.NEXT_PUBLIC_URL }}"
       NEXT_PUBLIC_PHONE: "${{ vars.NEXT_PUBLIC_PHONE }}"
       NEXT_PUBLIC_MODE: "${{ inputs.environment }}"
+      NEXT_PUBLIC_COMPANY_URL: "${{ vars.TEST_NEXT_PUBLIC_COMPANY_URL }}"
+      NEXT_PUBLIC_FREELANCER_URL: "${{ vars.TEST_NEXT_PUBLIC_FREELANCER_URL }}"
 
       # dynamic secrets and vars app
       NEXT_PUBLIC_TG_CHANNEL_ID: "${{ inputs.environment }}_NEXT_PUBLIC_TG_CHANNEL_ID"
       NEXT_PUBLIC_PERSONAL_URL: "${{ inputs.environment }}_NEXT_PUBLIC_PERSONAL_URL"
 
-      NEXT_PUBLIC_COMPANY_URL: "${{ inputs.environment }}_NEXT_PUBLIC_COMPANY_URL"
-      NEXT_PUBLIC_FREELANCER_URL: "${{ inputs.environment }}_NEXT_PUBLIC_FREELANCER_URL"
+
 
     steps:
       - name: Prepare image tag
@@ -106,8 +107,8 @@ jobs:
           echo "NEXT_PUBLIC_TG_CHANNEL_ID=${{ vars[env.NEXT_PUBLIC_TG_CHANNEL_ID] }}" >> $GITHUB_ENV
           echo "NEXT_PUBLIC_PERSONAL_URL=${{ vars[env.NEXT_PUBLIC_PERSONAL_URL] }}" >> $GITHUB_ENV
 
-          echo "NEXT_PUBLIC_COMPANY_URL=${{ vars[env.NEXT_PUBLIC_COMPANY_URL] }}" >> $GITHUB_ENV
-          echo "NEXT_PUBLIC_FREELANCER_URL=${{ vars[env.NEXT_PUBLIC_FREELANCER_URL] }}" >> $GITHUB_ENV
+#          echo "NEXT_PUBLIC_COMPANY_URL=${{ vars[env.NEXT_PUBLIC_COMPANY_URL] }}" >> $GITHUB_ENV
+#          echo "NEXT_PUBLIC_FREELANCER_URL=${{ vars[env.NEXT_PUBLIC_FREELANCER_URL] }}" >> $GITHUB_ENV
 
       - name: Checkout
         uses: actions/checkout@v4
