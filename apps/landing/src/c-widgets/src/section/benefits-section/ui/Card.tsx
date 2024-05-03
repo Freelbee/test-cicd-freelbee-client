@@ -23,7 +23,8 @@ const Container = styled.div`
     border-radius: 24px;
     background-color: ${Color.GRAY_200};
     padding: 32px;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 16px;
 
     ${mediaBreakpointDown(Breakpoint.Medium)} {

@@ -53,7 +53,7 @@ export const Heading1 = styled.h1<{
     ${typography.heading1};
     color: ${({$color}) => $color || Color.GRAY_800};
     margin: 0;
-    padding: 0;
+    padding: 0 !important;
     text-align: ${({$align}) => $align || 'left'};
     ${({$gradient}) => $gradient && css`
         background: ${$gradient};
