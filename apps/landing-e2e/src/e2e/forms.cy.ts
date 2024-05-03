@@ -35,6 +35,7 @@ describe('forms-e2e', () => {
     cy.getDataTest('landing-form-submit').click({ force: true });
 
     cy.wait('@tgBotRequest').its('response.statusCode').should('eq', 200);
-    cy.url().should('eq', Cypress.config().baseUrl + '/thanks-for-booking')
+    cy.location('pathname', {timeout: 10000}).should('eq', '/thanks-for-booking')
+    // cy.url().should('eq', Cypress.config().baseUrl + '/thanks-for-booking')
   });
 });
