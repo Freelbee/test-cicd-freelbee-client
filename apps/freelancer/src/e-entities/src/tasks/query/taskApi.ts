@@ -30,18 +30,18 @@ export const taskAPI = API.injectEndpoints({
       query: (contractId) => Endpoint_Enum.GET_CONTRACT_LINK.replace('{0}', contractId.toString())
     }),
     getInvoiceLink: builder.query<FileLink, number>({
-      query: (taskId) => Endpoint_Enum.GET_INVOICE_LINK.replace('{0}', taskId.toString())
+      query: (contractId) => Endpoint_Enum.GET_INVOICE_LINK.replace('{0}', contractId.toString())
     }),
     getTaskFiles: builder.query<Array<TaskFileDto>, number>({
       query: (taskId) => Endpoint_Enum.GET_TASK_FILES.replace('{0}', taskId.toString()),
-      
+
     }),
     updateTaskFiles: builder.mutation<Array<TaskFileDto>, {files: FormData, taskId: number}>({
       query: ({taskId, files}) => ({
         url: Endpoint_Enum.UPDATE_TASK_FILES.replace('{0}', taskId.toString()),
         method: 'POST',
         body: files
-      }) 
+      })
     }),
   })
 });
