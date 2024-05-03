@@ -11,7 +11,7 @@ const invoiceAllowedStatuses = [
     TaskStatus.PAYMENT_ERROR,
     TaskStatus.PAID
   ]
-  
+
 interface Props {
     task: TaskCounterpartyDataDto,
 }
@@ -22,7 +22,7 @@ export const DownloadTaskDocuments = ({task}: Props) => {
     const shouldDisplayInvoiceDownload = task?.status && invoiceAllowedStatuses.includes(task.status);
 
     const { data: linkContract } = useGetContractLinkQuery(task?.contractId ?? skipToken, { skip: !shouldDisplayContractDownload });
-    const { data: linkInvoice } = useGetInvoiceLinkQuery(task?.taskId ?? skipToken, { skip: !shouldDisplayInvoiceDownload });
+    const { data: linkInvoice } = useGetInvoiceLinkQuery(task?.contractId ?? skipToken, { skip: !shouldDisplayInvoiceDownload });
 
   return (
     <>
