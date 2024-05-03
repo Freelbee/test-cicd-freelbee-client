@@ -16,7 +16,7 @@ import { UserDataPropsType } from "@freelbee/entities";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@freelancer/features";
 import { setOnboardingOpened } from "@freelancer/entities";
-
+import countries from "i18n-iso-countries";
 
 const onboardingContent: Record<Onboarding_Step, JSX.Element> = {
     [Onboarding_Step.ADDRESS]: <AddressForm />,
@@ -33,7 +33,7 @@ const initialData: FormData = {
     [UserDataPropsType.LAST_NAME]: "",
     [UserDataPropsType.BIRTH_DATE]: "",
     [UserDataPropsType.STREET]: "",
-    [UserDataPropsType.COUNTRY]: "",
+    [UserDataPropsType.COUNTRY]: countries.getName("AE", "en"),
     [UserDataPropsType.CITY]: "",
     [UserDataPropsType.POSTAL_CODE]: "",
     [UserDataPropsType.HOUSE_NUMBER]: ""

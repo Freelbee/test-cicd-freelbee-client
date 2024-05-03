@@ -32,20 +32,20 @@ export const CompanyDataForm = () => {
     const [createCompany, {isLoading}] = useCreateCompanyMutation();
     const [validationResult, setValidationResult] = useState(new ValidatorResult<CompanyFormData>());
     const validator = new CompanyDataValidator();
-    const [countryCode, setCountryCode] = useState<string | null>(null);
+    const [country, setCountry] = useState<string>(countries.getName("AE", "en") || '');
     const [data, setData] = useDataStateUpdater<CompanyFormData>(initialData);
 
     const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
         const validationResult = validator.validate(data);
         setValidationResult(validationResult);
-        if(!validationResult.isSuccess() || !countryCode) {
+        if(!validationResult.isSuccess() || !country) {
             return;
         }
 
         const body = {
             counterpartyDetail: {
-                country: countryCode,
+                country: countries.getAlpha2Code(country, "en") ?? '',
                 type: CounterpartyDetailsType.DEFAULT_COMPANY_DATA,
                 props: PropsHelper.MapFieldsToProps(data)
             }
@@ -61,10 +61,10 @@ export const CompanyDataForm = () => {
   return (
     <Form onSubmit={submitHandler}>
         <CountrySelect
-            isError={!countryCode}
-            defaultCountryCode="AE"
+            isError={!country}
+            value={country || ''}
             onSelect={(c) => {
-                setCountryCode(countries.getAlpha2Code(c, "en") ?? '');
+                setCountry(c);
             }} />
         <Input
             isRequired

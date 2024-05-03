@@ -3,32 +3,20 @@
 import {SelectWithSearch, Text} from "@freelbee/shared/ui-kit";
 import styled from "styled-components";
 import countries from "i18n-iso-countries";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo} from "react";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 countries.registerLocale(require("i18n-iso-countries/langs/en.json"));
 
 interface Props {
-    // countries: Array<Country>;
-    // selectedCountry: Country | null;
-    defaultCountryCode: string;
+    value: string;
     onSelect: (c: string) => void;
     isError?: boolean;
 }
 
-export const CountrySelect = ({onSelect, isError, defaultCountryCode}: Props) => {
+export const CountrySelect = ({onSelect, isError, value}: Props) => {
 
     const countriesList = useMemo(() => Object.values(countries.getNames("en", {select: "official"})), []);
-
-    const [selectedCountry, setSelectedCountry] = useState<string>('');
-
-    useEffect(() => {
-        if(defaultCountryCode) {
-            const country = countries.getName(defaultCountryCode.toUpperCase(), "en") ?? ''; 
-            onSelect(country);
-            setSelectedCountry(country);
-         }
-    }, [defaultCountryCode]);
 
     const renderCountry = (country: string) => {
         return <CountryItem>
@@ -44,10 +32,9 @@ export const CountrySelect = ({onSelect, isError, defaultCountryCode}: Props) =>
           items={countriesList}
           isRequired
           label="Select a country"
-          value={selectedCountry}
+          value={value}
           getStringValue={c => c}
           setValue={(c) => {
-            setSelectedCountry(c);
             onSelect(c);
           }}
           renderOption={renderCountry}

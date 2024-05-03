@@ -11,8 +11,6 @@ import { FormData } from "../interface/FormData";
 import { AddressFormValidator } from "../util/AddressFormValidator";
 import { LanguageType } from "@freelbee/shared/language";
 import { UserDataPropsType } from "@freelbee/entities";
-import countries from "i18n-iso-countries";
-
 export const AddressForm = () => {
 
     const {setStep, formData, setFormData} = useContext(OnboardingContext);
@@ -29,14 +27,14 @@ export const AddressForm = () => {
         }
         setStep(Onboarding_Step.USER_DATA);
     }
-
+console.log(formData.COUNTRY)
   return (
     <Form onSubmit={submitHandler}>
         <CountrySelect 
             isError={validationResult.hasError(UserDataPropsType.COUNTRY)}
-            defaultCountryCode="AE"
+            value={formData.COUNTRY || ''}
             onSelect={(c) => {
-                setFormData(UserDataPropsType.COUNTRY, countries.getAlpha2Code(c, "en"));
+                setFormData(UserDataPropsType.COUNTRY, c);
             }} />
         <Input 
             isRequired

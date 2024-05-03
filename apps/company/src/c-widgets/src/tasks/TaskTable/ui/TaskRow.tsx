@@ -31,9 +31,7 @@ export const TaskRow = ({task}: Props) => {
         </TaskName>
 
         <MobileTitle>Freelancer</MobileTitle>
-        <MailLink href={`mailto:${task.executorEmail}`} onClick={e => e.preventDefault()}>
-         <Text font='bodySmall' color={Color.GRAY_600}>{task.executorEmail}</Text>   
-        </MailLink>
+        <Text font='bodySmall' color={Color.GRAY_600}>{task.executorEmail}</Text>   
 
         <MobileTitle>Amount</MobileTitle>
         <Text font='bodySmall'>{`${task.price} ${task?.customerCurrency || ''}`}</Text>
@@ -78,7 +76,7 @@ const StatusContainer = styled.div`
 `;
 
 const TaskName = styled.span<{ color: Color }>`
-  ${typography.body};
+  ${typography.bodySmall};
   color: ${({color}) => color};
   white-space: nowrap;
   overflow: hidden;
@@ -103,8 +101,4 @@ const MobileTitle = styled.div`
   ${mediaBreakpointDown(Breakpoint.Tablet)} {
     display: block;
   }
-`;
-
-const MailLink = styled.a`
-  width: fit-content;
 `;
