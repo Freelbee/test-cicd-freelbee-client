@@ -89,7 +89,7 @@ export const StepOneForm = () => {
         setFiles={setAttachedFiles}
         fileContainerStyles={[css`max-height: 250px;`]}
         text={'Attach a file'}
-        maxSizeText={'Max. file size: 5 MB'}
+        maxSizeText={'Max. file size: 15 MB'}
         borderColor={attachedFiles.length === 0 ? undefined : attachedFiles.some(file => file.isError) ? Color.DANGER : Color.EMERALD}
       />
       <Calendar

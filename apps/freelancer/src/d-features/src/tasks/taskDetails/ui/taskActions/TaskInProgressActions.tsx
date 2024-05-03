@@ -31,20 +31,20 @@ export default function TaskInProgressActions () {
 
         const formData = new FormData();
         attachedFiles.forEach(fileData => formData.append('addFiles', fileData.file));
-        
+
         updateTaskFiles({
             taskId: displayedTask?.taskId,
             files: formData
         }).unwrap()
         .then(() => {
             setAttachedFiles([]);
-            refetch();  
+            refetch();
         });
     };
 
     const hasActionsForUpload = () => {
         return attachedFiles.length !== 0;
-    } 
+    }
 
     const onSetStatus = () => {
         if(!displayedTask) return;
@@ -65,7 +65,7 @@ export default function TaskInProgressActions () {
                 setFiles={setAttachedFiles}
                 fileContainerStyles={[css`max-height: 250px;`]}
                 text={'Attach a file'}
-                maxSizeText={'Max. file size: 5 MB'}
+                maxSizeText={'Max. file size: 15 MB'}
                 borderColor={attachedFiles.length === 0 ? undefined : attachedFiles.some(file => file.isError) ? Color.DANGER : Color.EMERALD}
             />
             <InfoWithIcon
