@@ -129,7 +129,7 @@ export function Status (props: Props) {
                     <Pill
                         color={StatusColor.CANCELLED}
                         background={StatusBackground.CANCELLED}>
-                        CANCELLED
+                        Cancelled
                         <ArrowIcon />
                     </Pill>
                 );
@@ -186,7 +186,7 @@ export function Status (props: Props) {
     };
 
     const getParams = (status: TaskStatus) => {
-        
+
         const ourParams = params[status];
 
         return <StatusPopup ref={modalRef} $isOpen={menuStatusIsOpen}>
@@ -196,7 +196,7 @@ export function Status (props: Props) {
             >
                 Open
             </StatusNamePopupTextBlack>
-            
+
             {ourParams?.map(({hoverBackground, hoverColor, text, toStatus, onSetStatus}, i) => (
                 <StatusNamePopupText
                     key={i}
@@ -237,7 +237,7 @@ export function Status (props: Props) {
                 setMenuStatusIsOpen(prev => !prev);
             }}>
             {getNameByStatus(task.status)}
-            
+
             {/* {userData.status === UserStatus.APPROVED && getParams(task.status)} */}
             {getParams(task.status)}
         </Container>
