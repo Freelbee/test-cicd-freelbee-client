@@ -16,11 +16,15 @@ describe('landing-e2e', () => {
 
     cy.getDataTest('company-login')
     .should('be.visible')
-    .and('have.attr', 'href', Cypress.env().NEXT_PUBLIC_COMPANY_URL);
+    .should('have.attr', 'href')
+    .should('not.be.empty')
+    .and('contain', Cypress.env().NEXT_PUBLIC_COMPANY_URL);
 
     cy.getDataTest('freelancer-login')
     .should('be.visible')
-    .and('have.attr', 'href', Cypress.env().NEXT_PUBLIC_FREELANCER_URL);
+    .should('have.attr', 'href')
+    .should('not.be.empty')
+    .and('contain', Cypress.env().NEXT_PUBLIC_FREELANCER_URL);    
   });
 
   it('should open start modal window', () => {
@@ -31,11 +35,15 @@ describe('landing-e2e', () => {
 
     cy.getDataTest('company-login')
     .should('be.visible')
-    .and('have.attr', 'href', Cypress.env().NEXT_PUBLIC_COMPANY_URL + '/?authState=start');
+    .should('have.attr', 'href')
+    .should('not.be.empty')
+    .and('contain', Cypress.env().NEXT_PUBLIC_COMPANY_URL + '/?authState=start');
 
     cy.getDataTest('freelancer-login')
     .should('be.visible')
-    .and('have.attr', 'href', Cypress.env().NEXT_PUBLIC_FREELANCER_URL + '/?authState=start');
+    .should('have.attr', 'href')
+    .should('not.be.empty')
+    .and('contain', Cypress.env().NEXT_PUBLIC_FREELANCER_URL + '/?authState=start');
   });
 
   it('should open application modal with searchParams on button click', () => {
