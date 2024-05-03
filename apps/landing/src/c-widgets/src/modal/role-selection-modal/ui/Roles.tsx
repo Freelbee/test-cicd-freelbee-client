@@ -11,9 +11,15 @@ interface Props {
     modal: ModalQueryValue;
 }
 
+const map = {
+    [ModalQueryValue.START]: '/sign-up',
+    [ModalQueryValue.LOGIN]: '/',
+    [ModalQueryValue.APPLICATION]: '/',
+}
+
 export const Roles = ({modal}: Props) => {
 
-    const getPath = () => modal === ModalQueryValue.START ? '/?authState=start' : '/';
+    const getPath = () => map[modal];
 
     return (
         <Container>

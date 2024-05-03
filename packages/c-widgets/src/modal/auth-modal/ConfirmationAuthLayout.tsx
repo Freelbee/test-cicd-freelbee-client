@@ -29,6 +29,8 @@ type Props = {
 
 const CODE_LENGTH = 4;
 
+
+// TODO SUPPER REFACTOR
 export default function ConfirmationAuthLayout(props: Props) {
   const {remainingTime, description, sendCode, checkCode, buttonText, setModalState} = props;
   const router = useRouter();
@@ -79,7 +81,7 @@ export default function ConfirmationAuthLayout(props: Props) {
         goLeft();
         break;
       case `Backspace`:
-        setCodeChar(index, ``);
+        setCodeChar(index, ``, true);
         goLeftAndStop();
         break;
       case `Enter`:
@@ -92,10 +94,11 @@ export default function ConfirmationAuthLayout(props: Props) {
       default:
         break;
     }
+
   };
 
-  const setCodeChar = (position: number, value: string) => {
-    if (!/^[0-9]*$/.test(value)) return;
+  const setCodeChar = (position: number, value: string, dontMove?: boolean) => {
+    if (!/^[0-9 ]*$/.test(value)) return;
     value = value.replace(/^.+([0-9])$/, `$1`);
     setCode((prevState: string[]): string[] => {
       const newState = [...prevState];
@@ -105,6 +108,7 @@ export default function ConfirmationAuthLayout(props: Props) {
     if (position === 3) {
       return buttonRef.current?.focus();
     }
+    if(dontMove) return;
     if (value.length > 0 && position < code.length - 1) {
       goRightAndStop();
     } else if (value.length === 0 && position > 0 && position < code.length - 1) {
@@ -119,7 +123,7 @@ export default function ConfirmationAuthLayout(props: Props) {
 
     if (text.length !== CODE_LENGTH) return;
     setCode(Array.from(text));
-    setFocusPosition(code.length - 1);
+    setTimeout(() => buttonRef.current?.focus(), 0);
   };
 
   const timer = new Timer((time) => setResendRemain(time));
@@ -196,6 +200,26 @@ export default function ConfirmationAuthLayout(props: Props) {
     })
   }, []);
 
+  useEffect(() => {
+    window.addEventListener('focus', () => {
+      console.log('focus')
+      navigator.clipboard.readText()
+        .then(text => {
+          if (text.length !== CODE_LENGTH) return;
+          if (!/^[0-9]*$/.test(text)) return;
+          setCode(Array.from(text));
+          setTimeout(() => buttonRef.current?.focus(), 0);
+        })
+        .catch(err => {
+
+        });
+    });
+
+    return () => {
+      document.removeEventListener('focus', () => {});
+    }
+  }, []);
+
 
   return (
     <Container onSubmit={sendCheckCodeForm}>
@@ -214,7 +238,7 @@ export default function ConfirmationAuthLayout(props: Props) {
               <SquareInput
                 type={'text'}
                 inputMode={`numeric`}
-                maxLength={1}
+                maxLength={2}
                 name={`code-${index}`}
                 key={index}
                 ref={ref}
@@ -223,8 +247,20 @@ export default function ConfirmationAuthLayout(props: Props) {
                   e.target.select();
                   setFocusPosition(index);
                 }}
-                onKeyDown={e => handleKeyDown(index, e)}
-                onInput={e => setCodeChar(index, e.currentTarget.value)}
+                onKeyDown={e => {
+                  handleKeyDown(index, e);
+                }}
+                onChange={e => {
+                  if(e.currentTarget.value === '') return;
+                  if(e.currentTarget.value.length > 1) {
+                    const first = e.currentTarget.value[0];
+                    const second = e.currentTarget.value[1];
+                    if(first !== code[index]) setCodeChar(index, first);
+                    if(second !== code[index]) setCodeChar(index , second);
+                    return;
+                  }
+                  setCodeChar(index, e.currentTarget.value)
+                }}
                 onPaste={paste}
               />
             ))
