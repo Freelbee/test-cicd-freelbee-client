@@ -14,9 +14,13 @@ import {
 import {useEffect, useState} from "react";
 import {useQueryParamsNavigation} from "@freelbee/shared/hooks";
 import { AuthDto, RegistrationDto, SessionDto } from '@freelbee/entities';
+import { usePathname } from 'next/navigation';
 
 export const FreelancerAuthModal = () => {
+
+  const pathname = usePathname();
   const [searchParams] = useQueryParamsNavigation();
+
   const [modalState, setModalState] = useState(AuthModalState.Closed);
 
   const [registerUser] = useRegisterFreelancerMutation();
@@ -44,14 +48,12 @@ export const FreelancerAuthModal = () => {
   }
 
   useEffect(() => {
-    if (searchParams.get('authState')?.includes('start')) {
+    const isSignUp = pathname.includes('sign-up')
+    if (isSignUp) {
       setModalState(AuthModalState.Register)
-    } else if (localStorage.getItem('ACCESS_TOKEN') != null) {
-      setModalState(AuthModalState.Closed)
     } else {
       setModalState(AuthModalState.Login)
     }
-
   }, [searchParams]);
 
 

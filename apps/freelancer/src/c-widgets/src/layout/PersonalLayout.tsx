@@ -8,8 +8,12 @@ import styled from "styled-components"
 import { OnboardingModal } from "../onboarding"
 import { useGetUserQuery, useIsAuthenticatedQuery } from '@freelancer/entities';
 import {FreelancerAuthModal} from "../auth/FreelancerAuthModal";
+import { usePathname, useRouter } from 'next/navigation';
 
 export const PersonalLayout = ({ children }: PropsWithChildren) => {
+
+  const pathname = usePathname();
+  const router = useRouter();
 
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
 
@@ -22,6 +26,11 @@ export const PersonalLayout = ({ children }: PropsWithChildren) => {
     }
   }, [isAuthenticated, refetch]);
 
+  useEffect(() => {
+    if (isAuthenticated && pathname.includes('sign-up')) {
+      router.push('/')
+    }
+  }, [isAuthenticated]);
 
   return (
     <LayoutContext.Provider value={{

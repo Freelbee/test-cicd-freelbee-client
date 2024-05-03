@@ -13,11 +13,13 @@ import {
 } from "@company/entities";
 
 import { AuthDto, RegistrationDto, SessionDto } from '@freelbee/entities';
-import {useQueryParamsNavigation} from "@freelbee/shared/hooks";
 import {useEffect, useState} from "react";
+import { usePathname } from 'next/navigation';
 
 export const CompanyAuthModal = () => {
-  const [searchParams] = useQueryParamsNavigation();
+
+  const pathname = usePathname();
+
   const [modalState, setModalState] = useState(AuthModalState.Closed);
 
   const [registerUser] = useRegisterCompanyMutation();
@@ -64,13 +66,13 @@ export const CompanyAuthModal = () => {
   }
 
   useEffect(() => {
-    if (searchParams.get('authState')?.includes('start')) {
+    const isSignUp = pathname.includes('sign-up')
+    if (isSignUp) {
       setModalState(AuthModalState.Register)
     } else {
       setModalState(AuthModalState.Login)
     }
-
-  }, [searchParams]);
+  }, []);
 
   return (
     <AuthModal

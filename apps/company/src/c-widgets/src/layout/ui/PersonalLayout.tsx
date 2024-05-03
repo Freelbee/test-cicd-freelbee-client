@@ -2,17 +2,22 @@
 
 import { HeadMenu, LayoutContext, MobileMenu, NavigationMenu, OnboardingNotification } from "@company/features"
 import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit"
-import { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import styled from "styled-components"
 import { OnboardingModal } from "../../onboarding"
 import {
   useIsAuthenticatedQuery, useGetCompanyOnboardingStateQuery
 } from '@company/entities';
 import {CompanyAuthModal} from "../../auth/CompanyAuthModal";
+import { usePathname, useRouter } from 'next/navigation';
 
 export const PersonalLayout = ({ children }: PropsWithChildren) => {
 
+  const pathname = usePathname();
+  const router = useRouter();
+
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
+
 
   const { data: isAuthenticated, isLoading: isAuthenticatedLoading } = useIsAuthenticatedQuery();
   const {
@@ -23,6 +28,13 @@ export const PersonalLayout = ({ children }: PropsWithChildren) => {
   const isOnboardingPassed = () => {
     return onboardingState?.isUserDataSet && onboardingState?.isCounterpartyCreated && onboardingState?.isPaymentMethodSet;
   };
+
+  useEffect(() => {
+    if (isAuthenticated && pathname.includes('sign-up')) {
+      router.push('/')
+    }
+  }, [isAuthenticated]);
+
   return (
     <LayoutContext.Provider value={{
       navigationMenuOpened,
