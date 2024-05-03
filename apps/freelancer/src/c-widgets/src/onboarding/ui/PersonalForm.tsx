@@ -19,9 +19,10 @@ import { PersonalFormValidator } from "../util/PersonalFormValidator";
 import { LanguageType } from "@freelbee/shared/language";
 import { UserDataPropsType, UserDataType } from "@freelbee/entities";
 import { Onboarding_Step } from "../interface/OnboardingStep";
-import { setOnboardingOpened, useSaveUserDataMutation } from "@freelancer/entities";
+import { setOnboardingOpened, useGetUserQuery, useSaveUserDataMutation } from "@freelancer/entities";
 import { PropsHelper } from "@freelbee/shared/helpers";
 import { useDispatch } from "react-redux";
+import countries from "i18n-iso-countries";
 
 
 const documentTypes: { [key in UserDataType]: string } = {
@@ -36,6 +37,7 @@ export const PersonalForm = () => {
   const [validationResult, setValidationResult] = useState(new ValidatorResult<FormData>());
   const validator = new PersonalFormValidator();
   const [saveUserData, {isLoading}] = useSaveUserDataMutation();
+  const { refetch } = useGetUserQuery();
   const dispatch = useDispatch();
 
   const [documentType, setDocumentType] = useState<UserDataType>(UserDataType.PASSPORT);
@@ -48,11 +50,16 @@ export const PersonalForm = () => {
       if(!validationResult.isSuccess()) {
           return;
       }
+
+      formData.COUNTRY = countries.getAlpha2Code(formData.COUNTRY!, "en");
       saveUserData({
         type: documentType,
         props: PropsHelper.MapFieldsToProps(formData)
       }).unwrap()
-      .then(() => dispatch(setOnboardingOpened(false)));
+      .then(() => {
+        dispatch(setOnboardingOpened(false));
+        refetch();
+      });
   }
 
   return (
