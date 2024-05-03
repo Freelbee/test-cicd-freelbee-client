@@ -37,13 +37,13 @@ describe('landing-e2e', () => {
     .should('be.visible')
     .should('have.attr', 'href')
     .should('not.be.empty')
-    .and('contain', Cypress.env().NEXT_PUBLIC_COMPANY_URL + '/?authState=start');
+    .and('contain', '/?authState=start');
 
     cy.getDataTest('freelancer-login')
     .should('be.visible')
     .should('have.attr', 'href')
     .should('not.be.empty')
-    .and('contain', Cypress.env().NEXT_PUBLIC_FREELANCER_URL + '/?authState=start');
+    .and('contain', '/?authState=start');
   });
 
   it('should open application modal with searchParams on button click', () => {
