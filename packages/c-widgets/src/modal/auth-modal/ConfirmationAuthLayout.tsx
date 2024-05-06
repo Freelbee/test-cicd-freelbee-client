@@ -117,6 +117,7 @@ export default function ConfirmationAuthLayout(props: Props) {
   };
 
   const paste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
     const text = e.clipboardData.getData(`Text`)
       .replace(/[^0-9]/g, ``)
       .slice(0, CODE_LENGTH);
@@ -202,7 +203,6 @@ export default function ConfirmationAuthLayout(props: Props) {
 
   useEffect(() => {
     window.addEventListener('focus', () => {
-      console.log('focus')
       navigator.clipboard.readText()
         .then(text => {
           if (text.length !== CODE_LENGTH) return;
@@ -251,6 +251,7 @@ export default function ConfirmationAuthLayout(props: Props) {
                   handleKeyDown(index, e);
                 }}
                 onChange={e => {
+                  if(!/^[0-9]*$/.test(e.currentTarget.value)) return;
                   if(e.currentTarget.value === '') return;
                   if(e.currentTarget.value.length > 1) {
                     const first = e.currentTarget.value[0];
