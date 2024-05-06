@@ -30,10 +30,10 @@ export const TaskTable = () => {
 
 const headRow = css`
     display: grid;
-    grid-template-columns: 40px 2fr 1fr 0.8fr 0.8fr 0.8fr;
+    grid-template-columns: 40px 1.2fr 1.2fr 0.8fr 0.9fr 128px;
     gap: 16px;
 
-    ${mediaBreakpointDown(Breakpoint.xMedium)} {
+    ${mediaBreakpointDown(Breakpoint.Tablet)} {
       display: none;
     }
 `;
