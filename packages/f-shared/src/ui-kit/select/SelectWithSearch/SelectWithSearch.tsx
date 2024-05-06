@@ -21,6 +21,8 @@ interface SelectWithInputProps<T> {
     isDisabled?: boolean;
     hideSearch?: boolean;
     noBorder?: boolean;
+    query?: string;
+    setQuery?: (value: string) => void;
 }
 
 export function SelectWithSearch<T> (props: SelectWithInputProps<T>) {
@@ -37,13 +39,15 @@ export function SelectWithSearch<T> (props: SelectWithInputProps<T>) {
         isDisabled,
         hideSearch = false,
         noBorder = false,
+        query,
+        setQuery,
         ...rest
     } = props;
 
     const ariaId = useId();
     const searchId = useId();
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [searchValue, setSearchValue] = useState<string>('');
+    const [searchValue, setSearchValue] = useState<string>(query ?? '');
     const listboxRef = useRef<HTMLDivElement | null>(null);
     const modalRef = useRef(null);
     const buttonRef = useRef(null);
@@ -95,7 +99,10 @@ export function SelectWithSearch<T> (props: SelectWithInputProps<T>) {
                           id={searchId}
                           placeholder={searchPlaceholder}
                           value={searchValue}
-                          setValue={(v) => setSearchValue(v)}
+                          setValue={(v) => {
+                            setSearchValue(v);
+                            if (setQuery) setQuery(v);
+                          }}
                       />
                     </SearchContainer>
                 )}
