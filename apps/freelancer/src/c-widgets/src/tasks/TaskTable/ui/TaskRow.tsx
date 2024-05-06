@@ -31,18 +31,18 @@ export const TaskRow = ({task}: Props) => {
         </TaskName>
 
         <MobileTitle>Company</MobileTitle>
-        <Text font='bodySmall' color={Color.GRAY_600}>{task.customerEmail}</Text>  
+        <TextWithDots font='bodySmall' color={Color.GRAY_600}>{task.customerEmail}</TextWithDots>
 
         <MobileTitle>Amount</MobileTitle>
-        <Text font='bodySmall'>{`${task.price} ${task?.customerCurrency || ''}`}</Text>
+        <TextWithDots font='bodySmall'>{task.price}&nbsp;{task?.customerCurrency || ''}</TextWithDots>
 
         <MobileTitle>Deadline</MobileTitle>
         <Text font='bodySmall'>{` ${DateUtil.getFormatDate(task?.deadlineAt) ?? '--  --'}`}</Text>
 
         <MobileTitle>Status</MobileTitle>
         <StatusContainer onClick={e => e.stopPropagation()}>
-            <Status 
-                task={task} 
+            <Status
+                task={task}
                 openTask={handleOpen} />
         </StatusContainer>
     </Container>
@@ -52,7 +52,7 @@ export const TaskRow = ({task}: Props) => {
 const Container = styled.div`
     cursor: pointer;
     display: grid;
-    grid-template-columns: 40px 2fr 1fr 0.8fr 0.8fr 0.8fr;
+    grid-template-columns: 40px 1.2fr 1.2fr 0.8fr 0.9fr 128px;
     align-items: center;
     padding: 16px;
     gap: 16px;
@@ -79,8 +79,8 @@ const TaskName = styled.span<{ color: Color }>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  
-  
+
+
   ${mediaBreakpointDown(Breakpoint.Medium)} {
     max-width: ${vw(280, Breakpoint.Tablet)}
   }
@@ -90,6 +90,11 @@ const TaskName = styled.span<{ color: Color }>`
     -webkit-line-clamp: 2;
     line-clamp: 2;
   }
+`;
+
+const TextWithDots = styled(Text)`
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const MobileTitle = styled.div`
