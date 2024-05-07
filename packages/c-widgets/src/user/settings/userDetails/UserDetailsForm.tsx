@@ -26,50 +26,51 @@ export const UserDetailsForm = ({user}: Props) => {
   return (
     <Container onSubmit={submitHandler}>
       <InputRow>
-        <Input 
+        <Input
           disabled
-          label="Name" 
-          placeholder={""} 
-          value={userProps.FIRST_NAME ?? ''} 
+          label="Name"
+          placeholder={""}
+          value={userProps.FIRST_NAME ?? ''}
           setValue={() => {}} />
-        <Input 
+        <Input
           disabled
-          label="Surname" 
-          placeholder={""} 
-          value={userProps.LAST_NAME ?? ''} 
-          setValue={() => {}} />      
+          label="Surname"
+          placeholder={""}
+          value={userProps.LAST_NAME ?? ''}
+          setValue={() => {}} />
       </InputRow>
 
       <CopyContainer>
-        <Input 
+        <Input
           disabled
-          label="ID" 
-          placeholder={""} 
-          value={user.id.toString()} 
-          setValue={() => {}} />    
-        
-        <CopyButton 
+          label="ID"
+          placeholder={""}
+          value={user.id.toString()}
+          setValue={() => {}} />
+
+        <CopyButton
           onClick={copyID}
           aria-label='Copy user id'>
             <CopyIcon />
         </CopyButton>
       </CopyContainer>
 
-      <Input 
+      <Input
         disabled
-        label="Phone" 
-        placeholder={""} 
-        value={userProps.PHONE_NUMBER ?? ''} 
+        label="Phone"
+        placeholder={""}
+        value={user.phone ?? ''}
         setValue={() => {}} />
-        <InputContainer>
-          <Input 
-            disabled
-            label="E-mail" 
-            placeholder={""} 
-            value={user.email} 
-            setValue={() => {}} />
-          <Text font='bodySmall' color={Color.GRAY_600}>Notifications, support replies and payment documents are sent to this address</Text>
-        </InputContainer>
+
+      <InputContainer>
+        <Input
+          disabled
+          label="E-mail"
+          placeholder={""}
+          value={user.email}
+          setValue={() => {}} />
+        <Text font='bodySmall' color={Color.GRAY_600}>Notifications, support replies and payment documents are sent to this address</Text>
+      </InputContainer>
 
     </Container>
   )
@@ -79,7 +80,7 @@ const Container = styled.form`
 display: flex;
 flex-direction: column;
 gap: 24px;
-padding: 24px 0px;
+padding: 24px 0;
 
  ${mediaBreakpointDown(Breakpoint.Tablet)} {
   gap: 16px;
