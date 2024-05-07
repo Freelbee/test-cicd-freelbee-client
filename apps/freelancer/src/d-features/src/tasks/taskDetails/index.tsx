@@ -12,6 +12,7 @@ import TaskInProgressActions from "./ui/taskActions/TaskInProgressActions";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useGetTaskFilesQuery } from "@freelancer/entities";
 import { DownloadTaskDocuments } from './ui/taskActions/DownloadTaskDocuments';
+import styled from 'styled-components';
 
 const ACTIONS_BY_STATUS: Record<TaskStatus, JSX.Element> = {
     [TaskStatus.NEW]: <></>,
@@ -32,9 +33,9 @@ export const TaskDetails = () => {
 
     return (
         <FormGrid>
-            <Heading2 style={{maxWidth: '90%'}}>
-                {displayedTask?.title}
-            </Heading2>
+            <HeadingContainer>
+              <Heading2>{displayedTask?.title}</Heading2>
+            </HeadingContainer>
             <TaskHeadInfo task={displayedTask}/>
             <Description task={displayedTask}/>
             {displayedTask && <DownloadTaskDocuments task={displayedTask} />}
@@ -45,3 +46,8 @@ export const TaskDetails = () => {
         </FormGrid>
     );
 }
+
+const HeadingContainer = styled.div`
+  max-width: 90%;
+  overflow: hidden;
+`;

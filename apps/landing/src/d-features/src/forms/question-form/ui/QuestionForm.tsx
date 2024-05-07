@@ -53,7 +53,7 @@ export function QuestionForm () {
                 Last_Name: '--',
                 Lead_Source: "https://freelbee.com" + pathName,
                 field: formData.message
-            });                
+            });
         }
     };
 
@@ -71,7 +71,7 @@ export function QuestionForm () {
 
             sendLead(formData);
             const res = await sendTelegramNotification(formData);
-            
+
             if(res.ok) {
                 setIsSuccess(true);
             } else {
@@ -86,24 +86,25 @@ export function QuestionForm () {
 
     return (
         <Form onSubmit={sendApplication}>
-            <Input 
+            <Input
                 icon={<MailIcon stroke={Color.GRAY_600} />}
                 isError={validationResult.hasError('email')}
                 errorMessage={validationResult.getMessageByLanguage('email', LanguageType.EN)}
-                placeholder='mail@company.com' 
+                placeholder='mail@company.com'
                 label='E-mail to contact you'
-                value={formData.email} 
-                setValue={(val) => setFormData((prev) => ({...prev, email: val}))} 
+                value={formData.email}
+                setValue={(val) => setFormData((prev) => ({...prev, email: val}))}
                 data-testid='question-form-email'/>
             <TextArea
                 isError={validationResult.hasError('message')}
                 errorMessage={validationResult.getMessageByLanguage('message', LanguageType.EN)}
-                placeholder='Ask whatever you want' 
+                placeholder='Ask whatever you want'
                 label='Your question'
                 data-testid='question-form-text'
-                value={formData.email} 
-                onChange={(e) => setFormData((prev) => ({...prev, message: e.target.value}))} />
-            <Button 
+                value={formData.email}
+                setValue={(val) => setFormData((prev) => ({...prev, message: val}))}
+            />
+            <Button
                 wideOnBreakPoint={Breakpoint.xMobile}
                 styleType={ButtonStyleEnum.GREEN}
                 isLoading={isLoading}
