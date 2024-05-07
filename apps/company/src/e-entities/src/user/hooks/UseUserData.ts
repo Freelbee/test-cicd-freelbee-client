@@ -8,6 +8,7 @@ import { useGetUserQuery } from "@company/entities";
 const DEFAULT: UserData = {
     "id": 0,
     "email": '',
+    "phone": '',
     "userData": {
         "id": 0,
         "status": null,
