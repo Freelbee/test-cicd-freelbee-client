@@ -68,13 +68,6 @@ export const Input = (props: Props) => {
 
     const blockInvalidChar = (e: React.KeyboardEvent<HTMLInputElement>) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault();
 
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-        if(maxLength && e.target.value.length > maxLength) {
-            return;
-        }
-        setValue(e.target.value);
-    };
-
     return (
         <InputWrapper>
             <InputContainer
@@ -101,7 +94,7 @@ export const Input = (props: Props) => {
                         name={name}
                         onKeyDown={(e) => type === 'number' && blockInvalidChar(e)}
                         value={value || ''}
-                        onChange={handleChange}
+                        onChange={(e) => setValue(e.target.value)}
                         $withButton={!!onClear}
                         $withIcon={!!icon}
                         {...rest}

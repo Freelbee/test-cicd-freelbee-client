@@ -1,5 +1,5 @@
 'use client';
-import React, { ChangeEvent, ReactNode, useId } from 'react';
+import React, { ReactNode, useId } from 'react';
 import styled, { RuleSet } from "styled-components";
 import { AnimatePresence } from 'framer-motion';
 
@@ -44,11 +44,6 @@ export function TextArea (props: TextAreaProps) {
 
     const id = useId();
 
-    const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        if (maxLength && event.target.value.length > maxLength) return;
-        setValue(event.target.value);
-    };
-
     return (
         <Wrapper styles={styles}>
             <Container>
@@ -66,7 +61,7 @@ export function TextArea (props: TextAreaProps) {
                     $isValid={!!isValid}>
                     <TextAreaField
                         id={id}
-                        onChange={handleChange}
+                        onChange={(e) => setValue(e.target.value)}
                         value={value || ''}
                         {...rest}
                     />
