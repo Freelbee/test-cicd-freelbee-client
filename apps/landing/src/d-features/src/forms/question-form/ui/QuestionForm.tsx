@@ -101,7 +101,7 @@ export function QuestionForm () {
                 placeholder='Ask whatever you want'
                 label='Your question'
                 data-testid='question-form-text'
-                value={formData.email}
+                value={formData.message}
                 setValue={(val) => setFormData((prev) => ({...prev, message: val}))}
             />
             <Button

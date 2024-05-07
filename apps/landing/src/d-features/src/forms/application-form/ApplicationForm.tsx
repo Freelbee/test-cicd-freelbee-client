@@ -154,7 +154,7 @@ export const ApplicationModalForm = () => {
                 errorMessage={validationResult.getMessageByLanguage('message', LanguageType.EN)}
                 placeholder='Ask whatever you want!'
                 label='Any question?'
-                value={formData.email}
+                value={formData.message}
                 setValue={(val) => setFormData((prev) => ({...prev, message: val}))}
             />
             <Button
