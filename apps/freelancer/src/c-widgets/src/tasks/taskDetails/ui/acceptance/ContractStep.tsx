@@ -16,25 +16,25 @@ export const ContractStep = () => {
     const [agreementChecked, setAgreementChecked] = useState<boolean>(false);
 
     if(!displayedTask) return <></>;
-    
+
   return (
     <FormGrid>
         <FormGrid>
-            <Heading1>Signing the contract</Heading1>   
+            <Heading1>Signing the contract</Heading1>
             <DownloadTaskDocuments task={displayedTask} />
         </FormGrid>
         <Input
             label="Signature"
             placeholder="Enter signature"
             value={formData.freelancerSignature}
-            setValue={(v) => setFormData('freelancerSignature', v.trim())}
+            setValue={(v) => setFormData('freelancerSignature', v)}
           />
         <CheckContent>
-            <Checkbox 
+            <Checkbox
                 onChange={() => setAgreementChecked((prev) => !prev)}
                 isCheck={agreementChecked} />
             <Text font='body'>
-                {`By checking the box, I agree with the terms and conditions of the Contract. All the data I've provided is correct. I understand that when I click the "I agree" button, I am entering into a Contract with Contractor as a Client on the terms and conditions described`} 
+                {`By checking the box, I agree with the terms and conditions of the Contract. All the data I've provided is correct. I understand that when I click the "I agree" button, I am entering into a Contract with Contractor as a Client on the terms and conditions described`}
             </Text>
         </CheckContent>
 

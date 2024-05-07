@@ -116,10 +116,11 @@ export function SelectWithSearch<T> (props: SelectWithInputProps<T>) {
 }
 
 const placeholderStyled = css`
-height: 100%;
-padding: 15px;
-display: flex;
-align-items: center;
+  height: 100%;
+  max-width: 90%;
+  padding: 15px;
+  display: flex;
+  align-items: center;
 `
 
 const Content = styled.div`
@@ -181,7 +182,7 @@ const ListContainer = styled.div<{ $show: boolean }>`
   width: 100%;
   right: 0;
   background: #ffffff;
-  box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   border: 1px solid ${Color.GRAY_400};
   display: flex;
