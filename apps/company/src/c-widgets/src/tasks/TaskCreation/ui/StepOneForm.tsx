@@ -77,10 +77,10 @@ export const StepOneForm = () => {
         isRequired
         label="Describe"
         placeholder="See what an excellent description of the task, take up our order!"
-        value={taskCreationData?.description ?? ''}
-        maxLength={100}
+        value={taskCreationData.description ?? ''}
+        setValue={(value) => setData("description", value)}
+        maxLength={1000}
         noMessageSpace
-        onChange={(e) => setData("description", e.target.value)}
       />
 
       <FileLoader

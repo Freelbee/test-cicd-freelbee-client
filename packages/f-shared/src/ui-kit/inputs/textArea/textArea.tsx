@@ -1,5 +1,5 @@
 'use client';
-import React, { ReactNode, useId } from "react";
+import React, { ChangeEvent, ReactNode, useId } from 'react';
 import styled, { RuleSet } from "styled-components";
 import { AnimatePresence } from 'framer-motion';
 
@@ -13,6 +13,7 @@ import {typography, Color} from '@freelbee/shared/ui-kit'
 interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
     placeholder: string,
     value: string,
+    setValue: (value: string) => void;
     maxLength?: number,
     isError?: boolean,
     isValid?: boolean,
@@ -27,6 +28,7 @@ interface TextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
 export function TextArea (props: TextAreaProps) {
     const {
         value,
+        setValue,
         maxLength,
         isError,
         isValid,
@@ -41,6 +43,11 @@ export function TextArea (props: TextAreaProps) {
     } = props;
 
     const id = useId();
+
+    const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        if (maxLength && event.target.value.length > maxLength) return;
+        setValue(event.target.value);
+    };
 
     return (
         <Wrapper styles={styles}>
@@ -58,8 +65,10 @@ export function TextArea (props: TextAreaProps) {
                     $isError={!!isError}
                     $isValid={!!isValid}>
                     <TextAreaField
-                        {...rest}
                         id={id}
+                        onChange={handleChange}
+                        value={value || ''}
+                        {...rest}
                     />
                 </Content>
                 {tipsText &&
