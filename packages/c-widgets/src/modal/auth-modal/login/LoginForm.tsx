@@ -109,7 +109,7 @@ export default function LoginForm(props: Props) {
               setValue={(v) => {
                 handleInput(v, 'password')
               }}
-              // isError={validatorResult.hasError('password')}
+              isError={validatorResult.hasError('password')}
             />
             <ButtonContainer>
               <MapButtonSwitchAuth
