@@ -59,6 +59,7 @@ export default function Registration (props: Props) {
                       checkCode={checkCode}
                       resendCode={resendCode}
                       setModalState={setModalState}
+                      onBack={() => setStep(RegistrationSteps.FILL_USER_DATA)}
                     />}
                 </RegistrationLayout>
             </RegistrationContext.Provider>

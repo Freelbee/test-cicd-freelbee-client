@@ -11,19 +11,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        
+
         <StyledComponentsRegistry>
         <GlobalStyle />
 
           <StoreProvider>
             <PersonalLayout>
-              {children}            
+              {children}
             </PersonalLayout>
-            <ToastContainer position='bottom-right' />  
+            <ToastContainer position='bottom-right' />
           </StoreProvider>
 
         </StyledComponentsRegistry>
-        
+
       </body>
     </html>
   );
