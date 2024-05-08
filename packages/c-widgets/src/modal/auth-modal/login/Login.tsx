@@ -57,7 +57,10 @@ export default function Login(props: Props) {
             userRegSession={userAuthSession}
             checkCode={checkAuthCode}
             resendCode={resendAuthCode}
-            setModalState={setModalState}/>}
+            setModalState={setModalState}
+            onBack={() => setStep(LoginSteps.SEND_CREDENTIALS)}
+          />
+          }
 
         </AuthLayout>
 

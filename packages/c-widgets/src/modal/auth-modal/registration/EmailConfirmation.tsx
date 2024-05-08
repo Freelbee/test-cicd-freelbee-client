@@ -11,10 +11,11 @@ type Props = {
   checkCode: (str: string) => Promise<void>;
   resendCode: () => Promise<void>;
   setModalState: Dispatch<SetStateAction<AuthModalState>>;
+  onBack: () => void;
 };
 
 export default function EmailConfirmation (props: Props) {
-  const { email, userRegSession, checkCode, resendCode, setModalState } = props;
+  const { email, userRegSession, checkCode, resendCode, setModalState, onBack } = props;
 
 
   const getSessionState = (): Promise<number> => {
@@ -34,6 +35,7 @@ export default function EmailConfirmation (props: Props) {
           sendCode={resendCode}
           checkCode={checkCode}
           setModalState={setModalState}
+          onBack={onBack}
         />
     );
 }

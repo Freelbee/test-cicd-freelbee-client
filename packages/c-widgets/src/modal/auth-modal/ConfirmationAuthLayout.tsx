@@ -16,6 +16,7 @@ import {
 } from "@freelbee/shared/ui-kit";
 import {usePathname, useRouter} from "next/navigation";
 import {AuthModalState} from "@freelbee/widgets";
+import moment from 'moment';
 
 
 type Props = {
@@ -25,6 +26,7 @@ type Props = {
   remainingTime: () => Promise<number>;
   buttonText?: string;
   setModalState: Dispatch<SetStateAction<AuthModalState>>;
+  onBack?: () => void;
 };
 
 const CODE_LENGTH = 4;
@@ -32,7 +34,7 @@ const CODE_LENGTH = 4;
 
 // TODO SUPPER REFACTOR
 export default function ConfirmationAuthLayout(props: Props) {
-  const {remainingTime, description, sendCode, checkCode, buttonText, setModalState} = props;
+  const {remainingTime, description, sendCode, checkCode, buttonText, setModalState, onBack} = props;
   const router = useRouter();
   const pathname = usePathname();
   const [code, setCode] = useState<string[]>([``, ``, ``, ``]);
@@ -41,6 +43,8 @@ export default function ConfirmationAuthLayout(props: Props) {
   const [resendRemain, setResendRemain] = useState<number>(0);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const codeInputsRefs: RefObject<HTMLInputElement>[] = [];
+
+  const [date] = useState(moment.now());
 
   for (let i = 0; i < CODE_LENGTH; i++) {
     codeInputsRefs.push(createRef<HTMLInputElement>());
@@ -131,6 +135,12 @@ export default function ConfirmationAuthLayout(props: Props) {
 
   const sendCheckCodeForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (moment().diff(date, 'minutes') >= 13) {
+      onBack?.();
+      return;
+    }
+
     if (code.join(``).length !== CODE_LENGTH) return;
     setLoading(true);
     checkCode(code.join(``))
@@ -161,12 +171,22 @@ export default function ConfirmationAuthLayout(props: Props) {
           resendRemain <= 0 &&
           <LinkButton
             as='button'
-            onClick={() => sendCode().then(() => {
-              remainingTime().then((time) => {
-                setLoading(false);
-                timer.start(time);
-              });
-            })}
+            onClick={(e) => {
+              e.preventDefault();
+
+              // 15 minutes
+              if (moment().diff(date, 'minutes') >= 13) {
+                onBack?.();
+                return;
+              }
+
+              sendCode().then(() => {
+                remainingTime().then((time) => {
+                  setLoading(false);
+                  timer.start(time);
+                });
+              })
+            }}
           >
             Resend code
           </LinkButton>
@@ -203,7 +223,7 @@ export default function ConfirmationAuthLayout(props: Props) {
 
   useEffect(() => {
     window.addEventListener('focus', () => {
-      navigator.clipboard.readText()
+      navigator?.clipboard?.readText?.()
         .then(text => {
           if (text.length !== CODE_LENGTH) return;
           if (!/^[0-9]*$/.test(text)) return;
