@@ -12,7 +12,7 @@ readarray -t images_arr <<<"$images"
 
 # Определяем количество образов для удаления
 num_images=${#images_arr[@]}
-num_keep=2 # Количество образов, которые нужно сохранить
+num_keep=$KEEP_IMAGES # Количество образов, которые нужно сохранить
 let num_remove=num_images-num_keep
 
 # Удаляем образы, если их больше, чем num_keep
