@@ -170,7 +170,8 @@ export default function ConfirmationAuthLayout(props: Props) {
         {
           resendRemain <= 0 &&
           <LinkButton
-            as='button'
+            as = 'button'
+            type = 'button'
             onClick={(e) => {
               e.preventDefault();
 
