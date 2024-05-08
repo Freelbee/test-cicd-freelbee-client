@@ -1,17 +1,14 @@
 'use client'
+
 import React, {useContext, useState} from 'react';
 import styled, {css} from 'styled-components';
 import {
   Breakpoint,
   Button,
-  Color,
   IconPosition,
   Input,
-  LinkButton,
   mediaBreakpointDown,
-  mediaBreakpointUp,
   PasswordInput,
-  typography
 } from "@freelbee/shared/ui-kit";
 import {LoginContext} from "./LoginContext";
 import {ReactComponent as ArrIcon} from "@freelbee/assets/icons/arrow-icons/long_arrow.svg";
@@ -59,35 +56,7 @@ export default function LoginForm(props: Props) {
   return (
     <Content>
       <Form onSubmit={sendForm}>
-        <ToSignUpTextForMobile>
-          <Heading>
-            <Title>
-              Log in
-            </Title>
-            <Text>
-              {'Don’t have an account? '}
-            </Text>
-          </Heading>
-          <LinkButton
-            as='button'
-            type='button'
-            onClick={() => {
-              console.log('go to the registration')
-              /*router.push(router.asPath.replace('sign-in', 'sign-up'));
-              setAuthModalState(AuthModalState.Register);*/
-            }}>
-            Sign up
-          </LinkButton>
-        </ToSignUpTextForMobile>
         <Fields>
-          {/*{(validatorResult.hasError('email') || validatorResult.hasError('password')) && (
-                        <ErrorMessage>
-                            {validatorResult.getMessageByLanguage('email', language) === ''
-                                ? validatorResult.getMessageByLanguage('password', language)
-                                : validatorResult.getMessageByLanguage('email', language)}
-
-                        </ErrorMessage>
-                    )}*/}
           <Input
             label={'E-mail'}
             noMessageSpace
@@ -111,16 +80,6 @@ export default function LoginForm(props: Props) {
               }}
               isError={validatorResult.hasError('password')}
             />
-            <ButtonContainer>
-              <MapButtonSwitchAuth
-                onClick={() => {
-                  console.log('go to password recovery')
-                  /*router.push(router.asPath.replace('sign-in', 'password-reset'));
-                  setAuthModalState(AuthModalState.Recover);*/
-                }}>
-                Forgot password?
-              </MapButtonSwitchAuth>
-            </ButtonContainer>
           </PasswordContainer>
         </Fields>
         <LoginAction>
@@ -157,29 +116,6 @@ const Form = styled.form`
   transition: .5s;
 `;
 
-const ToSignUpTextForMobile = styled.div`
-  ${mediaBreakpointUp(Breakpoint.xMobile)} {
-    display: none;
-  }
-`;
-
-const Heading = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`;
-
-const Title = styled.div`
-  ${typography.heading1};
-  color: ${Color.GRAY_900};
-`;
-
-const Text = styled.div`
-  ${typography.body};
-  color: ${Color.GRAY_900};
-`;
-
 const Fields = styled.div`
   height: max-content;
   width: 100%;
@@ -214,20 +150,3 @@ const PasswordContainer = styled.div`
   flex-direction: column;
   gap: 8px;
 `;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: right;
-`;
-
-const MapButtonSwitchAuth = styled.div`
-  ${typography.body};
-  color: ${Color.GRAY_500};
-
-  cursor: pointer;
-`;
-
-// const ErrorMessage = styled.div`
-//   ${typography.body};
-//   color: ${Color.DANGER};
-// `;
