@@ -19,7 +19,9 @@ export default function FreelancerSelect(props: Props) {
 
   const addFreelancer = (freelancer : TaskFreelancerData) => {
     const newFreelancers = [...freelancers];
-    newFreelancers.push(freelancer);
+    if (newFreelancers.length < max) {
+      newFreelancers.push(freelancer);
+    }
     onSelect(newFreelancers);
   };
 
