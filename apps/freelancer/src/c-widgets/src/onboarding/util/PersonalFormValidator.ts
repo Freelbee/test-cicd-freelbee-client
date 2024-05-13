@@ -8,7 +8,8 @@ export class PersonalFormValidator extends AbstractValidator<FormData> {
       [UserDataPropsType.DOCUMENT_NUMBER]: [new RequiredRule()],
       [UserDataPropsType.FIRST_NAME]: [new RequiredRule(), new OnlyLettersRule()],
       [UserDataPropsType.LAST_NAME]: [new RequiredRule(), new OnlyLettersRule()],
-      [UserDataPropsType.BIRTH_DATE]: [new RequiredRule()]
-    };
+      [UserDataPropsType.BIRTH_DATE]: [new RequiredRule()],
+      [UserDataPropsType.TIN]: [new RequiredRule()],
+  };
   }
 }

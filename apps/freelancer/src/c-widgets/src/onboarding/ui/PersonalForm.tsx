@@ -17,7 +17,7 @@ import { ValidatorResult } from "@freelbee/features";
 import { FormData } from "../interface/FormData";
 import { PersonalFormValidator } from "../util/PersonalFormValidator";
 import { LanguageType } from "@freelbee/shared/language";
-import { UserDataPropsType, UserDataType } from "@freelbee/entities";
+import { UserDataPropsType, UserDataType } from '@freelbee/entities';
 import { Onboarding_Step } from "../interface/OnboardingStep";
 import { setOnboardingOpened, useGetUserQuery, useSaveUserDataMutation } from "@freelancer/entities";
 import { PropsHelper } from "@freelbee/shared/helpers";
@@ -84,6 +84,14 @@ export const PersonalForm = () => {
           placeholder={"1234567890"}
           value={formData?.DOCUMENT_NUMBER ?? ''}
           setValue={(v) => setFormData(UserDataPropsType.DOCUMENT_NUMBER, v)} />
+        <Input
+          isRequired
+          isError={validationResult.hasError(UserDataPropsType.TIN)}
+          errorMessage={validationResult.getMessageByLanguage(UserDataPropsType.TIN, LanguageType.EN)}
+          label="TIN"
+          placeholder="Enter the TIN"
+          value={formData?.TIN ?? ''}
+          setValue={(v) => setFormData(UserDataPropsType.TIN, v)} />
         <Input
             isRequired
             isError={validationResult.hasError(UserDataPropsType.FIRST_NAME)}
