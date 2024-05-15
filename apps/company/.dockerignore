@@ -5,6 +5,8 @@ dist
 .github
 .vscode
 .idea
+admin
+admin-e2e
 company-e2e
 freelancer-e2e
 freelancer
