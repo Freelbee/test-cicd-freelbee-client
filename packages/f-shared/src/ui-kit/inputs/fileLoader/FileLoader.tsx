@@ -53,7 +53,7 @@ export default function FileLoader(props: FileLoaderProps) {
     isRequired,
     files,
     setFiles,
-    maxFileSize = 5_242_880,
+    maxFileSize = 15_728_640,
     multiply = true
   } = props;
 
@@ -85,6 +85,7 @@ export default function FileLoader(props: FileLoaderProps) {
       // const filename = newFiles[i].name;
       const id = new Date().getTime() + i;
       const file = newFiles[i];
+      console.log(newFiles[i].size);
       if(newFiles[i].size > maxFileSize) {
         const newFile = {
           id: id,

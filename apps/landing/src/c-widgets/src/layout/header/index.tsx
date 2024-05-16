@@ -126,8 +126,8 @@ export const Header = () => {
                         <LoginMobile variants={item} key='login'>
 
                         <Suspense fallback={<></>}>
-                            <GetStartedButton />   
-                            <SignInButton />                             
+                            <GetStartedButton data-testid="start-mobile-button" />   
+                            <SignInButton data-testid="login-mobile-button" />                             
                         </Suspense>
                 
                         </LoginMobile>

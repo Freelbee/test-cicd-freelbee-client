@@ -21,6 +21,8 @@ interface SelectWithInputProps<T> {
     isDisabled?: boolean;
     hideSearch?: boolean;
     noBorder?: boolean;
+    query?: string;
+    setQuery?: (value: string) => void;
 }
 
 export function SelectWithSearch<T> (props: SelectWithInputProps<T>) {
@@ -37,13 +39,15 @@ export function SelectWithSearch<T> (props: SelectWithInputProps<T>) {
         isDisabled,
         hideSearch = false,
         noBorder = false,
+        query,
+        setQuery,
         ...rest
     } = props;
 
     const ariaId = useId();
     const searchId = useId();
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [searchValue, setSearchValue] = useState<string>('');
+    const [searchValue, setSearchValue] = useState<string>(query ?? '');
     const listboxRef = useRef<HTMLDivElement | null>(null);
     const modalRef = useRef(null);
     const buttonRef = useRef(null);
@@ -95,7 +99,10 @@ export function SelectWithSearch<T> (props: SelectWithInputProps<T>) {
                           id={searchId}
                           placeholder={searchPlaceholder}
                           value={searchValue}
-                          setValue={(v) => setSearchValue(v)}
+                          setValue={(v) => {
+                            setSearchValue(v);
+                            if (setQuery) setQuery(v);
+                          }}
                       />
                     </SearchContainer>
                 )}
@@ -109,10 +116,11 @@ export function SelectWithSearch<T> (props: SelectWithInputProps<T>) {
 }
 
 const placeholderStyled = css`
-height: 100%;
-padding: 15px;
-display: flex;
-align-items: center;
+  height: 100%;
+  max-width: 90%;
+  padding: 15px;
+  display: flex;
+  align-items: center;
 `
 
 const Content = styled.div`
@@ -174,7 +182,7 @@ const ListContainer = styled.div<{ $show: boolean }>`
   width: 100%;
   right: 0;
   background: #ffffff;
-  box-shadow: 0px 4px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   border: 1px solid ${Color.GRAY_400};
   display: flex;

@@ -65,6 +65,7 @@ export function InputWithSelect<T> (props: Props<T>) {
                         value={value}
                         onChange={(e)=>setValue(e.target.value)}
                         autoComplete='new-password'
+                        onWheel={(e) => (e.target as HTMLElement).blur()}
                     />
                     {renderButton && renderButton()}
                     <SelectContainer isError={hasError} isValid={isValid}>

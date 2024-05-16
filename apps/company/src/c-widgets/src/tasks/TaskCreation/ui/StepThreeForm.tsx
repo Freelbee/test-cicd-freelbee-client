@@ -115,7 +115,7 @@ export const StepThreeForm = () => {
           setFiles={setCustomContractFiles}
           fileContainerStyles={[css`max-height: 250px;`]}
           text={'Attach a file'}
-          maxSizeText={'Max. file size: 5 MB'}
+          maxSizeText={'Max. file size: 15 MB'}
           borderColor={customContractFiles.length === 0 ? undefined : customContractFiles.some(el => el.isError) ? Color.DANGER : Color.EMERALD}
         />
       )}

@@ -13,7 +13,7 @@ export enum Endpoint_Enum {
   ACCEPT_TASK = '/task/{0}/accept',
   SET_STATUS = '/task/{0}/set-status',
   GET_CONTRACT_LINK = '/contract/{0}/download-link',
-  GET_INVOICE_LINK = '/invoice/{0}/download-link', //TODO::: correct
+  GET_INVOICE_LINK = '/contract/{0}/invoice/COMMERCIAL/download-link',
   GET_TASK_FILES = '/task/{0}/files',
   UPDATE_TASK_FILES = 'freelancer/task/{0}/files/update',
 

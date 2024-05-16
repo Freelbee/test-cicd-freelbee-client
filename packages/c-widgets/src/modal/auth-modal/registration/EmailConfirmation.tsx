@@ -11,10 +11,11 @@ type Props = {
   checkCode: (str: string) => Promise<void>;
   resendCode: () => Promise<void>;
   setModalState: Dispatch<SetStateAction<AuthModalState>>;
+  onBack: () => void;
 };
 
 export default function EmailConfirmation (props: Props) {
-  const { email, userRegSession, checkCode, resendCode, setModalState } = props;
+  const { email, userRegSession, checkCode, resendCode, setModalState, onBack } = props;
 
 
   const getSessionState = (): Promise<number> => {
@@ -30,14 +31,11 @@ export default function EmailConfirmation (props: Props) {
         <ConfirmationAuthLayout
           remainingTime={getSessionState}
           buttonText={'Next'}
-          description={`
-                    A letter was sent to
-                    ${email}
-                    . To complete your registration, enter the code from email.
-            `}
+          description={`A letter was sent to ${email}. Please enter the code from email.`}
           sendCode={resendCode}
           checkCode={checkCode}
           setModalState={setModalState}
+          onBack={onBack}
         />
     );
 }

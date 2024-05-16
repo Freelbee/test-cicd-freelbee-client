@@ -9,11 +9,12 @@ import { CountrySelect, ValidatorResult } from "@freelbee/features";
 import {ReactComponent as AlertIcon} from '@freelbee/assets/icons/alert-icons/alert_icon.svg';
 import { LanguageType } from "@freelbee/shared/language";
 import { CompanyDataValidator } from "../util/CompanyDataValidator";
-import { useCreateCompanyMutation, useGetCountriesQuery } from "@company/entities";
+import { useCreateCompanyMutation} from "@company/entities";
 import { CompanyFormData } from "../interface/CompanyFormData";
-import { CounterpartyDetailsPropsType, CounterpartyDetailsType, Country } from "@freelbee/entities";
+import { CounterpartyDetailsPropsType, CounterpartyDetailsType} from "@freelbee/entities";
 import { useDataStateUpdater } from "@freelbee/shared/hooks";
 import { PropsHelper } from "@freelbee/shared/helpers";
+import countries from "i18n-iso-countries";
 
 const initialData: CompanyFormData = {
     [CounterpartyDetailsPropsType.NAME]: "",
@@ -28,11 +29,10 @@ const initialData: CompanyFormData = {
 export const CompanyDataForm = () => {
 
     const {setStep} = useContext(OnboardingContext);
-    const {data: countries} = useGetCountriesQuery();
     const [createCompany, {isLoading}] = useCreateCompanyMutation();
     const [validationResult, setValidationResult] = useState(new ValidatorResult<CompanyFormData>());
     const validator = new CompanyDataValidator();
-    const [country, setCountry] = useState<Country | null>(null);
+    const [country, setCountry] = useState<string>(countries.getName("AE", "en") || '');
     const [data, setData] = useDataStateUpdater<CompanyFormData>(initialData);
 
     const submitHandler: FormEventHandler<HTMLFormElement> = (e) => {
@@ -45,7 +45,7 @@ export const CompanyDataForm = () => {
 
         const body = {
             counterpartyDetail: {
-                country: country.alpha2Code,
+                country: countries.getAlpha2Code(country, "en") ?? '',
                 type: CounterpartyDetailsType.DEFAULT_COMPANY_DATA,
                 props: PropsHelper.MapFieldsToProps(data)
             }
@@ -62,8 +62,7 @@ export const CompanyDataForm = () => {
     <Form onSubmit={submitHandler}>
         <CountrySelect
             isError={!country}
-            countries={countries ?? []}
-            selectedCountry={country}
+            value={country || ''}
             onSelect={(c) => {
                 setCountry(c);
             }} />

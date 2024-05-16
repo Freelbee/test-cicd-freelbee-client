@@ -31,12 +31,10 @@ export const TaskRow = ({task}: Props) => {
         </TaskName>
 
         <MobileTitle>Freelancer</MobileTitle>
-        <MailLink href={`mailto:${task.executorEmail}`} onClick={e => e.preventDefault()}>
-         <Text font='bodySmall' color={Color.GRAY_600}>{task.executorEmail}</Text>   
-        </MailLink>
+        <TextWithDots font='bodySmall' color={Color.GRAY_600}>{task.executorEmail}</TextWithDots>
 
         <MobileTitle>Amount</MobileTitle>
-        <Text font='bodySmall'>{`${task.price} ${task?.customerCurrency || ''}`}</Text>
+        <TextWithDots font='bodySmall'>{task.price}&nbsp;{task?.customerCurrency || ''}</TextWithDots>
 
         <MobileTitle>Deadline</MobileTitle>
         <Text font='bodySmall'>
@@ -45,8 +43,8 @@ export const TaskRow = ({task}: Props) => {
 
         <MobileTitle>Status</MobileTitle>
         <StatusContainer onClick={e => e.preventDefault()}>
-            <Status 
-                task={task} 
+            <Status
+                task={task}
                 openTask={handleOpen} />
         </StatusContainer>
     </Container>
@@ -56,7 +54,7 @@ export const TaskRow = ({task}: Props) => {
 const Container = styled.div`
     cursor: pointer;
     display: grid;
-    grid-template-columns: 40px 2fr 1fr 0.8fr 0.8fr 0.8fr;
+    grid-template-columns: 40px 1.2fr 1.2fr 0.8fr 0.9fr 128px;
     align-items: center;
     padding: 16px;
     gap: 16px;
@@ -78,13 +76,13 @@ const StatusContainer = styled.div`
 `;
 
 const TaskName = styled.span<{ color: Color }>`
-  ${typography.body};
+  ${typography.bodySmall};
   color: ${({color}) => color};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  
-  
+
+
   ${mediaBreakpointDown(Breakpoint.Medium)} {
     max-width: ${vw(280, Breakpoint.Tablet)}
   }
@@ -96,6 +94,11 @@ const TaskName = styled.span<{ color: Color }>`
   }
 `;
 
+const TextWithDots = styled(Text)`
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
 const MobileTitle = styled.div`
   ${typography.body};
   color: ${Color.GRAY_600};
@@ -103,8 +106,4 @@ const MobileTitle = styled.div`
   ${mediaBreakpointDown(Breakpoint.Tablet)} {
     display: block;
   }
-`;
-
-const MailLink = styled.a`
-  width: fit-content;
 `;

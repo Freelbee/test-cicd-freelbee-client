@@ -28,8 +28,16 @@ export const StepOneForm = () => {
   const {data: worksCategories = []} = useGetWorksCategoriesQuery();
   const [, setData] = useDataStateUpdater<TaskCreationData>(taskCreationData, setTaskCreationData);
 
-  const isButtonDisabled = !taskCreationData.name || !taskCreationData.description || !taskCreationData.deadline
-    || !taskCreationData.worksType || taskCreationData?.freelancers?.length === 0 || attachedFiles.some((file) => file.isError);
+  const nameMaxLength = 100;
+  const descriptionMaxLength = 1000;
+
+  const isButtonDisabled =
+    !taskCreationData.name || taskCreationData.name.length > nameMaxLength
+    || !taskCreationData.description || taskCreationData.description.length > descriptionMaxLength
+    || !taskCreationData.deadline
+    || !taskCreationData.worksType
+    || taskCreationData.freelancers?.length === 0
+    || attachedFiles.some((file) => file.isError);
 
   return (
     <Content>
@@ -38,9 +46,9 @@ export const StepOneForm = () => {
         label="Name of the task"
         placeholder="Enter a name that will briefly show the essence"
         value={taskCreationData.name ?? ''}
-        maxLength={100}
+        maxLength={nameMaxLength}
         setValue={(item) => setData("name", item)}
-        isError={false}
+        isError={taskCreationData.name.length > nameMaxLength}
       />
       <Section>
         <SelectWithSearch<WorksCategory>
@@ -57,18 +65,18 @@ export const StepOneForm = () => {
           getStringValue={v => v.name}
           renderOption={(item) => <Text font='body' styles={worksText}>{item.name}</Text>}
         />
-        <HiddenBlock $isHide={!taskCreationData?.worksCategory} data-ishide={!taskCreationData?.worksCategory}>
+        <HiddenBlock $isHide={!taskCreationData.worksCategory} data-ishide={!taskCreationData.worksCategory}>
           <SelectWithSearch<WorksType>
             isRequired
             label='Type of work'
             placeholder='Click to select the job type'
             searchPlaceholder='Search by works type'
-            items={taskCreationData?.worksCategory?.workTypes ?? []}
-            value={taskCreationData?.worksType ?? null}
+            items={taskCreationData.worksCategory?.workTypes ?? []}
+            value={taskCreationData.worksType ?? null}
             setValue={(item) => setData("worksType", item)}
             getStringValue={v => v.name}
             renderOption={(item) => <Text font='body' styles={worksText}>{item.name}</Text>}
-            isDisabled={!taskCreationData?.worksCategory}
+            isDisabled={!taskCreationData.worksCategory}
           />
         </HiddenBlock>
       </Section>
@@ -77,10 +85,11 @@ export const StepOneForm = () => {
         isRequired
         label="Describe"
         placeholder="See what an excellent description of the task, take up our order!"
-        value={taskCreationData?.description ?? ''}
-        maxLength={100}
+        value={taskCreationData.description ?? ''}
+        setValue={(value) => setData("description", value)}
+        maxLength={descriptionMaxLength}
         noMessageSpace
-        onChange={(e) => setData("description", e.target.value)}
+        isError={taskCreationData.description.length > descriptionMaxLength}
       />
 
       <FileLoader
@@ -89,7 +98,7 @@ export const StepOneForm = () => {
         setFiles={setAttachedFiles}
         fileContainerStyles={[css`max-height: 250px;`]}
         text={'Attach a file'}
-        maxSizeText={'Max. file size: 5 MB'}
+        maxSizeText={'Max. file size: 15 MB'}
         borderColor={attachedFiles.length === 0 ? undefined : attachedFiles.some(file => file.isError) ? Color.DANGER : Color.EMERALD}
       />
       <Calendar

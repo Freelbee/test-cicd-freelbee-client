@@ -14,6 +14,7 @@ import TaskInReviewActions from './ui/taskActions/TaskInReviewActions';
 import TaskWaitingForPaymentActions from './ui/taskActions/TaskWaitingForPaymentActions';
 import { PinnedFiles } from "@freelbee/entities";
 import { DownloadTaskDocuments } from './ui/taskActions/DownloadTaskDocuments';
+import styled from 'styled-components';
 
 
 export const TaskDetails = () => {
@@ -36,7 +37,9 @@ export const TaskDetails = () => {
 
   return (
     <FormGrid>
-      <Heading2 style={{ maxWidth: '90%' }}>{displayedTask?.title}</Heading2>
+      <HeadingContainer>
+        <Heading2>{displayedTask?.title}</Heading2>
+      </HeadingContainer>
       <TaskHeadInfo task={displayedTask} />
       <Description task={displayedTask} />
       {displayedTask && <DownloadTaskDocuments task={displayedTask} />}
@@ -45,3 +48,8 @@ export const TaskDetails = () => {
     </FormGrid>
   );
 };
+
+const HeadingContainer = styled.div`
+  overflow: hidden;
+  max-width: 90%;
+`;

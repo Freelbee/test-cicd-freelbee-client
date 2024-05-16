@@ -23,10 +23,10 @@ import {FormData} from './interface/FormData';
 import { useSendRegisteredLeadMutation } from "../../zoho-crm/query/zohoAPI";
 
 const DEFAULT = {
-    email: '', 
-    phone: '', 
-    message: '', 
-    name: '', 
+    email: '',
+    phone: '',
+    message: '',
+    name: '',
     company: ''
 };
 
@@ -69,7 +69,7 @@ export const ApplicationModalForm = () => {
                 Phone: formData.phone,
                 Lead_Source: "https://freelbee.com" + pathName,
                 field: formData.message
-            });             
+            });
         }
     };
 
@@ -115,48 +115,49 @@ export const ApplicationModalForm = () => {
 
     return (
         <Form onSubmit={sendApplication} data-crmid='application-form-email'>
-            <Input 
+            <Input
                 data-testid='landing-form-name'
                 icon={<UserIcon stroke={Color.GRAY_600} />}
                 isError={validationResult.hasError('name')}
                 errorMessage={validationResult.getMessageByLanguage('name', LanguageType.EN)}
-                placeholder='John Silver' 
+                placeholder='John Silver'
                 label='Full Name'
-                value={formData.name} 
+                value={formData.name}
                 setValue={(val) => setFormData((prev) => ({...prev, name: val}))} />
-            <Input 
+            <Input
                 icon={<CompanyIcon stroke={Color.GRAY_600} />}
                 isError={validationResult.hasError('company')}
                 errorMessage={validationResult.getMessageByLanguage('company', LanguageType.EN)}
-                placeholder='FREELBEE' 
+                placeholder='FREELBEE'
                 label='Company name'
                 data-testid='landing-form-company'
-                value={formData.company} 
+                value={formData.company}
                 setValue={(val) => setFormData((prev) => ({...prev, company: val}))} />
-            <Input 
+            <Input
                 isError={validationResult.hasError('email')}
                 errorMessage={validationResult.getMessageByLanguage('email', LanguageType.EN)}
-                placeholder='mail@company.com' 
+                placeholder='mail@company.com'
                 label='Company E-mail'
                 data-testid='landing-form-email'
                 icon={<MailIcon stroke={Color.GRAY_600} />}
-                value={formData.email} 
+                value={formData.email}
                 setValue={(val) => setFormData((prev) => ({...prev, email: val}))} />
-            <PhoneNumberInput 
+            <PhoneNumberInput
                 label="Phone"
                 data-testid='landing-form-phone'
-                value={formData.phone} 
-                setValue={(val) => setFormData((prev) => ({...prev, phone: val}))}            
+                value={formData.phone}
+                setValue={(val) => setFormData((prev) => ({...prev, phone: val}))}
             />
             <TextArea
                 data-testid='landing-form-message'
                 isError={validationResult.hasError('message')}
                 errorMessage={validationResult.getMessageByLanguage('message', LanguageType.EN)}
-                placeholder='Ask whatever you want!' 
+                placeholder='Ask whatever you want!'
                 label='Any question?'
-                value={formData.email} 
-                onChange={(e) => setFormData((prev) => ({...prev, message: e.target.value}))} />
-            <Button 
+                value={formData.message}
+                setValue={(val) => setFormData((prev) => ({...prev, message: val}))}
+            />
+            <Button
                 styleType={ButtonStyleEnum.BLACK}
                 styles={buttonStyle}
                 isWide

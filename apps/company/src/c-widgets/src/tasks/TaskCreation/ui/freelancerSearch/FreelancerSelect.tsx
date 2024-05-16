@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { SelectWithSearch } from '@freelbee/shared/ui-kit';
 import FreelancerListItem from './FreelancerListItem';
@@ -14,11 +14,14 @@ type Props = {
 export default function FreelancerSelect(props: Props) {
   const { max, freelancers, onSelect } = props;
 
-  const { data: freelancersSearchResult = [] } = useFindFreelancersQuery({ email: "" });
+  const [query, setQuery] = useState('');
+  const { data: freelancersSearchResult = [] } = useFindFreelancersQuery({ email: query });
 
   const addFreelancer = (freelancer : TaskFreelancerData) => {
     const newFreelancers = [...freelancers];
-    newFreelancers.push(freelancer);
+    if (newFreelancers.length < max) {
+      newFreelancers.push(freelancer);
+    }
     onSelect(newFreelancers);
   };
 
@@ -39,6 +42,8 @@ export default function FreelancerSelect(props: Props) {
         setValue={addFreelancer}
         renderOption={(freelancer) => <FreelancerSelectItem freelancer={freelancer} />}
         isDisabled={freelancers.length >= max}
+        query={query}
+        setQuery={setQuery}
       />
       {freelancers.length > 0 && (
         <FreelancerListContainer>

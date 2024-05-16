@@ -6,6 +6,7 @@ import { UserDataPropsType} from "./UserDataPropType"
 export interface UserResponse {
 	id: number,
 	email: string,
+  phone: string,
 	userData:  {
 		id: number,
 		status: UserStatus | null,
@@ -18,6 +19,7 @@ export interface UserResponse {
 export interface UserData {
 	id: number,
 	email: string,
+  phone: string,
 	userData: {
 		id: number,
 		status: UserStatus | null,
