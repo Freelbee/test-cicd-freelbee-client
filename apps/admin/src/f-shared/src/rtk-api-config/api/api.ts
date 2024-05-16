@@ -6,7 +6,10 @@ import { baseQueryWithAuth } from '../query/queryWithAuth';
 export const API = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithAuth,
-  tagTypes: [],
+  tagTypes: [
+    'companyCounterparties',
+    'companyCounterparty'
+  ],
   endpoints: () => ({}),
 });
 

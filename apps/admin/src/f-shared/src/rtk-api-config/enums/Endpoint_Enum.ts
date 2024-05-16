@@ -10,9 +10,10 @@ export enum Endpoint_Enum { //TODO::: rename to comply with backend
   REFRESH_TOKEN_PAIR = `auth/refresh-token-pair`,
 
   CONFIRMATION_CODES = `confirmation-codes/search`,
-  ROLES = `roles`,
-  ADMIN = `admin`,
-  COMPANY = `company/{0}`,
+
+  GET_PAGE_OF_COMPANY_COUNTERPARTIES = 'companies',
+  GET_COMPANY_COUNTERPARTY = 'companies/{0}',
+  SET_COMPANY_COUNTERPARTY_STATUS = 'companies/{0}/set-status',
 }
 
 export const ApiMethodsWithoutToken = [

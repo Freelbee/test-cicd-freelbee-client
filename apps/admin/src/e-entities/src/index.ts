@@ -9,7 +9,6 @@ export * from './auth/dto/TelegramUser';
 export * from './auth/query/AuthApiService';
 
 export * from './companies/dto/CounterpartyDto';
-export * from './companies/hooks/UseCompaniesData';
 export * from './companies/query/companiesApi';
 
 export * from './layout/PageContainer';
