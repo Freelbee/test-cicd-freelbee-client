@@ -29,7 +29,7 @@ export const companiesAPI = API.injectEndpoints({
         method: 'PUT',
         body: { status }
       }),
-      invalidatesTags: ['companyCounterparty']
+      invalidatesTags: ['companyCounterparty', 'companyCounterparties']
     }),
   })
 });

@@ -9,7 +9,7 @@ export enum Endpoint_Enum { //TODO::: rename to comply with backend
   LOGOUT = `auth/logout`,
   REFRESH_TOKEN_PAIR = `auth/refresh-token-pair`,
 
-  CONFIRMATION_CODES = `confirmation-codes/search`,
+  GET_PAGE_OF_CONFIRMATION_CODES = `confirmation-codes`,
 
   GET_PAGE_OF_COMPANY_COUNTERPARTIES = 'companies',
   GET_COMPANY_COUNTERPARTY = 'companies/{0}',

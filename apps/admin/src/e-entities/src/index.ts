@@ -11,6 +11,9 @@ export * from './auth/query/AuthApiService';
 export * from './companies/dto/CounterpartyDto';
 export * from './companies/query/companiesApi';
 
+export * from './confirmation-codes/dto/ConfirmationCode';
+export * from './confirmation-codes/query/confirmationCodesApi';
+
 export * from './layout/PageContainer';
 export * from './layout/PageTitle';
 export * from './layout/TableHead';

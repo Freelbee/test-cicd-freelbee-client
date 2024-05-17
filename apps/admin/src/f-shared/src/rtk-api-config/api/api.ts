@@ -8,7 +8,8 @@ export const API = createApi({
   baseQuery: baseQueryWithAuth,
   tagTypes: [
     'companyCounterparties',
-    'companyCounterparty'
+    'companyCounterparty',
+    'confirmationCodes',
   ],
   endpoints: () => ({}),
 });
