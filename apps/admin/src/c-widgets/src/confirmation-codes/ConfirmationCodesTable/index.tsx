@@ -1,12 +1,12 @@
 'use client';
 
 import { css } from 'styled-components';
-import { TableHead, useGetPageOfConfirmationCodesQuery } from '@admin/entities';
+import { TableHead, useGetAllConfirmationCodesQuery } from '@admin/entities';
 import { Breakpoint, Color, Text, mediaBreakpointDown } from '@freelbee/shared/ui-kit';
 import { ConfirmationCodesRow } from './ui/ConfirmationCodesRow';
 
 export const ConfirmationCodesTable = () => {
-  const { data: confirmationCodes } = useGetPageOfConfirmationCodesQuery();
+  const { data: confirmationCodes } = useGetAllConfirmationCodesQuery();
 
   return (
     <>
@@ -15,7 +15,6 @@ export const ConfirmationCodesTable = () => {
         <Text font="body" color={Color.GRAY_700}>Contact</Text>
         <Text font="body" color={Color.GRAY_700}>Purpose</Text>
         <Text font="body" color={Color.GRAY_700}>Code</Text>
-        {/*<Text font="body" color={Color.GRAY_700}>Date created</Text>*/}
       </TableHead>
       {confirmationCodes && [...confirmationCodes]
         .sort((a, b) => b.id.localeCompare(a.id))

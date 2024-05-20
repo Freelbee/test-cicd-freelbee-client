@@ -1,109 +1,67 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AuthApiService, SessionStatusType } from '@admin/entities';
+import React, { FormEvent, useState } from 'react';
+import { useSignInMutation } from '@admin/entities';
 import styled from 'styled-components';
-import {
-  ActionButton, usePaApiService, StateUpdater, ColorType, Title, Paragraph, ParagraphSizeMods, AnyError,
-  ApiResponseError
-} from '@admin/shared';
-import { ErrorBlock } from './ui/ErrorBlock';
-import { Document } from './ui/Document';
-import { DocumentField } from './ui/DocumentField';
-import { Input } from './ui/Input/Input';
-import { LoginData } from '../../../../e-entities/src/auth/dto/LoginData';
-import { setSessionData } from '@admin/entities';
+import { useDataStateUpdater } from '@freelbee/shared/hooks';
+import { Button, Heading1, Input, PasswordInput } from '@freelbee/shared/ui-kit';
+import { AuthDto } from '@freelbee/entities';
+import { ValidatorResult } from '@freelbee/features';
+import { LanguageType } from '@freelbee/shared/language';
+import { LoginDataValidator } from 'apps/admin/src/c-widgets/src/auth/util/LoginDataValidator';
 
 export function Login() {
-  const dispatch = useDispatch();
-  const [data, setData] = useState<LoginData>({
-    email: ``,
-    password: ``
-  });
-  const [errorMessage, setErrorMessage] = useState<string>(``);
-  const [errorRes, setErrorRes] = useState<ApiResponseError | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const apiService = usePaApiService(AuthApiService);
 
-  const setFieldValue = StateUpdater
-    .builder<LoginData, LoginData>(setData)
-    .build()
-    .get();
+  const [loginData, setLoginData] = useState<AuthDto>({ email: '', password: '' });
+  const [, setData] = useDataStateUpdater<AuthDto>(loginData, setLoginData);
 
-  const send = async () => {
-    if (!data.email) {
-      setErrorMessage(`E-mail field is required`);
-      return;
-    }
-    if (!data.password) {
-      setErrorMessage(`Password is required`);
-      return;
-    }
-    setLoading(true);
+  const [login, { isLoading: isLoadingLogin }] = useSignInMutation();
 
-    const response = await apiService.login({
-      email: data.email,
-      password: data.password
-    });
+  const [validatorResult, setValidatorResult] = useState(new ValidatorResult<AuthDto>());
+  const validator = new LoginDataValidator();
 
-    if (response.getCode() == 401) {
-      setErrorMessage('Неверный логин или пароль');
-      setLoading(false);
-      return;
-    }
+  const onSubmit = async (e?: FormEvent<HTMLFormElement>) => {
+    e?.preventDefault();
 
-    const statusRes = await apiService.getSessionData();
+    const formValidatorResult = validator.validate(loginData);
+    setValidatorResult(formValidatorResult);
 
-    if (statusRes.isSuccess()) {
-      if (statusRes.getData().authStatus === SessionStatusType.NOT_LOGGED_IN) {
-        setErrorMessage('Authorization failed, please try again');
-      }
-      dispatch(setSessionData(statusRes.getData()));
-    } else {
-      setErrorRes(response.getError());
-    }
-    setLoading(false);
-    console.log(statusRes.getData());
+    if (!validatorResult.isSuccess()) return;
+
+    login(loginData);
   };
 
   return (
     <Container>
       <ContainerBody>
-        <Title color={ColorType.BLACK_COLOR}>Sign In</Title>
-        {!!errorMessage && <>
-          <ContainerErrorHolder>
-            <ErrorBlock>
-              <Paragraph sizeMod={ParagraphSizeMods.DEFAULT} color={ColorType.BLACK_COLOR}>{errorMessage}</Paragraph>
-            </ErrorBlock>
-          </ContainerErrorHolder>
-        </>}
-        <ContainerForm>
-          <Document>
-            <DocumentField label={`E-mail address`}>
-              <Input
-                name={`email`}
-                type={`text`}
-                placeholder={`Enter e-mail address`}
-                value={data.email}
-                onChange={(e) => setFieldValue(`email`, e.target.value)}
-              />
-            </DocumentField>
-            <DocumentField label={`Password`}>
-              <Input
-                name={`password`}
-                type={`password`}
-                placeholder={`Enter password`}
-                value={data.password}
-                onChange={(e) => setFieldValue(`password`, e.target.value)}
-              />
-            </DocumentField>
-          </Document>
-        </ContainerForm>
-        <ActionButton onClick={() => send()} fullWidth={true} loading={loading} background={ColorType.BLACK_COLOR}>
-          Submit
-        </ActionButton>
-        <AnyError error={errorRes} exceptFields={[]} />
+        <Heading1>Sign In</Heading1>
+        <Form onSubmit={onSubmit}>
+          <Input
+            isRequired
+            label="E-mail address"
+            placeholder="Enter e-mail address"
+            value={loginData.email}
+            setValue={(value) => setData('email', value)}
+            isError={validatorResult.hasError('email')}
+            errorMessage={validatorResult.getMessageByLanguage('email', LanguageType.EN)}
+          />
+          <PasswordInput
+            isRequired
+            label="Password"
+            placeholder="Enter password"
+            value={loginData.password}
+            setValue={(value) => setData('password', value)}
+            isError={validatorResult.hasError('password')}
+            errorMessage={validatorResult.getMessageByLanguage('password', LanguageType.EN)}
+          />
+          <Button
+            type='submit'
+            isWide
+            isLoading={isLoadingLogin}
+          >
+            Submit
+          </Button>
+        </Form>
       </ContainerBody>
     </Container>
   );
@@ -118,21 +76,16 @@ const Container = styled.div`
 
 const ContainerBody = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 32px;
   width: 100%;
   flex-direction: column;
 `;
 
-const ContainerForm = styled.div`
+const Form = styled.form`
   display: flex;
+  flex-direction: column;
   width: 100%;
-  font-weight: 600;
-  font-size: 22px;
-`;
-
-const ContainerErrorHolder = styled.div`
-  display: flex;
-  width: 100%;
+  gap: 25px;
   font-weight: 600;
   font-size: 22px;
 `;

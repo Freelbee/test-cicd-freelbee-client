@@ -34,7 +34,6 @@ export const ConfirmationCodesRow = (props: Props) => {
       <Text font="bodySmall">{extractContactMethod(confirmationCode)}</Text>
       <Text font="bodySmall">{extractEmail(confirmationCode)}</Text>
       <Text font="bodySmall">{extractPurpose(confirmationCode)}</Text>
-      {/*<Text font="bodySmall">{confirmationCode.id}</Text>*/}
       <Text font="bodySmall">{confirmationCode.value}</Text>
     </Container>
   );

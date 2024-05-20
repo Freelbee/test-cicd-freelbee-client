@@ -2,19 +2,15 @@
 
 import { Breakpoint, Button, ButtonStyleEnum, mediaBreakpointDown } from '@freelbee/shared/ui-kit';
 import { CounterpartyStatus } from '@freelbee/entities';
-import { useState } from 'react';
-import { CompanyData, useSetCompanyCounterpartyStatusMutation } from '@admin/entities';
+import { useContext, useState } from 'react';
+import { useSetCompanyCounterpartyStatusMutation } from '@admin/entities';
 import styled from 'styled-components';
+import { CompanyNavigationContext } from '@admin/features';
 
-interface Props {
-  company: CompanyData;
-}
-
-export const StatusUpdateButtons = (props: Props) => {
-  const { company } = props;
-
-  const [setCompanyCounterpartyStatus] = useSetCompanyCounterpartyStatusMutation();
+export const StatusUpdateButtons = () => {
+  const { company } = useContext(CompanyNavigationContext);
   const [updateStatusLoading, setUpdateStatusLoading] = useState(false);
+  const [setCompanyCounterpartyStatus] = useSetCompanyCounterpartyStatusMutation();
 
   const counterpartyDetailsStatus = company.counterpartyDetail.status;
 
@@ -45,7 +41,6 @@ export const StatusUpdateButtons = (props: Props) => {
           {counterpartyDetailsStatus === CounterpartyStatus.IN_REVIEW && 'Approve'}
         </Button>
       )}
-      {/*{!company && <Preloader size={PreloaderSize.Micro} />}*/}
     </ButtonsContainer>
   );
 };

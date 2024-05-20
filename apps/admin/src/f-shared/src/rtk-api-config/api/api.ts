@@ -7,6 +7,7 @@ export const API = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithAuth,
   tagTypes: [
+    'sessionData',
     'companyCounterparties',
     'companyCounterparty',
     'confirmationCodes',

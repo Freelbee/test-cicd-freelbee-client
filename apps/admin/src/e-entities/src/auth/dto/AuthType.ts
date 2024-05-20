@@ -1,5 +1,5 @@
 export enum AuthStep {
-  Login,
-  ConnectTelegram,
-  Confirmation
+  LOGIN,
+  CONNECT_TELEGRAM,
+  CONFIRMATION
 }

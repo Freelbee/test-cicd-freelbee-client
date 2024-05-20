@@ -2,12 +2,9 @@
 
 import { Breakpoint, Color, Text, mediaBreakpointDown, typography, vw } from '@freelbee/shared/ui-kit';
 import styled from 'styled-components';
-import { ReactComponent as ApprovedIcon } from '@freelbee/assets/icons/counterparty-details-status/approved.svg';
-import { ReactComponent as InReviewIcon } from '@freelbee/assets/icons/counterparty-details-status/in-review.svg';
-import { ReactComponent as RejectedIcon } from '@freelbee/assets/icons/counterparty-details-status/rejected.svg';
-import { CounterpartyStatus } from '@freelbee/entities';
 import { useRouter } from 'next/navigation';
 import { CompanyData } from '@admin/entities';
+import { CounterpartyDetailStatusIcon } from '@admin/features';
 
 interface Props {
   company: CompanyData;
@@ -18,12 +15,6 @@ export const CompanyRow = (props: Props) => {
 
   const router = useRouter();
 
-  const counterpartyDetailStatusIcon = {
-    [CounterpartyStatus.APPROVED]: <ApprovedIcon />,
-    [CounterpartyStatus.IN_REVIEW]: <InReviewIcon />,
-    [CounterpartyStatus.REJECTED]: <RejectedIcon />,
-  };
-
   const onRowClick = () => router.push(`/companies/${company.id}`);
 
   return (
@@ -32,7 +23,7 @@ export const CompanyRow = (props: Props) => {
       <CompanyName color={Color.GRAY_900}>{company.counterpartyDetail.props.NAME}</CompanyName>
       <Text font="bodySmall" color={Color.GRAY_600}>{'{user data}'}</Text>
       <Text font="bodySmall" color={Color.GRAY_600}>{company.counterpartyDetail.props.TIN}</Text>
-      {counterpartyDetailStatusIcon[company.counterpartyDetail.status]}
+      <CounterpartyDetailStatusIcon company={company} />
     </Container>
   );
 };

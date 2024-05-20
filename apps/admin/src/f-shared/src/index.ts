@@ -12,7 +12,6 @@ export * from './rtk-api-config/interfaces/IDataSliceType';
 export * from './rtk-api-config/query/baseQuery';
 export * from './rtk-api-config/query/queryWithAuth';
 
-export * from './store/hooks/usePaApiService';
 export * from './store/reducers/generalStatesSlice';
 
 export * from './utils/ColorType';

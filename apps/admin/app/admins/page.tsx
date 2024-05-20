@@ -1,3 +1,5 @@
+'use client';
+
 import { PersonalLayout } from '@admin/widgets';
 import { AdminsPage } from '@admin/pages';
 

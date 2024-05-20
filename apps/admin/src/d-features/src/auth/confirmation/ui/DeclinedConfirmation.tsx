@@ -10,6 +10,7 @@ type Props = {
 
 export function DeclinedConfirmation(props: Props) {
   const { sendConfirmation } = props;
+
   return (
     <Container>
       <Holder>
