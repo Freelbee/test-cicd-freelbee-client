@@ -18,7 +18,12 @@ export function NavigationMenu() {
   const refNavigation = useRef<HTMLDivElement>(null);
   const { navigationMenuOpened, setNavigationMenuOpened } = useContext(LayoutContext);
 
-  const isRouteActive = (link: string) => pathName.endsWith(link);
+  const isRouteActive = (link: string) => {
+    if (link === '/companies') {
+      return pathName.endsWith(link) || /^\/companies\/\d+$/.test(pathName);
+    }
+    return pathName.endsWith(link);
+  };
 
   const closeMenu = (e: React.MouseEvent<HTMLDivElement>) => {
     DOMHelper.isNotChildOfElem(e) && setNavigationMenuOpened(false);

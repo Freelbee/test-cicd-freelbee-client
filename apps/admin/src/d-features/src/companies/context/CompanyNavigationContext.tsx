@@ -1,17 +1,16 @@
 'use client';
 
 import { createContext } from 'react';
-import { CompanyData } from '@admin/entities';
+import { CounterpartyDtoModified } from '@admin/entities';
 
 export enum CompanyNavigationTab {
   PRIMARY_INFO = 'PRIMARY_INFO',
-  ACCOUNTS = 'ACCOUNTS',
   DOCUMENTS = 'DOCUMENTS',
   METHODS = 'METHODS',
 }
 
 export interface ICompanyNavigationContext {
-  company: CompanyData;
+  company: CounterpartyDtoModified;
   companyNavigationTab: CompanyNavigationTab;
   setCompanyNavigationTab: (step: CompanyNavigationTab) => void;
 }

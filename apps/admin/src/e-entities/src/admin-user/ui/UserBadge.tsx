@@ -6,10 +6,8 @@ import styled, { css } from 'styled-components';
 import { UserAvatar } from './UserAvatar';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
-  // To-DO interface
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   status: any;
-  avatarContent?: string;
+  avatarContent?: any;
   name?: string;
   subInfo?: ReactNode;
 }
@@ -41,7 +39,7 @@ const clampNameStyles = css`
 const AccountName = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
 `;
 

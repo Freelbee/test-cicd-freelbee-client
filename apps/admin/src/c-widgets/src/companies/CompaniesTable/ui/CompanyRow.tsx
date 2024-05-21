@@ -3,11 +3,11 @@
 import { Breakpoint, Color, Text, mediaBreakpointDown, typography, vw } from '@freelbee/shared/ui-kit';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
-import { CompanyData } from '@admin/entities';
+import { CounterpartyDtoModified } from '@admin/entities';
 import { CounterpartyDetailStatusIcon } from '@admin/features';
 
 interface Props {
-  company: CompanyData;
+  company: CounterpartyDtoModified;
 }
 
 export const CompanyRow = (props: Props) => {
@@ -19,20 +19,30 @@ export const CompanyRow = (props: Props) => {
 
   return (
     <Container onClick={onRowClick}>
-      <Text font="bodySmall">{company.id}</Text>
-      <CompanyName color={Color.GRAY_900}>{company.counterpartyDetail.props.NAME}</CompanyName>
-      <Text font="bodySmall" color={Color.GRAY_600}>{'{user data}'}</Text>
-      <Text font="bodySmall" color={Color.GRAY_600}>{company.counterpartyDetail.props.TIN}</Text>
+      <Text>{company.id}</Text>
+      <TextWithDots>{company.counterpartyDetail.props.NAME}</TextWithDots>
+      <UserDataContainer>
+        <Text>ID: {company.user.userData.id}</Text>
+        <Text>{company.user.userData.props.FIRST_NAME} {company.user.userData.props.LAST_NAME}</Text>
+        <Text>{company.user.email}</Text>
+        <Text>{company.user.phone}</Text>
+      </UserDataContainer>
+      <Text>{company.counterpartyDetail.props.TIN}</Text>
       <CounterpartyDetailStatusIcon company={company} />
     </Container>
   );
 };
 
+const UserDataContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
 const Container = styled.div`
   cursor: pointer;
   display: grid;
-  grid-template-columns: 40px 1.2fr 1.2fr 0.8fr 0.9fr 128px;
-  align-items: center;
+  grid-template-columns: 40px 1.2fr 1.2fr 0.8fr 22px;
+  align-items: flex-start;
   padding: 16px;
   gap: 16px;
 
@@ -48,20 +58,7 @@ const Container = styled.div`
   }
 `;
 
-const CompanyName = styled.span<{ color: Color }>`
-  ${typography.bodySmall};
-  color: ${({ color }) => color};
-  white-space: nowrap;
+const TextWithDots = styled(Text)`
   overflow: hidden;
   text-overflow: ellipsis;
-
-  ${mediaBreakpointDown(Breakpoint.Medium)} {
-    max-width: ${vw(280, Breakpoint.Tablet)}
-  }
-
-  ${mediaBreakpointDown(Breakpoint.Tablet)} {
-    white-space: normal;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-  }
 `;

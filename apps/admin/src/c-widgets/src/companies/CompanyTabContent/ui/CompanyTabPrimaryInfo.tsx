@@ -83,14 +83,14 @@ export function CompanyTabPrimaryInfo() {
         <Input
           label="E-mail"
           placeholder=""
-          value={'{{{{email}}}}'} //TODO::: get email
+          value={company.user.email}
           setValue={() => null}
           disabled
         />
         <Input
           label="Phone"
           placeholder=""
-          value={'{{{{phone}}}}'} //TODO::: get phone
+          value={company.user.phone}
           setValue={() => null}
           disabled
         />

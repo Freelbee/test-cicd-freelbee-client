@@ -2,6 +2,10 @@ import { SessionStatusType } from '@admin/entities';
 import { TelegramUser } from './TelegramUser';
 
 export interface SessionData {
-  status: SessionStatusType | null,
+  authStatus: SessionStatusType,
   adminUser: TelegramUser | null,
+  tokenPair?: {
+    accessToken: string,
+    refreshToken: string
+  }
 }

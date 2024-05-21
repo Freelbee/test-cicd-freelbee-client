@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CanceledIcon } from './CanceledIcon';
-import { Paragraph } from '@admin/shared';
-import { ColorType } from '@admin/shared';
+import { Text, Color, Button } from '@freelbee/shared/ui-kit';
 
 type Props = {
   sendConfirmation: () => void
@@ -16,12 +15,10 @@ export function DeclinedConfirmation(props: Props) {
       <Holder>
         <CanceledIcon className={`declinedConfirmation__icon`} />
       </Holder>
-      <Paragraph color={ColorType.GREY_COLOR}>
-        Authorization request rejected
-      </Paragraph>
-      <SendConfirmationHolder onClick={() => sendConfirmation()}>
-        <Paragraph color={ColorType.LINK}>Send new confirmation</Paragraph>
-      </SendConfirmationHolder>
+      <Text color={Color.GRAY_600} align='center'>Authorization request rejected</Text>
+      <ButtonContainer>
+        <Button onClick={() => sendConfirmation()}>Send new confirmation</Button>
+      </ButtonContainer>
     </Container>
   );
 }
@@ -30,6 +27,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   padding: 30px;
   gap: 15px;
 `;
@@ -40,10 +38,7 @@ const Holder = styled.div`
   width: 100%;
 `;
 
-const SendConfirmationHolder = styled.div`
+const ButtonContainer = styled.div`
   display: flex;
-  width: 100%;
   justify-content: center;
-  font-size: 15px;
-  padding-top: 15px;
 `;

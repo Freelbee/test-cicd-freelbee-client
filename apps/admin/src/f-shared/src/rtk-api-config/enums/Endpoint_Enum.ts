@@ -4,7 +4,7 @@ export enum Endpoint_Enum { //TODO::: rename to comply with backend
   SESSION_DATA = 'auth/info',
   GET_ADMIN = 'admin',
   // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
-  SAVE_NEW_ADMIN = 'admin',
+  CREATE_ADMIN_USER = 'admin',
   SIGN_IN = 'auth/credentials',
   SEND_CONFIRMATION = 'auth/send-confirmation',
   CONNECT_TELEGRAM = 'auth/telegram-user',

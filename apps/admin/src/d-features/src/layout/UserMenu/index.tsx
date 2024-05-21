@@ -1,129 +1,57 @@
 'use client';
 
-import {useRef, useState} from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as ArrowIcon} from '@freelbee/assets/icons/arrow-icons/arrow_down.svg';
-import { ReactComponent as OpenIcon} from '@freelbee/assets/icons/cross-icons/plus.svg';
+import { ReactComponent as ArrowIcon } from '@freelbee/assets/icons/arrow-icons/arrow_down.svg';
 import { useOnClickOutside } from '@freelbee/shared/hooks';
-import { DOMHelper } from '@freelbee/shared/helpers';
-import { Breakpoint, Color, mediaBreakpointDown, mediaBreakpointUp } from '@freelbee/shared/ui-kit';
-import { ProfileVerificationLink } from './ui/ProfileVerificationLink';
-import { CompanySwitcher } from './ui/CompanySwitcher';
-import { CopyUser } from './ui/CopyUser';
-import { TechInfo } from './ui/TechInfo';
-import { AccountActions } from './ui/AccountActions';
-import { UserBadge } from '@company/entities';
+import { Breakpoint, Color, mediaBreakpointDown, mediaBreakpointUp, Text, typography } from '@freelbee/shared/ui-kit';
+import { useGetAdminUserQuery, UserBadge } from '@admin/entities';
+import { Token_Enum } from '@admin/shared';
+import { useRouter } from 'next/navigation';
+import { ReactComponent as LogoutIcon } from '@freelbee/assets/icons/menu-icons/exit.svg';
 
-export function UserMenu () {
+export function UserMenu() {
+  const router = useRouter();
+  const modalRef = useRef(null);
+  const buttonRef = useRef(null);
+  const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
 
-    const [profileMenuIsOpen, setProfileMenuIsOpen] = useState(false);
-    const [companiesIsOpen, setCompaniesIsOpen] = useState(false);
-    const modalRef = useRef(null);
-    const buttonRef = useRef(null);
+  const { data: adminUser, status } = useGetAdminUserQuery();
 
-    // To-Do
-    const user = {
-      id: 1,
-      firstname: 'Testov',
-      lastname: 'Test',
-      email: 'test@mail.com',
-      status: 'approved',
-      currentCompany: {
-        id: 1,
-        name: 'Company1',
-        status: 'approved',
-      },
-      companies: [
-        {
-          id: 1,
-          name: 'Company1',
-          status: 'approved',
-        },
-        {
-          id: 2,
-          name: 'Company2',
-          status: 'approved',
-        },
-        {
-          id: 3,
-          name: 'Company3',
-          status: 'not approved',
-        },
-        {
-          id: 4,
-          name: 'Company4',
-          status: 'waiting',
-        }
-      ]
-    }
+  useOnClickOutside(modalRef, () => {
+    setProfileMenuOpen(false);
+  }, buttonRef);
 
-    useOnClickOutside(modalRef, () => {
-        setProfileMenuIsOpen(false);
-    }, buttonRef);
+  const toggleProfileMenu = () => setProfileMenuOpen(!isProfileMenuOpen);
 
-    const toggleMenu = () => {
-        setProfileMenuIsOpen((prevState) => !prevState);
-    };
+  const logout = () => {
+    localStorage.removeItem(Token_Enum.ACCESS_TOKEN);
+    localStorage.removeItem(Token_Enum.REFRESH_TOKEN);
+    router.push('/');
+  };
 
-    return (
-      <PersonalMenuAccount
-          tabIndex={0}
-          ref={modalRef}
-          onKeyDown={(e) => DOMHelper.handleEnterKeydown(e, toggleMenu)}
-          onClick={(e) => DOMHelper.isNotChildOfElem(e) && toggleMenu()}>
-          <UserBadge
-            onClick={toggleMenu}
-            avatarContent={user.firstname[0]}
-            status={user.status}
-            name={`${user.firstname} ${user.lastname}`}
-            subInfo={user.status === 'not approved' && <ProfileVerificationLink />} />
+  if (!adminUser) return <></>;
 
-          <OpenMenu $isOpened={profileMenuIsOpen} onClick={toggleMenu}>
-              <ArrowIcon />
-          </OpenMenu>
-
-          <AccountPopup $isOpen={profileMenuIsOpen}>
-
-              <AccountUserData>
-
-                  <AccountUserNames>
-
-                  <UserBadge
-                    onClick={toggleMenu}
-                    avatarContent={user.firstname[0]}
-                    status={user.status}
-                    name={`${user.firstname} ${user.lastname}`}
-                    subInfo={user.status === 'not approved' && <ProfileVerificationLink />} />
-
-                    <CompaniesButton
-                      onClick={() => {
-                        setCompaniesIsOpen(prev => !prev)
-                      }}
-                      $opened={companiesIsOpen}
-                      aria-label={companiesIsOpen ? 'close companies menu' : 'open companies menu'}>
-                      <OpenIcon />
-                    </CompaniesButton>
-
-                  </AccountUserNames>
-
-                  <CompanySwitcher
-                    style={{
-                      height: companiesIsOpen ? '250px' : '0px'
-                    }}
-                    isOpen={companiesIsOpen}
-                    toggleOpen={() => setCompaniesIsOpen(prev => !prev)}
-                    companies={user.companies}
-                    selectedCompany={user.currentCompany} />
-
-                  <CopyUser user={user} />
-              </AccountUserData>
-
-              <AccountActions />
-              <TechInfo />
-
-          </AccountPopup>
-      </PersonalMenuAccount>
-    );
+  return (
+    <PersonalMenuAccount ref={modalRef}>
+      <UserBadge
+        onClick={toggleProfileMenu}
+        avatarContent={adminUser.telegramUser.photoUrl}
+        status={null}
+        name={`${adminUser.telegramUser.firstName ?? ''} ${adminUser.telegramUser.lastName ?? ''}`}
+        subInfo={<Text>{adminUser.email}</Text>}
+      />
+      <OpenProfileMenuButton $isOpened={isProfileMenuOpen} onClick={toggleProfileMenu}>
+        <ArrowIcon />
+      </OpenProfileMenuButton>
+      <AccountPopup $isOpen={isProfileMenuOpen}>
+        <LogoutButton onClick={logout}>
+          <LogoutIcon stroke={Color.GRAY_800} />
+          <Text>Log out</Text>
+        </LogoutButton>
+      </AccountPopup>
+    </PersonalMenuAccount>
+  )
 }
 
 const PersonalMenuAccount = styled.div`
@@ -135,25 +63,29 @@ const PersonalMenuAccount = styled.div`
   align-items: center;
 `;
 
-const CompaniesButton = styled.button<{$opened: boolean}>`
-  display: block;
+const LogoutButton = styled.div`
+  ${typography.body};
   cursor: pointer;
-  flex-shrink: 0;
-  width: 20px;
-  height: 20px;
-  align-self: center;
-  margin-left: auto;
-  transition: transform 0.5s;
-  transform: ${({$opened}) => $opened ? 'rotate(45deg)' : 'rotate(0deg)'};
+  color: ${Color.GRAY_900};
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 16px;
+  transition: background 0.5s;
+  border-radius: 10px;
+
+  &:hover {
+    background: ${Color.GRAY_200};
+  }
 
   svg {
-    fill: ${Color.GRAY_700};
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
   }
 `;
 
-const OpenMenu = styled.div<{ $isOpened: boolean }>`
+const OpenProfileMenuButton = styled.div<{ $isOpened: boolean }>`
   cursor: pointer;
   width: 16px;
   height: 16px;
@@ -163,11 +95,11 @@ const OpenMenu = styled.div<{ $isOpened: boolean }>`
   transition: transform 500ms;
   transform: ${({ $isOpened }) => $isOpened ? 'scaleY(-1)' : 'scaleY(1)'};
 
-    svg {
-        stroke: ${Color.GRAY_800};
-        width: 100%;
-        height: 100%;
-    }
+  svg {
+    stroke: ${Color.GRAY_800};
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const AccountPopup = styled.div<{ $isOpen: boolean }>`
@@ -178,7 +110,7 @@ const AccountPopup = styled.div<{ $isOpen: boolean }>`
   right: -16px;
   width: 258px;
   background: #ffffff;
-  box-shadow: 0px 4px 34px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 34px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   display: grid;
   grid-auto-rows: auto;
@@ -193,21 +125,10 @@ const AccountPopup = styled.div<{ $isOpen: boolean }>`
   }
 
   ${mediaBreakpointDown(Breakpoint.xMobile)} {
-        position: fixed;
-        top: 80px;
-        left: 10px;
-        right: 10px;
-        width: inherit;
-    }
-`;
-
-const AccountUserData = styled.div`
-  display: grid;
-  grid-gap: 16px;
-  align-items: center;
-`;
-
-const AccountUserNames = styled.span`
-  display: flex;
-  gap: 8px;
+    position: fixed;
+    top: 80px;
+    left: 10px;
+    right: 10px;
+    width: inherit;
+  }
 `;

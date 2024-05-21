@@ -4,38 +4,29 @@ import styled, { css } from 'styled-components';
 import { ColorType } from '@admin/shared';
 import { Button, Input, PasswordInput } from '@freelbee/shared/ui-kit';
 import React, { FormEvent, useState } from 'react';
-import { useSaveNewAdminMutation } from '@admin/entities';
+import { useCreateAdminUserMutation } from '@admin/entities';
 
 export const AdminCreationForm = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isSuccessButton, setSuccessButton] = useState(false);
 
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-
-  const [saveNewAdmin] = useSaveNewAdminMutation();
+  const [createAdminUser, { isLoading, isSuccess }] = useCreateAdminUserMutation();
 
   const sendForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
-    const body = {
-      email,
-      password,
-      roles: []
-    };
-    saveNewAdmin(body)
-      .then((response) => {
-        // if (response.isSuccess()) {
+    createAdminUser({ email, password, roles: [] })
+      .then(() => {
+        if (isSuccess) {
           setEmail('');
           setPassword('');
-          setSuccess(true);
+          setSuccessButton(true);
           setTimeout(() => {
-            setSuccess(false);
+            setSuccessButton(false);
           }, 3000);
-        // }
+        }
       })
-      .finally(() => setLoading(false));
   };
 
   return (
@@ -53,12 +44,12 @@ export const AdminCreationForm = () => {
           setValue={(value) => setPassword(value)}
         />
         <Button
-          type='submit'
+          type="submit"
           isWide
-          isLoading={loading}
-          styles={success && css`background-color: ${ColorType.GREEN_COLOR}`}
+          isLoading={isLoading}
+          styles={isSuccessButton && css`background-color: ${ColorType.GREEN_COLOR}`}
         >
-          {success ? 'Success' : 'Create admin'}
+          {isSuccessButton ? 'Success' : 'Create admin'}
         </Button>
       </Form>
     </FormContent>

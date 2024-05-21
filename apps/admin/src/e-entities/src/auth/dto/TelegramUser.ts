@@ -1,9 +1,9 @@
 export interface TelegramUser {
   id: number,
   first_name: string,
-  hash: string,
   last_name: string,
-  photo_url: string,
   username: string,
+  photo_url: string,
   auth_date: number
+  hash: string,
 }

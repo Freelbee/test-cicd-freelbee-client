@@ -1,5 +1,5 @@
 import { API, Endpoint_Enum } from '@admin/shared';
-import { CompanyData, CounterpartyDto } from '../dto/CounterpartyDto';
+import { CounterpartyDtoModified, CounterpartyDto } from '../dto/CounterpartyDto';
 import { PropsHelper } from '@freelbee/shared/helpers';
 import { CounterpartyStatus } from '@freelbee/entities';
 
@@ -10,12 +10,17 @@ export const companiesAPI = API.injectEndpoints({
       providesTags: ['companyCounterparties'],
       transformResponse: (res: CounterpartyDto[]) => {
         return res.map((company: CounterpartyDto) => {
-          const mappedProps = PropsHelper.MapPropsToFields(company.counterpartyDetail.props);
-          return { ...company, counterpartyDetail: { ...company.counterpartyDetail, props: mappedProps } };
+          const mappedCounterpartyDetailProps = PropsHelper.MapPropsToFields(company.counterpartyDetail.props);
+          const mappedUserDataProps = PropsHelper.MapPropsToFields(company.user.userData.props);
+          return {
+            ...company,
+            counterpartyDetail: { ...company.counterpartyDetail, props: mappedCounterpartyDetailProps },
+            user: { ...company.user, userData: { ...company.user.userData, props: mappedUserDataProps } }
+          };
         });
       }
     }),
-    getCompanyCounterparty: builder.query<CompanyData, number>({
+    getCompanyCounterparty: builder.query<CounterpartyDtoModified, number>({
       query: (companyId) => Endpoint_Enum.GET_COMPANY_COUNTERPARTY.replace('{0}', companyId.toString()),
       providesTags: ['companyCounterparty'],
       transformResponse: (res: CounterpartyDto) => {

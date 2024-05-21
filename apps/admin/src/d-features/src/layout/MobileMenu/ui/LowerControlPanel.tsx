@@ -3,9 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { ReactComponent as MoreIcon } from '@freelbee/assets/icons/menu-icons/more.svg';
 import { visibleMenuItems } from '../data/links';
-import { LowerMenu } from './LowerMenu';
 import { Breakpoint, Color, mediaBreakpointUp } from '@freelbee/shared/ui-kit';
 import { usePathname } from 'next/navigation';
 import { LowerPanelButton } from './LowerPanelButton';
@@ -29,9 +27,7 @@ export default function LowerControlPanel() {
             <LowerPanelButton text={title} Icon={Icon} isActive={isRouteActive(link)} />
           </Link>
         ))}
-        <LowerPanelButton onClick={() => setIsOpen(prev => !prev)} Icon={MoreIcon} text="More" />
       </LowerPanel>
-      <LowerMenu isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
 }

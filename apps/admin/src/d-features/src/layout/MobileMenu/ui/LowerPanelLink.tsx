@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation';
 import styled from 'styled-components';
 
 interface Props {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Icon: any;
   text: string;
   link: string;
@@ -14,7 +13,13 @@ interface Props {
 
 export const LowerPanelLink = ({ Icon, link, text }: Props) => {
   const pathName = usePathname();
-  const isRouteActive = (link: string) => pathName.endsWith(link);
+
+  const isRouteActive = (link: string) => {
+    if (link === '/companies') {
+      return pathName.endsWith(link) || /^\/companies\/\d+$/.test(pathName);
+    }
+    return pathName.endsWith(link);
+  };
 
   return (
     <Link href={link}>

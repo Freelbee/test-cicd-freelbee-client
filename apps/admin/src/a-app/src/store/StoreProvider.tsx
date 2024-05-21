@@ -1,10 +1,10 @@
 'use client';
 
 import { AppStore, setupStore } from '@admin/features';
-import { useRef } from 'react';
+import { ReactNode, useRef } from 'react';
 import { Provider } from 'react-redux';
 
-export function StoreProvider({ children }: { children: React.ReactNode }) {
+export function StoreProvider({ children }: { children: ReactNode }) {
 
   const storeRef = useRef<AppStore>();
 

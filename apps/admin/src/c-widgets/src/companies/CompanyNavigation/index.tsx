@@ -20,10 +20,6 @@ export function CompanyNavigation() {
     if (company.counterpartyDetail.status !== CounterpartyStatus.IN_REVIEW) {
       items = items.concat([
         {
-          name: 'Accounts',
-          tab: CompanyNavigationTab.ACCOUNTS
-        },
-        {
           name: 'Documents',
           tab: CompanyNavigationTab.DOCUMENTS
         },

@@ -27,7 +27,7 @@ export const CompaniesTable = () => {
 
 const headRow = css`
   display: grid;
-  grid-template-columns: 40px 1.2fr 1.2fr 0.8fr 0.9fr 128px;
+  grid-template-columns: 40px 1.2fr 1.2fr 0.8fr 22px;
   gap: 16px;
 
   ${mediaBreakpointDown(Breakpoint.Tablet)} {

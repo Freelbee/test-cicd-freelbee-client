@@ -27,7 +27,7 @@ export const AdminAuth = () => {
         setStep(AuthStep.CONFIRMATION);
         break;
       case SessionStatusType.CONFIRMED:
-        router.push('/companies'); //TODO::: change to const
+        router.push('/companies');
     }
   }, [sessionData]);
 

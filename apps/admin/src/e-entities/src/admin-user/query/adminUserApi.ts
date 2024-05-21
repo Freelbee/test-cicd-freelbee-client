@@ -1,15 +1,14 @@
 import { API, Endpoint_Enum } from '@admin/shared';
 import { AdminCreationDto } from '../dto/AdminCreationDto';
-import { SessionDataResponse } from '../../auth/dto/SessionDataResponse';
-import { TelegramUser } from '../../auth/dto/TelegramUser';
-import { ConnectTelegramRequest } from '../../auth/dto/ConnectTelegramRequest';
-import { LoginData } from '../../auth/dto/LoginData';
 import { SessionStatusType } from '../../auth/dto/SessionStatusType';
 import { Token_Enum } from '@landing/shared';
+import { AdminUserDto, TelegramUserDto } from '../dto/AdminUserDto';
+import { SessionData } from '../../auth/dto/SessionData';
+import { AuthDto } from '@freelbee/entities';
 
 export const adminUserAPI = API.injectEndpoints({
   endpoints: (builder) => ({
-    getSessionData: builder.query<SessionDataResponse, void>({
+    getSessionData: builder.query<SessionData, void>({
       query: () => Endpoint_Enum.SESSION_DATA,
       providesTags: ['sessionData'],
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
@@ -24,10 +23,10 @@ export const adminUserAPI = API.injectEndpoints({
         }
       },
     }),
-    getAdminUser: builder.query<TelegramUser, null>({
+    getAdminUser: builder.query<AdminUserDto, void>({
       query: () => Endpoint_Enum.GET_ADMIN
     }),
-    signIn: builder.mutation<void, LoginData>({
+    signIn: builder.mutation<void, AuthDto>({
       query: (body) => ({
         url: Endpoint_Enum.SIGN_IN,
         method: 'POST',
@@ -35,14 +34,14 @@ export const adminUserAPI = API.injectEndpoints({
       }),
       invalidatesTags: ['sessionData']
     }),
-    saveNewAdmin: builder.mutation<void, AdminCreationDto>({
+    createAdminUser: builder.mutation<void, AdminCreationDto>({
       query: (body) => ({
-        url: Endpoint_Enum.SAVE_NEW_ADMIN,
+        url: Endpoint_Enum.CREATE_ADMIN_USER,
         method: 'POST',
         body
       })
     }),
-    connectTelegram: builder.mutation<void, ConnectTelegramRequest>({
+    connectTelegram: builder.mutation<void, TelegramUserDto>({
       query: (body) => ({
         url: Endpoint_Enum.CONNECT_TELEGRAM,
         method: 'POST',
@@ -75,7 +74,7 @@ export const {
   useGetSessionDataQuery,
   useGetAdminUserQuery,
   useSignInMutation,
-  useSaveNewAdminMutation,
+  useCreateAdminUserMutation,
   useConnectTelegramMutation,
   useSendConfirmationMutation,
 } = adminUserAPI;

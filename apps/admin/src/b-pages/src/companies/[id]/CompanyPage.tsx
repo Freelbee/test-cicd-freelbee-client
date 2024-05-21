@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { PageContainer, useGetCompanyCounterpartyQuery } from '@admin/entities';
-import { CompanyHeading, CompanyTabContent } from '@admin/widgets';
+import { CompanyHeading, CompanyTabsContent } from '@admin/widgets';
 import { CompanyNavigationContext, CompanyNavigationTab } from '@admin/features';
 
 export const CompanyPage = () => {
@@ -23,7 +23,7 @@ export const CompanyPage = () => {
     <CompanyNavigationContext.Provider value={{ company, companyNavigationTab, setCompanyNavigationTab }}>
       <PageContainer>
         <CompanyHeading />
-        <CompanyTabContent />
+        <CompanyTabsContent />
       </PageContainer>
     </CompanyNavigationContext.Provider>
   );

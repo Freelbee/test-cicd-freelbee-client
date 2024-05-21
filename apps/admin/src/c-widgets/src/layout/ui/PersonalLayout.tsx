@@ -8,7 +8,7 @@ import { Breakpoint, Color, mediaBreakpointDown } from '@freelbee/shared/ui-kit'
 export const PersonalLayout = ({ children }: PropsWithChildren) => {
   return (
     <Container>
-      <HeadMenu />{/*TODO::: fix*/}
+      <HeadMenu />
       <NavigationMenu />
       <MobileMenu />
       <Main>{children}</Main>

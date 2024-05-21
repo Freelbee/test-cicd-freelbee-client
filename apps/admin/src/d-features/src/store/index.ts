@@ -4,7 +4,7 @@ import { API, generalStatesReducer } from '@admin/shared';
 import { combineReducers, configureStore, isRejectedWithValue, Middleware, MiddlewareAPI } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { TypedUseSelectorHook, useSelector } from "react-redux";
-import { companiesAPI, sessionReducer } from '@admin/entities';
+import { companiesAPI } from '@admin/entities';
 
 export const rtkQueryErrorLogger: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
   if (isRejectedWithValue(action)) {
@@ -32,7 +32,6 @@ if (process.env.NODE_ENV === `development`) {
 }
 
 export const rootReducer = combineReducers({
-  sessionReducer,
   generalStatesReducer,
   [companiesAPI.reducerPath]: companiesAPI.reducer,
 });
