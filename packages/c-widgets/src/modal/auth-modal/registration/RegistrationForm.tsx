@@ -15,7 +15,7 @@ import {
   typography
 } from '@freelbee/shared/ui-kit';
 import { ReactComponent as ArrIcon } from '@freelbee/assets/icons/arrow-icons/long_arrow.svg';
-import { ValidatorResult } from '@freelbee/features';
+import { LeadMessageBuilder, ValidatorResult } from '@freelbee/features';
 import { RegistrationData } from '@freelbee/entities';
 import { RegistrationDataValidator } from './util/RegistrationDataValidator';
 import { LanguageType } from '@freelbee/shared/language';
@@ -32,8 +32,36 @@ export default function RegistrationForm(props: Props) {
   const { registrationData, setRegistrationData, setStep } = useContext(RegistrationContext);
   const [loading, setLoading] = useState(false);
   const [validatorResult, setValidatorResult] = useState(new ValidatorResult<RegistrationData>());
-
   const validator = new RegistrationDataValidator();
+
+  const getUserType = (): string => {
+    const origin = window.location.origin;
+    const freelancerUrl = process.env.NEXT_PUBLIC_FREELANCER_URL;
+    const companyUrl = process.env.NEXT_PUBLIC_COMPANY_URL;
+
+    if(freelancerUrl && origin.includes(freelancerUrl)) {
+      return 'freelancer';
+    } 
+
+    if(companyUrl && origin.includes(companyUrl)) {
+      return 'company';
+    } 
+
+    return 'user';
+  }
+
+  const sendTelegramNotification = async (formData: RegistrationData) => {
+    const tgMessage = new LeadMessageBuilder(`New ${getUserType()} has registered!`)
+        .phone(formData.phone)
+        .email(formData.email)
+        .source(window.location.origin)
+        .build();
+
+    return fetch("/api/tg_bot", {
+        method: "POST",
+        body: JSON.stringify(tgMessage)
+    });
+};
 
   const sendForm: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -48,14 +76,16 @@ export default function RegistrationForm(props: Props) {
     if (!formValidatorResult.isSuccess()) return;
 
     setLoading(true);
-
     const body = {
       email: registrationData.email.toLowerCase(),
       password: registrationData.password,
       phone: registrationData.phone
     };
     registerUser(body)
-      .then(() => setStep(RegistrationSteps.CONFIRM_EMAIL))
+      .then(() => {
+        setStep(RegistrationSteps.CONFIRM_EMAIL);
+        sendTelegramNotification(registrationData);
+      })
       .finally(() => setLoading(false));
   };
 

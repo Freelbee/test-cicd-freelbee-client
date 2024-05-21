@@ -17,7 +17,7 @@ export const LinkedInScript = () => process.env.NODE_ENV === 'production' && (
         <Script 
             id='linkedin_script'
             defer
-            strategy='worker'
+            strategy='lazyOnload'
             dangerouslySetInnerHTML={{
                 __html: `
                 (function(l) {
