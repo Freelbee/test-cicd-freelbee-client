@@ -4,7 +4,7 @@ export const GoogleTag = () => (
     <>
         <Script
             id='gtag-manager'
-            strategy='worker'
+            strategy='lazyOnload'
             defer
             dangerouslySetInnerHTML={{
                 __html: `
@@ -24,11 +24,11 @@ export const GoogleTag = () => (
         }} />
 
         <Script
-            strategy='worker'
+            strategy='lazyOnload'
             defer src="https://www.googletagmanager.com/gtag/js?id=AW-11470654223"/>
         <Script 
             id='gtag-init'
-            strategy='worker'
+            strategy='lazyOnload'
             defer
             dangerouslySetInnerHTML={{
                 __html: `

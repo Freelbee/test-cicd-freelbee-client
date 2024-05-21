@@ -13,6 +13,7 @@ import { LogoLink } from './ui/LogoLink';
 import { RoleSelectionModal } from '../../modal';
 import { GetStartedButton } from './ui/GetStartedButton';
 import { SignInButton } from './ui/SignInButton';
+import { usePathname } from 'next/navigation';
 
 
 const SWITCH_TO_BURGER_BREAKPOINT = 1080;
@@ -67,7 +68,7 @@ export const Header = () => {
     const headerRef = useRef<HTMLDivElement | null>(null);
     const burgerRef = useRef<HTMLButtonElement | null>(null);
     const isDesktop = useMatchMedia(`(min-width: ${SWITCH_TO_BURGER_BREAKPOINT}px)`);
-
+    const pathname = usePathname();
     const [isOpen, toggleOpen] = useCycle(false, true);
     const { height } = useDimensions(menuRef);
 
@@ -90,16 +91,25 @@ export const Header = () => {
         };
     }, []);
 
-    const renderLinks = () => NAV_LINKS.map(({text, url}) => (
-        <motion.li variants={item} key={text} custom={isDesktop}>
-            <Link href={`#${url}`} onClick={() => toggleOpen()}>
-                <PageLink
-                    $isActive={false}>
-                    {text}
-                </PageLink>
-            </Link>
-        </motion.li>
-    ));
+
+    const getNavUrlRelativeToMain = (url: string) => {
+      if(url.startsWith('_') && pathname !== '/') {
+          return `/#${url}`;
+      } else {
+          return `#${url}`;
+      }
+  };
+
+  const renderLinks = () => NAV_LINKS.map(({text, url}) => (
+      <LinkItem variants={item} key={text} custom={isDesktop}>
+          <Link data-crmid={`header_link_${url}`} href={getNavUrlRelativeToMain(url)} onClick={() => toggleOpen()}>
+              <PageLink 
+                  $isActive={false}>
+                  {text}
+              </PageLink>
+          </Link>        
+      </LinkItem>
+  ));
 
     return (
         <>
@@ -349,4 +359,8 @@ const PageLink = styled.span<{$isActive?: boolean}>`
   ${mediaBreakpointDown(SWITCH_TO_BURGER_BREAKPOINT)}{
     font-size: 20px;
   }
+`;
+
+const LinkItem = styled(motion.li)`
+  opacity: 1;
 `;

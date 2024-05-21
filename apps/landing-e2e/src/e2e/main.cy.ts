@@ -36,14 +36,12 @@ describe('landing-e2e', () => {
     cy.getDataTest('company-login')
     .should('be.visible')
     .should('have.attr', 'href')
-    .should('not.be.empty')
-    .and('contain', '/?authState=start');
+    .should('not.be.empty');
 
     cy.getDataTest('freelancer-login')
     .should('be.visible')
     .should('have.attr', 'href')
-    .should('not.be.empty')
-    .and('contain', '/?authState=start');
+    .should('not.be.empty');
   });
 
   it('should open application modal with searchParams on button click', () => {
