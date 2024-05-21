@@ -10,7 +10,7 @@ export const MeetFreelbee = () => (
     <Container>
         <MeetIcon />
         <Title1 $align='center' as='h2'>
-            convenient and cost-effective service
+            convenient and cost-effective platform
             <br/>for managing contractors
         </Title1>
     </Container>

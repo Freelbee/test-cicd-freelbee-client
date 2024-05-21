@@ -30,7 +30,7 @@ export default function Login(props: Props) {
 
   const data = {
     sidebarTitle: `Log in`,
-    sidebarText: `Don’t have an account?`,
+    sidebarText: `Don’t have an account yet?`,
     sidebarLinkText: `Sign up`,
   };
 
