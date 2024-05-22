@@ -19,6 +19,11 @@ const nextConfig = {
         hostname: 'assets-dev.transak.com',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'assets.transak.com',
+        port: '',
+      },
     ],
   },
   nx: {
