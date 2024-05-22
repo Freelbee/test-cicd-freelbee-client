@@ -1,34 +1,19 @@
 'use client';
 
-import { ReactComponent as VerificationIcon } from '@freelbee/assets/icons/user/verification.svg';
-import { ReactComponent as WaitingIcon } from '@freelbee/assets/icons/user/waiting.svg';
 import { ReactComponent as UserIcon } from '@freelbee/assets/icons/user/person.svg';
 import { BORDER_RADIUS, Color } from '@freelbee/shared/ui-kit';
 import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
-  // To-DO interface
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  status: any;
   avatarContent?: string;
 }
 
-export const UserAvatar = ({ status, avatarContent, ...rest }: Props) => {
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'approved':
-        return <VerificationIcon fill={Color.EMERALD} />;
-      case 'waiting':
-        return <WaitingIcon fill={Color.YELLOW} />;
-    }
-  };
-
+export const UserAvatar = ({ avatarContent, ...rest }: Props) => {
   return (
     <NameWrapper {...rest}>
       <Avatar>{avatarContent || <UserIcon />}</Avatar>
-      {getStatusIcon(status)}
     </NameWrapper>
   );
 };

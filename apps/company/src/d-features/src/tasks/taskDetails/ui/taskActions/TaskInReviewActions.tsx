@@ -3,7 +3,7 @@
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../../store";
 import { setDetailsOpen, useGetCompanyCounterpartyQuery, useSetTaskStatusMutation } from "@company/entities";
-import { CounterpartyStatus, PaymentProviderName, TaskStatus } from '@freelbee/entities';
+import { CounterpartyDetailsStatus, PaymentProviderName, TaskStatus } from '@freelbee/entities';
 import { ActionsContainer } from "./ActionsContainer";
 import { Button, ButtonStyleEnum, Checkbox, Color, InfoWithIcon, Text } from '@freelbee/shared/ui-kit';
 import React, { useState } from 'react';
@@ -20,8 +20,8 @@ export default function TaskInReviewActions () {
     const isNebeusAccountCreated = false; //TODO::: change to request and uncomment
     const isNebeusAndNebeusNotAccountCreated = displayedTask?.paymentProviderName === PaymentProviderName.NEBEUS && !isNebeusAccountCreated;
 
-    const isButtonApproveDisabled = !isBoxChecked || company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED || isNebeusAndNebeusNotAccountCreated;
-    const isButtonRefineDisabled = company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED;
+    const isButtonApproveDisabled = !isBoxChecked || company?.counterpartyDetail.status !== CounterpartyDetailsStatus.APPROVED || isNebeusAndNebeusNotAccountCreated;
+    const isButtonRefineDisabled = company?.counterpartyDetail.status !== CounterpartyDetailsStatus.APPROVED;
 
     const handleSetStatus = (status: TaskStatus) => {
         if (!displayedTask) return;

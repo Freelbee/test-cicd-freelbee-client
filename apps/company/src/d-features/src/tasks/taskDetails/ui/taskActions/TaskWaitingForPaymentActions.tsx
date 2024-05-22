@@ -12,7 +12,7 @@ import {
   useSetTaskStatusMutation,
   useTransakWidget
 } from '@company/entities';
-import { CounterpartyStatus, PaymentProviderName, TaskCounterpartyDataDto, TaskStatus } from '@freelbee/entities';
+import { CounterpartyDetailsStatus, PaymentProviderName, TaskCounterpartyDataDto, TaskStatus } from '@freelbee/entities';
 import { ActionsContainer } from './ActionsContainer';
 import { Button, ButtonStyleEnum } from '@freelbee/shared/ui-kit';
 import { useEffect, useState } from 'react';
@@ -102,7 +102,7 @@ export default function TaskWaitingForPaymentActions() {
     <>
       <ActionsContainer>
         <Button
-          disabled={company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED || isButtonPayHidden}
+          disabled={company?.counterpartyDetail.status !== CounterpartyDetailsStatus.APPROVED || isButtonPayHidden}
           isWide
           styleType={ButtonStyleEnum.GREEN}
           onClick={() => onClickPay()}

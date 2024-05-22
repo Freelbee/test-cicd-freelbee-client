@@ -13,9 +13,9 @@ export function DeclinedConfirmation(props: Props) {
   return (
     <Container>
       <Holder>
-        <CanceledIcon className={`declinedConfirmation__icon`} />
+        <CanceledIcon />
       </Holder>
-      <Text color={Color.GRAY_600} align='center'>Authorization request rejected</Text>
+      <Text color={Color.GRAY_600} align="center">Authorization request rejected</Text>
       <ButtonContainer>
         <Button onClick={() => sendConfirmation()}>Send new confirmation</Button>
       </ButtonContainer>

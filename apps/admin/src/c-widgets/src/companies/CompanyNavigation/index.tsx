@@ -1,10 +1,9 @@
 'use client';
 
-import { CounterpartyStatus } from '@freelbee/entities';
+import { CounterpartyDetailsStatus } from '@freelbee/entities';
 import { useContext } from 'react';
 import styled from 'styled-components';
-import { typography } from '@freelbee/shared/ui-kit';
-import { ColorType } from '@admin/shared';
+import { Color, typography } from '@freelbee/shared/ui-kit';
 import { CompanyNavigationContext, CompanyNavigationTab } from '@admin/features';
 
 export function CompanyNavigation() {
@@ -17,16 +16,16 @@ export function CompanyNavigation() {
         tab: CompanyNavigationTab.PRIMARY_INFO
       }
     ];
-    if (company.counterpartyDetail.status !== CounterpartyStatus.IN_REVIEW) {
+    if (company.counterpartyDetail.status !== CounterpartyDetailsStatus.IN_REVIEW) {
       items = items.concat([
-        {
-          name: 'Documents',
-          tab: CompanyNavigationTab.DOCUMENTS
-        },
-        {
-          name: 'Methods',
-          tab: CompanyNavigationTab.METHODS
-        }
+        // {
+        //   name: 'Documents',
+        //   tab: CompanyNavigationTab.DOCUMENTS
+        // },
+        // {
+        //   name: 'Methods',
+        //   tab: CompanyNavigationTab.METHODS
+        // }
       ]);
     }
 
@@ -60,7 +59,7 @@ const NavigationItem = styled.div<{ $selected: boolean }>`
   ${typography.body};
   display: flex;
   padding: 8px 16px;
-  color: ${({ $selected }) => $selected ? '#3D6BE2' : ColorType.GREY_COLOR};
+  color: ${({ $selected }) => $selected ? '#3D6BE2' : Color.GRAY_600};
   border-bottom: ${({ $selected }) => $selected ? ' 2px solid #3D6BE2' : ' 2px solid transparent'};
   cursor: pointer;
 `;

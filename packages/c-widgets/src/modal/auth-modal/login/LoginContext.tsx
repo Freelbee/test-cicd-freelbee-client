@@ -1,10 +1,10 @@
 import React, {Dispatch, SetStateAction} from "react";
-import {AuthDto} from "@freelbee/entities";
+import {AuthenticationDto} from "@freelbee/entities";
 import {LoginSteps} from "./LoginSteps";
 
 export interface LoginContextType {
-  loginData: AuthDto;
-  setLoginData: Dispatch<SetStateAction<AuthDto>>;
+  loginData: AuthenticationDto;
+  setLoginData: Dispatch<SetStateAction<AuthenticationDto>>;
   step: LoginSteps;
   setStep: Dispatch<SetStateAction<LoginSteps>>;
 }

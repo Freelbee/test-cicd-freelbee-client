@@ -5,20 +5,18 @@ import { useSignInMutation } from '@admin/entities';
 import styled from 'styled-components';
 import { useDataStateUpdater } from '@freelbee/shared/hooks';
 import { Button, Heading1, Input, PasswordInput } from '@freelbee/shared/ui-kit';
-import { AuthDto } from '@freelbee/entities';
+import { AuthenticationDto } from '@freelbee/entities';
 import { ValidatorResult } from '@freelbee/features';
 import { LanguageType } from '@freelbee/shared/language';
-import { LoginDataValidator } from 'apps/admin/src/c-widgets/src/auth/util/LoginDataValidator';
+import { LoginDataValidator } from '@admin/features';
 
 export function Login() {
-
-  const [loginData, setLoginData] = useState<AuthDto>({ email: '', password: '' });
-  const [, setData] = useDataStateUpdater<AuthDto>(loginData, setLoginData);
+  const [loginData, setLoginData] = useState<AuthenticationDto>({ email: '', password: '' });
+  const [, setData] = useDataStateUpdater<AuthenticationDto>(loginData, setLoginData);
+  const validator = new LoginDataValidator();
+  const [validatorResult, setValidatorResult] = useState(new ValidatorResult<AuthenticationDto>());
 
   const [login, { isLoading: isLoadingLogin }] = useSignInMutation();
-
-  const [validatorResult, setValidatorResult] = useState(new ValidatorResult<AuthDto>());
-  const validator = new LoginDataValidator();
 
   const onSubmit = async (e?: FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
@@ -55,7 +53,7 @@ export function Login() {
             errorMessage={validatorResult.getMessageByLanguage('password', LanguageType.EN)}
           />
           <Button
-            type='submit'
+            type="submit"
             isWide
             isLoading={isLoadingLogin}
           >

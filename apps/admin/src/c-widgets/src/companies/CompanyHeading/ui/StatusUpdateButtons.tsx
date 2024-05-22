@@ -1,7 +1,7 @@
 'use client';
 
 import { Breakpoint, Button, ButtonStyleEnum, mediaBreakpointDown } from '@freelbee/shared/ui-kit';
-import { CounterpartyStatus } from '@freelbee/entities';
+import { CounterpartyDetailsStatus } from '@freelbee/entities';
 import { useContext, useState } from 'react';
 import { useSetCompanyCounterpartyStatusMutation } from '@admin/entities';
 import styled from 'styled-components';
@@ -10,11 +10,12 @@ import { CompanyNavigationContext } from '@admin/features';
 export const StatusUpdateButtons = () => {
   const { company } = useContext(CompanyNavigationContext);
   const [updateStatusLoading, setUpdateStatusLoading] = useState(false);
+
   const [setCompanyCounterpartyStatus] = useSetCompanyCounterpartyStatusMutation();
 
   const counterpartyDetailsStatus = company.counterpartyDetail.status;
 
-  const updateStatus = (status: CounterpartyStatus) => {
+  const updateStatus = (status: CounterpartyDetailsStatus) => {
     setUpdateStatusLoading(true);
     setCompanyCounterpartyStatus({ companyId: company.id, status })
       .finally(() => setUpdateStatusLoading(false));
@@ -22,23 +23,23 @@ export const StatusUpdateButtons = () => {
 
   return (
     <ButtonsContainer>
-      {(counterpartyDetailsStatus === CounterpartyStatus.APPROVED || counterpartyDetailsStatus === CounterpartyStatus.IN_REVIEW) && (
+      {(counterpartyDetailsStatus === CounterpartyDetailsStatus.APPROVED || counterpartyDetailsStatus === CounterpartyDetailsStatus.IN_REVIEW) && (
         <Button
-          onClick={() => updateStatus(CounterpartyStatus.REJECTED)}
+          onClick={() => updateStatus(CounterpartyDetailsStatus.REJECTED)}
           styleType={ButtonStyleEnum.RED}
           isLoading={updateStatusLoading}
         >
           Block
         </Button>
       )}
-      {(counterpartyDetailsStatus === CounterpartyStatus.IN_REVIEW || counterpartyDetailsStatus === CounterpartyStatus.REJECTED) && (
+      {(counterpartyDetailsStatus === CounterpartyDetailsStatus.IN_REVIEW || counterpartyDetailsStatus === CounterpartyDetailsStatus.REJECTED) && (
         <Button
-          onClick={() => updateStatus(CounterpartyStatus.APPROVED)}
+          onClick={() => updateStatus(CounterpartyDetailsStatus.APPROVED)}
           styleType={ButtonStyleEnum.GREEN}
           isLoading={updateStatusLoading}
         >
-          {counterpartyDetailsStatus === CounterpartyStatus.REJECTED && 'Unblock'}
-          {counterpartyDetailsStatus === CounterpartyStatus.IN_REVIEW && 'Approve'}
+          {counterpartyDetailsStatus === CounterpartyDetailsStatus.REJECTED && 'Unblock'}
+          {counterpartyDetailsStatus === CounterpartyDetailsStatus.IN_REVIEW && 'Approve'}
         </Button>
       )}
     </ButtonsContainer>

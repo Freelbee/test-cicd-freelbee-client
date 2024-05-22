@@ -5,7 +5,6 @@ import { ReactNode, useRef } from 'react';
 import { Provider } from 'react-redux';
 
 export function StoreProvider({ children }: { children: ReactNode }) {
-
   const storeRef = useRef<AppStore>();
 
   if (!storeRef.current) {

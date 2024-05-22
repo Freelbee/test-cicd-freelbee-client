@@ -3,6 +3,7 @@
 > docker-compose.landing.deploy.yaml
 > docker-compose.freelancer.deploy.yaml
 > docker-compose.company.deploy.yaml
+> docker-compose.admin.deploy.yaml
 
 > deploy.sh
 
@@ -88,5 +89,29 @@ docker-compose -f docker-compose.company.deploy.yaml up -d" >> deploy.sh
 bash ./remove-old-images.sh company $NUMBER_OF_SAVED_IMAGES
     " >> deploy.sh
   fi
+fi
 
+# Проверка и добавление сервиса admin в файл docker-compose.deploy.yml, если он указан в DEPLOY_PROJECTS или если all
+if [[ "$DEPLOY_PROJECTS" == *"admin"* || "$DEPLOY_PROJECTS" == *"all"* ]]; then
+  echo "
+version: '3.8'
+services:
+  admin:
+    image: ghcr.io/freelbee/nx-client/admin-${IMAGE_TAG}
+    ports:
+      - '4203:4200'
+    restart: unless-stopped
+    labels:
+      - 'project=admin'
+
+" >> docker-compose.admin.deploy.yaml
+
+  echo "
+docker-compose -f docker-compose.admin.deploy.yaml pull
+docker-compose -f docker-compose.admin.deploy.yaml up -d" >> deploy.sh
+  if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
+    echo "
+bash ./remove-old-images.sh admin $NUMBER_OF_SAVED_IMAGES
+    " >> deploy.sh
+  fi
 fi

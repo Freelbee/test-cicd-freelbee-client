@@ -18,7 +18,7 @@ export const visibleMenuItems: Array<MobileMenuLink> = [
     link: `/confirmation-codes`,
     title: 'Codes',
     Icon: ConfirmationCodesIcon
-  },
+  }
 ];
 
 export const hiddenMenuItems: Array<MobileMenuLink> = [];

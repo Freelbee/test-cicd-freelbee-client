@@ -63,7 +63,7 @@ export function CompanyTabPrimaryInfo() {
           setValue={() => null}
           disabled
         />
-        <Input //TODO::: change format
+        <Input
           label="Status"
           placeholder=""
           value={company.counterpartyDetail.status}

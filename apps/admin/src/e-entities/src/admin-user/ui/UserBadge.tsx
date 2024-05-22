@@ -6,23 +6,23 @@ import styled, { css } from 'styled-components';
 import { UserAvatar } from './UserAvatar';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
-  status: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   avatarContent?: any;
   name?: string;
   subInfo?: ReactNode;
 }
 
 export const UserBadge = forwardRef(
-  function Badge({ status, avatarContent, name, subInfo, ...rest }: Props, ref: ForwardedRef<HTMLDivElement>) {
+  function Badge({ avatarContent, name, subInfo, ...rest }: Props, ref: ForwardedRef<HTMLDivElement>) {
     return (
       <Container {...rest}>
-        <UserAvatar status={status} avatarContent={avatarContent} />
+        <UserAvatar avatarContent={avatarContent} />
         <AccountName ref={ref} {...ref}>
           <Text font="bodyMedium" styles={clampNameStyles}>{name}</Text>
           {subInfo}
         </AccountName>
       </Container>
-    )
+    );
   });
 
 const clampNameStyles = css`

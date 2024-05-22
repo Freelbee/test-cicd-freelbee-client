@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import { PageContainer, useGetCompanyCounterpartyQuery } from '@admin/entities';
+import { useGetCompanyCounterpartyQuery } from '@admin/entities';
 import { CompanyHeading, CompanyTabsContent } from '@admin/widgets';
 import { CompanyNavigationContext, CompanyNavigationTab } from '@admin/features';
+import { PageContainer } from '@admin/shared';
 
 export const CompanyPage = () => {
   const params = useParams();

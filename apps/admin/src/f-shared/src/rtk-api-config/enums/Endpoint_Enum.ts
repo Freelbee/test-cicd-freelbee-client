@@ -1,28 +1,36 @@
-export enum Endpoint_Enum { //TODO::: rename to comply with backend
-  REFRESH_TOKEN = '/auth/refresh-token-pair',
+export enum Endpoint_Enum {
 
-  SESSION_DATA = 'auth/info',
-  GET_ADMIN = 'admin',
-  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
-  CREATE_ADMIN_USER = 'admin',
+  /**
+   * @see telegramUserApi
+   */
+  CREATE_TELEGRAM_USER = 'auth/telegram-user',
+
+  /**
+   * @see adminAuthApi
+   */
   SIGN_IN = 'auth/credentials',
   SEND_CONFIRMATION = 'auth/send-confirmation',
-  CONNECT_TELEGRAM = 'auth/telegram-user',
+  GET_AUTH_INFO = 'auth/info',
+  REFRESH_TOKEN_PAIR = '/auth/refresh-token-pair',
   LOGOUT = 'auth/logout',
-  REFRESH_TOKEN_PAIR = 'auth/refresh-token-pair',
 
-  GET_ALL_CONFIRMATION_CODES = 'confirmation-codes',
+  /**
+   * @see adminUserApi
+   */
+  GET_ADMIN_ROLES = `roles`,
+  CREATE_ADMIN_USER = 'admin',
+  // eslint-disable-next-line @typescript-eslint/no-duplicate-enum-values
+  GET_ADMIN_USER = 'admin',
 
-  GET_PAGE_OF_COMPANY_COUNTERPARTIES = 'companies',
+  /**
+   * @see companyApi
+   */
   GET_COMPANY_COUNTERPARTY = 'companies/{0}',
+  GET_PAGE_OF_COMPANY_COUNTERPARTIES = 'companies?page={0}&size={1}',
   SET_COMPANY_COUNTERPARTY_STATUS = 'companies/{0}/set-status',
-}
 
-export const ApiMethodsWithoutToken = [
-  Endpoint_Enum.SESSION_DATA,
-  Endpoint_Enum.SIGN_IN,
-  Endpoint_Enum.LOGOUT,
-  Endpoint_Enum.CONNECT_TELEGRAM,
-  Endpoint_Enum.SEND_CONFIRMATION,
-  Endpoint_Enum.REFRESH_TOKEN_PAIR
-];
+  /**
+   * @see confirmationCodeApi
+   */
+  GET_ALL_CONFIRMATION_CODES = 'confirmation-codes',
+}

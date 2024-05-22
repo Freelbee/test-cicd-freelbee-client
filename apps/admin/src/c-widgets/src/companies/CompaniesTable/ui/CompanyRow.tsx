@@ -1,10 +1,10 @@
 'use client';
 
-import { Breakpoint, Color, Text, mediaBreakpointDown, typography, vw } from '@freelbee/shared/ui-kit';
+import { Breakpoint, Color, Text, mediaBreakpointDown } from '@freelbee/shared/ui-kit';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
-import { CounterpartyDtoModified } from '@admin/entities';
 import { CounterpartyDetailStatusIcon } from '@admin/features';
+import { CounterpartyDtoModified } from '@freelbee/entities';
 
 interface Props {
   company: CounterpartyDtoModified;

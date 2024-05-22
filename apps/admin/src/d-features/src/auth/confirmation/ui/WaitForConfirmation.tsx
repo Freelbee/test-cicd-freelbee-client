@@ -1,26 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import * as process from 'process';
-import { ColorType } from '@admin/shared';
-import { useGetSessionDataQuery } from '@admin/entities';
-import { Button, Heading1, Text } from '@freelbee/shared/ui-kit';
+import { useGetAuthInfoQuery } from '@admin/entities';
+import { Button, Color, Heading1, Text } from '@freelbee/shared/ui-kit';
 
 export function WaitForConfirmation() {
-  const { refetch, isFetching } = useGetSessionDataQuery();
+  const { refetch, isFetching } = useGetAuthInfoQuery();
 
   return (
     <Container>
       <Heading1>Sign In Confirmation</Heading1>
-      <Text color={ColorType.GREY_COLOR}>
+      <Text color={Color.GRAY_600}>
         Accept authorization in your Telegram account: &nbsp;
-        <a href={`https://t.me/${process.env.NEXT_PUBLIC_BOT_URL ?? 'FreelbeeAdminBot1'}`} target={`_blank`}>
-          <Text color={ColorType.LINK}>@{process.env.NEXT_PUBLIC_BOT_URL ?? 'FreelbeeAdminBot1'}</Text>
+        <a href={`https://t.me/${process.env.NEXT_PUBLIC_BOT_URL ?? 'FreelbeeAdminTest1Bot'}`} target={`_blank`}>
+          <Text color={Color.BLUE}>@{process.env.NEXT_PUBLIC_BOT_URL ?? 'FreelbeeAdminTest1Bot'}</Text>
         </a>
         &nbsp;and click the button
       </Text>
-      <Button onClick={() => refetch()} isLoading={isFetching} isWide>
-        Check status
-      </Button>
+      <Button onClick={() => refetch()} isLoading={isFetching} isWide>Check status</Button>
     </Container>
   );
 }

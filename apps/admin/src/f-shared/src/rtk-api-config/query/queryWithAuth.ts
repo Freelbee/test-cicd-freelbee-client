@@ -1,10 +1,9 @@
-import { Mutex } from 'async-mutex';
-import { BaseQueryApi, BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { baseQuery } from './baseQuery';
-import { Endpoint_Enum, Token_Enum } from '@admin/shared';
 import { redirect } from 'next/navigation';
+import { Mutex } from 'async-mutex';
+import { baseQuery } from './baseQuery';
+import { BaseQueryApi, BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { Endpoint_Enum, Token_Enum, TokenPairDto } from '@admin/shared';
 import { QueryReturnValue } from '@reduxjs/toolkit/dist/query/baseQueryTypes';
-import { TokenPairDto } from '@admin/shared';
 
 const mutex = new Mutex();
 
@@ -34,7 +33,7 @@ export const baseQueryWithAuth: BaseQueryFn<
         const res = await refreshTokensQuery(args, api, extraOptions);
         result = res ? res : result;
 
-        if(result.error){
+        if (result.error) {
           localStorage.removeItem(Token_Enum.ACCESS_TOKEN);
           redirect('/sign-in');
         }
@@ -52,28 +51,22 @@ export const baseQueryWithAuth: BaseQueryFn<
 };
 
 const refreshTokensQuery = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: ExtraOptions) => {
-  const refreshResult = (await baseQuery(
-    {
-      url: Endpoint_Enum.REFRESH_TOKEN,
-      method: 'POST'
-    },
-    api,
-    extraOptions
-  )) as QueryReturnValue<TokenPairDto, FetchBaseQueryError>;
+  const refreshResult = (
+    await baseQuery(
+      { url: Endpoint_Enum.REFRESH_TOKEN_PAIR, method: 'POST' },
+      api,
+      extraOptions
+    )) as QueryReturnValue<TokenPairDto, FetchBaseQueryError>;
 
   if (refreshResult) {
     /*const accessToken = refreshResult.meta.response.headers.get('Authorization').replace('Bearer ', '');
-
     localStorage.setItem(Token_Enum.ACCESS_TOKEN, accessToken);*/
 
     // retry the initial query
-    return await baseQuery(
-      getAuthorizedArgsConfig(args),
-      api,
-      extraOptions);
+    return await baseQuery(getAuthorizedArgsConfig(args), api, extraOptions);
   } else {
     localStorage.removeItem(Token_Enum.ACCESS_TOKEN);
-    redirect('/sign-in');
+    redirect('/');
   }
 };
 

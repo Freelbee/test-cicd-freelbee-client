@@ -1,10 +1,10 @@
 'use client';
 
-import { API, generalStatesReducer } from '@admin/shared';
+import { API } from '@admin/shared';
 import { combineReducers, configureStore, isRejectedWithValue, Middleware, MiddlewareAPI } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { TypedUseSelectorHook, useSelector } from "react-redux";
-import { companiesAPI } from '@admin/entities';
+import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { companyAPI } from '@admin/entities';
 
 export const rtkQueryErrorLogger: Middleware = (api: MiddlewareAPI) => (next) => (action) => {
   if (isRejectedWithValue(action)) {
@@ -32,14 +32,13 @@ if (process.env.NODE_ENV === `development`) {
 }
 
 export const rootReducer = combineReducers({
-  generalStatesReducer,
-  [companiesAPI.reducerPath]: companiesAPI.reducer,
+  [companyAPI.reducerPath]: companyAPI.reducer
 });
 
 export const setupStore = () => configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
-    serializableCheck: false,
+    serializableCheck: false
   }).concat(middlewares)
 });
 
@@ -50,4 +49,4 @@ setupListeners(store.dispatch);
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
 export type AppDispatch = AppStore[`dispatch`];
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

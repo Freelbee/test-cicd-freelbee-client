@@ -1,6 +1,5 @@
 import React from 'react';
-import { CounterpartyDtoModified } from '@admin/entities';
-import { CounterpartyStatus } from '@freelbee/entities';
+import { CounterpartyDetailsStatus, CounterpartyDtoModified } from '@freelbee/entities';
 import { ReactComponent as ApprovedIcon } from '@freelbee/assets/icons/counterparty-details-status/approved.svg';
 import { ReactComponent as InReviewIcon } from '@freelbee/assets/icons/counterparty-details-status/in-review.svg';
 import { ReactComponent as RejectedIcon } from '@freelbee/assets/icons/counterparty-details-status/rejected.svg';
@@ -13,9 +12,9 @@ export const CounterpartyDetailStatusIcon = (props: Props) => {
   const { company } = props;
 
   const counterpartyDetailStatusIcon = {
-    [CounterpartyStatus.APPROVED]: <ApprovedIcon />,
-    [CounterpartyStatus.IN_REVIEW]: <InReviewIcon />,
-    [CounterpartyStatus.REJECTED]: <RejectedIcon />,
+    [CounterpartyDetailsStatus.APPROVED]: <ApprovedIcon />,
+    [CounterpartyDetailsStatus.IN_REVIEW]: <InReviewIcon />,
+    [CounterpartyDetailsStatus.REJECTED]: <RejectedIcon />
   };
 
   return counterpartyDetailStatusIcon[company.counterpartyDetail.status];

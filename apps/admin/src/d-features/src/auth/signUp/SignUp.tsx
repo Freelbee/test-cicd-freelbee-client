@@ -1,15 +1,15 @@
 'use client';
 
 import React from 'react';
-import { AnyError, ColorType, Paragraph, Title } from '@admin/shared';
-import { useConnectTelegramMutation } from '@admin/entities';
 import styled from 'styled-components';
 import { TelegramOauth } from './ui/TelegramOauth';
-import { TelegramUser } from '@admin/entities';
+import { TelegramUser, useCreateTelegramUserMutation } from '@admin/entities';
+import { Color, Heading1, Text } from '@freelbee/shared/ui-kit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { SerializedError } from '@reduxjs/toolkit';
 
 export function SignUp() {
-
-  const [connectTelegram, { error }] = useConnectTelegramMutation();
+  const [connectTelegram, { error }] = useCreateTelegramUserMutation();
 
   const callbackConnectTelegram = (user: TelegramUser) => {
     connectTelegram({
@@ -22,11 +22,20 @@ export function SignUp() {
     });
   };
 
+  function isFetchBaseQueryError(error: FetchBaseQueryError | SerializedError): error is FetchBaseQueryError {
+    return typeof error === 'object' && error !== null && 'data' in error;
+  }
+  function isErrorDataString(data: unknown): data is string {
+    return typeof data === 'string';
+  }
+
   return (
     <Container>
-      <Title color={ColorType.BLACK_COLOR}>Hello</Title>
-      <Paragraph color={ColorType.GREY_COLOR}>To continue, please connect your Telegram account</Paragraph>
-      <AnyError error={error} exceptFields={[]} />
+      <Heading1>Hello</Heading1>
+      <Text color={Color.GRAY_600}>To continue, please connect your Telegram account</Text>
+      {error && isFetchBaseQueryError(error) && isErrorDataString(error.data) && (
+        <Text color={Color.DANGER}>{error.data}</Text>
+      )}
       <TelegramOauth callback={(user) => callbackConnectTelegram(user)} />
     </Container>
   );

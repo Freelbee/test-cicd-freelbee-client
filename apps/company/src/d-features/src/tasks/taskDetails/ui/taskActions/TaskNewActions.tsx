@@ -1,7 +1,7 @@
 'use client';
 
 import { setDetailsOpen, useGetCompanyCounterpartyQuery, useSetTaskStatusMutation } from "@company/entities";
-import { CounterpartyStatus, TaskStatus } from "@freelbee/entities";
+import { CounterpartyDetailsStatus, TaskStatus } from "@freelbee/entities";
 import { useAppSelector } from "../../../../store";
 import { useDispatch } from "react-redux";
 import { ActionsContainer } from "./ActionsContainer";
@@ -29,7 +29,7 @@ export default function TaskNewActions () {
         <>
             <ActionsContainer>
                 <Button
-                    disabled={company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED}
+                    disabled={company?.counterpartyDetail.status !== CounterpartyDetailsStatus.APPROVED}
                     isWide
                     onClick={()=> handleSetStatus(TaskStatus.ASSIGNED)}
                 >

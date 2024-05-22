@@ -1,13 +1,13 @@
 'use client'
 
 import ConfirmationAuthLayout from "../ConfirmationAuthLayout";
-import {SessionDto} from "@freelbee/entities";
+import {UserAuthSessionDto} from "@freelbee/entities";
 import {Dispatch, SetStateAction} from "react";
 import {AuthModalState} from "@freelbee/widgets";
 
 type Props = {
   email: string;
-  userRegSession: () => Promise<SessionDto>;
+  userRegSession: () => Promise<UserAuthSessionDto>;
   checkCode: (str: string) => Promise<void>;
   resendCode: () => Promise<void>;
   setModalState: Dispatch<SetStateAction<AuthModalState>>;

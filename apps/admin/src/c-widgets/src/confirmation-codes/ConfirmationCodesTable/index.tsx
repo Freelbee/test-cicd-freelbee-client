@@ -1,9 +1,10 @@
 'use client';
 
 import { css } from 'styled-components';
-import { TableHead, useGetAllConfirmationCodesQuery } from '@admin/entities';
+import { useGetAllConfirmationCodesQuery } from '@admin/entities';
 import { Breakpoint, Color, Text, mediaBreakpointDown } from '@freelbee/shared/ui-kit';
 import { ConfirmationCodesRow } from './ui/ConfirmationCodesRow';
+import { TableHead } from '@admin/shared';
 
 export const ConfirmationCodesTable = () => {
   const { data: confirmationCodes } = useGetAllConfirmationCodesQuery();

@@ -14,18 +14,18 @@ import {LoginContext} from "./LoginContext";
 import {ReactComponent as ArrIcon} from "@freelbee/assets/icons/arrow-icons/long_arrow.svg";
 import {LoginDataValidator} from "./util/LoginDataValidator";
 import {ValidatorResult} from "@freelbee/features";
-import {AuthDto} from "@freelbee/entities";
+import {AuthenticationDto} from "@freelbee/entities";
 import {LoginSteps} from "./LoginSteps";
 
 type Props = {
-  authUser: (dto: AuthDto) => Promise<void>;
+  authUser: (dto: AuthenticationDto) => Promise<void>;
 };
 
 export default function LoginForm(props: Props) {
 
   const {authUser} = props;
   const [buttonLoading, setButtonLoading] = useState(false);
-  const [validatorResult, setValidatorResult] = useState(new ValidatorResult<AuthDto>());
+  const [validatorResult, setValidatorResult] = useState(new ValidatorResult<AuthenticationDto>());
   const {loginData, setLoginData, setStep} = useContext(LoginContext);
 
 

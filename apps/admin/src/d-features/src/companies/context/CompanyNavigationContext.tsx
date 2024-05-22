@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext } from 'react';
-import { CounterpartyDtoModified } from '@admin/entities';
+import { CounterpartyDtoModified } from '@freelbee/entities';
 
 export enum CompanyNavigationTab {
   PRIMARY_INFO = 'PRIMARY_INFO',
@@ -16,7 +16,8 @@ export interface ICompanyNavigationContext {
 }
 
 export const CompanyNavigationContext = createContext<ICompanyNavigationContext>({
+  // @ts-expect-error //@typescript-eslint/ban-ts-comment
   company: {},
   companyNavigationTab: CompanyNavigationTab.PRIMARY_INFO,
-  setCompanyNavigationTab: () => {},
+  setCompanyNavigationTab: () => {}
 });

@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { PageContainer, PageTitle } from '@admin/entities';
 import { AdminCreationForm } from '@admin/widgets';
+import { PageContainer, PageTitle } from '@admin/shared';
 
 export const AdminsPage = () => {
   return (

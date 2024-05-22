@@ -1,8 +1,6 @@
 'use client';
 
-import {
-  BORDER_RADIUS, Breakpoint, Color, Z_INDEX, mediaBreakpointDown, mediaBreakpointUp
-} from '@freelbee/shared/ui-kit';
+import { BORDER_RADIUS, Breakpoint, Color, Z_INDEX, mediaBreakpointDown, mediaBreakpointUp } from '@freelbee/shared/ui-kit';
 import styled from 'styled-components';
 import { ReactComponent as BurgerIcon } from '@freelbee/assets/icons/menu-icons/burger.svg';
 import { useContext } from 'react';

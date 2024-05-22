@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { SessionStatusType, useGetSessionDataQuery, useSendConfirmationMutation } from '@admin/entities';
+import { AuthStatus, useGetAuthInfoQuery, useSendConfirmationMutation } from '@admin/entities';
 import { WaitForConfirmation } from './ui/WaitForConfirmation';
 import { DeclinedConfirmation } from './ui/DeclinedConfirmation';
 
@@ -12,8 +12,9 @@ enum ConfirmationStep {
 
 export function Confirmation() {
   const [step, setStep] = useState<ConfirmationStep>(ConfirmationStep.WAITING);
+  let workaroundCounter = 0; //TODO::: find out why 2 requests are being sent, and remove this workaround
 
-  const { data: sessionData } = useGetSessionDataQuery();
+  const { data: sessionData } = useGetAuthInfoQuery();
   const [sendConfirmation] = useSendConfirmationMutation();
 
   const onSendConfirmation = () => {
@@ -22,8 +23,11 @@ export function Confirmation() {
   };
 
   useEffect(() => {
-    if (sessionData && sessionData.authStatus === SessionStatusType.NEED_TO_CONFIRM) {
-      sendConfirmation();
+    if (sessionData && sessionData.authStatus === AuthStatus.NEED_TO_CONFIRM) {
+      if (workaroundCounter === 0) {
+        sendConfirmation();
+        workaroundCounter += 1;
+      }
     }
   });
 

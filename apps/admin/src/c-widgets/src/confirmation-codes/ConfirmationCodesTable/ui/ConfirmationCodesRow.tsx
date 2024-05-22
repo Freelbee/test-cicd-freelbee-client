@@ -1,8 +1,8 @@
 'use client';
 
-import { Breakpoint, Color, Text, mediaBreakpointDown } from '@freelbee/shared/ui-kit';
 import styled from 'styled-components';
-import { ConfirmationCode, ConfirmationCodeType } from '@admin/entities';
+import { Breakpoint, Color, Text, mediaBreakpointDown } from '@freelbee/shared/ui-kit';
+import { ConfirmationCode, ConfirmationCodeType } from '@freelbee/entities';
 
 interface Props {
   confirmationCode: ConfirmationCode;
@@ -14,8 +14,8 @@ export const ConfirmationCodesRow = (props: Props) => {
   const extractContactMethod = (code: ConfirmationCode) => {
     const purpose = {
       [ConfirmationCodeType.EMAIL_REGISTRATION_CONFIRMATION]: 'email',
-      [ConfirmationCodeType.EMAIL_AUTHENTICATION_CONFIRMATION]: 'email',
-    }
+      [ConfirmationCodeType.EMAIL_AUTHENTICATION_CONFIRMATION]: 'email'
+    };
     return purpose[code.type];
   };
 
@@ -24,8 +24,8 @@ export const ConfirmationCodesRow = (props: Props) => {
   const extractPurpose = (code: ConfirmationCode) => {
     const purpose = {
       [ConfirmationCodeType.EMAIL_REGISTRATION_CONFIRMATION]: 'registration',
-      [ConfirmationCodeType.EMAIL_AUTHENTICATION_CONFIRMATION]: 'authentication',
-    }
+      [ConfirmationCodeType.EMAIL_AUTHENTICATION_CONFIRMATION]: 'authentication'
+    };
     return purpose[code.type];
   };
 

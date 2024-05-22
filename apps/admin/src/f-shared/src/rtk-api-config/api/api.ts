@@ -1,20 +1,19 @@
 import { FetchBaseQueryError, createApi } from '@reduxjs/toolkit/query/react';
 import { SerializedError } from '@reduxjs/toolkit';
-import { ErrorResponse } from '@freelbee/shared/error';
 import { baseQueryWithAuth } from '../query/queryWithAuth';
 
 export const API = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithAuth,
   tagTypes: [
-    'sessionData',
-    'companyCounterparties',
-    'companyCounterparty',
-    'confirmationCodes',
+    'auth-info',
+    'company-counterparties',
+    'company-counterparty',
+    'confirmation-codes'
   ],
-  endpoints: () => ({}),
+  endpoints: () => ({})
 });
 
 export type MutationResponse<T> = Promise<
-  { data: T } | { error: FetchBaseQueryError | ErrorResponse | SerializedError }
+  { data: T } | { error: FetchBaseQueryError | SerializedError }
 >;
