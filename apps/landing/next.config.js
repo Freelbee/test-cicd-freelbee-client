@@ -13,6 +13,25 @@ const { composePlugins, withNx } = require('@nx/next');
  * @type {import('@nx/next/plugins/with-nx').WithNxOptions}
  **/
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'assets-stg.transak.com',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'assets-dev.transak.com',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: 'assets.transak.com',
+        port: '',
+      },
+    ],
+  },
   nx: {
     svgr: true,
 
