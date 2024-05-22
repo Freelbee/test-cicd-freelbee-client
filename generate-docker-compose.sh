@@ -32,7 +32,7 @@ services:
 
   echo "
 docker-compose -f docker-compose.landing.deploy.yaml pull
-docker-compose -p freelbee-client-landing -f docker-compose.landing.deploy.yaml up -d" >> deploy.sh
+docker-compose -p landing -f docker-compose.landing.deploy.yaml up -d" >> deploy.sh
   if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
     echo "
 bash ./remove-old-images.sh landing $NUMBER_OF_SAVED_IMAGES
@@ -57,7 +57,7 @@ services:
 
   echo "
 docker-compose -f docker-compose.freelancer.deploy.yaml pull
-docker-compose -p freelbee-client-freelancer -f docker-compose.freelancer.deploy.yaml up -d" >> deploy.sh
+docker-compose -p freelancer -f docker-compose.freelancer.deploy.yaml up -d" >> deploy.sh
   if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
     echo "
 bash ./remove-old-images.sh freelancer $NUMBER_OF_SAVED_IMAGES
@@ -82,7 +82,7 @@ services:
 
   echo "
 docker-compose -f docker-compose.company.deploy.yaml pull
-docker-compose -p freelbee-client-company -f docker-compose.company.deploy.yaml up -d" >> deploy.sh
+docker-compose -p company -f docker-compose.company.deploy.yaml up -d" >> deploy.sh
   if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
     echo "
 bash ./remove-old-images.sh company $NUMBER_OF_SAVED_IMAGES
