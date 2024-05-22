@@ -1,5 +1,11 @@
 # company
 
+## 1.1.0
+
+### Minor Changes
+
+- a4fe567: Telegram bot notifications added for registration. Meta tags added and marketing scripts fixed.
+
 ## 1.5.0
 
 ### Minor Changes
