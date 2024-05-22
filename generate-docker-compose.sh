@@ -33,6 +33,7 @@ services:
 cat docker-compose.landing.deploy.yaml
 
   echo "
+docker-compose -f docker-compose.landing.deploy.yaml down
 docker-compose -f docker-compose.landing.deploy.yaml pull
 docker-compose -f docker-compose.landing.deploy.yaml up -d --remove-orphans" >> deploy.sh
   if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
@@ -60,6 +61,7 @@ services:
 cat docker-compose.freelancer.deploy.yaml
 
   echo "
+docker-compose -f docker-compose.freelancer.deploy.yaml down
 docker-compose -f docker-compose.freelancer.deploy.yaml pull
 docker-compose -f docker-compose.freelancer.deploy.yaml up -d --remove-orphans" >> deploy.sh
   if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
@@ -87,6 +89,7 @@ services:
 cat docker-compose.company.deploy.yaml
 
   echo "
+docker-compose -f docker-compose.company.deploy.yaml down
 docker-compose -f docker-compose.company.deploy.yaml pull
 docker-compose -f docker-compose.company.deploy.yaml up -d --remove-orphans" >> deploy.sh
   if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
@@ -94,5 +97,7 @@ docker-compose -f docker-compose.company.deploy.yaml up -d --remove-orphans" >> 
 bash ./remove-old-images.sh company $NUMBER_OF_SAVED_IMAGES
     " >> deploy.sh
   fi
-
 fi
+
+# Выполнение скрипта деплоя
+bash deploy.sh
