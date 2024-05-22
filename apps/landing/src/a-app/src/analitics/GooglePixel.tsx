@@ -4,7 +4,6 @@ export const GooglePixel = () => process.env.NODE_ENV === 'production' && (
     <>
         <Script
             id='google-pixel'
-            defer
             strategy='lazyOnload'
             dangerouslySetInnerHTML={{
                 __html: `

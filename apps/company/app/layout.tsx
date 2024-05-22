@@ -1,4 +1,4 @@
-import { GlobalStyle, StoreProvider, StyledComponentsRegistry } from '@company/app';
+import { GlobalStyle, GoogleTagManagerPersonal, StoreProvider, StyledComponentsRegistry } from '@company/app';
 import { PersonalLayout } from '@company/widgets';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -11,6 +11,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <GoogleTagManagerPersonal />
 
         <StyledComponentsRegistry>
         <GlobalStyle />
