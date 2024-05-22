@@ -14,8 +14,8 @@ export default defineConfig({
       NEXT_PUBLIC_SITE: 'com',
       NEXT_PUBLIC_MODE: 'test',
       NEXT_PUBLIC_URL: '',
-      NEXT_PUBLIC_FREELANCER_URL: 'https://test-prod.freelancer.freelbee.com',
-      NEXT_PUBLIC_COMPANY_URL: 'https://test-prod.company.freelbee.com',
+      NEXT_PUBLIC_FREELANCER_URL: 'https://dev.freelancer.freelbee.com',
+      NEXT_PUBLIC_COMPANY_URL: 'https://dev.company.freelbee.com',
       NEXT_PUBLIC_EMAIL: 'hello@freelbee.com',
     },
     defaultCommandTimeout: 10000
