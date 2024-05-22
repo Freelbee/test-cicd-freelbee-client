@@ -30,9 +30,11 @@ services:
        - 'project=landing'
 " >> docker-compose.landing.deploy.yaml
 
+cat docker-compose.landing.deploy.yaml
+
   echo "
 docker-compose -f docker-compose.landing.deploy.yaml pull
-docker-compose -f docker-compose.landing.deploy.yaml up -d" >> deploy.sh
+docker-compose -f docker-compose.landing.deploy.yaml up -d --remove-orphans" >> deploy.sh
   if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
     echo "
 bash ./remove-old-images.sh landing $NUMBER_OF_SAVED_IMAGES
@@ -55,9 +57,11 @@ services:
 
 " >> docker-compose.freelancer.deploy.yaml
 
+cat docker-compose.freelancer.deploy.yaml
+
   echo "
 docker-compose -f docker-compose.freelancer.deploy.yaml pull
-docker-compose -f docker-compose.freelancer.deploy.yaml up -d" >> deploy.sh
+docker-compose -f docker-compose.freelancer.deploy.yaml up -d --remove-orphans" >> deploy.sh
   if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
     echo "
 bash ./remove-old-images.sh freelancer $NUMBER_OF_SAVED_IMAGES
@@ -80,9 +84,11 @@ services:
 
 " >> docker-compose.company.deploy.yaml
 
+cat docker-compose.company.deploy.yaml
+
   echo "
 docker-compose -f docker-compose.company.deploy.yaml pull
-docker-compose -f docker-compose.company.deploy.yaml up -d" >> deploy.sh
+docker-compose -f docker-compose.company.deploy.yaml up -d --remove-orphans" >> deploy.sh
   if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
     echo "
 bash ./remove-old-images.sh company $NUMBER_OF_SAVED_IMAGES
