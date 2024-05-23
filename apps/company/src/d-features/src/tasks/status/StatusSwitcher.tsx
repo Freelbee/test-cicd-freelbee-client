@@ -220,6 +220,7 @@ export function Status (props: Props) {
                 text: 'To pay',
                 hoverColor: StatusColor.PAID,
                 hoverBackground: StatusBackground.PAID,
+                onSetStatus: openTask,
             },
         ]
     };
