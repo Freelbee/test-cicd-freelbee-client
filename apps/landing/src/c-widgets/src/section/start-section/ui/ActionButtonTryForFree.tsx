@@ -2,20 +2,20 @@
 
 import { ButtonStyleEnum, Button } from "@freelbee/shared/ui-kit";
 import {useQueryParamsNavigation } from "@freelbee/shared/hooks";
-import { ModalQueryValue, SectionId } from "@landing/entities";
+import { ModalQueryValue } from "@landing/entities";
 import styled from "styled-components";
 
 
-export const ActionButton = () => {
+export const ActionButtonTryForFree = () => {
     const [, navigateWithParam] = useQueryParamsNavigation();
 
     return (
         <ButtonWrapper>
             <Button
-                data-testid="main-banner-btn"
-                styleType={ButtonStyleEnum.GREEN}
-                onClick={() => navigateWithParam('modal', ModalQueryValue.APPLICATION + SectionId.MAIN_BANNER)}
-            >Book a demo</Button>
+                data-testid="main-banner-btn-try-for-free"
+                styleType={ButtonStyleEnum.ROUND_STROKE_WHITE}
+                onClick={() => navigateWithParam('modal', ModalQueryValue.START)}
+            >Try for Free</Button>
         </ButtonWrapper>
     );
 };
