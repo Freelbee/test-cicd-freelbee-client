@@ -34,17 +34,17 @@ export default function TaskWaitingForPaymentActions() {
     if (!taskPaymentData) return;
     if (taskPaymentData.payments.length === 0) {
       createPaymentData({ paymentDataId: taskPaymentData!.id });
-      if (taskPaymentData.paymentProviderName !== PaymentProviderName.TRANSAK) return;
-        if (process.env['NEXT_PUBLIC_MODE'] === 'test') {
-          handleSetStatus(TaskStatus.PAID)
-        } else {
-          setTaskForPayment(displayedTask);
-        }
+    }
+    if (taskPaymentData.paymentProviderName !== PaymentProviderName.TRANSAK) return;
+    if (process.env['NEXT_PUBLIC_MODE'] === 'test') {
+      handleSetStatus(TaskStatus.PAID);
+    } else {
+      setTaskForPayment(displayedTask);
     }
   }
 
   const handleSetStatus = (status: TaskStatus) => {
-    if (!displayedTask) return
+    if (!displayedTask) return;
     setTaskStatus({ taskId: displayedTask.taskId, status })
       .unwrap()
       .then(() => dispatch(setDetailsOpen(false)));
@@ -96,7 +96,7 @@ export default function TaskWaitingForPaymentActions() {
     });
     Transak.on(Transak.EVENTS.TRANSAK_ORDER_CREATED, async (data) => eventAboutTaskStatus(data as string));
     Transak.on('*', (data) => console.log(data));
-  }
+  };
 
   return (
     <>
