@@ -26,7 +26,7 @@ export const PersonalLayout = ({ children }: PropsWithChildren) => {
   } = useGetCompanyOnboardingStateQuery(undefined, { skip: !isAuthenticated || isAuthenticatedLoading });
 
   const isOnboardingPassed = () => {
-    return onboardingState?.isUserDataSet && onboardingState?.isCounterpartyCreated && onboardingState?.isPaymentMethodSet;
+    return onboardingState && Object.values(onboardingState).every(step => !!step);
   };
 
   useEffect(() => {

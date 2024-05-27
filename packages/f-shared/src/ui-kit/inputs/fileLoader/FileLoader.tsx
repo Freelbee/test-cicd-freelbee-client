@@ -5,6 +5,8 @@ import { Color, Text, typography } from '@freelbee/shared/ui-kit';
 import { ReactComponent as PaperClipIcon } from '@freelbee/assets/icons/paper-clip/paper-clip.svg';
 import { RuleMessage } from '../../../validator/RuleMessage';
 import { FileBadge } from './FileBadge';
+import { AnimatePresence } from 'framer-motion';
+import { ErrorOutput } from '../self-utils/errorOutput';
 
 export interface FileData {
   id?: number,
@@ -32,6 +34,8 @@ interface FileLoaderProps {
   setFiles: React.Dispatch<React.SetStateAction<FileData[]>>;
   maxFileSize?: number;
   multiply?: boolean;
+  isError?: boolean,
+  errorMessage?: string,
 }
 
 const errors = {
@@ -43,7 +47,7 @@ const errors = {
   }
 };
 
-export default function FileLoader(props: FileLoaderProps) {
+export function FileLoader(props: FileLoaderProps) {
   const {
     text,
     borderColor,
@@ -54,7 +58,9 @@ export default function FileLoader(props: FileLoaderProps) {
     files,
     setFiles,
     maxFileSize = 15_728_640,
-    multiply = true
+    multiply = true,
+    isError,
+    errorMessage
   } = props;
 
   function getBase64(file: File, id: number) {
@@ -157,13 +163,17 @@ export default function FileLoader(props: FileLoaderProps) {
     <Container>
       {label &&
         <Text font="bodyMedium">{isRequired ? label + '*' : label}</Text>}
-      <Content borderColor={borderColor} styles={fileContainerStyles}>
+      <Content borderColor={isError ? Color.ERROR : borderColor} styles={fileContainerStyles}>
         {
           files.map(fileData => (
             <FileBadge key={fileData.id} fileData={fileData} removeFile={removeFile} />
           ))
         }
       </Content>
+      <AnimatePresence>
+          {isError && errorMessage &&
+          <ErrorOutput message={errorMessage} />}
+      </AnimatePresence>   
       <InputFileContainer>
         <PaperClipIcon />
         <InputFile type="file" name="file" multiple={multiply} onChange={(e) => onDropHandler(e)} />
@@ -171,7 +181,7 @@ export default function FileLoader(props: FileLoaderProps) {
         {
           maxSizeText && <MaxSize>{maxSizeText}</MaxSize>
         }
-      </InputFileContainer>
+      </InputFileContainer>   
     </Container>
   );
 }
@@ -213,7 +223,6 @@ const Content = styled.div<{ borderColor?: Color, styles?: Array<RuleSet<object>
 
   ${p => p.styles};
 `;
-
 
 const InputFileContainer = styled.label`
   cursor: pointer;

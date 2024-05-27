@@ -1,7 +1,7 @@
 'use client';
 
 import {
-  Button, ButtonStyleEnum, Calendar, Color, InfoWithIcon, Input, SelectWithSearch, Text, TextArea
+  Button, ButtonStyleEnum, Calendar, Color, FileLoader, InfoWithIcon, Input, SelectWithSearch, Text, TextArea
 } from '@freelbee/shared/ui-kit';
 import styled, { css } from 'styled-components';
 import React, { useContext } from 'react';
@@ -11,7 +11,6 @@ import { ReactComponent as AlertIcon } from '@freelbee/assets/icons/alert-icons/
 import moment from "moment/moment";
 import FreelancerSelect from './freelancerSearch/FreelancerSelect';
 import DateUtil from 'packages/f-shared/src/utils/date/DateUtil';
-import FileLoader from 'packages/f-shared/src/ui-kit/inputs/fileLoader/FileLoader';
 import { setTaskCreationModalOpened, useGetWorksCategoriesQuery, WorksCategory, WorksType } from '@company/entities';
 import { useDispatch } from 'react-redux';
 

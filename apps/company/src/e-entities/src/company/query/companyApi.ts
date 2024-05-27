@@ -27,6 +27,14 @@ export const companyAPI = API.injectEndpoints({
       }),
       invalidatesTags: ['counterparty', 'company-onboarding-state']
     }),
+    createCompanyDocuments: builder.mutation<void, FormData>({
+      query: (body) => ({
+          url: Endpoint_Enum.COMPANY_DOCUMENTS,
+          method: 'POST',
+          body
+      }),
+      invalidatesTags: ['counterparty', 'company-onboarding-state']
+    }),
     createPaymentMethod: builder.mutation<void, CreatePaymentMethodDto>({
       query: (body) => ({
         url: Endpoint_Enum.CREATE_PAYMENT_METHODS,
@@ -43,5 +51,6 @@ export const {
     useGetCompanyOnboardingStateQuery,
     useLazyGetCompanyOnboardingStateQuery,
     useCreateCompanyMutation,
+    useCreateCompanyDocumentsMutation,
     useCreatePaymentMethodMutation
 } = companyAPI;
