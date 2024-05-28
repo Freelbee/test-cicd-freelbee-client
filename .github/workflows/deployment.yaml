@@ -146,7 +146,7 @@ jobs:
         if: ${{ github.event.inputs.project == 'all' || github.event.inputs.project == matrix.project }}
         run: |
           for i in {1..4}; do
-            docker build -t ${{ env.IMAGE_NAME }} -f ./apps/${{ matrix.project }}/Dockerfile && break || sleep 10;
+            docker build -t ${{ env.IMAGE_NAME }} -f ./apps/${{ matrix.project }}/Dockerfile . && break || sleep 10;
           done
           for i in {1..4}; do
             docker push ${{ env.IMAGE_NAME }} && break || sleep 10;
