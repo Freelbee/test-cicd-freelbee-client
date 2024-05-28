@@ -86,7 +86,7 @@ jobs:
       TG_CHANNEL_ID: "${{ inputs.environment }}_NEXT_PUBLIC_TG_CHANNEL_ID"
       COMPANY_URL: "${{ inputs.environment }}_NEXT_PUBLIC_COMPANY_URL"
       FREELANCER_URL: "${{ inputs.environment }}_NEXT_PUBLIC_FREELANCER_URL"
-#      BOT_URL: "${{ inputs.environment }}_NEXT_PUBLIC_BOT_URL"
+      BOT_URL: "${{ inputs.environment }}_NEXT_PUBLIC_BOT_URL"
 
     steps:
       - name: Prepare image tag
