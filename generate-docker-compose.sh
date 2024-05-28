@@ -3,6 +3,7 @@
 #> docker-compose.landing.deploy.yaml
 #> docker-compose.freelancer.deploy.yaml
 #> docker-compose.company.deploy.yaml
+#> docker-compose.admin.deploy.yaml
 #
 #> deploy.sh
 #
@@ -99,6 +100,34 @@
 #  fi
 #fi
 #
+## Проверка и добавление сервиса admin в файл docker-compose.deploy.yml, если он указан в DEPLOY_PROJECTS или если all
+#if [[ "$DEPLOY_PROJECTS" == *"admin"* || "$DEPLOY_PROJECTS" == *"all"* ]]; then
+#  echo "
+#version: '3.8'
+#services:
+#  admin:
+#    image: ghcr.io/freelbee/nx-client/admin-${IMAGE_TAG}
+#    ports:
+#      - '4203:4200'
+#    restart: unless-stopped
+#    labels:
+#      - 'project=admin'
+#
+#" >> docker-compose.admin.deploy.yaml
+#
+#cat docker-compose.admin.deploy.yaml
+#
+#  echo "
+#docker-compose -f docker-compose.admin.deploy.yaml down
+#docker-compose -f docker-compose.admin.deploy.yaml pull
+#docker-compose -f docker-compose.admin.deploy.yaml up -d --remove-orphans" >> deploy.sh
+#  if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
+#    echo "
+#bash ./remove-old-images.sh admin $NUMBER_OF_SAVED_IMAGES
+#    " >> deploy.sh
+#  fi
+#fi
+#
 ## Выполнение скрипта деплоя
 #bash deploy.sh
 
@@ -156,6 +185,10 @@ fi
 
 if [[ "$DEPLOY_PROJECTS" == *"company"* || "$DEPLOY_PROJECTS" == *"all"* ]]; then
   add_service "company" "4202"
+fi
+
+if [[ "$DEPLOY_PROJECTS" == *"admin"* || "$DEPLOY_PROJECTS" == *"all"* ]]; then
+  add_service "admin" "4203"
 fi
 
 # Выполнение скрипта деплоя
