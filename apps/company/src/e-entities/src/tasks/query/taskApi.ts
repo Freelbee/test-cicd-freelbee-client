@@ -4,8 +4,9 @@ import { TaskFreelancerData } from '../dto/TaskFreelancerData';
 import { FileLink, TaskCounterpartyDataDto, TaskFileDto, TaskStatus } from '@freelbee/entities';
 import { ContractPreviewDto } from '../dto/ContractPreviewDto';
 import { FileDownloadHelper } from 'packages/f-shared/src/helpers/FileDownloadHelper';
-import { PaymentDataResponseDto } from '../dto/PaymentDataDto';
+import { PaymentDataResponseDto, PaymentDataResponseDtoModified } from '../dto/PaymentDataDto';
 import { PaymentResponseDto } from '../dto/PaymentDto';
+import { PropsHelper } from '@freelbee/shared/helpers';
 
 export const taskAPI = API.injectEndpoints({
   endpoints: (builder) => ({
@@ -74,6 +75,15 @@ export const taskAPI = API.injectEndpoints({
         method: 'GET',
       }),
       providesTags: ["payment-data"],
+      transformResponse: (res: PaymentDataResponseDtoModified) => {
+        const mappedPayerPaymentMethodProps = PropsHelper.MapPropsToFields(res.payerPaymentMethod.props);
+        const mappedReceiverPaymentMethodProps = PropsHelper.MapPropsToFields(res.receiverPaymentMethod.props);
+        return {
+          ...res,
+          payerPaymentMethod: { ...res.payerPaymentMethod, props: mappedPayerPaymentMethodProps },
+          receiverPaymentMethod: { ...res.receiverPaymentMethod, props: mappedReceiverPaymentMethodProps },
+        }
+      }
     }),
     createPaymentData: builder.mutation<PaymentResponseDto, { paymentDataId: number }>({
       query: ({ paymentDataId }) => ({
