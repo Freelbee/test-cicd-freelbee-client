@@ -1,8 +1,8 @@
 #!/bin/bash
 
 > docker-compose.landing.deploy.yaml
-> docker-compose.freelancer.deploy.yaml
 > docker-compose.company.deploy.yaml
+> docker-compose.freelancer.deploy.yaml
 > docker-compose.admin.deploy.yaml
 
 > deploy.sh
@@ -23,7 +23,7 @@ if [[ "$DEPLOY_PROJECTS" == *"landing"* || "$DEPLOY_PROJECTS" == *"all"* ]]; the
 version: '3.8'
 services:
   landing:
-    image: ghcr.io/freelbee/nx-client/landing-${IMAGE_TAG}
+    image: ghcr.io/freelbee/freelbee-client/landing-${IMAGE_TAG}
     ports:
       - '4200:4200'
     restart: unless-stopped
@@ -47,44 +47,13 @@ bash ./remove-old-images.sh landing $NUMBER_OF_SAVED_IMAGES
   fi
 fi
 
-# Проверка и добавление сервиса freelancer в файл docker-compose.deploy.yml, если он указан в DEPLOY_PROJECTS или если all
-if [[ "$DEPLOY_PROJECTS" == *"freelancer"* || "$DEPLOY_PROJECTS" == *"all"* ]]; then
-  echo "
-version: '3.8'
-services:
-  freelancer:
-    image: ghcr.io/freelbee/nx-client/freelancer-${IMAGE_TAG}
-    ports:
-      - '4201:4200'
-    restart: unless-stopped
-    labels:
-      - 'project=freelancer'
-
-" >> docker-compose.freelancer.deploy.yaml
-
-#  echo "
-#docker-compose -f docker-compose.freelancer.deploy.yaml pull
-#docker-compose -f docker-compose.freelancer.deploy.yaml up -d" >> deploy.sh
-  echo "
-for i in {1..4}; do
-  docker-compose -f docker-compose.freelancer.deploy.yaml pull && break || sleep 10;
-done
-docker-compose -f docker-compose.freelancer.deploy.yaml up -d" >> deploy.sh
-
-  if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
-    echo "
-bash ./remove-old-images.sh freelancer $NUMBER_OF_SAVED_IMAGES
-    " >> deploy.sh
-  fi
-fi
-
 # Проверка и добавление сервиса company в файл docker-compose.deploy.yml, если он указан в DEPLOY_PROJECTS или если all
 if [[ "$DEPLOY_PROJECTS" == *"company"* || "$DEPLOY_PROJECTS" == *"all"* ]]; then
   echo "
 version: '3.8'
 services:
   company:
-    image: ghcr.io/freelbee/nx-client/company-${IMAGE_TAG}
+    image: ghcr.io/freelbee/freelbee-client/company-${IMAGE_TAG}
     ports:
       - '4202:4200'
     restart: unless-stopped
@@ -109,13 +78,44 @@ bash ./remove-old-images.sh company $NUMBER_OF_SAVED_IMAGES
   fi
 fi
 
+# Проверка и добавление сервиса freelancer в файл docker-compose.deploy.yml, если он указан в DEPLOY_PROJECTS или если all
+if [[ "$DEPLOY_PROJECTS" == *"freelancer"* || "$DEPLOY_PROJECTS" == *"all"* ]]; then
+  echo "
+version: '3.8'
+services:
+  freelancer:
+    image: ghcr.io/freelbee/freelbee-client/freelancer-${IMAGE_TAG}
+    ports:
+      - '4201:4200'
+    restart: unless-stopped
+    labels:
+      - 'project=freelancer'
+
+" >> docker-compose.freelancer.deploy.yaml
+
+#  echo "
+#docker-compose -f docker-compose.freelancer.deploy.yaml pull
+#docker-compose -f docker-compose.freelancer.deploy.yaml up -d" >> deploy.sh
+  echo "
+for i in {1..4}; do
+  docker-compose -f docker-compose.freelancer.deploy.yaml pull && break || sleep 10;
+done
+docker-compose -f docker-compose.freelancer.deploy.yaml up -d" >> deploy.sh
+
+  if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
+    echo "
+bash ./remove-old-images.sh freelancer $NUMBER_OF_SAVED_IMAGES
+    " >> deploy.sh
+  fi
+fi
+
 # Проверка и добавление сервиса admin в файл docker-compose.deploy.yml, если он указан в DEPLOY_PROJECTS или если all
 if [[ "$DEPLOY_PROJECTS" == *"admin"* || "$DEPLOY_PROJECTS" == *"all"* ]]; then
   echo "
 version: '3.8'
 services:
   admin:
-    image: ghcr.io/freelbee/nx-client/admin-${IMAGE_TAG}
+    image: ghcr.io/freelbee/freelbee-client/admin-${IMAGE_TAG}
     ports:
       - '4203:4200'
     restart: unless-stopped
