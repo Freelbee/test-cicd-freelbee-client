@@ -12,8 +12,8 @@ export function WaitForConfirmation() {
       <Heading1>Sign In Confirmation</Heading1>
       <Text color={Color.GRAY_600}>
         Accept authorization in your Telegram account: &nbsp;
-        <a href={`https://t.me/${process.env.NEXT_PUBLIC_ADMIN_BOT_URL ?? 'FreelbeeAdminTest1Bot'}`} target={`_blank`}>
-          <Text color={Color.BLUE}>@{process.env.NEXT_PUBLIC_ADMIN_BOT_URL ?? 'FreelbeeAdminTest1Bot'}</Text>
+        <a href={`https://t.me/${process.env.NEXT_PUBLIC_BOT_URL ?? 'FreelbeeAdminTest1Bot'}`} target={`_blank`}>
+          <Text color={Color.BLUE}>@{process.env.NEXT_PUBLIC_BOT_URL ?? 'FreelbeeAdminTest1Bot'}</Text>
         </a>
         &nbsp;and click the button
       </Text>
