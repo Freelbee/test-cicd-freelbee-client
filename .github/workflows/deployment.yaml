@@ -17,8 +17,8 @@ on:
         default: 'all'
         options:
           - landing
-          - freelancer
           - company
+          - freelancer
           - admin
           - all
       old-images:
@@ -62,10 +62,10 @@ jobs:
         include:
           - project: landing
             if: ${{ github.event.inputs.project == 'landing' || github.event.inputs.project == 'all' }}
-          - project: freelancer
-            if: ${{ github.event.inputs.project == 'freelancer' || github.event.inputs.project == 'all' }}
           - project: company
             if: ${{ github.event.inputs.project == 'company' || github.event.inputs.project == 'all' }}
+          - project: freelancer
+            if: ${{ github.event.inputs.project == 'freelancer' || github.event.inputs.project == 'all' }}
           - project: admin
             if: ${{ github.event.inputs.project == 'admin' || github.event.inputs.project == 'all' }}
       fail-fast: false
