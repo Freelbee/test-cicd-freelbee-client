@@ -1,13 +1,12 @@
 import { UserDataPropsType } from "./UserDataPropType"
 import { UserDataType } from "./UserDataType"
 import { UserStatus } from './UserStatus';
-import { DetailProps } from '@freelbee/shared';
 
 export interface UserDataDto {
-  id: number,
-  status: UserStatus | null,
+  id?: number,
+  status?: UserStatus,
   type: UserDataType,
-  props: DetailProps<UserDataPropsType>
+  props: Array<{ type: UserDataPropsType; value: string }>
 }
 
 export interface UserDataDtoModified extends Omit<UserDataDto, 'props'> {
