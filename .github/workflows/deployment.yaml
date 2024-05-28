@@ -19,7 +19,7 @@ on:
           - landing
           - freelancer
           - company
-#          - admin
+          - admin
           - all
       old-images:
         type: choice
@@ -66,8 +66,8 @@ jobs:
             if: ${{ github.event.inputs.project == 'freelancer' || github.event.inputs.project == 'all' }}
           - project: company
             if: ${{ github.event.inputs.project == 'company' || github.event.inputs.project == 'all' }}
-#          - project: admin
-#            if: ${{ github.event.inputs.project == 'admin' || github.event.inputs.project == 'all' }}
+          - project: admin
+            if: ${{ github.event.inputs.project == 'admin' || github.event.inputs.project == 'all' }}
       fail-fast: false
     permissions:
       contents: read
