@@ -8,11 +8,12 @@ import { useState } from 'react';
 import { ReactComponent as PrevPageIcon } from '@freelbee/assets/icons/arrow-icons/arrow_prev_page.svg';
 import { ReactComponent as NextPageIcon } from '@freelbee/assets/icons/arrow-icons/arrow_next_page.svg';
 import { TableHead } from '@admin/shared';
+import { Sort } from '@freelbee/shared';
 
 export const CompaniesTable = () => {
   const [page, setPage] = useState(0);
 
-  const { data: companiesPage } = useGetPageOfCompanyCounterpartiesQuery({ page, size: 10 });
+  const { data: companiesPage } = useGetPageOfCompanyCounterpartiesQuery({ page, size: 10, sort: Sort.DESC });
 
   if (!companiesPage) return <></>;
 

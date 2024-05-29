@@ -1,6 +1,6 @@
 import { API, Endpoint_Enum } from '@admin/shared';
 import { CounterpartyDetailsStatus, CounterpartyDto, CounterpartyDtoModified } from '@freelbee/entities';
-import { PageResponse } from '@freelbee/shared';
+import { PageResponse, Sort } from '@freelbee/shared';
 import { CounterpartyDtoMapperHelper } from '../helpers/CounterpartyDtoMapperHelper';
 
 /**
@@ -14,11 +14,16 @@ export const companyAPI = API.injectEndpoints({
       providesTags: ['company-counterparty'],
       transformResponse: (company: CounterpartyDto) => CounterpartyDtoMapperHelper.ModifyCounterpartyDto(company)
     }),
-    getPageOfCompanyCounterparties: builder.query<PageResponse<CounterpartyDtoModified>, { page: number; size: number }>({
-      query: ({ page, size }) =>
-        Endpoint_Enum.GET_PAGE_OF_COMPANY_COUNTERPARTIES
+    getPageOfCompanyCounterparties: builder.query<PageResponse<CounterpartyDtoModified>, { page: number; size: number; sort?: Sort }>({
+      query: ({ page, size, sort }) => {
+        let url = Endpoint_Enum.GET_PAGE_OF_COMPANY_COUNTERPARTIES
           .replace('{0}', page.toString())
-          .replace('{1}', size.toString()),
+          .replace('{1}', size.toString());
+        if (sort) {
+          url = url.concat('&sort=' + sort);
+        }
+        return url;
+      },
       providesTags: ['company-counterparties'],
       transformResponse: (res: PageResponse<CounterpartyDto>) => CounterpartyDtoMapperHelper.ModifyPageOfCounterpartyDto(res)
     }),

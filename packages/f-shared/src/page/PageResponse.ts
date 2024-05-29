@@ -13,3 +13,8 @@ export interface PageResponse<T> {
   numberOfElements: number,
   empty: boolean
 }
+
+export enum Sort {
+  ASC = 'asc',
+  DESC = 'desc',
+}

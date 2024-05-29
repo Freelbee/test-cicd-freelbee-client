@@ -24,7 +24,7 @@ export const CompanyRow = (props: Props) => {
       <UserDataContainer>
         <Text>ID: {company.user.userData.id}</Text>
         <Text>{company.user.userData.props.FIRST_NAME} {company.user.userData.props.LAST_NAME}</Text>
-        <Text>{company.user.email}</Text>
+        <TextWithDots>{company.user.email}</TextWithDots>
         <Text>{company.user.phone}</Text>
       </UserDataContainer>
       <Text>{company.counterpartyDetail.props.TIN}</Text>
@@ -36,6 +36,8 @@ export const CompanyRow = (props: Props) => {
 const UserDataContainer = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
 const Container = styled.div`
