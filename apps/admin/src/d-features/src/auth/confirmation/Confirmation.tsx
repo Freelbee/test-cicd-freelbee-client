@@ -19,7 +19,9 @@ export function Confirmation() {
 
   const onSendConfirmation = () => {
     sendConfirmation()
-      .then(() => setStep(ConfirmationStep.WAITING));
+      .unwrap()
+      .then(() => setStep(ConfirmationStep.WAITING))
+      .catch(() => console.error('Error during onSendConfirmation'));
   };
 
   useEffect(() => {

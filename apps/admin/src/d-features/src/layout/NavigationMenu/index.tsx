@@ -11,12 +11,15 @@ import { LayoutContext } from '../context/LayoutContext';
 import { ReactComponent as CloseIcon } from '@freelbee/assets/icons/cross-icons/close-icon.svg';
 import { usePathname } from 'next/navigation';
 import { NavigationLink } from '@freelbee/shared/ui-kit';
+import { useGetAdminUserQuery } from '@admin/entities';
 
 export function NavigationMenu() {
   const pathName = usePathname();
   const refWrapper = useRef<HTMLDivElement>(null);
   const refNavigation = useRef<HTMLDivElement>(null);
   const { navigationMenuOpened, setNavigationMenuOpened } = useContext(LayoutContext);
+
+  const { data: adminUser } = useGetAdminUserQuery();
 
   const isRouteActive = (link: string) => {
     if (link === '/companies') {
@@ -28,6 +31,14 @@ export function NavigationMenu() {
   const closeMenu = (e: React.MouseEvent<HTMLDivElement>) => {
     DOMHelper.isNotChildOfElem(e) && setNavigationMenuOpened(false);
   };
+
+  const isPageAdminsVisible = adminUser?.authorities.includes("CREATE__ADMINS");
+  const linksFiltered = links.filter(link => {
+    if (link.link === '/admins') {
+      return isPageAdminsVisible;
+    }
+    return true;
+  });
 
   return (
     <NavigationWrapper
@@ -44,7 +55,7 @@ export function NavigationMenu() {
             </button>
           </NavigationLogo>
           <div>
-            {links.map((link) => (
+            {linksFiltered.map((link) => (
               <NavigationLink key={link.title} isActive={isRouteActive(link.link)} {...link} />
             ))}
           </div>

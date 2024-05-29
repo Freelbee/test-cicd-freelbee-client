@@ -26,26 +26,28 @@ export const AdminCreationForm = () => {
     );
   };
 
+  const resetForm = () => {
+    setEmail('');
+    setPassword('');
+    setAdminRolesSelected([]);
+    setSuccessButton(true);
+    setAdminRoleLastOnHover(null);
+    setTimeout(() => {
+      setSuccessButton(false);
+    }, 3000);
+  }
+
   const sendForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createAdminUser({ email, password, roles: adminRolesSelected })
       .then(() => {
-        if (isSuccess) {
-          setEmail('');
-          setPassword('');
-          setAdminRolesSelected([]);
-          setSuccessButton(true);
-          setAdminRoleLastOnHover(null);
-          setTimeout(() => {
-            setSuccessButton(false);
-          }, 3000);
-        }
+        if (isSuccess) resetForm();
       });
   };
 
   return (
     <FormContent>
-      <Form onSubmit={(e) => sendForm(e)}>
+      <Form onSubmit={sendForm}>
         <Input
           label="E-mail"
           placeholder="E-mail"

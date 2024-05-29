@@ -1,5 +1,3 @@
-'use client';
-
 import { CompanyNavigation } from '@admin/widgets';
 import React from 'react';
 

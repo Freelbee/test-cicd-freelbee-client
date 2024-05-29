@@ -24,6 +24,7 @@ const BurgerButton = styled.button`
   width: 24px;
   height: 24px;
   cursor: pointer;
+  display: none; //TODO::: remove this line when properly setting up tablet view
 
   ${mediaBreakpointUp(Breakpoint.Medium)} {
     display: none;

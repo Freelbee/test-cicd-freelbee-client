@@ -21,11 +21,11 @@ export const CompanyPage = () => {
   if (!company) return <></>;
 
   return (
-    <CompanyNavigationContext.Provider value={{ company, companyNavigationTab, setCompanyNavigationTab }}>
-      <PageContainer>
+    <PageContainer>
+      <CompanyNavigationContext.Provider value={{ company, companyNavigationTab, setCompanyNavigationTab }}>
         <CompanyHeading />
         <CompanyTabsContent />
-      </PageContainer>
-    </CompanyNavigationContext.Provider>
+      </CompanyNavigationContext.Provider>
+    </PageContainer>
   );
 };

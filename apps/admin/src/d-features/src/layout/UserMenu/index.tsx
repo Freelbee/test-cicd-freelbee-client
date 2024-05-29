@@ -8,9 +8,12 @@ import { Breakpoint, Color, mediaBreakpointDown, mediaBreakpointUp, Text, typogr
 import { useGetAdminUserQuery, useLogoutMutation, UserBadge } from '@admin/entities';
 import { useRouter } from 'next/navigation';
 import { ReactComponent as LogoutIcon } from '@freelbee/assets/icons/menu-icons/exit.svg';
+import { API } from '@admin/shared';
+import { useDispatch } from 'react-redux';
 
 export function UserMenu() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const modalRef = useRef(null);
   const buttonRef = useRef(null);
   const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -26,7 +29,10 @@ export function UserMenu() {
   const onLogout = () => {
     logout()
       .unwrap()
-      .then(() => router.push('/'));
+      .then(() => {
+        router.push('/');
+        dispatch(API.util.resetApiState()); //TODO::: find better solution (maybe in rootReducer) as resetting state triggers refetch
+      });
   };
 
   if (!adminUser) return <></>;

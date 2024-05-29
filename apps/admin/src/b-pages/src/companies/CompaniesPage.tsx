@@ -1,5 +1,3 @@
-'use client';
-
 import { PageContainer, PageTitle } from '@admin/shared';
 import { CompaniesTable } from '@admin/widgets';
 import React from 'react';

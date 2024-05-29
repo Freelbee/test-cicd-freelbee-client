@@ -13,7 +13,8 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 export const UserAvatar = ({ avatarContent, ...rest }: Props) => {
   return (
     <NameWrapper {...rest}>
-      <Avatar>{avatarContent || <UserIcon />}</Avatar>
+      {/*<Avatar>{avatarContent || <UserIcon />}</Avatar>*/}
+      <Avatar>{<UserIcon />}</Avatar>
     </NameWrapper>
   );
 };

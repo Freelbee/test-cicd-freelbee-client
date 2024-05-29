@@ -38,7 +38,7 @@ export const CompaniesTable = () => {
         <Text font="body" color={Color.GRAY_700}>Tax Code</Text>
       </TableHead>
       {companies && [...companies]
-        .sort((a, b) => a.id - b.id)
+        .sort((a, b) => b.id - a.id)
         .map(company => (
           <CompanyRow key={company.id} company={company} />
         ))
