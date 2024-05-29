@@ -1,4 +1,4 @@
-export interface SessionDto {
+export interface UserAuthSessionDto {
   email: string;
   codeCanBeForwardedIn: string;
 }

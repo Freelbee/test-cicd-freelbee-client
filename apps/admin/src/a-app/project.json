@@ -1,0 +1,17 @@
+{
+  "name": "admin-a-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/admin/src/a-app/src",
+  "projectType": "library",
+  "tags": [
+    "type:admin-app"
+  ],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    }
+  }
+}

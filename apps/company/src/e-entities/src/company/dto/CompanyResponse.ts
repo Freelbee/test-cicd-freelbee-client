@@ -1,10 +1,10 @@
-import { CounterpartyDetailsPropsType, CounterpartyDetailsType, CounterpartyStatus } from "@freelbee/entities";
+import { CounterpartyDetailsPropsType, CounterpartyDetailsType, CounterpartyDetailsStatus } from "@freelbee/entities";
 import { DetailProps } from "@freelbee/shared";
 
 export interface CompanyResponse {
     id: number,
     counterpartyDetail: {
-        status: CounterpartyStatus,
+        status: CounterpartyDetailsStatus,
         id: number,
         iban: string,
         country: string,
@@ -16,7 +16,7 @@ export interface CompanyResponse {
 export interface CompanyData {
     id: number,
     counterpartyDetail: {
-        status: CounterpartyStatus,
+        status: CounterpartyDetailsStatus,
         id: number,
         iban: string,
         country: string,

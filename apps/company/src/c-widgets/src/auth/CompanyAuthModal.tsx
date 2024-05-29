@@ -12,7 +12,7 @@ import {
   useGetCompanyAuthSessionMutation
 } from "@company/entities";
 
-import { AuthDto, RegistrationDto, SessionDto } from '@freelbee/entities';
+import { AuthenticationDto, RegistrationDto, UserAuthSessionDto } from '@freelbee/entities';
 import {useEffect, useState} from "react";
 import { usePathname } from 'next/navigation';
 
@@ -32,19 +32,19 @@ export const CompanyAuthModal = () => {
   const [getCompanyRegSession] = useGetCompanyRegSessionMutation();
   const [getCompanyAuthSession] = useGetCompanyAuthSessionMutation();
 
-  const userRegSession = async (): Promise<SessionDto> => {
+  const userRegSession = async (): Promise<UserAuthSessionDto> => {
     return getCompanyRegSession().unwrap().then((response) => {
       return response;
     });
   }
 
-  const userAuthSession = async (): Promise<SessionDto> => {
+  const userAuthSession = async (): Promise<UserAuthSessionDto> => {
     return getCompanyAuthSession().unwrap().then((response) => {
       return response;
     });
   }
 
-  const onAuthUser = async (dto: AuthDto): Promise<void> => {
+  const onAuthUser = async (dto: AuthenticationDto): Promise<void> => {
     return authUser(dto).unwrap();
   }
 

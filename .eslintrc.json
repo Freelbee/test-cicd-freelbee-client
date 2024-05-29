@@ -38,6 +38,53 @@
                 "onlyDependOnLibsWithTags": [ "layout:shared"]
               },
 
+
+              {
+                "sourceTag": "scope:admin",
+                "onlyDependOnLibsWithTags": [
+                  "scope:admin",
+
+                  "type:admin-app",
+                  "type:admin-pages",
+                  "type:admin-widgets",
+                  "type:admin-features",
+                  "type:admin-entities",
+                  "type:admin-shared",
+
+                  "layout:app",
+                  "layout:pages",
+                  "layout:widgets",
+                  "layout:features",
+                  "layout:entities",
+                  "layout:shared"
+                ]
+              },
+              {
+                "sourceTag": "type:admin-app",
+                "onlyDependOnLibsWithTags": [ "type:admin-app","type:admin-pages","type:admin-widgets","type:admin-features","type:admin-entities", "type:admin-shared","layout:app","layout:pages","layout:widgets","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:admin-pages",
+                "onlyDependOnLibsWithTags": [ "type:admin-pages","type:admin-widgets","type:admin-features","type:admin-entities",  "type:admin-shared","layout:pages","layout:widgets","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:admin-widgets",
+                "onlyDependOnLibsWithTags": [ "type:admin-widgets","type:admin-features","type:admin-shared","type:admin-entities","layout:widgets","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:admin-features",
+                "onlyDependOnLibsWithTags": [ "type:admin-features","type:admin-entities","type:admin-shared","layout:features","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:admin-entities",
+                "onlyDependOnLibsWithTags": [ "type:admin-entities","type:admin-shared","layout:entities","layout:shared"]
+              },
+              {
+                "sourceTag": "type:admin-shared",
+                "onlyDependOnLibsWithTags": [ "type:admin-shared","layout:shared"]
+              },
+
+
               {
                 "sourceTag": "scope:company",
                 "onlyDependOnLibsWithTags": [

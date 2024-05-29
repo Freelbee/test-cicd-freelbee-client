@@ -1,0 +1,13 @@
+{
+  "name": "admin-b-pages",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/admin/src/b-pages/src",
+  "projectType": "library",
+  "tags": ["type:admin-pages"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}

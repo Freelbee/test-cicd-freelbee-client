@@ -4,7 +4,7 @@ import {useDispatch} from "react-redux";
 import {Breakpoint, Button, ButtonStyleEnum} from "@freelbee/shared/ui-kit";
 import {setFreelancerInvitationModalOpened, useGetCompanyCounterpartyQuery} from "@company/entities";
 import {css} from "styled-components";
-import {CounterpartyStatus} from "@freelbee/entities";
+import {CounterpartyDetailsStatus} from "@freelbee/entities";
 
 export const InviteFreelancerButton = () => {
   const dispatch = useDispatch();
@@ -12,7 +12,7 @@ export const InviteFreelancerButton = () => {
 
   return (
     <Button
-      disabled={!company || company.counterpartyDetail.status !== CounterpartyStatus.APPROVED}
+      disabled={!company || company.counterpartyDetail.status !== CounterpartyDetailsStatus.APPROVED}
       styleType={ButtonStyleEnum.GREEN}
       onClick={() => dispatch(setFreelancerInvitationModalOpened(true))}
       isFit
