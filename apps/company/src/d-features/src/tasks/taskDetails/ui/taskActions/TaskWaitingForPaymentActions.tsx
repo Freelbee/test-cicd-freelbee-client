@@ -12,7 +12,7 @@ import {
   useSetTaskStatusMutation,
   useTransakWidget
 } from '@company/entities';
-import { CounterpartyStatus, PaymentProviderName, TaskCounterpartyDataDto, TaskStatus } from '@freelbee/entities';
+import { CounterpartyDetailsStatus, PaymentProviderName, TaskCounterpartyDataDto, TaskStatus } from '@freelbee/entities';
 import { ActionsContainer } from './ActionsContainer';
 import { Button, ButtonStyleEnum } from '@freelbee/shared/ui-kit';
 import { useEffect, useState } from 'react';
@@ -34,17 +34,17 @@ export default function TaskWaitingForPaymentActions() {
     if (!taskPaymentData) return;
     if (taskPaymentData.payments.length === 0) {
       createPaymentData({ paymentDataId: taskPaymentData!.id });
-      if (taskPaymentData.paymentProviderName !== PaymentProviderName.TRANSAK) return;
-        if (process.env['NEXT_PUBLIC_MODE'] === 'test') {
-          handleSetStatus(TaskStatus.PAID)
-        } else {
-          setTaskForPayment(displayedTask);
-        }
+    }
+    if (taskPaymentData.paymentProviderName !== PaymentProviderName.TRANSAK) return;
+    if (process.env['NEXT_PUBLIC_MODE'] === 'test') {
+      handleSetStatus(TaskStatus.PAID);
+    } else {
+      setTaskForPayment(displayedTask);
     }
   }
 
   const handleSetStatus = (status: TaskStatus) => {
-    if (!displayedTask) return
+    if (!displayedTask) return;
     setTaskStatus({ taskId: displayedTask.taskId, status })
       .unwrap()
       .then(() => dispatch(setDetailsOpen(false)));
@@ -96,13 +96,13 @@ export default function TaskWaitingForPaymentActions() {
     });
     Transak.on(Transak.EVENTS.TRANSAK_ORDER_CREATED, async (data) => eventAboutTaskStatus(data as string));
     Transak.on('*', (data) => console.log(data));
-  }
+  };
 
   return (
     <>
       <ActionsContainer>
         <Button
-          disabled={company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED || isButtonPayHidden}
+          disabled={company?.counterpartyDetail.status !== CounterpartyDetailsStatus.APPROVED || isButtonPayHidden}
           isWide
           styleType={ButtonStyleEnum.GREEN}
           onClick={() => onClickPay()}

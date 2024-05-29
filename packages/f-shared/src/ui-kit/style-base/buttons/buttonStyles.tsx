@@ -14,7 +14,8 @@ export enum ButtonStyleEnum {
   BLACK = 'black',
   TRANSPARENT_WHITE = 'transparentWhite',
   STROKE_WHITE = 'strokeWhite',
-  ROUND_STROKE_WHITE = 'roundStrokeWhite'
+  ROUND_STROKE_WHITE = 'roundStrokeWhite',
+  RED = 'red',
 }
 
 export const activeButtonStyles: Record<ButtonStyleEnum, RuleSet<object>> = {
@@ -35,6 +36,9 @@ export const activeButtonStyles: Record<ButtonStyleEnum, RuleSet<object>> = {
     [ButtonStyleEnum.ROUND_STROKE_WHITE]: css`
         border: 1px solid ${Color.GRAY_200};
         background-color: ${Color.GRAY_100};
+    `,
+    [ButtonStyleEnum.RED]: css`
+        background-color: ${Color.BG_RED};
     `,
 };
 
@@ -114,6 +118,16 @@ export const buttonStyles: Record<ButtonStyleEnum, RuleSet<object>> = {
         @media (hover: hover) {
             &:hover {
                 ${activeButtonStyles.roundStrokeWhite};
+            }
+        }
+    `,
+    [ButtonStyleEnum.RED]: css`
+        background-color: ${Color.BG_RED};
+        color: ${Color.DANGER};
+
+        @media (hover: hover) {
+            &:hover {
+                ${activeButtonStyles.red};
             }
         }
     `,

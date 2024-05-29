@@ -14,6 +14,7 @@ jobs:
   paths-filter:
     runs-on: ubuntu-latest
     outputs:
+      admin-changed: ${{ steps.filter.outputs.admin }}
       company-changed: ${{ steps.filter.outputs.company }}
       freelancer-changed: ${{ steps.filter.outputs.freelancer }}
       landing-changed: ${{ steps.filter.outputs.landing }}
@@ -33,6 +34,8 @@ jobs:
         with:
           list-files: shell
           filters: |
+            admin:
+              - 'apps/admin/**'
             company:
               - 'apps/company/**'
             freelancer:
@@ -52,6 +55,30 @@ jobs:
             shared:
               - 'packages/f-shared/**'
 
+  tests-admin:
+    needs: paths-filter
+    if: ${{ needs.paths-filter.outputs.admin-changed == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Catch deps
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+      - name: install dependencies
+        run: |
+          yarn install
+          npx cypress install
+
+      - name: run lint admin
+        run: yarn lint:admin
+      - name: run tests admin
+        run: yarn test:admin
+      - name: run build admin
+        run: yarn build:admin
+
   tests-company:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.company-changed == 'true' }}
@@ -68,7 +95,7 @@ jobs:
         run: |
           yarn install
           npx cypress install
-          
+
       - name: run lint company
         run: yarn lint:company
       - name: run tests company
@@ -159,7 +186,7 @@ jobs:
       - name: install dependencies
         run: |
           yarn install
-          
+
       - name: run lint app
         run: yarn lint:app
       - name: run tests app
@@ -180,7 +207,7 @@ jobs:
       - name: install dependencies
         run: |
           yarn install
-          
+
       - name: run lint pages
         run: yarn lint:pages
       - name: run tests pages
@@ -201,7 +228,7 @@ jobs:
       - name: install dependencies
         run: |
           yarn install
-          
+
       - name: run lint widgets
         run: yarn lint:widgets
       - name: run tests widgets
@@ -222,7 +249,7 @@ jobs:
       - name: install dependencies
         run: |
           yarn install
-          
+
       - name: run lint features
         run: yarn lint:features
       - name: run tests features
@@ -243,7 +270,7 @@ jobs:
       - name: install dependencies
         run: |
           yarn install
-          
+
       - name: run lint entities
         run: yarn lint:entities
       - name: run tests entities
@@ -264,7 +291,7 @@ jobs:
       - name: install dependencies
         run: |
           yarn install
-          
+
       - name: run lint shared
         run: yarn lint:shared
       - name: run tests shared

@@ -1,4 +1,4 @@
-import {AuthDto, RegistrationDto, SessionDto} from "@freelbee/entities";
+import { AuthenticationDto, RegistrationDto, UserAuthSessionDto } from '@freelbee/entities';
 import { API, Endpoint_Enum, Token_Enum } from '@company/shared';
 
 export const authApi = API.injectEndpoints({
@@ -17,7 +17,7 @@ export const authApi = API.injectEndpoints({
       }),
       extraOptions: { notAuthorized: true}
     }),
-    getCompanyRegSession: builder.mutation<SessionDto, void>({
+    getCompanyRegSession: builder.mutation<UserAuthSessionDto, void>({
       query: () => ({
         url: Endpoint_Enum.COMPANY_REG_SESSION
       }),
@@ -38,7 +38,7 @@ export const authApi = API.injectEndpoints({
       }),
       extraOptions: { notAuthorized: true }
     }),
-    signInCompany: builder.mutation<void, AuthDto>({
+    signInCompany: builder.mutation<void, AuthenticationDto>({
       query: (body) => ({
           url: Endpoint_Enum.COMPANY_SIGNIN,
           method: 'POST',
@@ -46,7 +46,7 @@ export const authApi = API.injectEndpoints({
       }),
       extraOptions: { notAuthorized: true}
     }),
-    getCompanyAuthSession: builder.mutation<SessionDto, void>({
+    getCompanyAuthSession: builder.mutation<UserAuthSessionDto, void>({
       query: () => ({
         url: Endpoint_Enum.COMPANY_AUTH_SESSION
       }),

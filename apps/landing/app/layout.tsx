@@ -12,7 +12,6 @@ export const metadata: Metadata = {
     title: 'Freelancer Management & Global Payments for Freelancers and Distributed Teams | Freelbee',
     description: 'Organize your work with global freelancers and contractors. All-in-one platform for contractor management, payouts, and compliance. Low rates. Any currencies.',
     metadataBase: new URL("https://freelbee.com/"),
-    robots: 'noindex, nofollow',
     openGraph: {
         title: 'Freelancer Management & Global Payments for Freelancers and Distributed Teams | Freelbee',
         description: `Organize your work with global freelancers and contractors. All-in-one platform for contractor management, payouts, and compliance. Low rates. Any currencies.`,

@@ -17,8 +17,9 @@ on:
         default: 'all'
         options:
           - landing
-          - freelancer
           - company
+          - freelancer
+          - admin
           - all
       old-images:
         type: choice
@@ -61,10 +62,12 @@ jobs:
         include:
           - project: landing
             if: ${{ github.event.inputs.project == 'landing' || github.event.inputs.project == 'all' }}
-          - project: freelancer
-            if: ${{ github.event.inputs.project == 'freelancer' || github.event.inputs.project == 'all' }}
           - project: company
             if: ${{ github.event.inputs.project == 'company' || github.event.inputs.project == 'all' }}
+          - project: freelancer
+            if: ${{ github.event.inputs.project == 'freelancer' || github.event.inputs.project == 'all' }}
+          - project: admin
+            if: ${{ github.event.inputs.project == 'admin' || github.event.inputs.project == 'all' }}
       fail-fast: false
     permissions:
       contents: read
@@ -83,6 +86,7 @@ jobs:
       TG_CHANNEL_ID: "${{ inputs.environment }}_NEXT_PUBLIC_TG_CHANNEL_ID"
       COMPANY_URL: "${{ inputs.environment }}_NEXT_PUBLIC_COMPANY_URL"
       FREELANCER_URL: "${{ inputs.environment }}_NEXT_PUBLIC_FREELANCER_URL"
+      BOT_URL: "${{ inputs.environment }}_NEXT_PUBLIC_BOT_URL"
 
     steps:
       - name: Prepare image tag
@@ -95,7 +99,7 @@ jobs:
           echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
           echo "REF_NAME_SANITIZED=$REF_NAME_SANITIZED" >> $GITHUB_ENV
           IMAGE_TAG="$REF_NAME_SANITIZED-$SHORT_SHA"
-          echo "IMAGE_NAME=ghcr.io/freelbee/nx-client/${{ matrix.project }}-${{ github.run_number }}:$IMAGE_TAG" >> $GITHUB_ENV
+          echo "IMAGE_NAME=ghcr.io/freelbee/freelbee-client/${{ matrix.project }}-${{ github.run_number }}:$IMAGE_TAG" >> $GITHUB_ENV
         shell: bash
 
       - name: Set envs for landing
@@ -103,6 +107,7 @@ jobs:
           echo "NEXT_PUBLIC_TG_CHANNEL_ID=${{ vars[env.TG_CHANNEL_ID] }}" >> $GITHUB_ENV
           echo "NEXT_PUBLIC_COMPANY_URL=${{ vars[env.COMPANY_URL] }}" >> $GITHUB_ENV
           echo "NEXT_PUBLIC_FREELANCER_URL=${{ vars[env.FREELANCER_URL] }}" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_BOT_URL=${{ vars[env.BOT_URL] }}" >> $GITHUB_ENV
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -132,11 +137,20 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+#      - name: Build and Push Docker image to GitHub Container Registry
+#        if: ${{ github.event.inputs.project == 'all' || github.event.inputs.project == matrix.project }}
+#        run: |
+#          docker build -t ${{ env.IMAGE_NAME }} -f ./apps/${{ matrix.project }}/Dockerfile .
+#          docker push ${{ env.IMAGE_NAME }}
       - name: Build and Push Docker image to GitHub Container Registry
         if: ${{ github.event.inputs.project == 'all' || github.event.inputs.project == matrix.project }}
         run: |
-          docker build -t ${{ env.IMAGE_NAME }} -f ./apps/${{ matrix.project }}/Dockerfile .
-          docker push ${{ env.IMAGE_NAME }}
+          for i in {1..4}; do
+            docker build -t ${{ env.IMAGE_NAME }} -f ./apps/${{ matrix.project }}/Dockerfile . && break || sleep 10;
+          done
+          for i in {1..4}; do
+            docker push ${{ env.IMAGE_NAME }} && break || sleep 10;
+          done
 
   deploy:
     needs: build-and-push

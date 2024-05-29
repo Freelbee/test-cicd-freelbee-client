@@ -6,7 +6,7 @@ import {RegistrationContext} from "./RegistrationContext";
 import RegistrationForm from "./RegistrationForm";
 import EmailConfirmation from "./EmailConfirmation";
 import {AuthModalState} from "@freelbee/widgets";
-import { RegistrationData, SessionDto} from "@freelbee/entities";
+import { RegistrationData, UserAuthSessionDto} from "@freelbee/entities";
 import RegistrationLayout from "./RegistrationLayout";
 import {RegistrationSteps} from "./RegistrationSteps";
 import {RegistrationDto} from '@freelbee/entities';
@@ -14,7 +14,7 @@ import {RegistrationDto} from '@freelbee/entities';
 type Props = {
     isOpen: boolean;
     registerUser: (dto: RegistrationDto) => Promise<void>;
-    userRegSession: () => Promise<SessionDto>;
+    userRegSession: () => Promise<UserAuthSessionDto>;
     checkCode: (code: string) => Promise<void>;
     resendCode: () => Promise<void>;
     setModalState: Dispatch<SetStateAction<AuthModalState>>;

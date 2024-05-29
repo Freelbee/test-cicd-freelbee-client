@@ -7,23 +7,23 @@ import AuthContainer from "../AuthContainer";
 import LoginForm from "./LoginForm";
 import {LoginContext} from "./LoginContext";
 import EmailConfirmation from "../registration/EmailConfirmation";
-import { AuthDto, SessionDto } from '@freelbee/entities';
+import { AuthenticationDto, UserAuthSessionDto } from '@freelbee/entities';
 import {AuthModalState} from "@freelbee/widgets";
 import {LoginSteps} from "./LoginSteps";
 
 type Props = {
   isOpen: boolean;
-  authUser: (dto: AuthDto) => Promise<void>;
+  authUser: (dto: AuthenticationDto) => Promise<void>;
   checkAuthCode: (code: string) => Promise<void>;
   resendAuthCode: () => Promise<void>;
-  userAuthSession: () => Promise<SessionDto>;
+  userAuthSession: () => Promise<UserAuthSessionDto>;
   setModalState: Dispatch<SetStateAction<AuthModalState>>;
 };
 
 export default function Login(props: Props) {
   const {isOpen, authUser, checkAuthCode, resendAuthCode, userAuthSession, setModalState} = props;
   const [step, setStep] = useState<LoginSteps>(LoginSteps.SEND_CREDENTIALS);
-  const [loginData, setLoginData] = useState<AuthDto>({
+  const [loginData, setLoginData] = useState<AuthenticationDto>({
     email: '',
     password: ``
   })

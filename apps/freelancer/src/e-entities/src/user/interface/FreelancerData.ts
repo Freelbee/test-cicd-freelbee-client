@@ -1,8 +1,8 @@
-import { CounterpartyDetailsPropsType, CounterpartyDetailsType, CounterpartyStatus } from '@freelbee/entities';
+import { CounterpartyDetailsPropsType, CounterpartyDetailsType, CounterpartyDetailsStatus } from '@freelbee/entities';
 import { DetailProps } from '@freelbee/shared';
 
 export interface FreelancerResponse {
-  status: CounterpartyStatus,
+  status: CounterpartyDetailsStatus,
   id: number,
   counterpartyDetail: {
     id: number,
@@ -14,7 +14,7 @@ export interface FreelancerResponse {
 }
 
 export interface FreelancerData {
-  status: CounterpartyStatus,
+  status: CounterpartyDetailsStatus,
   id: number,
   counterpartyDetail: {
     id: number,

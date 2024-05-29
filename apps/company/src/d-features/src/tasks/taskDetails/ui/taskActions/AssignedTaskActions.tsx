@@ -3,7 +3,7 @@
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../../store";
 import { setDetailsOpen, useGetCompanyCounterpartyQuery, useSetTaskStatusMutation } from "@company/entities";
-import { CounterpartyStatus, TaskStatus } from "@freelbee/entities";
+import { CounterpartyDetailsStatus, TaskStatus } from "@freelbee/entities";
 import { ActionsContainer } from "./ActionsContainer";
 import { Button, ButtonStyleEnum } from "@freelbee/shared/ui-kit";
 
@@ -28,7 +28,7 @@ export default function AssignedTaskActions () {
     return (
         <ActionsContainer>
             <Button
-                disabled={company?.counterpartyDetail.status !== CounterpartyStatus.APPROVED}
+                disabled={company?.counterpartyDetail.status !== CounterpartyDetailsStatus.APPROVED}
                 onClick={()=> handleSetStatus(TaskStatus.CANCELLED)}
                 isWide styleType={ButtonStyleEnum.ROUND_STROKE_WHITE}>
                 Cancel task

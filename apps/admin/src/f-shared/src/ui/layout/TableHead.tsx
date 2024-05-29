@@ -1,0 +1,33 @@
+'use client';
+
+import { Breakpoint, Color, mediaBreakpointDown } from '@freelbee/shared/ui-kit';
+import { HTMLAttributes, ReactNode } from 'react';
+import styled, { RuleSet } from 'styled-components';
+
+interface Props extends HTMLAttributes<HTMLDivElement> {
+  children: ReactNode;
+  styles: RuleSet<object>;
+}
+
+export const TableHead = (props: Props) => {
+  const { children, styles, ...rest } = props;
+
+  return (
+    <Container $styles={styles} {...rest}>
+      {children}
+    </Container>
+  );
+};
+
+const Container = styled.div<{ $styles?: RuleSet<object> }>`
+  padding: 20px 16px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  background-color: ${Color.GRAY_200};
+
+  ${mediaBreakpointDown(Breakpoint.xMobile)} {
+    display: none;
+  }
+
+  ${({ $styles }) => $styles};
+`;

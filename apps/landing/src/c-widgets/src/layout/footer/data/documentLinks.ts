@@ -1,22 +1,14 @@
 export const DOC_LINKS = [
     {
         text: 'Privacy policy',
-        url: '/documents/privacy-policy.pdf'
-    },
-    {
-        text: 'Business User Agreement',
-        url: '/documents/user-agreement-business.pdf'
-    },
-    {
-        text: 'Freelancer User Agreement',
-        url: '/documents/user-agreement-freelancer.pdf'
+        url: 'https://freelbee-docs.s3.eu-north-1.amazonaws.com/Privacy+Policy.pdf'
     },
     {
         text: 'General Terms',
-        url: '/documents/general-terms.pdf'
+        url: 'https://freelbee-docs.s3.eu-north-1.amazonaws.com/General+Terms+and+Conditions+Freelbee+Service.pdf'
     },
     {
         text: 'KYC&AML Policy',
-        url: '/documents/aml-kyc-policy.pdf'
+        url: 'https://freelbee-docs.s3.eu-north-1.amazonaws.com/AML_KYC+Policy.pdf'
     },
 ];

@@ -4,7 +4,7 @@ PROJECT="$1"
 KEEP_IMAGES="$2"
 # Получаем список образов по паттерну, отсортированный по дате создания в обратном порядке
 # Формат вывода: <дата создания> <ID образа>
-images=$(docker images -a --format "{{.Repository}}\t{{.CreatedAt}}\t{{.ID}}" | grep "ghcr.io/freelbee/nx-client/$PROJECT" | sort -r)
+images=$(docker images -a --format "{{.Repository}}\t{{.CreatedAt}}\t{{.ID}}" | grep "ghcr.io/freelbee/freelbee-client/$PROJECT" | sort -r)
 #echo $images
 
 # Преобразуем список в массив

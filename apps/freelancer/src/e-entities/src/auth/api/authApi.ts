@@ -1,5 +1,5 @@
 import { API, Endpoint_Enum, Token_Enum } from '@freelancer/shared';
-import {AuthDto, RegistrationDto, SessionDto} from "@freelbee/entities";
+import { AuthenticationDto, RegistrationDto, UserAuthSessionDto } from '@freelbee/entities';
 
 
 export const authApi = API.injectEndpoints({
@@ -18,7 +18,7 @@ export const authApi = API.injectEndpoints({
       }),
       extraOptions: {notAuthorized: true}
     }),
-    getFreelancerRegSession: builder.mutation<SessionDto, void>({
+    getFreelancerRegSession: builder.mutation<UserAuthSessionDto, void>({
       query: () => ({
         url: Endpoint_Enum.FREELANCER_REG_SESSION
       }),
@@ -39,7 +39,7 @@ export const authApi = API.injectEndpoints({
       }),
       extraOptions: {notAuthorized: true}
     }),
-    signInFreelancer: builder.mutation<void, AuthDto>({
+    signInFreelancer: builder.mutation<void, AuthenticationDto>({
       query: (body) => ({
         url: Endpoint_Enum.FREELANCER_SIGNIN,
         method: 'POST',
@@ -47,7 +47,7 @@ export const authApi = API.injectEndpoints({
       }),
       extraOptions: {notAuthorized: true}
     }),
-    getFreelancerAuthSession: builder.mutation<SessionDto, void>({
+    getFreelancerAuthSession: builder.mutation<UserAuthSessionDto, void>({
       query: () => ({
         url: Endpoint_Enum.FREELANCER_AUTH_SESSION
       }),

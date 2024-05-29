@@ -6,19 +6,19 @@ import Login from "./login/Login";
 import Registration from "./registration/Registration";
 import {AuthModalState} from "./Types";
 import {Dispatch, SetStateAction} from "react";
-import {AuthDto, RegistrationDto, SessionDto} from "@freelbee/entities";
+import {AuthenticationDto, RegistrationDto, UserAuthSessionDto} from "@freelbee/entities";
 
 type Props = {
   authModalState: AuthModalState;
   setAuthModalState: Dispatch<SetStateAction<AuthModalState>>;
   registerUser: (dto: RegistrationDto) => Promise<void>
-  userRegSession: () => Promise<SessionDto>;
+  userRegSession: () => Promise<UserAuthSessionDto>;
   checkCode: (code: string) => Promise<void>;
   resendCode: () => Promise<void>;
-  authUser: (dto: AuthDto) => Promise<void>;
+  authUser: (dto: AuthenticationDto) => Promise<void>;
   checkAuthCode: (code: string) => Promise<void>;
   resendAuthCode: () => Promise<void>;
-  userAuthSession: () => Promise<SessionDto>;
+  userAuthSession: () => Promise<UserAuthSessionDto>;
 }
 
 export const AuthModal = (props: Props) => {

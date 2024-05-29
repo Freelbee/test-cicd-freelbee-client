@@ -1,9 +1,9 @@
 import { AbstractValidator, EmailRule, IRule, RequiredRule } from '@freelbee/features';
-import { AuthDto } from '@freelbee/entities';
+import { AuthenticationDto } from '@freelbee/entities';
 
 
-export class LoginDataValidator extends AbstractValidator<AuthDto> {
-  protected rules(): { [key in keyof AuthDto]?: IRule[] } {
+export class LoginDataValidator extends AbstractValidator<AuthenticationDto> {
+  protected rules(): { [key in keyof AuthenticationDto]?: IRule[] } {
     return {
       email: [new RequiredRule(), new EmailRule()],
       password: [new RequiredRule()]

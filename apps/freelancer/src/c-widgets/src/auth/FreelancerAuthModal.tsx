@@ -13,7 +13,7 @@ import {
 } from "@freelancer/entities";
 import {useEffect, useState} from "react";
 import {useQueryParamsNavigation} from "@freelbee/shared/hooks";
-import { AuthDto, RegistrationDto, SessionDto } from '@freelbee/entities';
+import { AuthenticationDto, RegistrationDto, UserAuthSessionDto } from '@freelbee/entities';
 import { usePathname } from 'next/navigation';
 
 export const FreelancerAuthModal = () => {
@@ -35,13 +35,13 @@ export const FreelancerAuthModal = () => {
   const [getAuthSession] = useGetFreelancerAuthSessionMutation();
 
 
-  const userRegSession = async (): Promise<SessionDto> => {
+  const userRegSession = async (): Promise<UserAuthSessionDto> => {
     return getRegSession().unwrap().then((res) => {
       return res;
     });
   }
 
-  const userAuthSession = async (): Promise<SessionDto> => {
+  const userAuthSession = async (): Promise<UserAuthSessionDto> => {
     return getAuthSession().unwrap().then((res) => {
       return res;
     });
@@ -64,7 +64,7 @@ export const FreelancerAuthModal = () => {
     return resendAuthCode().unwrap();
   }
 
-  const onAuthUser = async (dto: AuthDto) => {
+  const onAuthUser = async (dto: AuthenticationDto) => {
     return authUser(dto).unwrap();
   }
 
