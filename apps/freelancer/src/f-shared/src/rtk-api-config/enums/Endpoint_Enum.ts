@@ -32,4 +32,6 @@ export enum Endpoint_Enum {
   FREELANCER_AUTH_RESEND_SESSION = '/auth/freelancer/email/resend',
   AUTH__FREELANCER__IS_AUTHENTICATED = '/auth/freelancer/is-authenticated',
   AUTH__FREELANCER__LOGOUT = '/auth/freelancer/logout',
+
+  UPDATE_PASSWORD = 'security/user/password'
 }
