@@ -8,7 +8,7 @@ export const DocumentsStepTitle = () => {
             <Heading1>Documents</Heading1>  
             <Text font='bodyMedium'>You can attach documents in pdf, png and jpg;</Text> 
             <Text font='body'>{`
-                Attached documents must have a Latin name and not contain special characters > < * : ^ + \\ = & /
+                Attached documents should not contain special characters > < * : ^ + \\ = & /
             `}</Text>
             
         </>

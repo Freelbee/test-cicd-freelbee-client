@@ -18,8 +18,6 @@ export const CardPaymentDataForm = () => {
 
     if(!displayedTask) return <></>;
 
-    console.log('V FROM CARD', paymentFormData)
-    
   return (
     <Container>
         <SelectWithSearch<Currency>
