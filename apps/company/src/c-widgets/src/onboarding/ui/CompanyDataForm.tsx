@@ -53,7 +53,7 @@ export const CompanyDataForm = () => {
 
         createCompany(body).unwrap()
         .then(() => {
-            setStep(Onboarding_Step.PAYMENT_DATA);
+            setStep(Onboarding_Step.DOCUMENTS_DATA);
         })
         .catch(e => {})
     }

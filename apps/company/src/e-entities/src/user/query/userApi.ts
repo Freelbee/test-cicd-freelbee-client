@@ -8,7 +8,6 @@ export const userAPI = API.injectEndpoints({
       query: () => Endpoint_Enum.USER,
       providesTags: ['user'],
       transformResponse: (res: UserResponse) => {
-        console.log(res)
         const mappedProps = PropsHelper.MapPropsToFields(res.userData.props);
         return {...res, userData: {...(res?.userData ?? {}), props: mappedProps}};
       }

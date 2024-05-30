@@ -5,6 +5,8 @@ import { Color, Text, typography } from '@freelbee/shared/ui-kit';
 import { ReactComponent as PaperClipIcon } from '@freelbee/assets/icons/paper-clip/paper-clip.svg';
 import { RuleMessage } from '../../../validator/RuleMessage';
 import { FileBadge } from './FileBadge';
+import { AnimatePresence } from 'framer-motion';
+import { ErrorOutput } from '../self-utils/errorOutput';
 
 export interface FileData {
   id?: number,
@@ -18,6 +20,7 @@ export interface FileData {
 
 export enum ErrorFileType {
   FILE_SIZE = 'fileSize',
+  FILE_EXTENSION = 'fileExtension',
   FILE_NAME = 'name',
 }
 
@@ -32,18 +35,24 @@ interface FileLoaderProps {
   setFiles: React.Dispatch<React.SetStateAction<FileData[]>>;
   maxFileSize?: number;
   multiply?: boolean;
+  isError?: boolean,
+  errorMessage?: string,
+  allowedExtensions?: Array<string>
 }
 
 const errors = {
   fileIsTooBig: {
     en: 'File is too big',
   },
+  invalidExtension: {
+    en: 'Invalid extension',
+  },
   fileHasInvalidSymbols: {
     en: 'Invalid file name',
   }
 };
 
-export default function FileLoader(props: FileLoaderProps) {
+export function FileLoader(props: FileLoaderProps) {
   const {
     text,
     borderColor,
@@ -54,7 +63,10 @@ export default function FileLoader(props: FileLoaderProps) {
     files,
     setFiles,
     maxFileSize = 15_728_640,
-    multiply = true
+    multiply = true,
+    isError,
+    errorMessage,
+    allowedExtensions
   } = props;
 
   function getBase64(file: File, id: number) {
@@ -78,6 +90,7 @@ export default function FileLoader(props: FileLoaderProps) {
     };
   }
 
+
   const onDropHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const newFiles = e.target!.files!;
@@ -86,6 +99,27 @@ export default function FileLoader(props: FileLoaderProps) {
       const id = new Date().getTime() + i;
       const file = newFiles[i];
       console.log(newFiles[i].size);
+
+      const ext = newFiles[i].name.split('.').pop()?.toLowerCase();
+
+      if(allowedExtensions && ext && !allowedExtensions.includes(ext) ) {
+        const newFile = {
+          id: id,
+          file: file,
+          loading: false,
+          isError: true,
+          message: errors.invalidExtension,
+          errorType: ErrorFileType.FILE_SIZE
+        };
+
+        if(multiply) {
+          setFiles(prev => [...prev, newFile]);
+        } else {
+          setFiles([newFile]);
+        }
+        continue;
+      }
+
       if(newFiles[i].size > maxFileSize) {
         const newFile = {
           id: id,
@@ -95,6 +129,7 @@ export default function FileLoader(props: FileLoaderProps) {
           message: errors.fileIsTooBig,
           errorType: ErrorFileType.FILE_SIZE
         };
+
         if(multiply) {
           setFiles(prev => [...prev, newFile]);
         } else {
@@ -157,13 +192,17 @@ export default function FileLoader(props: FileLoaderProps) {
     <Container>
       {label &&
         <Text font="bodyMedium">{isRequired ? label + '*' : label}</Text>}
-      <Content borderColor={borderColor} styles={fileContainerStyles}>
+      <Content borderColor={isError ? Color.ERROR : borderColor} styles={fileContainerStyles}>
         {
           files.map(fileData => (
             <FileBadge key={fileData.id} fileData={fileData} removeFile={removeFile} />
           ))
         }
       </Content>
+      <AnimatePresence>
+          {isError && errorMessage &&
+          <ErrorOutput message={errorMessage} />}
+      </AnimatePresence>   
       <InputFileContainer>
         <PaperClipIcon />
         <InputFile type="file" name="file" multiple={multiply} onChange={(e) => onDropHandler(e)} />
@@ -171,7 +210,7 @@ export default function FileLoader(props: FileLoaderProps) {
         {
           maxSizeText && <MaxSize>{maxSizeText}</MaxSize>
         }
-      </InputFileContainer>
+      </InputFileContainer>   
     </Container>
   );
 }
@@ -213,7 +252,6 @@ const Content = styled.div<{ borderColor?: Color, styles?: Array<RuleSet<object>
 
   ${p => p.styles};
 `;
-
 
 const InputFileContainer = styled.label`
   cursor: pointer;

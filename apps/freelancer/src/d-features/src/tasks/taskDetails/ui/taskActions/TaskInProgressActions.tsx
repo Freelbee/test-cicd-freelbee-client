@@ -4,14 +4,13 @@ import {ReactComponent as AttentionIcon} from "@freelbee/assets/icons/alert-icon
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../../../store";
 import { setDetailsOpen, useGetTaskFilesQuery, useSetTaskStatusMutation, useUpdateTaskFilesMutation } from "@freelancer/entities";
-import { Button, ButtonStyleEnum, Color, FileData, InfoWithIcon } from "@freelbee/shared/ui-kit";
+import { Button, ButtonStyleEnum, Color, FileData, FileLoader, InfoWithIcon } from "@freelbee/shared/ui-kit";
 import { FormGrid } from "../FormGrid";
 import { ActionsContainer } from "./ActionsContainer";
 import { TaskStatus } from "@freelbee/entities";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { useState } from "react";
 import { css } from "styled-components";
-import FileLoader from "packages/f-shared/src/ui-kit/inputs/fileLoader/FileLoader";
 
 export default function TaskInProgressActions () {
 
