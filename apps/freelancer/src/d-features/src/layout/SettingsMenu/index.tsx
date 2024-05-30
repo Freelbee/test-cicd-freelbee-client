@@ -8,7 +8,10 @@ import { NavigationLink } from "@freelbee/shared/ui-kit";
 export function SettingsMenu () {
   const pathName = usePathname();
 
-  const isRouteActive = (link: string) => pathName.endsWith(link);
+  const isRouteActive = (link: string) => {
+    if(link === '/') return pathName === link;
+    return pathName.endsWith(link);
+  };
   
     return (
         <NavigationWrapper>

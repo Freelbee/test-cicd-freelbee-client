@@ -13,6 +13,7 @@ type Props<T> = {
     selectedColor?: Color,
     tabTextColor?: Color,
     underlineColor?: Color,
+    reset?: boolean;
 };
 
 export default function TabsSelect<T> (props: Props<T>) {
@@ -24,6 +25,7 @@ export default function TabsSelect<T> (props: Props<T>) {
         tabTextColor = Color.GRAY_600,
         selectedColor = Color.SWAMPY,
         underlineColor = Color.SWAMPY,
+        reset
     } = props;
 
     const [isOverflowing, setIsOverflowing] = useState<boolean>(false);
@@ -33,6 +35,12 @@ export default function TabsSelect<T> (props: Props<T>) {
     const dragRowRef = useRef<HTMLDivElement | null>(null);
 
     const layoutId = useId();
+
+    useEffect(() => {
+        if(reset) {
+            setSelected(defaultValue);
+        }
+    }, [reset]);
 
     const checkOverflow = () => {
         if(dragRowRef.current && dragWrapperRef.current) {
