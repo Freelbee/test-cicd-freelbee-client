@@ -12,6 +12,8 @@ import { DocumentsData } from "../interface/DocumentsData";
 import { CompanyDocumentType } from "../interface/CompanyDocumentTypeEnum";
 import { DocumentsDataValidator } from "../util/DocumentsDataValidator";
 
+const ALLOWED_EXTENSIONS = ['pdf', 'png', 'jpg', 'jpeg'];
+
 export const DocumentsForm = () => {
 
     const {setStep} = useContext(OnboardingContext);
@@ -60,6 +62,7 @@ export const DocumentsForm = () => {
     <Form onSubmit={submitHandler}>
         <FileLoader
           multiply={false}
+          allowedExtensions={ALLOWED_EXTENSIONS}
           label='Certificate of incorporation/registration'
           isRequired
           files={registration}
@@ -72,6 +75,7 @@ export const DocumentsForm = () => {
 
         <FileLoader
           multiply={false}
+          allowedExtensions={ALLOWED_EXTENSIONS}
           label='Proof of address, Statement of information'
           isRequired
           files={address}
@@ -84,6 +88,7 @@ export const DocumentsForm = () => {
 
         <FileLoader
           multiply={false}
+          allowedExtensions={ALLOWED_EXTENSIONS}
           label='Shareholder registry'
           isRequired
           files={shareholderRegistry}
@@ -96,6 +101,7 @@ export const DocumentsForm = () => {
 
         <FileLoader
           multiply={false}
+          allowedExtensions={ALLOWED_EXTENSIONS}
           label='Director registry'
           isRequired
           files={directorRegistry}

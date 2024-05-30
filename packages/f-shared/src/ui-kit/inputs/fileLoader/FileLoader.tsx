@@ -20,6 +20,7 @@ export interface FileData {
 
 export enum ErrorFileType {
   FILE_SIZE = 'fileSize',
+  FILE_EXTENSION = 'fileExtension',
   FILE_NAME = 'name',
 }
 
@@ -36,11 +37,15 @@ interface FileLoaderProps {
   multiply?: boolean;
   isError?: boolean,
   errorMessage?: string,
+  allowedExtensions?: Array<string>
 }
 
 const errors = {
   fileIsTooBig: {
     en: 'File is too big',
+  },
+  invalidExtension: {
+    en: 'Invalid extension',
   },
   fileHasInvalidSymbols: {
     en: 'Invalid file name',
@@ -60,7 +65,8 @@ export function FileLoader(props: FileLoaderProps) {
     maxFileSize = 15_728_640,
     multiply = true,
     isError,
-    errorMessage
+    errorMessage,
+    allowedExtensions
   } = props;
 
   function getBase64(file: File, id: number) {
@@ -84,6 +90,7 @@ export function FileLoader(props: FileLoaderProps) {
     };
   }
 
+
   const onDropHandler = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const newFiles = e.target!.files!;
@@ -92,6 +99,27 @@ export function FileLoader(props: FileLoaderProps) {
       const id = new Date().getTime() + i;
       const file = newFiles[i];
       console.log(newFiles[i].size);
+
+      const ext = newFiles[i].name.split('.').pop()?.toLowerCase();
+
+      if(allowedExtensions && ext && !allowedExtensions.includes(ext) ) {
+        const newFile = {
+          id: id,
+          file: file,
+          loading: false,
+          isError: true,
+          message: errors.invalidExtension,
+          errorType: ErrorFileType.FILE_SIZE
+        };
+
+        if(multiply) {
+          setFiles(prev => [...prev, newFile]);
+        } else {
+          setFiles([newFile]);
+        }
+        continue;
+      }
+
       if(newFiles[i].size > maxFileSize) {
         const newFile = {
           id: id,
@@ -101,6 +129,7 @@ export function FileLoader(props: FileLoaderProps) {
           message: errors.fileIsTooBig,
           errorType: ErrorFileType.FILE_SIZE
         };
+
         if(multiply) {
           setFiles(prev => [...prev, newFile]);
         } else {
