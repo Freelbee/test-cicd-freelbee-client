@@ -36,7 +36,7 @@ export const PhoneNumberInput = ({value, setValue, defaultCountry = 'US', isRequ
             defaultCountry={defaultCountry}
             placeholder="Enter phone number"
             value={value}
-            onChange={setValue}
+            onChange={(number) => number && setValue(number as string)}
             {...rest}
         />
             <AnimatePresence>
