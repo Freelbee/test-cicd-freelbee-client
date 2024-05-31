@@ -21,6 +21,8 @@ export * from './counterparty/interface/CounterpartyDataDto';
 export * from './counterparty/interface/CounterpartyDetailsType';
 export * from './counterparty/interface/CounterpartyDetailsPropsType';
 export * from './counterparty/interface/CounterpartyDetailsStatus';
+export * from './counterparty/interface/CounterpartyDocumentLinkDto';
+export * from './counterparty/interface/CounterpartyDocumentType';
 
 export * from './payment/interface/PaymentMethod';
 export * from './payment/interface/PaymentMethodPropType';

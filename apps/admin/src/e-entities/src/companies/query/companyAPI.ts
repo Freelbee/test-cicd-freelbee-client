@@ -1,7 +1,13 @@
 import { API, Endpoint_Enum } from '@admin/shared';
-import { CounterpartyDetailsStatus, CounterpartyDto, CounterpartyDtoModified } from '@freelbee/entities';
+import {
+  CounterpartyDetailsStatus,
+  CounterpartyDocumentLinkDto,
+  CounterpartyDocumentType,
+  CounterpartyDto,
+  CounterpartyDtoModified
+} from '@freelbee/entities';
 import { PageResponse, Sort } from '@freelbee/shared';
-import { CounterpartyDtoMapperHelper } from '../helpers/CounterpartyDtoMapperHelper';
+import { CounterpartyHelper } from '../helpers/CounterpartyHelper';
 
 /**
  * @see AdminCompanyController
@@ -12,7 +18,11 @@ export const companyAPI = API.injectEndpoints({
     getCompanyCounterparty: builder.query<CounterpartyDtoModified, number>({
       query: (companyId) => Endpoint_Enum.GET_COMPANY_COUNTERPARTY.replace('{0}', companyId.toString()),
       providesTags: ['company-counterparty'],
-      transformResponse: (company: CounterpartyDto) => CounterpartyDtoMapperHelper.ModifyCounterpartyDto(company)
+      transformResponse: (company: CounterpartyDto) => CounterpartyHelper.ModifyCounterpartyDto(company)
+    }),
+    getCompanyCounterpartyDocuments: builder.query<Record<CounterpartyDocumentType, string>, number>({
+      query: (companyId) => Endpoint_Enum.GET_COMPANY_COUNTERPARTY_DOCUMENTS.replace('{0}', companyId.toString()),
+      transformResponse: (links: CounterpartyDocumentLinkDto[]) => CounterpartyHelper.MapCounterpartyDocumentLinks(links)
     }),
     getPageOfCompanyCounterparties: builder.query<PageResponse<CounterpartyDtoModified>, { page: number; size: number; sort?: Sort }>({
       query: ({ page, size, sort }) => {
@@ -25,7 +35,7 @@ export const companyAPI = API.injectEndpoints({
         return url;
       },
       providesTags: ['company-counterparties'],
-      transformResponse: (res: PageResponse<CounterpartyDto>) => CounterpartyDtoMapperHelper.ModifyPageOfCounterpartyDto(res)
+      transformResponse: (res: PageResponse<CounterpartyDto>) => CounterpartyHelper.ModifyPageOfCounterpartyDto(res)
     }),
     setCompanyCounterpartyStatus: builder.mutation<void, { status: CounterpartyDetailsStatus, companyId: number }>({
       query: ({ status, companyId }) => ({
@@ -40,6 +50,7 @@ export const companyAPI = API.injectEndpoints({
 
 export const {
   useGetCompanyCounterpartyQuery,
+  useGetCompanyCounterpartyDocumentsQuery,
   useGetPageOfCompanyCounterpartiesQuery,
   useSetCompanyCounterpartyStatusMutation,
 } = companyAPI;

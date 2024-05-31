@@ -26,6 +26,7 @@ export enum Endpoint_Enum {
    * @see companyApi
    */
   GET_COMPANY_COUNTERPARTY = 'companies/{0}',
+  GET_COMPANY_COUNTERPARTY_DOCUMENTS = 'companies/{0}/documents',
   GET_PAGE_OF_COMPANY_COUNTERPARTIES = 'companies?page={0}&size={1}',
   SET_COMPANY_COUNTERPARTY_STATUS = 'companies/{0}/set-status',
 

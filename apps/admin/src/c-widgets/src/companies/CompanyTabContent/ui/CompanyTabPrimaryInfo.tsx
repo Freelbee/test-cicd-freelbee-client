@@ -4,10 +4,13 @@ import styled from 'styled-components';
 import React, { useContext } from 'react';
 import { Input, Text } from '@freelbee/shared/ui-kit';
 import { CompanyNavigation } from '@admin/widgets';
-import { CompanyNavigationContext } from '@admin/features';
+import { CompanyNavigationContext, FileDownload } from '@admin/features';
+import { useGetCompanyCounterpartyDocumentsQuery } from '@admin/entities';
+import { CounterpartyDocumentType } from '@freelbee/entities';
 
 export function CompanyTabPrimaryInfo() {
   const { company } = useContext(CompanyNavigationContext);
+  const { data: companyDocumentLinks } = useGetCompanyCounterpartyDocumentsQuery(company.id);
 
   return (
     <Container>
@@ -95,6 +98,27 @@ export function CompanyTabPrimaryInfo() {
           disabled
         />
       </Section>
+      {companyDocumentLinks && (
+        <Section>
+          <Text font="heading2">Documents</Text>
+          <FileDownload
+            text='Director registry*'
+            link={companyDocumentLinks[CounterpartyDocumentType.DIRECTOR_REGISTRY]}
+          />
+          <FileDownload
+            text='Shareholder registry*'
+            link={companyDocumentLinks[CounterpartyDocumentType.SHAREHOLDER_REGISTRY]}
+          />
+          <FileDownload
+            text='Proof of address, Statement of information*'
+            link={companyDocumentLinks[CounterpartyDocumentType.ADDRESS]}
+          />
+          <FileDownload
+            text='Certificate of incorporation/registration*'
+            link={companyDocumentLinks[CounterpartyDocumentType.REGISTRATION]}
+          />
+        </Section>
+      )}
     </Container>
   );
 }
@@ -103,7 +127,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 20px;
+  gap: 32px;
 `;
 
 const Section = styled.div`
