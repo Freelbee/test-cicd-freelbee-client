@@ -1,12 +1,11 @@
 'use client';
 
 import styled, { css } from 'styled-components';
-import { Button, ButtonStyleEnum, Checkbox, Color, Heading3, Input, SelectWithSearch, Text } from '@freelbee/shared/ui-kit';
+import { Button, ButtonStyleEnum, Checkbox, Color, FileLoader, Heading3, Input, SelectWithSearch, Text } from '@freelbee/shared/ui-kit';
 import React, { useContext, useState } from 'react';
 import { TaskCreation_Step, TaskCreationContext, TaskCreationData } from '../context/TaskCreationContext';
 import { ReactComponent as DownloadIcon } from '@freelbee/assets/icons/download/download.svg';
 import { useDataStateUpdater } from '@freelbee/shared/hooks';
-import FileLoader from 'packages/f-shared/src/ui-kit/inputs/fileLoader/FileLoader';
 import {
   ContractPreviewDto,
   setTaskCreationModalOpened,

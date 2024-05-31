@@ -6,6 +6,7 @@ export enum Endpoint_Enum {
   COMPANY_ONBOARDING_STATUS = `/users/company/onboarding/state`,
   SET_USER_DATA = `/users/user-data`,
   CREATE_COMPANY = `/counterparties/company`,
+  COMPANY_DOCUMENTS = '/counterparties/company-documents',
   COMPANY = `/counterparties/company`,
   CREATE_PAYMENT_METHODS = '/payment-methods',
   GET_PAYMENT_METHODS = '/payment-methods/{0}',

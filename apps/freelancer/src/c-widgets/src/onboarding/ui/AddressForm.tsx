@@ -27,7 +27,7 @@ export const AddressForm = () => {
         }
         setStep(Onboarding_Step.USER_DATA);
     }
-console.log(formData.COUNTRY)
+
   return (
     <Form onSubmit={submitHandler}>
         <CountrySelect 

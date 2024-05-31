@@ -1,10 +1,10 @@
 import { Color, Heading1, Text} from "@freelbee/shared/ui-kit";
 
-export const ThirdStepTitle = () => {
+export const PaymentDataStepTitle = () => {
 
     return (
         <>
-            <Text font='captions' color={Color.GRAY_600}>3 of 3 Payment details</Text>
+            <Text font='captions' color={Color.GRAY_600}>4 of 4 Payment details</Text>
             <Heading1>Bank account</Heading1>   
         </>
     );

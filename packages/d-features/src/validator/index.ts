@@ -28,3 +28,4 @@ export * from './rules/Task/WorksNameRule';
 export * from './rules/CompanyEmailRule';
 export * from './rules/MaximumNumberRule';
 export * from './rules/PasswordRule';
+export * from './rules/ValidFIleDataRule';

@@ -9,24 +9,28 @@ import { Onboarding_Step } from "./interface/OnboardingStep";
 import { OnboardingContext } from "./context/OnboardingContext";
 import { CompanyDataForm } from "./ui/CompanyDataForm";
 import { PaymentDataForm } from "./ui/PaymentDataForm";
-import { FirstStepTitle } from "./ui/FirstStepTitle";
-import { SecondStepTitle } from "./ui/SecondStepTitle";
-import { ThirdStepTitle } from "./ui/ThirdStepTitle";
 import { setOnboardingOpened, useGetCompanyOnboardingStateQuery, useGetCompanyCounterpartyQuery } from "@company/entities";
 import Spinner from "packages/f-shared/src/ui-kit/spinner/Spinner";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@company/features";
+import { PersonalDataStepTitle } from "./ui/PersonalDataStepTitle";
+import { CompanyDataStepTitle } from "./ui/CompanyDataStepTitle";
+import { PaymentDataStepTitle } from "./ui/PaymentDataStepTitle";
+import { DocumentsStepTitle } from "./ui/DocumentsStepTitle";
+import { DocumentsForm } from "./ui/DocumentsForm";
 
 const onboardingContent: Record<Onboarding_Step, JSX.Element> = {
     [Onboarding_Step.USER_DATA]: <PersonalForm />,
     [Onboarding_Step.COMPANY_DATA]: <CompanyDataForm />,
+    [Onboarding_Step.DOCUMENTS_DATA]: <DocumentsForm />,
     [Onboarding_Step.PAYMENT_DATA]: <PaymentDataForm />,
 }
 
 const onboardingTitle: Record<Onboarding_Step, JSX.Element> = {
-    [Onboarding_Step.USER_DATA]: <FirstStepTitle />,
-    [Onboarding_Step.COMPANY_DATA]: <SecondStepTitle />,
-    [Onboarding_Step.PAYMENT_DATA]: <ThirdStepTitle />
+    [Onboarding_Step.USER_DATA]: <PersonalDataStepTitle />,
+    [Onboarding_Step.COMPANY_DATA]: <CompanyDataStepTitle />,
+    [Onboarding_Step.DOCUMENTS_DATA]: <DocumentsStepTitle />,
+    [Onboarding_Step.PAYMENT_DATA]: <PaymentDataStepTitle />,
 }
 
 export const OnboardingModal = () => {
@@ -45,8 +49,12 @@ export const OnboardingModal = () => {
         if(onboardingState?.isUserDataSet && !onboardingState.isCounterpartyCreated) {
             setStep(Onboarding_Step.COMPANY_DATA)
         }
+        if(onboardingState?.isUserDataSet && onboardingState.isCounterpartyCreated && !onboardingState.isCounterpartyDocumentsSet) {
+            setStep(Onboarding_Step.DOCUMENTS_DATA)
+        }
         if(onboardingState?.isUserDataSet
             && onboardingState.isCounterpartyCreated
+            && onboardingState.isCounterpartyDocumentsSet
             && !onboardingState.isPaymentMethodSet) {
             setStep(Onboarding_Step.PAYMENT_DATA)
         }
