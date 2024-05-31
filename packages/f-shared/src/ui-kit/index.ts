@@ -15,8 +15,8 @@ export * from "./style-base/buttons/squareButtonStyles";
 export * from "./style-base/buttons/styleEnum";
 
 
-
 export * from "./hoc/Portal/Portal";
+export * from "./hoc/Draggable";
 
 export * from "./modal/modalWindow";
 

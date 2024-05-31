@@ -46,8 +46,9 @@ export const PasswordUpdateForm = ({handlePasswordUpdate, ...rest}: Props) => {
   }
 
   return (
-    <FormContainer {...rest} onSubmit={submitHandler}>
+    <FormContainer {...rest} onSubmit={submitHandler} autoComplete='new-password'>
       <PasswordInput 
+          autoComplete='new-password'
           label="Old password"
           value={oldPassword} 
           onFocus={resetErrors}
@@ -55,6 +56,7 @@ export const PasswordUpdateForm = ({handlePasswordUpdate, ...rest}: Props) => {
           errorMessage={validationResult.getMessageByLanguage('oldPassword', LanguageType.EN)}
           setValue={(password) => setOldPassword(password)} />
       <PasswordInput
+          autoComplete='new-password'
           label="New password"
           value={newPassword} 
           onFocus={resetErrors}
