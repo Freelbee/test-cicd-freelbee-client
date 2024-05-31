@@ -11,7 +11,12 @@ import { useDataStateUpdater } from "@freelbee/shared/hooks";
 import { PaymentMethodFormData } from "../interface/PaymentMethodsFormData";
 import { PaymentMethodPropType, PaymentMethodType } from "@freelbee/entities";
 import { useDispatch } from "react-redux";
-import { setOnboardingOpened, useCreatePaymentMethodMutation, useGetCompanyCounterpartyQuery } from "@company/entities";
+import {
+  setOnboardingOpened,
+  useCreatePaymentMethodMutation,
+  useGetCompanyCounterpartyQuery,
+  useSendNotificationAboutNewCompanyForApprovalMutation
+} from '@company/entities';
 import { PropsHelper } from "@freelbee/shared/helpers";
 
 const initialData: PaymentMethodFormData = {
@@ -23,10 +28,10 @@ const initialData: PaymentMethodFormData = {
 }
 
 export const PaymentDataForm = () => {
-
     const dispatch = useDispatch();
     const {data: company, isLoading: isCompanyLoading } = useGetCompanyCounterpartyQuery();
     const [createPaymentData, {isLoading}] = useCreatePaymentMethodMutation();
+    const [sendNotificationAboutNewCompanyForApproval] = useSendNotificationAboutNewCompanyForApprovalMutation();
     const [validationResult, setValidationResult] = useState(new ValidatorResult<PaymentMethodFormData>());
     const validator = new PaymentDataValidator();
     const [data, setData] = useDataStateUpdater<PaymentMethodFormData>(initialData);
@@ -44,7 +49,10 @@ export const PaymentDataForm = () => {
             type: PaymentMethodType.BANK_ACCOUNT,
             props: PropsHelper.MapFieldsToProps(data)
         }).unwrap()
-        .then(() => dispatch(setOnboardingOpened(false)));
+        .then(() => {
+          dispatch(setOnboardingOpened(false));
+          sendNotificationAboutNewCompanyForApproval(company.id);
+        });
     }
 
   return (

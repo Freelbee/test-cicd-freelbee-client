@@ -1,4 +1,5 @@
 export * from './company/query/companyApi';
+export * from './company/query/notificationApi';
 export * from './payment/query/paymentAPI';
 
 export * from './freelancer/query/freelansersApi';

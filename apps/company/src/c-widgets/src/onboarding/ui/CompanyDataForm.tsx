@@ -111,7 +111,7 @@ export const CompanyDataForm = () => {
             isRequired
             isError={validationResult.hasError(CounterpartyDetailsPropsType.ADDRESS)}
             errorMessage={validationResult.getMessageByLanguage(CounterpartyDetailsPropsType.ADDRESS, LanguageType.EN)}
-            label="Company adress"
+            label="Company address"
             placeholder="Enter the street name"
             value={data?.ADDRESS ?? ''}
             setValue={(v) => setData(CounterpartyDetailsPropsType.ADDRESS, v)} />
