@@ -1,7 +1,8 @@
-import React, { ReactNode, useEffect, useId, useRef, useState} from 'react';
+import React, { ReactNode, useEffect, useId, useState} from 'react';
 import styled from 'styled-components';
 import { motion } from "framer-motion";
 import { Color, mediaBreakpointDown } from '@freelbee/shared/ui-kit';
+import {Draggable} from '../../hoc/Draggable';
 
 const UNDERLINE_SPACE = 16;
 
@@ -15,7 +16,7 @@ type Props<T> = {
     underlineColor?: Color,
 };
 
-export default function TabsSelect<T> (props: Props<T>) {
+export function TabsSelect<T> (props: Props<T>) {
     const {
         defaultValue,
         listItemRender,
@@ -26,23 +27,9 @@ export default function TabsSelect<T> (props: Props<T>) {
         underlineColor = Color.SWAMPY,
     } = props;
 
-    const [isOverflowing, setIsOverflowing] = useState<boolean>(false);
     const [selected, setSelected] = useState<T>(defaultValue);
 
-    const dragWrapperRef = useRef<HTMLDivElement | null>(null);
-    const dragRowRef = useRef<HTMLDivElement | null>(null);
-
     const layoutId = useId();
-
-    const checkOverflow = () => {
-        if(dragRowRef.current && dragWrapperRef.current) {
-            if(dragRowRef.current.scrollWidth > dragWrapperRef.current.offsetWidth) {
-                setIsOverflowing(true);
-            } else {
-                setIsOverflowing(false);
-            }                
-        }
-    };
 
     useEffect(() => {
         onSelect(selected);
@@ -53,94 +40,32 @@ export default function TabsSelect<T> (props: Props<T>) {
         setSelected(defaultValue);
     }, [defaultValue]);
 
-    // useEffect(() => {
-    //     checkOverflow();
-    // });
-
-    useEffect(() => {
-        if (dragWrapperRef.current && dragRowRef.current) {
-            checkOverflow();
-            window.addEventListener('resize', checkOverflow);
-        }
-        return () => {
-            window.removeEventListener('resize', checkOverflow);
-        };
-    }, []);
-
     const handleSelectItem = (item: T) => {
         setSelected(item);
     };
 
     return (
-        <Container>
-
-            <OptionsWrapper ref={dragWrapperRef}>
-                <OptionsRow
-                    key={`${isOverflowing}`}
-                    ref={dragRowRef}
-                    drag={isOverflowing ? 'x' : false}
-                    dragConstraints={isOverflowing ? dragWrapperRef : dragRowRef}>
-
-                    {items.length !== 0 && items?.map((item, index) => (
-                                <SelectItem
-                                    onClick={() => handleSelectItem(item)}
-                                    color={item === selected ? selectedColor : tabTextColor}
-                                    key={index}>
-                                    {listItemRender(item)}
-                                    
-                                    {item === selected && 
-                                    <SelectedUnderLine
-                                        transition={{ 
-                                            type: "spring", 
-                                            bounce: 0.2,
-                                            duration: 0.9 }}
-                                        background={underlineColor}
-                                        layoutId={layoutId} />}
-                                </SelectItem>
-                            ))}
-
-                </OptionsRow>
-            </OptionsWrapper>
-
-        </Container>
+        <Draggable>
+            {items.length !== 0 && items?.map((item, index) => (
+                    <SelectItem
+                        onClick={() => handleSelectItem(item)}
+                        color={item === selected ? selectedColor : tabTextColor}
+                        key={index}>
+                        {listItemRender(item)}
+                        
+                        {item === selected && 
+                        <SelectedUnderLine
+                            transition={{ 
+                                type: "spring", 
+                                bounce: 0.2,
+                                duration: 0.9 }}
+                            background={underlineColor}
+                            layoutId={layoutId} />}
+                    </SelectItem>
+                ))}           
+        </Draggable>
     );
 }
-
-const Container = styled(motion.div)`
-  position: relative;
-  width: 100%;
-`;
-
-const OptionsWrapper = styled(motion.div)`
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-
-    &::after {
-        content: '';
-        width: 100%;
-        height: 1px;
-        position: absolute;
-        z-index: 0;
-        background-color:${Color.GRAY_400};
-        left: 0;
-        right: 0;
-        bottom: 1px;
-
-        ${mediaBreakpointDown(800)} {
-            bottom: 3px;
-        }
-    }
-`;
-
-const OptionsRow = styled(motion.div)`
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    width: max-content;
-    cursor: ${props => props.drag ? 'grab' : 'unset'}!important;
-`;
 
 const SelectItem = styled(motion.button) <{ color?: Color }>`
     cursor: pointer;

@@ -1,6 +1,6 @@
 
 import { ReactComponent as PersonalIcon } from "@freelbee/assets/icons/menu-icons/personal.svg";
-// import { ReactComponent as LockIcon } from "@freelbee/assets/icons/menu-icons/lock.svg";
+import { ReactComponent as LockIcon } from "@freelbee/assets/icons/menu-icons/lock.svg";
 import { NavLink } from "@freelbee/shared/ui-kit";
 
 export const links: Array<NavLink> = [
@@ -9,10 +9,9 @@ export const links: Array<NavLink> = [
         title: 'Personal info',
         Icon: PersonalIcon
     },
-    // To - Do вернуть когда будет смена пароля
-    // {
-    //     link: `/settings/security`,
-    //     title: 'Security',
-    //     Icon: LockIcon
-    // }
+    {
+        link: `/settings/security`,
+        title: 'Security',
+        Icon: LockIcon
+    }
 ]

@@ -1,14 +1,21 @@
 'use client';
 
-import { PageTitle } from "@freelancer/entities"
-import { PasswordChangeForm } from "@freelbee/widgets"
+import { PageTitle, useUpdateUserPasswordMutation } from "@freelancer/entities"
+import { PasswordUpdateDto } from "@freelbee/entities";
+import { PasswordUpdateForm } from "@freelbee/widgets"
 
 export const SecurityPage = () => {
+
+  const [updateUserPassword] = useUpdateUserPasswordMutation();
+
+  const handlePasswordUpdate = (dto: PasswordUpdateDto) => {
+    return updateUserPassword(dto).unwrap();
+  }
 
   return (
     <>
         <PageTitle text='Change password' />
-        <PasswordChangeForm handler={() => {}}/>
+        <PasswordUpdateForm handlePasswordUpdate={handlePasswordUpdate}/>
     </>
   )
 }

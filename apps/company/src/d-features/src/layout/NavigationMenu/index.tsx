@@ -18,7 +18,10 @@ export function NavigationMenu () {
     const {navigationMenuOpened, setNavigationMenuOpened} = useContext(LayoutContext);
     const pathName = usePathname();
 
-    const isRouteActive = (link: string) => pathName.endsWith(link);
+    const isRouteActive = (link: string) => {
+      if(link === '/') return pathName === link;
+      return pathName.includes(link);
+    };
 
     const refWrapper = useRef<HTMLDivElement>(null);
     const refNavigation = useRef<HTMLDivElement>(null);

@@ -18,7 +18,7 @@ export const visibleMenuItems: Array<MobileMenuLink> = [
 
 export const hiddenMenuItems: Array<MobileMenuLink> = [
     {
-        link: `settings`,
+        link: `/settings`,
         title: 'Settings',
         Icon: SettingsIcon
     },

@@ -25,7 +25,10 @@ export default function LowerControlPanel () {
 
     }, [isOpen]);
 
-    const isRouteActive = (link: string) => pathName.endsWith(link);
+    const isRouteActive = (link: string) => {
+        if(link === '/') return pathName === link;
+        return pathName.endsWith(link);
+      };
 
     return (
         <>

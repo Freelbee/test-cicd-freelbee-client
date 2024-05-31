@@ -16,8 +16,11 @@ interface Props {
 export const LowerPanelLink = ({Icon, link, text}: Props) => {
 
     const pathName = usePathname();
-    const isRouteActive = (link: string) => pathName.endsWith(link);
-
+    const isRouteActive = (link: string) => {
+      if(link === '/') return pathName === link;
+      return pathName.endsWith(link);
+    };
+    
   return (
     <Link href={link}>
         <PanelLink $isActive={isRouteActive(link)}>
