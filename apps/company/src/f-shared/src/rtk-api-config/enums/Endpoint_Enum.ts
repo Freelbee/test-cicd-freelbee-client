@@ -27,6 +27,8 @@ export enum Endpoint_Enum {
   CREATE_PAYMENT_DATA = '/payment-data/{0}/payment',
   WEBHOOK_TRANSAK_EVENT = '/webhook/transak/event-from-widget',
 
+  SEND_NOTIFICATION_ABOUT_NEW_COMPANY_FOR_APPROVAL = `/notifications/new-company-for-approval/{0}`,
+
   //sign-up
   COMPANY_SIGNUP = '/registration/company',
   COMPANY_REG_SESSION = '/registration/company/session',

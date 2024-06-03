@@ -6,6 +6,7 @@ export * from './auth/utils/LoginDataValidator';
 
 export * from './companies/context/CompanyNavigationContext';
 export * from './companies/ui/CounterpartyDetailStatusIcon';
+export * from './companies/ui/FileDownload';
 
 export * from './layout/index';
 

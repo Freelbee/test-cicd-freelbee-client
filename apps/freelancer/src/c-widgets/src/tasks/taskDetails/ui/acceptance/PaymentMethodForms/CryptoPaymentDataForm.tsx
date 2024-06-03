@@ -16,20 +16,20 @@ export const CryptoPaymentDataForm = () => {
     const { data: currenciesTransak = [] } = useGetCurrenciesQuery({provider: PaymentProviderName.TRANSAK, type: CurrencyType.CRYPTO});
 
     if(!displayedTask) return <></>;
-    
+
   return (
     <FormGrid>
-         <Input 
+         <Input
           isError={validatorResult?.hasError(PaymentMethodPropType.CRYPTO_WALLET_ADDRESS)}
           errorMessage={validatorResult?.getMessageByLanguage(PaymentMethodPropType.CRYPTO_WALLET_ADDRESS, LanguageType.EN)}
-          label="Wallet adress for debiting funds" 
+          label="Wallet address for debiting funds"
           isRequired
-          placeholder="Enter the wallet adress" 
-          value={paymentFormData?.CRYPTO_WALLET_ADDRESS ?? ''} 
+          placeholder="Enter the wallet address"
+          value={paymentFormData?.CRYPTO_WALLET_ADDRESS ?? ''}
           setValue={(v) => {
             setFormData('freelancerPaymentDetails', v);
             setPaymentFormData(PaymentMethodPropType.CRYPTO_WALLET_ADDRESS, v)
-          }} />   
+          }} />
 
           <SelectWithSearch<Currency>
                 label='Cryptocurrency*'
@@ -40,7 +40,7 @@ export const CryptoPaymentDataForm = () => {
                 renderOption={(item) => <CurrencySelectItem currency={item} />}
                 getStringValue={v => v.code}
                 hideSearch={true}
-            />   
+            />
     </FormGrid>
   )
 }
