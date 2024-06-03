@@ -28,74 +28,74 @@ export const Footer = () => {
             return `#${url}`;
         }
     };
-    
+
     return (
         <>
             <Container id={SectionId.CONTACTS}>
                 <Content>
-                <FooterLogo><Image 
-                        src={logoIcon} 
+                <FooterLogo><Image
+                        src={logoIcon}
                         alt='Freelbee logo'
                         fill /></FooterLogo>
 
                     <LinksBlock>
                         <Heading3>Legal</Heading3>
                         {DOC_LINKS.map(link => (
-                            <LinkButton 
+                            <LinkButton
                                 key={link.text}
                                 font='body'
-                                as='Link' 
+                                as='Link'
                                 target='_blank'
                                 linkStyle={LinkStyle.GRAY}
                                 href={link.url}>
                                 {link.text}
                             </LinkButton>
-                        ))}             
+                        ))}
                     </LinksBlock>
 
                     <NavBlock>
                         <Heading3>Navigation</Heading3>
                         {NAV_LINKS.map(link => (
-                            <LinkButton 
+                            <LinkButton
                                 key={link.text}
                                 font='body'
-                                as='Link' 
+                                as='Link'
                                 linkStyle={LinkStyle.GRAY}
                                 href={getNavUrlRelativeToMain(link.url)}>
                                 {link.text}
                             </LinkButton>
-                        ))}                 
+                        ))}
                     </NavBlock>
-                  
+
                     <LinksBlock>
                         <Heading3>Contact us</Heading3>
-              
+
                         <LinkWithIcon>
                             <MailIcon />
                             <a href={`mailto: ${process.env.NEXT_PUBLIC_EMAIL}`}>
                                 {process.env.NEXT_PUBLIC_EMAIL}
-                            </a>                              
+                            </a>
                         </LinkWithIcon>
-        
+
                         <LinkWithIcon>
                             <PhoneIcon />
                             <a href={`tel: ${process.env.NEXT_PUBLIC_PHONE}`}>
                                 {process.env.NEXT_PUBLIC_PHONE}
-                            </a>                              
+                            </a>
                         </LinkWithIcon>
-              
+
                         <LinkWithIcon>
                             <LocationIcon/>
-                            <span>Office No. 1101-225 King of Tides</span>
-                            <span>Ships Limited - Jebel Ali Al Wali, Dubai, UAE. </span>                  
+                            <span>The offices at Ibn Battuta Gate 16-0,</span>
+                            <span>Jabal Ali First 591-0, Dubai, UAE</span>
                         </LinkWithIcon>
                     </LinksBlock>
 
-                    <RateWrapper 
+                    <RateWrapper
                         aria-label='View company reviews on the g2 website'
-                        href='https://www.g2.com/products/freelbee/reviews' 
+                        href='https://www.g2.com/products/freelbee/reviews'
                         target='_blank'>
-                        <Image src={rateImg} width={120} height={61} alt='Company rating' /> 
+                        <Image src={rateImg} width={120} height={61} alt='Company rating' />
                         <div itemProp="itemReviewed" itemScope itemType="https://schema.org/Organization">
                             <meta itemProp="name" content="Freelbee - contractor payment platform"/>
                             <div itemProp="aggregateRating" itemScope itemType="http://schema.org/AggregateRating">
