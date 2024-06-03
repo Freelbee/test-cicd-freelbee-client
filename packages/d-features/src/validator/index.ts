@@ -29,3 +29,5 @@ export * from './rules/CompanyEmailRule';
 export * from './rules/MaximumNumberRule';
 export * from './rules/PasswordRule';
 export * from './rules/ValidFIleDataRule';
+export * from './rules/DateFormatRule';
+export * from './rules/MinAgeRule';
