@@ -10,7 +10,10 @@ export const NavigationLink = ({link, title, Icon}: NavLink) => {
 
     const pathName = usePathname();
 
-    const isRouteActive = (link: string) => pathName.endsWith(link);
+    const isRouteActive = (link: string) => {
+      if(link === '/') return pathName === link;
+      return pathName.includes(link);
+    };
 
   return (
     <Link href={link}>

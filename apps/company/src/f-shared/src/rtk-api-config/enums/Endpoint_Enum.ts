@@ -41,5 +41,7 @@ export enum Endpoint_Enum {
   COMPANY_AUTH_CONFIRM = '/auth/company/confirm/{0}',
   COMPANY_AUTH_RESEND_SESSION = '/auth/company/email/resend',
   AUTH__COMPANY__IS_AUTHENTICATED = '/auth/company/is-authenticated',
-  AUTH__COMPANY__LOGOUT = '/auth/company/logout'
+  AUTH__COMPANY__LOGOUT = '/auth/company/logout',
+
+  UPDATE_PASSWORD = 'security/user/password'
 }
