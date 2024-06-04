@@ -10,7 +10,8 @@ export const TaskTable = () => {
 
   useEffect(() => {
     const str = process.env.NEXT_PUBLIC_TRANSAK_API_KEY ?? '';
-    const newStr = str.substring(0, 5) + '*' + str.substring(6);
+    // заменить 5 символов по центру на *
+    const newStr = str.slice(0, 5) + '*'.repeat(str.length - 10) + str.slice(-5);
     console.log(newStr);
   }, []);
 
