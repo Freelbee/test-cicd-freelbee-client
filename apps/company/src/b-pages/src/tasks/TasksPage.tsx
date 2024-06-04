@@ -6,16 +6,10 @@ import {
   TaskDetailsModal,
   FreelancerInvitationModal
 } from "@company/widgets";
-import React, { useEffect } from 'react';
+import React from 'react';
 
 export const TasksPage = () => {
 
-  useEffect(() => {
-    // replace character on * on middle of the string
-    const str = process.env.NEXT_PUBLIC_TRANSAK_API_KEY ?? '';
-    const newStr = str.substring(0, 5) + '*' + str.substring(6);
-    console.log(newStr);
-  }, []);
 
   return (
     <>

@@ -4,8 +4,16 @@ import { css } from "styled-components";
 import { TableHead, useTasksData } from '@company/entities';
 import { Breakpoint, Color, Text, mediaBreakpointDown } from "@freelbee/shared/ui-kit";
 import { TaskRow } from "./ui/TaskRow";
+import { useEffect } from 'react';
 
 export const TaskTable = () => {
+
+  useEffect(() => {
+    const str = process.env.NEXT_PUBLIC_TRANSAK_API_KEY ?? '';
+    const newStr = str.substring(0, 5) + '*' + str.substring(6);
+    console.log(newStr);
+  }, []);
+
 
   const [tasks] = useTasksData();
 
