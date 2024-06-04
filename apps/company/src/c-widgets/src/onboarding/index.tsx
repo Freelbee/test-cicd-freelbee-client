@@ -10,7 +10,7 @@ import { OnboardingContext } from "./context/OnboardingContext";
 import { CompanyDataForm } from "./ui/CompanyDataForm";
 import { PaymentDataForm } from "./ui/PaymentDataForm";
 import { setOnboardingOpened, useGetCompanyOnboardingStateQuery, useGetCompanyCounterpartyQuery } from "@company/entities";
-import Spinner from "packages/f-shared/src/ui-kit/spinner/Spinner";
+import {Spinner} from "packages/f-shared/src/ui-kit/spinner/Spinner";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "@company/features";
 import { PersonalDataStepTitle } from "./ui/PersonalDataStepTitle";
@@ -70,10 +70,11 @@ export const OnboardingModal = () => {
                     step,
                     setStep
                 }}>
-                    {isLoading ?
-                    <Container><Spinner loading={isLoading} size={50} /></Container>
-                    :
-                     <Container>
+                    <Container>
+                        {isLoading ?
+                        <Spinner loading={isLoading} autoCentered />
+                        :
+                        <>
                         <Header>
                             {onboardingTitle[step]}
                             <CloseButton
@@ -81,8 +82,10 @@ export const OnboardingModal = () => {
                                 styles={closeBtnStyle}
                                 clickHandler={closeModal} />
                         </Header>
-                        {onboardingContent[step]}
-                    </Container>}
+                            {onboardingContent[step]}
+                        </>}                        
+                    </Container>
+
 
                 </OnboardingContext.Provider>
 

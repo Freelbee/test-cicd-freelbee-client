@@ -1,15 +1,17 @@
 'use client'
 
 import { HeadMenu, LayoutContext, MobileMenu, NavigationMenu, OnboardingNotification } from "@company/features"
-import { Breakpoint, Color, mediaBreakpointDown } from "@freelbee/shared/ui-kit"
+import { Breakpoint, Color, Spinner, mediaBreakpointDown } from "@freelbee/shared/ui-kit"
 import { PropsWithChildren, useEffect, useState } from 'react';
 import styled from "styled-components"
 import { OnboardingModal } from "../../onboarding"
 import {
-  useIsAuthenticatedQuery, useGetCompanyOnboardingStateQuery
+  useIsAuthenticatedQuery, useGetCompanyOnboardingStateQuery,
+  useGetCompanyCounterpartyQuery
 } from '@company/entities';
 import {CompanyAuthModal} from "../../auth/CompanyAuthModal";
 import { usePathname, useRouter } from 'next/navigation';
+import { CounterpartyDetailsStatus } from "@freelbee/entities";
 
 export const PersonalLayout = ({ children }: PropsWithChildren) => {
 
@@ -18,14 +20,17 @@ export const PersonalLayout = ({ children }: PropsWithChildren) => {
 
   const [navigationMenuOpened, setNavigationMenuOpened] = useState<boolean>(false);
 
-
   const { data: isAuthenticated, isLoading: isAuthenticatedLoading } = useIsAuthenticatedQuery();
+  const {data: company, isLoading: isCompanyLoading} = useGetCompanyCounterpartyQuery();
   const {
     data: onboardingState,
     isLoading
   } = useGetCompanyOnboardingStateQuery(undefined, { skip: !isAuthenticated || isAuthenticatedLoading });
 
   const isOnboardingPassed = () => {
+    if(company && company.counterpartyDetail.status === CounterpartyDetailsStatus.APPROVED) {
+      return true;
+    }
     return onboardingState && Object.values(onboardingState).every(step => !!step);
   };
 
@@ -49,6 +54,7 @@ export const PersonalLayout = ({ children }: PropsWithChildren) => {
             <NavigationMenu />
             <MobileMenu />
             <Main>
+              {(isLoading || isCompanyLoading) && <Spinner loading={isLoading || isCompanyLoading} autoCentered />}
               {!isLoading && isOnboardingPassed() && children}
               {!isLoading && !isOnboardingPassed() && <OnboardingNotification />}
             </Main>
