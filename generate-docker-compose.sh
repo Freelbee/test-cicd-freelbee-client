@@ -9,13 +9,11 @@
 
 DEPLOY_PROJECTS="$1"
 IMAGE_TAG="$2"
-NUMBER_OF_SAVED_IMAGES="$3"
-KEEP_IMAGES="$4"
+#NUMBER_OF_SAVED_IMAGES="$3"
 
 echo "DEPLOY_PROJECTS: $DEPLOY_PROJECTS"
 echo "IMAGE_TAG: $IMAGE_TAG"
-echo "NUMBER_OF_SAVED_IMAGES: $NUMBER_OF_SAVED_IMAGES"
-echo "KEEP_IMAGES: $KEEP_IMAGES"
+#echo "NUMBER_OF_SAVED_IMAGES: $NUMBER_OF_SAVED_IMAGES"
 
 # Проверка и добавление сервиса landing в файл docker-compose.deploy.yml, если он указан в DEPLOY_PROJECTS или если all
 if [[ "$DEPLOY_PROJECTS" == *"landing"* || "$DEPLOY_PROJECTS" == *"all"* ]]; then
