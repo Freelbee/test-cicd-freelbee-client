@@ -39,12 +39,6 @@ for i in {1..4}; do
   docker-compose -f docker-compose.landing.deploy.yaml pull && break || sleep 10;
 done
 docker-compose -f docker-compose.landing.deploy.yaml up -d" >> deploy.sh
-
-  if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
-    echo "
-bash ./remove-old-images.sh landing $NUMBER_OF_SAVED_IMAGES
-" >> deploy.sh
-  fi
 fi
 
 # Проверка и добавление сервиса company в файл docker-compose.deploy.yml, если он указан в DEPLOY_PROJECTS или если all
@@ -70,12 +64,6 @@ for i in {1..4}; do
   docker-compose -f docker-compose.company.deploy.yaml pull && break || sleep 10;
 done
 docker-compose -f docker-compose.company.deploy.yaml up -d" >> deploy.sh
-
-  if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
-    echo "
-bash ./remove-old-images.sh company $NUMBER_OF_SAVED_IMAGES
-    " >> deploy.sh
-  fi
 fi
 
 # Проверка и добавление сервиса freelancer в файл docker-compose.deploy.yml, если он указан в DEPLOY_PROJECTS или если all
@@ -102,11 +90,6 @@ for i in {1..4}; do
 done
 docker-compose -f docker-compose.freelancer.deploy.yaml up -d" >> deploy.sh
 
-  if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
-    echo "
-bash ./remove-old-images.sh freelancer $NUMBER_OF_SAVED_IMAGES
-    " >> deploy.sh
-  fi
 fi
 
 # Проверка и добавление сервиса admin в файл docker-compose.deploy.yml, если он указан в DEPLOY_PROJECTS или если all
@@ -132,12 +115,6 @@ for i in {1..4}; do
   docker-compose -f docker-compose.admin.deploy.yaml pull && break || sleep 10;
 done
 docker-compose -f docker-compose.admin.deploy.yaml up -d" >> deploy.sh
-
-  if [[ "$KEEP_IMAGES" == *"remove"* ]]; then
-    echo "
-bash ./remove-old-images.sh admin $NUMBER_OF_SAVED_IMAGES
-    " >> deploy.sh
-  fi
 fi
 
 

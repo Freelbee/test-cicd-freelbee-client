@@ -31,13 +31,13 @@ on:
         required: false
         default: 'false'
         type: boolean
-      old-images:
-        type: choice
-        description: Select what to do with the images from the second after deployment
-        default: 'keep'
-        options:
-          - remove
-          - keep
+#      old-images:
+#        type: choice
+#        description: Select what to do with the images from the second after deployment
+#        default: 'keep'
+#        options:
+#          - remove
+#          - keep
 
 jobs:
   check-branch-and-env:
@@ -207,7 +207,7 @@ jobs:
           script: |
             echo "Deploying ${ENVIRONMENT} environment"
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            NUMBER_OF_SAVED_IMAGES=2
+#            NUMBER_OF_SAVED_IMAGES=2
             cd /mnt/freelbee/client
             chmod +x generate-docker-compose.sh
             chmod +x remove-old-images.sh
