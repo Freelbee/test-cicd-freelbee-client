@@ -188,7 +188,7 @@ jobs:
           key: ${{ secrets[env.SSH_PRIVATE_KEY_ENV] }}
           passphrase: ${{ secrets[env.SSH_PASSPHRASE_ENV] }}
           source: "generate-docker-compose.sh"
-          target: /mnt/freelbee.com/client
+          target: /mnt/freelbee/client
 
       - name: Set up SSH connection
         uses: appleboy/ssh-action@v1.0.3
