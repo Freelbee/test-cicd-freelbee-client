@@ -92,16 +92,18 @@ jobs:
     steps:
       - name: Prepare image tag
         run: |
-          SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
-          REF_NAME_SANITIZED=$(echo ${{ github.ref_name }} | sed 's/[^a-zA-Z0-9._-]/-/g' | sed 's/^-//')
-          if [[ -z "$REF_NAME_SANITIZED" || "$REF_NAME_SANITIZED" == "-" ]]; then
-            REF_NAME_SANITIZED="default"
-          fi
+#          SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+#          REF_NAME_SANITIZED=$(echo ${{ github.ref_name }} | sed 's/[^a-zA-Z0-9._-]/-/g' | sed 's/^-//')
+#          if [[ -z "$REF_NAME_SANITIZED" || "$REF_NAME_SANITIZED" == "-" ]]; then
+#            REF_NAME_SANITIZED="default"
+#          fi
+#          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
+#          echo "REF_NAME_SANITIZED=$REF_NAME_SANITIZED" >> $GITHUB_ENV
+#          IMAGE_TAG="$REF_NAME_SANITIZED-$SHORT_SHA"
+#          ${{ github.run_number }}
+
           REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
-          echo "REF_NAME_SANITIZED=$REF_NAME_SANITIZED" >> $GITHUB_ENV
-          IMAGE_TAG="$REF_NAME_SANITIZED-$SHORT_SHA"
-          echo "IMAGE_NAME=ghcr.io/$REPO_NAME/${{ matrix.project }}-${{ github.run_number }}:$IMAGE_TAG" >> $GITHUB_ENV
+          echo "IMAGE_NAME=ghcr.io/$REPO_NAME/${{ matrix.project }}:latest" >> $GITHUB_ENV
         shell: bash
 
       - name: Set envs for landing
@@ -160,22 +162,26 @@ jobs:
       SSH_PRIVATE_KEY_ENV: "${{ inputs.environment }}_SSH_PRIVATE_KEY"
       SSH_PASSPHRASE_ENV: "${{ inputs.environment }}_SSH_PASSPHRASE"
     steps:
-      - name: Prepare image tag
-        run: |
-          SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
-          REF_NAME_SANITIZED=$(echo ${{ github.ref_name }} | sed 's/[^a-zA-Z0-9._-]/-/g' | sed 's/^-//')
-          if [[ -z "$REF_NAME_SANITIZED" || "$REF_NAME_SANITIZED" == "-" ]]; then
-            REF_NAME_SANITIZED="default"
-          fi
-          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
-          echo "REF_NAME_SANИТIZED=$REF_NAME_SANИТIZED" >> $GITHUB_ENV
-          IMAGE_TAG="$REF_NAME_SANITIZED-$SHORT_SHA"
-
-          echo "IMAGE_NAME=${{ github.run_number }}:$IMAGE_TAG" >> $GITHUB_ENV
+#      - name: Prepare image tag
+#        run: |
+#          SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+#          REF_NAME_SANITIZED=$(echo ${{ github.ref_name }} | sed 's/[^a-zA-Z0-9._-]/-/g' | sed 's/^-//')
+#          if [[ -z "$REF_NAME_SANITIZED" || "$REF_NAME_SANITIZED" == "-" ]]; then
+#            REF_NAME_SANITIZED="default"
+#          fi
+#          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
+#          echo "REF_NAME_SANИТIZED=$REF_NAME_SANИТIZED" >> $GITHUB_ENV
+#          IMAGE_TAG="$REF_NAME_SANITIZED-$SHORT_SHA"
+#
+#          echo "IMAGE_NAME=${{ github.run_number }}:$IMAGE_TAG" >> $GITHUB_ENV
       - name: Setup environment variables
         run: |
-          echo "DEPLOY_PROJECTS=${{ github.event.inputs.projects }}" >> $GITHUB_ENV
-          echo "IMAGE_TAG=${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
+#          echo "DEPLOY_PROJECTS=${{ github.event.inputs.projects }}" >> $GITHUB_ENV
+#          echo "IMAGE_TAG=${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
+          echo "COMPANY=${{ github.event.inputs.deploy_company }}" >> $GITHUB_ENV
+          echo "FREELANCER=${{ github.event.inputs.deploy_freelancer }}" >> $GITHUB_ENV
+          echo "LANDING=${{ github.event.inputs.deploy_landing }}" >> $GITHUB_ENV
+          echo "ADMIN=${{ github.event.inputs.deploy_admin }}" >> $GITHUB_ENV
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -187,7 +193,8 @@ jobs:
           username: ${{ secrets[env.SSH_USERNAME_ENV] }}
           key: ${{ secrets[env.SSH_PRIVATE_KEY_ENV] }}
           passphrase: ${{ secrets[env.SSH_PASSPHRASE_ENV] }}
-          source: "generate-docker-compose.sh"
+#          source: "generate-docker-compose.sh"
+          source: "compose.yaml"
           target: /mnt/freelbee/client
 
       - name: Set up SSH connection
@@ -201,7 +208,26 @@ jobs:
             echo "Deploying ${ENVIRONMENT} environment"
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             cd /mnt/freelbee/client
-            chmod +x generate-docker-compose.sh
-            bash generate-docker-compose.sh ${{ env.DEPLOY_PROJECTS }} ${{ env.IMAGE_TAG }}
-            chmod +x deploy.sh
-            bash deploy.sh
+#            chmod +x generate-docker-compose.sh
+#            bash generate-docker-compose.sh ${{ env.DEPLOY_PROJECTS }} ${{ env.IMAGE_TAG }}
+#            chmod +x deploy.sh
+#            bash deploy.sh
+            docker-compose -f compose.yaml pull && break || sleep 10;
+
+            if [ "${{ env.COMPANY }}" == "true" ]; then
+              docker-compose -f compose.yaml up -d company
+            fi
+
+            if [ "${{ env.FREELANCER }}" == "true" ]; then
+              docker-compose -f compose.yaml up -d freelancer
+            fi
+
+            if [ "${{ env.LANDING }}" == "true" ]; then
+              docker-compose -f compose.yaml up -d landing
+            fi
+
+            if [ "${{ env.ADMIN }}" == "true" ]; then
+              docker-compose -f compose.yaml up -d admin
+            fi
+
+

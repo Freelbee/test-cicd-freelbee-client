@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  company:
+    image: ghcr.io/freelbee/freelbee-client/company:latest
+    ports:
+      - '4202:4200'
+    restart: unless-stopped
+    labels:
+      - 'project=company'
+
+  freelancer:
+    image: ghcr.io/freelbee/freelbee-client/freelancer:latest
+    ports:
+      - '4201:4200'
+    restart: unless-stopped
+    labels:
+      - 'project=freelancer'
+
+  admin:
+    image: ghcr.io/freelbee/freelbee-client/admin:latest
+    ports:
+      - '4203:4200'
+    restart: unless-stopped
+    labels:
+      - 'project=admin'
+
+  landing:
+    image: ghcr.io/freelbee/freelbee-client/landing:latest
+    ports:
+      - '4200:4200'
+    restart: unless-stopped
+    labels:
+      - 'project=landing'
