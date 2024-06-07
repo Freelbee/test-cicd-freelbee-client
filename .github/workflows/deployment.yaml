@@ -217,6 +217,8 @@ jobs:
             echo "ADMIN_IMAGE=${IMAGE_NAME}/admin:latest" >> $GITHUB_ENV
             echo "LANDING_IMAGE=${IMAGE_NAME}/landing:latest" >> $GITHUB_ENV
 
+            source $GITHUB_ENV
+
             docker-compose -f compose.yaml pull
 
             if [ "${{ env.COMPANY }}" == "true" ]; then
@@ -230,7 +232,7 @@ jobs:
             if [ "${{ env.LANDING }}" == "true" ]; then
             docker-compose -f compose.yaml up -d landing
             fi
-            
+
             if [ "${{ env.ADMIN }}" == "true" ]; then
             docker-compose -f compose.yaml up -d admin
             fi
