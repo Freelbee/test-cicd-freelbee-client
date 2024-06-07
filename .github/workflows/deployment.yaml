@@ -92,15 +92,15 @@ jobs:
     steps:
       - name: Prepare image tag
         run: |
-#          SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
-#          REF_NAME_SANITIZED=$(echo ${{ github.ref_name }} | sed 's/[^a-zA-Z0-9._-]/-/g' | sed 's/^-//')
-#          if [[ -z "$REF_NAME_SANITIZED" || "$REF_NAME_SANITIZED" == "-" ]]; then
-#            REF_NAME_SANITIZED="default"
-#          fi
-#          echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
-#          echo "REF_NAME_SANITIZED=$REF_NAME_SANITIZED" >> $GITHUB_ENV
-#          IMAGE_TAG="$REF_NAME_SANITIZED-$SHORT_SHA"
-#          ${{ github.run_number }}
+          #SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+          #REF_NAME_SANITIZED=$(echo ${{ github.ref_name }} | sed 's/[^a-zA-Z0-9._-]/-/g' | sed 's/^-//')
+          #if [[ -z "$REF_NAME_SANITIZED" || "$REF_NAME_SANITIZED" == "-" ]]; then
+          #  REF_NAME_SANITIZED="default"
+          #fi
+          #echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
+          #echo "REF_NAME_SANITIZED=$REF_NAME_SANITIZED" >> $GITHUB_ENV
+          #IMAGE_TAG="$REF_NAME_SANITIZED-$SHORT_SHA"
+          #${{ github.run_number }}
 
           REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
           echo "IMAGE_NAME=ghcr.io/$REPO_NAME/${{ matrix.project }}:latest" >> $GITHUB_ENV
