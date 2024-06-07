@@ -208,12 +208,6 @@ jobs:
             echo "Deploying ${ENVIRONMENT} environment"
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             cd /mnt/freelbee/client
-            #chmod +x generate-docker-compose.sh
-            #bash generate-docker-compose.sh ${{ env.DEPLOY_PROJECTS }} ${{ env.IMAGE_TAG }}
-            #chmod +x deploy.sh
-            #bash deploy.sh
-
-            docker-compose -f compose.yaml pull && break || sleep 10;
 
             REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
             IMAGE_NAME=ghcr.io/$REPO_NAME/
@@ -222,6 +216,12 @@ jobs:
             FREELANCER_IMAGE=$IMAGE_NAME/freelancer:latest
             ADMIN_IMAGE=$IMAGE_NAME/admin:latest
             LANDING_IMAGE=$IMAGE_NAME/landing:latest
+
+            #for i in {1..4}; do
+            #&& break || sleep 10;
+            #done
+            
+            docker-compose -f compose.yaml pull
 
             if [ "${{ env.COMPANY }}" == "true" ]; then
               docker-compose -f compose.yaml up -d company
