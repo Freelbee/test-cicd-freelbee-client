@@ -205,38 +205,34 @@ jobs:
           key: ${{ secrets[env.SSH_PRIVATE_KEY_ENV] }}
           passphrase: ${{ secrets[env.SSH_PASSPHRASE_ENV] }}
           script: |
-            echo "Deploying ${ENVIRONMENT} environment"
+            echo "Deploying ${{ inputs.environment }} environment"
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             cd /mnt/freelbee/client
 
             REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-            IMAGE_NAME=ghcr.io/$REPO_NAME/
+            IMAGE_NAME="ghcr.io/$REPO_NAME"
 
-            COMPANY_IMAGE=$IMAGE_NAME/company:latest
-            FREELANCER_IMAGE=$IMAGE_NAME/freelancer:latest
-            ADMIN_IMAGE=$IMAGE_NAME/admin:latest
-            LANDING_IMAGE=$IMAGE_NAME/landing:latest
+            echo "COMPANY_IMAGE=${IMAGE_NAME}/company:latest" >> $GITHUB_ENV
+            echo "FREELANCER_IMAGE=${IMAGE_NAME}/freelancer:latest" >> $GITHUB_ENV
+            echo "ADMIN_IMAGE=${IMAGE_NAME}/admin:latest" >> $GITHUB_ENV
+            echo "LANDING_IMAGE=${IMAGE_NAME}/landing:latest" >> $GITHUB_ENV
 
-            #for i in {1..4}; do
-            #&& break || sleep 10;
-            #done
-            
             docker-compose -f compose.yaml pull
 
             if [ "${{ env.COMPANY }}" == "true" ]; then
-              docker-compose -f compose.yaml up -d company
+            docker-compose -f compose.yaml up -d company
             fi
 
             if [ "${{ env.FREELANCER }}" == "true" ]; then
-              docker-compose -f compose.yaml up -d freelancer
+            docker-compose -f compose.yaml up -d freelancer
             fi
 
             if [ "${{ env.LANDING }}" == "true" ]; then
-              docker-compose -f compose.yaml up -d landing
+            docker-compose -f compose.yaml up -d landing
             fi
-
+            
             if [ "${{ env.ADMIN }}" == "true" ]; then
-              docker-compose -f compose.yaml up -d admin
+            docker-compose -f compose.yaml up -d admin
             fi
 
 
