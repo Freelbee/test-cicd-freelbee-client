@@ -11,16 +11,26 @@ on:
           - test
           - prod
           - demo
-      project:
-        type: choice
-        description: Select app you want to be deployed
-        default: 'all'
-        options:
-          - landing
-          - company
-          - freelancer
-          - admin
-          - all
+      deploy_landing:
+        description: Deploy Landing
+        required: false
+        default: 'false'
+        type: boolean
+      deploy_company:
+        description: Deploy Company
+        required: false
+        default: 'false'
+        type: boolean
+      deploy_freelancer:
+        description: Deploy Freelancer
+        required: false
+        default: 'false'
+        type: boolean
+      deploy_admin:
+        description: Deploy Admin
+        required: false
+        default: 'false'
+        type: boolean
       old-images:
         type: choice
         description: Select what to do with the images from the second after deployment
@@ -46,10 +56,20 @@ jobs:
           else
             echo "error=false" >> $GITHUB_ENV
           fi
-      - name: Show prjoect input
+      - name: Check selected projects
+        id: check-selected-projects
+        run: |
+          if [[ ${{ github.event.inputs.deploy_landing }} == 'false' && ${{ github.event.inputs.deploy_company }} == 'false' && ${{ github.event.inputs.deploy_freelancer }} == 'false' && ${{ github.event.inputs.deploy_admin }} == 'false' ]]; then
+            echo "No projects selected for deployment. Exiting."
+            exit 1
+          fi
+      - name: Show project inputs
         run: |
           echo "### PROJECTS DEPLOY INFO" >> $GITHUB_STEP_SUMMARY
-          echo "Project: ${{ github.event.inputs.project }}" >> $GITHUB_STEP_SUMMARY
+          echo "Deploy Landing: ${{ github.event.inputs.deploy_landing }}" >> $GITHUB_STEP_SUMMARY
+          echo "Deploy Company: ${{ github.event.inputs.deploy_company }}" >> $GITHUB_STEP_SUMMARY
+          echo "Deploy Freelancer: ${{ github.event.inputs.deploy_freelancer }}" >> $GITHUB_STEP_SUMMARY
+          echo "Deploy Admin: ${{ github.event.inputs.deploy_admin }}" >> $GITHUB_STEP_SUMMARY
           echo "Environment: ${{ github.event.inputs.environment }}" >> $GITHUB_STEP_SUMMARY
           echo "Old images action: ${{ github.event.inputs.old-images }}" >> $GITHUB_STEP_SUMMARY
 
@@ -59,30 +79,18 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        include:
-          - project: landing
-            if: ${{ github.event.inputs.project == 'landing' || github.event.inputs.project == 'all' }}
-          - project: company
-            if: ${{ github.event.inputs.project == 'company' || github.event.inputs.project == 'all' }}
-          - project: freelancer
-            if: ${{ github.event.inputs.project == 'freelancer' || github.event.inputs.project == 'all' }}
-          - project: admin
-            if: ${{ github.event.inputs.project == 'admin' || github.event.inputs.project == 'all' }}
+        project: [landing, company, freelancer, admin]
       fail-fast: false
     permissions:
       contents: read
       packages: write
     env:
-#      IMAGE_NAME: ghcr.io/freelbee/nx-client/${{ matrix.project }}:${{ github.run_number }}
-
-      # static secrets and vars app
       NEXT_PUBLIC_BOT_TOKEN: "${{ secrets.NEXT_PUBLIC_BOT_TOKEN }}"
       NEXT_PUBLIC_EMAIL: "${{ vars.NEXT_PUBLIC_EMAIL }}"
       NEXT_PUBLIC_URL: "${{ vars.NEXT_PUBLIC_URL }}"
       NEXT_PUBLIC_PHONE: "${{ vars.NEXT_PUBLIC_PHONE }}"
       NEXT_PUBLIC_MODE: "${{ inputs.environment }}"
 
-      # dynamic secrets and vars app
       TG_CHANNEL_ID: "${{ inputs.environment }}_NEXT_PUBLIC_TG_CHANNEL_ID"
       COMPANY_URL: "${{ inputs.environment }}_NEXT_PUBLIC_COMPANY_URL"
       FREELANCER_URL: "${{ inputs.environment }}_NEXT_PUBLIC_FREELANCER_URL"
@@ -100,7 +108,7 @@ jobs:
           echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
           echo "REF_NAME_SANITIZED=$REF_NAME_SANITIZED" >> $GITHUB_ENV
           IMAGE_TAG="$REF_NAME_SANITIZED-$SHORT_SHA"
-          echo "IMAGE_NAME=ghcr.io/freelbee/freelbee-client/${{ matrix.project }}-${{ github.run_number }}:$IMAGE_TAG" >> $GITHUB_ENV
+          echo "IMAGE_NAME=ghcr.io/freelbee/{github.repository}/${{ matrix.project }}-${{ github.run_number }}:$IMAGE_TAG" >> $GITHUB_ENV
         shell: bash
 
       - name: Set envs for landing
@@ -125,11 +133,11 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
       - name: Install dependencies
-        if: ${{ github.event.inputs.project == 'all' || github.event.inputs.project == matrix.project }}
+        if: ${{ github.event.inputs.deploy_landing == 'true' && matrix.project == 'landing' || github.event.inputs.deploy_company == 'true' && matrix.project == 'company' || github.event.inputs.deploy_freelancer == 'true' && matrix.project == 'freelancer' || github.event.inputs.deploy_admin == 'true' && matrix.project == 'admin' }}
         run: yarn install
 
       - name: Build NX project
-        if: ${{ github.event.inputs.project == 'all' || github.event.inputs.project == matrix.project }}
+        if: ${{ github.event.inputs.deploy_landing == 'true' && matrix.project == 'landing' || github.event.inputs.deploy_company == 'true' && matrix.project == 'company' || github.event.inputs.deploy_freelancer == 'true' && matrix.project == 'freelancer' || github.event.inputs.deploy_admin == 'true' && matrix.project == 'admin' }}
         run: npx nx build ${{ matrix.project }}
 
       - name: Login to GitHub Container Registry
@@ -139,13 +147,8 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-#      - name: Build and Push Docker image to GitHub Container Registry
-#        if: ${{ github.event.inputs.project == 'all' || github.event.inputs.project == matrix.project }}
-#        run: |
-#          docker build -t ${{ env.IMAGE_NAME }} -f ./apps/${{ matrix.project }}/Dockerfile .
-#          docker push ${{ env.IMAGE_NAME }}
       - name: Build and Push Docker image to GitHub Container Registry
-        if: ${{ github.event.inputs.project == 'all' || github.event.inputs.project == matrix.project }}
+        if: ${{ github.event.inputs.deploy_landing == 'true' && matrix.project == 'landing' || github.event.inputs.deploy_company == 'true' && matrix.project == 'company' || github.event.inputs.deploy_freelancer == 'true' && matrix.project == 'freelancer' || github.event.inputs.deploy_admin == 'true' && matrix.project == 'admin' }}
         run: |
           for i in {1..4}; do
             docker build -t ${{ env.IMAGE_NAME }} -f ./apps/${{ matrix.project }}/Dockerfile . && break || sleep 10;
@@ -172,13 +175,13 @@ jobs:
             REF_NAME_SANITIZED="default"
           fi
           echo "SHORT_SHA=$SHORT_SHA" >> $GITHUB_ENV
-          echo "REF_NAME_SANITIZED=$REF_NAME_SANITIZED" >> $GITHUB_ENV
+          echo "REF_NAME_SANИТIZED=$REF_NAME_SANИТIZED" >> $GITHUB_ENV
           IMAGE_TAG="$REF_NAME_SANITIZED-$SHORT_SHA"
 
           echo "IMAGE_NAME=${{ github.run_number }}:$IMAGE_TAG" >> $GITHUB_ENV
       - name: Setup environment variables
         run: |
-          echo "DEPLOY_PROJECTS=${{ github.event.inputs.project }}" >> $GITHUB_ENV
+          echo "DEPLOY_PROJECTS=${{ github.event.inputs.projects }}" >> $GITHUB_ENV
           echo "IMAGE_TAG=${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
 
       - name: Checkout
