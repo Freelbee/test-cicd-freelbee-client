@@ -212,12 +212,15 @@ jobs:
             REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
             IMAGE_NAME="ghcr.io/$REPO_NAME"
 
-            echo "COMPANY_IMAGE=${IMAGE_NAME}/company:latest" >> $GITHUB_ENV
-            echo "FREELANCER_IMAGE=${IMAGE_NAME}/freelancer:latest" >> $GITHUB_ENV
-            echo "ADMIN_IMAGE=${IMAGE_NAME}/admin:latest" >> $GITHUB_ENV
-            echo "LANDING_IMAGE=${IMAGE_NAME}/landing:latest" >> $GITHUB_ENV
+            COMPANY_IMAGE="${IMAGE_NAME}/company:latest"
+            FREELANCER_IMAGE="${IMAGE_NAME}/freelancer:latest"
+            ADMIN_IMAGE="${IMAGE_NAME}/admin:latest"
+            LANDING_IMAGE="${IMAGE_NAME}/landing:latest"
 
-            source $GITHUB_ENV
+            export COMPANY_IMAGE
+            export FREELANCER_IMAGE
+            export ADMIN_IMAGE
+            export LANDING_IMAGE
 
             docker-compose -f compose.yaml pull
 
