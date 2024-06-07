@@ -212,7 +212,16 @@ jobs:
             #bash generate-docker-compose.sh ${{ env.DEPLOY_PROJECTS }} ${{ env.IMAGE_TAG }}
             #chmod +x deploy.sh
             #bash deploy.sh
+
             docker-compose -f compose.yaml pull && break || sleep 10;
+
+            REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+            IMAGE_NAME=ghcr.io/$REPO_NAME/
+
+            COMPANY_IMAGE=$IMAGE_NAME/company:latest
+            FREELANCER_IMAGE=$IMAGE_NAME/freelancer:latest
+            ADMIN_IMAGE=$IMAGE_NAME/admin:latest
+            LANDING_IMAGE=$IMAGE_NAME/landing:latest
 
             if [ "${{ env.COMPANY }}" == "true" ]; then
               docker-compose -f compose.yaml up -d company
