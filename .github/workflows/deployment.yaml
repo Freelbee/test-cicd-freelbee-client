@@ -63,24 +63,24 @@ jobs:
           fi
       - name: Show project inputs
         run: |
-          echo "### PROJECTS DEPLOY INFO" >> $GITHUB_STEP_SUMMARY
+          echo "### PROJECTS DEPLOY INFO :frog: :frog: :frog:" >> $GITHUB_STEP_SUMMARY
           if [[ ${{ github.event.inputs.all_projects }} == 'true' ]]; then
-            echo "Deploying all projects" >> $GITHUB_STEP_SUMMARY
+            echo ":octocat: Deploying all projects" >> $GITHUB_STEP_SUMMARY
             echo "Environment: ${{ github.event.inputs.environment }}" >> $GITHUB_STEP_SUMMARY
             exit 0
           fi
           echo "Deploing projects:" >> $GITHUB_STEP_SUMMARY
           if [[ ${{ github.event.inputs.deploy_landing }} == 'true' ]]; then
-            echo "Landing;" >> $GITHUB_STEP_SUMMARY
+            echo ":octocat: Landing;" >> $GITHUB_STEP_SUMMARY
           fi
           if [[ ${{ github.event.inputs.deploy_company }} == 'true' ]]; then
-              echo "Company;" >> $GITHUB_STEP_SUMMARY
+              echo ":octocat: Company;" >> $GITHUB_STEP_SUMMARY
           fi
           if [[ ${{ github.event.inputs.deploy_freelancer }} == 'true' ]]; then
-              echo "Freelancer;" >> $GITHUB_STEP_SUMMARY
+              echo ":octocat: Freelancer;" >> $GITHUB_STEP_SUMMARY
           fi
           if [[ ${{ github.event.inputs.deploy_admin }} == 'true' ]]; then
-              echo "Admin;" >> $GITHUB_STEP_SUMMARY
+              echo ":octocat: Admin;" >> $GITHUB_STEP_SUMMARY
           fi
 
   build-and-push:
@@ -235,10 +235,10 @@ jobs:
             ADMIN_IMAGE="${IMAGE_NAME}/admin:latest"
             LANDING_IMAGE="${IMAGE_NAME}/landing:latest"
 
-            echo ":octocat: company-image: $COMPANY_IMAGE" >> $GITHUB_STEP_SUMMARY
-            echo ":octocat: freelancer-image: $FREELANCER_IMAGE" >> $GITHUB_STEP_SUMMARY
-            echo ":octocat: freelancer-image: $ADMIN_IMAGE" >> $GITHUB_STEP_SUMMARY
-            echo ":octocat: freelancer-image: $LANDING_IMAGE" >> $GITHUB_STEP_SUMMARY
+            echo "company-image: $COMPANY_IMAGE"
+            echo "freelancer-image: $FREELANCER_IMAGE"
+            echo "freelancer-image: $ADMIN_IMAGE"
+            echo "freelancer-image: $LANDING_IMAGE"
 
             export COMPANY_IMAGE
             export FREELANCER_IMAGE
@@ -250,6 +250,8 @@ jobs:
             [ "${{ env.FREELANCER }}" == "true" ] && SERVICES="$SERVICES freelancer"
             [ "${{ env.LANDING }}" == "true" ] && SERVICES="$SERVICES landing"
             [ "${{ env.ADMIN }}" == "true" ] && SERVICES="$SERVICES admin"
+
+            echo "Deploying services: $SERVICES"
 
             if [ -n "$SERVICES" ]; then
               docker-compose -f compose.yaml pull
