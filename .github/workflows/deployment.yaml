@@ -246,10 +246,18 @@ jobs:
             export LANDING_IMAGE
 
             SERVICES=""
-            [ "${{ env.COMPANY }}" == "true" ] && SERVICES="$SERVICES company"
-            [ "${{ env.FREELANCER }}" == "true" ] && SERVICES="$SERVICES freelancer"
-            [ "${{ env.LANDING }}" == "true" ] && SERVICES="$SERVICES landing"
-            [ "${{ env.ADMIN }}" == "true" ] && SERVICES="$SERVICES admin"
+            if [ "${{ env.COMPANY }}" == "true" ]; then
+              docker pull $COMPANY_IMAGE && SERVICES="$SERVICES company"
+            fi
+            if [ "${{ env.FREELANCER }}" == "true" ]; then
+              docker pull $FREELANCER_IMAGE && SERVICES="$SERVICES freelancer"
+            fi
+            if [ "${{ env.LANDING }}" == "true" ]; then
+              docker pull $LANDING_IMAGE && SERVICES="$SERVICES landing"
+            fi
+            if [ "${{ env.ADMIN }}" == "true" ]; then
+              docker pull $ADMIN_IMAGE && SERVICES="$SERVICES admin"
+            fi
 
             echo "Deploying services: $SERVICES"
 
