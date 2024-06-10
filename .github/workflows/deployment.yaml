@@ -67,7 +67,7 @@ jobs:
           if [[ ${{ github.event.inputs.all_projects }} == 'true' ]]; then
             echo "Deploying all projects" >> $GITHUB_STEP_SUMMARY
             echo "Environment: ${{ github.event.inputs.environment }}" >> $GITHUB_STEP_SUMMARY
-            return 0
+            exit 0
           fi
           echo "Deploing projects:" >> $GITHUB_STEP_SUMMARY
           if [[ ${{ github.event.inputs.deploy_landing }} == 'true' ]]; then
