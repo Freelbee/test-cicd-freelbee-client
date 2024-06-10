@@ -275,11 +275,35 @@ jobs:
             else
               echo "No services to deploy"
             fi
+
+            # Cleanup old images, keeping only the latest 2 images for each deployed project
+            IMAGES_TO_KEEP=""
+            if [ "${{ env.COMPANY }}" == "true" ]; then
+              IMAGES_TO_KEEP+=$(docker images --filter=reference="$COMPANY_IMAGE" --format "{{.Repository}}:{{.Tag}}" | head -n 2)
+              IMAGES_TO_KEEP+=$'\n'
+            fi
+            if [ "${{ env.FREELANCER }}" == "true" ]; then
+              IMAGES_TO_KEEP+=$(docker images --filter=reference="$FREELANCER_IMAGE" --format "{{.Repository}}:{{.Tag}}" | head -n 2)
+              IMAGES_TO_KEEP+=$'\n'
+            fi
+            if [ "${{ env.LANDING }}" == "true" ]; then
+              IMAGES_TO_KEEP+=$(docker images --filter=reference="$LANDING_IMAGE" --format "{{.Repository}}:{{.Tag}}" | head -n 2)
+              IMAGES_TO_KEEP+=$'\n'
+            fi
+            if [ "${{ env.ADMIN }}" == "true" ]; then
+              IMAGES_TO_KEEP+=$(docker images --filter=reference="$ADMIN_IMAGE" --format "{{.Repository}}:{{.Tag}}" | head -n 2)
+              IMAGES_TO_KEEP+=$'\n'
+
+            ALL_IMAGES=$(docker images --filter=reference="ghcr.io/$REPO_NAME/*" --format "{{.Repository}}:{{.Tag}}")
+            IMAGES_TO_DELETE=$(comm -23 <(echo "$ALL_IMAGES" | sort) <(echo "$IMAGES_TO_KEEP" | s
+            if [ -n "$IMAGES_TO_DELETE" ]; then
+              echo "Deleting old images:"
+              echo "$IMAGES_TO_DELETE"
+              echo "$IMAGES_TO_DELETE" | xargs -n 1 docker rmi -f
+            else
+              echo "No old images to delete"
+            fi
           shell: bash
-
-
-
-#          script: |
 #            echo "Deploying ${{ inputs.environment }} environment"
 #            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 #            cd /mnt/freelbee/client
@@ -292,34 +316,42 @@ jobs:
 #            ADMIN_IMAGE="${IMAGE_NAME}/admin:latest"
 #            LANDING_IMAGE="${IMAGE_NAME}/landing:latest"
 #
-#            echo "company-image: $COMPANY_IMAGE"
-#            echo "freelancer-image: $FREELANCER_IMAGE"
-#            echo "freelancer-image: $ADMIN_IMAGE"
-#            echo "freelancer-image: $LANDING_IMAGE"
-#
 #            export COMPANY_IMAGE
 #            export FREELANCER_IMAGE
 #            export ADMIN_IMAGE
 #            export LANDING_IMAGE
 #
+#            echo "company-image: $COMPANY_IMAGE"
+#            echo "freelancer-image: $FREELANCER_IMAGE"
+#            echo "admin-image: $ADMIN_IMAGE"
+#            echo "landing-image: $LANDING_IMAGE"
+#
 #            SERVICES=""
+#
 #            if [ "${{ env.COMPANY }}" == "true" ]; then
-#              docker pull $COMPANY_IMAGE && SERVICES="$SERVICES company"
+#              if docker pull $COMPANY_IMAGE; then
+#                SERVICES="$SERVICES company"
+#              fi
 #            fi
 #            if [ "${{ env.FREELANCER }}" == "true" ]; then
-#              docker pull $FREELANCER_IMAGE && SERVICES="$SERVICES freelancer"
+#              if docker pull $FREELANCER_IMAGE; then
+#                SERVICES="$SERVICES freelancer"
+#              fi
 #            fi
 #            if [ "${{ env.LANDING }}" == "true" ]; then
-#              docker pull $LANDING_IMAGE && SERVICES="$SERVICES landing"
+#              if docker pull $LANDING_IMAGE; then
+#                SERVICES="$SERVICES landing"
+#              fi
 #            fi
 #            if [ "${{ env.ADMIN }}" == "true" ]; then
-#              docker pull $ADMIN_IMAGE && SERVICES="$SERVICES admin"
+#              if docker pull $ADMIN_IMAGE; then
+#                SERVICES="$SERVICES admin"
+#              fi
 #            fi
 #
 #            echo "Deploying services: $SERVICES"
 #
 #            if [ -n "$SERVICES" ]; then
-#              docker-compose -f compose.yaml pull
 #              docker-compose -f compose.yaml up -d $SERVICES
 #            else
 #              echo "No services to deploy"
