@@ -130,17 +130,11 @@ jobs:
           FREELANCER=${{ github.event.inputs.deploy_freelancer && matrix.project == 'freelancer' }}
           ADMIN=${{ github.event.inputs.deploy_admin && matrix.project == 'admin' }}
 
-          #echo "DEPLOY_THIS_PROJECT=$(($LANDING || $COMPANY || $FREELANCER || $ADMIN))" >> $GITHUB_ENV
-          if [[ $LANDING || $COMPANY || $FREELANCER || $ADMIN ]]; then
-            echo "DEPLOY_THIS_PROJECT=true" >> $GITHUB_ENV
-            echo "::set-output name=deploy-flag::true"
-          else
-            echo "DEPLOY_THIS_PROJECT=false" >> $GITHUB_ENV
-            echo "::set-output name=deploy-flag::false"
-          fi
+          echo "DEPLOY_THIS_PROJECT=$(($LANDING || $COMPANY || $FREELANCER || $ADMIN))" >> $GITHUB_ENV
+          echo "$DEPLOY_THIS_PROJECT" >> $GITHUB_STEP_SUMMARY
 
       - name: Check deploy project
-        if: steps.set-deploy-flag.outputs.deploy-flag == 'false'
+        if: ${{ env.DEPLOY_THIS_PROJECT == 'false'}}
         run: echo "This project will not be deployed." && exit 0
 
       - name: Checkout
