@@ -131,7 +131,7 @@ jobs:
           ADMIN=${{ github.event.inputs.deploy_admin == 'true' && matrix.project == 'admin' }}
 
 
-          DEPLOY_THIS_PROJECT=$(($LANDING || $COMPANY || $FREELANCER || $ADMIN))
+          DEPLOY_THIS_PROJECT=$LANDING || $COMPANY || $FREELANCER || $ADMIN
 
           echo "DEPLOY_THIS_PROJECT=${DEPLOY_THIS_PROJECT}" >> $GITHUB_ENV
           echo "${{ env.DEPLOY_THIS_PROJECT }}" >> $GITHUB_STEP_SUMMARY
