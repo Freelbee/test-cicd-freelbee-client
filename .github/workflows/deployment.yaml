@@ -245,8 +245,6 @@ jobs:
             export ADMIN_IMAGE
             export LANDING_IMAGE
 
-            docker-compose -f compose.yaml pull
-
             SERVICES=""
             [ "${{ env.COMPANY }}" == "true" ] && SERVICES="$SERVICES company"
             [ "${{ env.FREELANCER }}" == "true" ] && SERVICES="$SERVICES freelancer"
@@ -254,6 +252,7 @@ jobs:
             [ "${{ env.ADMIN }}" == "true" ] && SERVICES="$SERVICES admin"
 
             if [ -n "$SERVICES" ]; then
+              docker-compose -f compose.yaml pull
               docker-compose -f compose.yaml up -d $SERVICES
             else
               echo "No services to deploy" >> $GITHUB_STEP_SUMMARY
