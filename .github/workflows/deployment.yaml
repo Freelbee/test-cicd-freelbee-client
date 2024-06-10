@@ -192,6 +192,11 @@ jobs:
     if: ${{ needs.check-branch-and-env.outputs.error != 'true' }}
     runs-on: ubuntu-latest
     env:
+      LANDING: "${{ github.event.inputs.deploy_landing  || github.event.inputs.all_projects }}"
+      COMPANY: "${{ github.event.inputs.deploy_company || github.event.inputs.all_projects }}"
+      FREELANCER: "${{ github.event.inputs.deploy_freelancer || github.event.inputs.all_projects }}"
+      ADMIN: "${{ github.event.inputs.deploy_admin || github.event.inputs.all_projects }}"
+
       SSH_HOST_ENV: "${{ inputs.environment }}_SSH_HOST"
       SSH_USERNAME_ENV: "${{ inputs.environment }}_SSH_USERNAME"
       SSH_PRIVATE_KEY_ENV: "${{ inputs.environment }}_SSH_PRIVATE_KEY"
