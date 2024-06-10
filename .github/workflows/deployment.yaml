@@ -112,7 +112,7 @@ jobs:
         run: |
           REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
           echo "IMAGE_NAME=ghcr.io/$REPO_NAME/${{ matrix.project }}:latest" >> $GITHUB_ENV
-          echo "${{ env.IMAGE_NAME }}" >> $GITHUB_STEP_SUMMARY
+          echo "ghcr.io/$REPO_NAME/${{ matrix.project }}:latest" >> $GITHUB_STEP_SUMMARY
         shell: bash
 
       - name: Set envs for projects
@@ -123,21 +123,23 @@ jobs:
           echo "NEXT_PUBLIC_BOT_URL=${{ vars[env.BOT_URL] }}" >> $GITHUB_ENV
           echo "NEXT_PUBLIC_TRANSAK_API_KEY=${{ secrets[env.TRANSAK_API_KEY] }}" >> $GITHUB_ENV
 
-      - name: Set deploy flag
+      - name: Set deployment flag
         run: |
           LANDING=${{ github.event.inputs.deploy_landing == 'true' && matrix.project == 'landing' }}
           COMPANY=${{ github.event.inputs.deploy_company == 'true' && matrix.project == 'company' }}
           FREELANCER=${{ github.event.inputs.deploy_freelancer == 'true' && matrix.project == 'freelancer' }}
           ADMIN=${{ github.event.inputs.deploy_admin == 'true' && matrix.project == 'admin' }}
 
-          if [[ $LANDING == 'true' || $COMPANY == 'true' || $FREELANCER == 'true' || $ADMIN == 'true' ]]; then
-            echo "DEPLOY_THIS_PROJECT=true" >> $GITHUB_ENV
-          else
-            echo "DEPLOY_THIS_PROJECT=false" >> $GITHUB_ENV
-          fi
-          
-          echo "${{ env.DEPLOY_THIS_PROJECT }}" >> $GITHUB_STEP_SUMMARY
+          DEPLOY_THIS_PROJECT=$([[ $LANDING == 'true' || $COMPANY == 'true' || $FREELANCER == 'true' || $ADMIN == 'true' ]] && echo "true" || echo "false")
+          echo "DEPLOY_THIS_PROJECT=$DEPLOY_THIS_PROJECT" >> $GITHUB_ENV
 
+          if [[ $DEPLOY_THIS_PROJECT == 'true' ]]; then
+            echo "Deploing" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Not deploying" >> $GITHUB_STEP_SUMMARY
+          fi
+
+        shell: bash
 
       - name: Checkout
         if: ${{ env.DEPLOY_THIS_PROJECT == 'true' }}
