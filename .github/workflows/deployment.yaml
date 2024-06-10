@@ -131,12 +131,11 @@ jobs:
           ADMIN=${{ github.event.inputs.deploy_admin == 'true' && matrix.project == 'admin' }}
 
           if [[ $LANDING == 'true' || $COMPANY == 'true' || $FREELANCER == 'true' || $ADMIN == 'true' ]]; then
-            DEPLOY_THIS_PROJECT=true
+            echo "DEPLOY_THIS_PROJECT=true" >> $GITHUB_ENV
           else
-            DEPLOY_THIS_PROJECT=false
+            echo "DEPLOY_THIS_PROJECT=false" >> $GITHUB_ENV
           fi
-
-          echo "DEPLOY_THIS_PROJECT=${DEPLOY_THIS_PROJECT}" >> $GITHUB_ENV
+          
           echo "${{ env.DEPLOY_THIS_PROJECT }}" >> $GITHUB_STEP_SUMMARY
 
 
