@@ -130,8 +130,7 @@ jobs:
           FREELANCER=${{ github.event.inputs.deploy_freelancer == 'true' && matrix.project == 'freelancer' }}
           ADMIN=${{ github.event.inputs.deploy_admin == 'true' && matrix.project == 'admin' }}
 
-          DEPLOY_THIS_PROJECT=$LANDING=="true" || $COMPANY=="true" || $FREELANCER=="true" || $ADMIN=="true"
-
+          DEPLOY_THIS_PROJECT=$(echo $LANDING $COMPANY $FREELANCER $ADMIN | tr ' ' '\n' | grep -v '^$' | wc -l)
           echo "DEPLOY_THIS_PROJECT=$DEPLOY_THIS_PROJECT" >> $GITHUB_ENV
           echo "${{ env.DEPLOY_THIS_PROJECT }}" >> $GITHUB_STEP_SUMMARY
 
