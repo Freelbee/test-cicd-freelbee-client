@@ -82,12 +82,6 @@ jobs:
           if [[ ${{ github.event.inputs.deploy_admin }} == 'true' ]]; then
               echo "Admin;" >> $GITHUB_STEP_SUMMARY
           fi
-      - name: Set deploy projects
-        run: |
-          echo "LANDING=${{ github.event.inputs.deploy_landing || github.event.inputs.all_projects }}" >> $GITHUB_ENV
-          echo "COMPANY=${{ github.event.inputs.deploy_company || github.event.inputs.all_projects }}" >> $GITHUB_ENV
-          echo "FREELANCER=${{ github.event.inputs.deploy_freelancer || github.event.inputs.all_projects }}" >> $GITHUB_ENV
-          echo "ADMIN=${{ github.event.inputs.deploy_admin || github.event.inputs.all_projects }}" >> $GITHUB_ENV
 
   build-and-push:
     needs: check-branch-and-env
@@ -101,6 +95,11 @@ jobs:
       contents: read
       packages: write
     env:
+      LANDING: "${{ github.event.inputs.deploy_landing  || github.event.inputs.all_projects }}"
+      COMPANY: "${{ github.event.inputs.deploy_company || github.event.inputs.all_projects }}"
+      FREELANCER: "${{ github.event.inputs.deploy_freelancer || github.event.inputs.all_projects }}"
+      ADMIN: "${{ github.event.inputs.deploy_admin || github.event.inputs.all_projects }}"
+
       NEXT_PUBLIC_BOT_TOKEN: "${{ secrets.NEXT_PUBLIC_BOT_TOKEN }}"
       NEXT_PUBLIC_EMAIL: "${{ vars.NEXT_PUBLIC_EMAIL }}"
       NEXT_PUBLIC_URL: "${{ vars.NEXT_PUBLIC_URL }}"
