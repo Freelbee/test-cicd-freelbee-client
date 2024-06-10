@@ -293,7 +293,9 @@ jobs:
 
             # Вызов скрипта очистки для всех проектов сразу
             if [ -n "$PROJECTS" ]; then
-              remove-old-images.sh $PROJECTS
+              echo "PROJECTS: $PROJECTS"
+              chmod +x remove-old-images.sh
+              bash remove-old-images.sh $PROJECTS
             fi
 
           shell: bash
