@@ -293,7 +293,7 @@ jobs:
 
             # Вызов скрипта очистки для всех проектов сразу
             if [ -n "$PROJECTS" ]; then
-              /path/to/your/cleanup_script.sh $PROJECTS
+              remove-old-images.sh $PROJECTS
             fi
 
           shell: bash
