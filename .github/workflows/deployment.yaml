@@ -130,25 +130,23 @@ jobs:
           FREELANCER=${{ github.event.inputs.deploy_freelancer == 'true' && matrix.project == 'freelancer' }}
           ADMIN=${{ github.event.inputs.deploy_admin == 'true' && matrix.project == 'admin' }}
 
+          DEPLOY_THIS_PROJECT=$LANDING=="true" || $COMPANY=="true" || $FREELANCER=="true" || $ADMIN=="true"
 
-          DEPLOY_THIS_PROJECT=$LANDING || $COMPANY || $FREELANCER || $ADMIN
-
-          echo "DEPLOY_THIS_PROJECT=${DEPLOY_THIS_PROJECT}" >> $GITHUB_ENV
+          echo "DEPLOY_THIS_PROJECT=$DEPLOY_THIS_PROJECT" >> $GITHUB_ENV
           echo "${{ env.DEPLOY_THIS_PROJECT }}" >> $GITHUB_STEP_SUMMARY
 
-      - name: Check deploy project
-        if: ${{ env.DEPLOY_THIS_PROJECT == 'false'}}
-        run: echo "This project will not be deployed." && exit 0
-
       - name: Checkout
+        if: ${{ env.DEPLOY_THIS_PROJECT == 'true' }}
         uses: actions/checkout@v4
 
       - name: Setup Node.js
+        if: ${{ env.DEPLOY_THIS_PROJECT == 'true' }}
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
       - name: Catch deps
+        if: ${{ env.DEPLOY_THIS_PROJECT == 'true' }}
         uses: actions/cache@v4
         with:
           path: node_modules
@@ -157,9 +155,11 @@ jobs:
         run: yarn install
 
       - name: Build NX project
+        if: ${{ env.DEPLOY_THIS_PROJECT == 'true' }}
         run: npx nx build ${{ matrix.project }}
 
       - name: Login to GitHub Container Registry
+        if: ${{ env.DEPLOY_THIS_PROJECT == 'true' }}
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
@@ -167,6 +167,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Push Docker image to GitHub Container Registry
+        if: ${{ env.DEPLOY_THIS_PROJECT == 'true' }}
         run: |
           for i in {1..4}; do
             docker build -t ${{ env.IMAGE_NAME }} -f ./apps/${{ matrix.project }}/Dockerfile . && break || sleep 10;
