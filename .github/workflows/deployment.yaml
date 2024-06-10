@@ -139,9 +139,9 @@ jobs:
           echo "DEPLOY_THIS_PROJECT=$DEPLOY_THIS_PROJECT" >> $GITHUB_ENV
 
           if [[ $DEPLOY_THIS_PROJECT == 'true' ]]; then
-            echo "Deploing" >> $GITHUB_STEP_SUMMARY
+            echo "Deploying :white_check_mark:" >> $GITHUB_STEP_SUMMARY
           else
-            echo "Not deploying" >> $GITHUB_STEP_SUMMARY
+            echo "Not deploying :x:" >> $GITHUB_STEP_SUMMARY
           fi
 
         shell: bash
@@ -235,6 +235,11 @@ jobs:
             ADMIN_IMAGE="${IMAGE_NAME}/admin:latest"
             LANDING_IMAGE="${IMAGE_NAME}/landing:latest"
 
+            echo ":octocat: company-image: $COMPANY_IMAGE" >> $GITHUB_STEP_SUMMARY
+            echo ":octocat: freelancer-image: $FREELANCER_IMAGE" >> $GITHUB_STEP_SUMMARY
+            echo ":octocat: freelancer-image: $ADMIN_IMAGE" >> $GITHUB_STEP_SUMMARY
+            echo ":octocat: freelancer-image: $LANDING_IMAGE" >> $GITHUB_STEP_SUMMARY
+
             export COMPANY_IMAGE
             export FREELANCER_IMAGE
             export ADMIN_IMAGE
@@ -242,20 +247,17 @@ jobs:
 
             docker-compose -f compose.yaml pull
 
-            if [ "${{ env.COMPANY }}" == "true" ]; then
-            docker-compose -f compose.yaml up -d company
-            fi
+            SERVICES=""
+            [ "${{ env.COMPANY }}" == "true" ] && SERVICES="$SERVICES company"
+            [ "${{ env.FREELANCER }}" == "true" ] && SERVICES="$SERVICES freelancer"
+            [ "${{ env.LANDING }}" == "true" ] && SERVICES="$SERVICES landing"
+            [ "${{ env.ADMIN }}" == "true" ] && SERVICES="$SERVICES admin"
 
-            if [ "${{ env.FREELANCER }}" == "true" ]; then
-            docker-compose -f compose.yaml up -d freelancer
+            if [ -n "$SERVICES" ]; then
+              docker-compose -f compose.yaml up -d $SERVICES
+            else
+              echo "No services to deploy" >> $GITHUB_STEP_SUMMARY
             fi
-
-            if [ "${{ env.LANDING }}" == "true" ]; then
-            docker-compose -f compose.yaml up -d landing
-            fi
-
-            if [ "${{ env.ADMIN }}" == "true" ]; then
-            docker-compose -f compose.yaml up -d admin
-            fi
+          shell: bash
 
 
