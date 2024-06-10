@@ -125,13 +125,13 @@ jobs:
 
       - name: Set deploy flag
         run: |
-          LANDING=${{ github.event.inputs.deploy_landing && matrix.project == 'landing' }}
-          COMPANY=${{ github.event.inputs.deploy_company && matrix.project == 'company' }}
-          FREELANCER=${{ github.event.inputs.deploy_freelancer && matrix.project == 'freelancer' }}
-          ADMIN=${{ github.event.inputs.deploy_admin && matrix.project == 'admin' }}
+          LANDING=${{ github.event.inputs.deploy_landing == 'true' && matrix.project == 'landing' }}
+          COMPANY=${{ github.event.inputs.deploy_company == 'true' && matrix.project == 'company' }}
+          FREELANCER=${{ github.event.inputs.deploy_freelancer == 'true' && matrix.project == 'freelancer' }}
+          ADMIN=${{ github.event.inputs.deploy_admin == 'true' && matrix.project == 'admin' }}
 
           echo "DEPLOY_THIS_PROJECT=$(($LANDING || $COMPANY || $FREELANCER || $ADMIN))" >> $GITHUB_ENV
-          echo "$DEPLOY_THIS_PROJECT" >> $GITHUB_STEP_SUMMARY
+          echo "${{ env.DEPLOY_THIS_PROJECT }}" >> $GITHUB_STEP_SUMMARY
 
       - name: Check deploy project
         if: ${{ env.DEPLOY_THIS_PROJECT == 'false'}}
