@@ -82,6 +82,12 @@ jobs:
           if [[ ${{ github.event.inputs.deploy_admin }} == 'true' ]]; then
               echo "Admin;" >> $GITHUB_STEP_SUMMARY
           fi
+      - name: Set deploy projects
+        run: |
+          echo "LANDING=${{ github.event.inputs.deploy_landing || github.event.inputs.all_projects }}" >> $GITHUB_ENV
+          echo "COMPANY=${{ github.event.inputs.deploy_company || github.event.inputs.all_projects }}" >> $GITHUB_ENV
+          echo "FREELANCER=${{ github.event.inputs.deploy_freelancer || github.event.inputs.all_projects }}" >> $GITHUB_ENV
+          echo "ADMIN=${{ github.event.inputs.deploy_admin || github.event.inputs.all_projects }}" >> $GITHUB_ENV
 
   build-and-push:
     needs: check-branch-and-env
@@ -125,10 +131,10 @@ jobs:
 
       - name: Set deployment flag
         run: |
-          LANDING=${{ github.event.inputs.deploy_landing == 'true' && matrix.project == 'landing' }}
-          COMPANY=${{ github.event.inputs.deploy_company == 'true' && matrix.project == 'company' }}
-          FREELANCER=${{ github.event.inputs.deploy_freelancer == 'true' && matrix.project == 'freelancer' }}
-          ADMIN=${{ github.event.inputs.deploy_admin == 'true' && matrix.project == 'admin' }}
+          LANDING=${{ env.LANDING == 'true' && matrix.project == 'landing' }}
+          COMPANY=${{ env.COMPANY == 'true' && matrix.project == 'company' }}
+          FREELANCER=${{ env.FREELANCER == 'true' && matrix.project == 'freelancer' }}
+          ADMIN=${{ env.ADMIN == 'true' && matrix.project == 'admin' }}
 
           DEPLOY_THIS_PROJECT=$([[ $LANDING == 'true' || $COMPANY == 'true' || $FREELANCER == 'true' || $ADMIN == 'true' ]] && echo "true" || echo "false")
           echo "DEPLOY_THIS_PROJECT=$DEPLOY_THIS_PROJECT" >> $GITHUB_ENV
@@ -192,15 +198,6 @@ jobs:
       SSH_PRIVATE_KEY_ENV: "${{ inputs.environment }}_SSH_PRIVATE_KEY"
       SSH_PASSPHRASE_ENV: "${{ inputs.environment }}_SSH_PASSPHRASE"
     steps:
-      - name: Setup environment variables
-        run: |
-          #echo "DEPLOY_PROJECTS=${{ github.event.inputs.projects }}" >> $GITHUB_ENV
-          #echo "IMAGE_TAG=${{ env.IMAGE_NAME }}" >> $GITHUB_ENV
-          echo "COMPANY=${{ github.event.inputs.deploy_company }}" >> $GITHUB_ENV
-          echo "FREELANCER=${{ github.event.inputs.deploy_freelancer }}" >> $GITHUB_ENV
-          echo "LANDING=${{ github.event.inputs.deploy_landing }}" >> $GITHUB_ENV
-          echo "ADMIN=${{ github.event.inputs.deploy_admin }}" >> $GITHUB_ENV
-
       - name: Checkout
         uses: actions/checkout@v4
 
