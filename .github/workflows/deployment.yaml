@@ -235,6 +235,11 @@ jobs:
             ADMIN_IMAGE="${IMAGE_NAME}/admin:latest"
             LANDING_IMAGE="${IMAGE_NAME}/landing:latest"
 
+            export COMPANY_IMAGE
+            export FREELANCER_IMAGE
+            export ADMIN_IMAGE
+            export LANDING_IMAGE
+
             echo "company-image: $COMPANY_IMAGE"
             echo "freelancer-image: $FREELANCER_IMAGE"
             echo "admin-image: $ADMIN_IMAGE"
@@ -271,3 +276,52 @@ jobs:
               echo "No services to deploy"
             fi
           shell: bash
+
+
+
+#          script: |
+#            echo "Deploying ${{ inputs.environment }} environment"
+#            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+#            cd /mnt/freelbee/client
+#
+#            REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+#            IMAGE_NAME="ghcr.io/$REPO_NAME"
+#
+#            COMPANY_IMAGE="${IMAGE_NAME}/company:latest"
+#            FREELANCER_IMAGE="${IMAGE_NAME}/freelancer:latest"
+#            ADMIN_IMAGE="${IMAGE_NAME}/admin:latest"
+#            LANDING_IMAGE="${IMAGE_NAME}/landing:latest"
+#
+#            echo "company-image: $COMPANY_IMAGE"
+#            echo "freelancer-image: $FREELANCER_IMAGE"
+#            echo "freelancer-image: $ADMIN_IMAGE"
+#            echo "freelancer-image: $LANDING_IMAGE"
+#
+#            export COMPANY_IMAGE
+#            export FREELANCER_IMAGE
+#            export ADMIN_IMAGE
+#            export LANDING_IMAGE
+#
+#            SERVICES=""
+#            if [ "${{ env.COMPANY }}" == "true" ]; then
+#              docker pull $COMPANY_IMAGE && SERVICES="$SERVICES company"
+#            fi
+#            if [ "${{ env.FREELANCER }}" == "true" ]; then
+#              docker pull $FREELANCER_IMAGE && SERVICES="$SERVICES freelancer"
+#            fi
+#            if [ "${{ env.LANDING }}" == "true" ]; then
+#              docker pull $LANDING_IMAGE && SERVICES="$SERVICES landing"
+#            fi
+#            if [ "${{ env.ADMIN }}" == "true" ]; then
+#              docker pull $ADMIN_IMAGE && SERVICES="$SERVICES admin"
+#            fi
+#
+#            echo "Deploying services: $SERVICES"
+#
+#            if [ -n "$SERVICES" ]; then
+#              docker-compose -f compose.yaml pull
+#              docker-compose -f compose.yaml up -d $SERVICES
+#            else
+#              echo "No services to deploy"
+#            fi
+#          shell: bash
