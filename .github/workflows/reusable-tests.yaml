@@ -15,9 +15,6 @@ on:
       build_command:
         description: 'Build command to run'
         required: false
-    secrets:
-      GITHUB_TOKEN:
-        required: true
 
 jobs:
   test:
