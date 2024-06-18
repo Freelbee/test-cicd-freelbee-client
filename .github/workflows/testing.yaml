@@ -92,14 +92,6 @@ jobs:
   tests-landing:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.landing-changed == 'true' }}
-    run: |
-      {
-        echo '  NEXT_PUBLIC_BOT_TOKEN=${{ secrets.NEXT_PUBLIC_BOT_TOKEN }}'
-        echo '  NEXT_PUBLIC_TG_CHANNEL_ID=${{ vars.TEST_NEXT_PUBLIC_TG_CHANNEL_ID }}'
-        echo '  NEXT_PUBLIC_COMPANY_URL=${{ vars.TEST_NEXT_PUBLIC_COMPANY_URL }}'
-        echo '  NEXT_PUBLIC_FREELANCER_URL=${{ vars.TEST_NEXT_PUBLIC_FREELANCER_URL }}'
-      } >> apps/landing/.env
-      cat apps/landing/.env
     uses: ./.github/workflows/reusable-tests.yaml
     with:
       app_name: landing

@@ -46,6 +46,16 @@ jobs:
       - name: Run lint
         run: ${{ inputs.lint_command }}
 
+      - name: Create .env file
+        run: |
+          {
+            echo '  NEXT_PUBLIC_BOT_TOKEN=${{ secrets.NEXT_PUBLIC_BOT_TOKEN }}'
+            echo '  NEXT_PUBLIC_TG_CHANNEL_ID=${{ vars.TEST_NEXT_PUBLIC_TG_CHANNEL_ID }}'
+            echo '  NEXT_PUBLIC_COMPANY_URL=${{ vars.TEST_NEXT_PUBLIC_COMPANY_URL }}'
+            echo '  NEXT_PUBLIC_FREELANCER_URL=${{ vars.TEST_NEXT_PUBLIC_FREELANCER_URL }}'
+          } >> apps/${{ inputs.app_name }}/.env
+          cat apps/${{ inputs.app_name }}/.env
+
       - name: Run tests
         run: ${{ inputs.test_command }}
 
