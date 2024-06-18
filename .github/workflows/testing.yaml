@@ -62,15 +62,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Catch deps
-        uses: actions/cache@v4
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-      - name: install dependencies
-        run: |
-          yarn install
-          npx cypress install
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+      - name: Cache npm dependencies
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: run lint admin
         run: yarn lint:admin
@@ -86,15 +92,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Catch deps
-        uses: actions/cache@v4
+
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-      - name: install dependencies
-        run: |
-          yarn install
-          npx cypress install
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+      - name: Cache npm dependencies
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: run lint company
         run: yarn lint:company
@@ -111,22 +124,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Catch deps
-        uses: actions/cache@v4
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-
-      # - name: Catch cypress deps
-      #   uses: actions/cache@v4
-      #   with:
-      #     path: ~/.cache/Cypress
-      #     key: ${{ runner.os }}-cypress-${{ hashFiles('**/yarn.lock') }}
-
-      - name: install dependencies
-        run: |
-          yarn install
-          npx cypress install
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+      - name: Cache npm dependencies
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: run lint freelancer
         run: yarn lint:freelancer
@@ -143,16 +155,39 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Catch deps
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+      # - name: Get yarn cache directory path
+      #   id: yarn-cache-dir-path
+      #   run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
-      - name: install dependencies
-        run: |
-          yarn install
-          npx cypress install
+      # - name: Cache yarn dependencies
+      #   uses: actions/cache@v4
+      #   id: yarn-cache
+      #   with:
+      #     path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-yarn-
+
+      # - name: install dependencies
+      #   run: |
+      #     yarn install --frozen-lockfile 
+      #     npx cypress install
+
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+      - name: Cache npm dependencies
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: Create env file
         run: |
@@ -178,14 +213,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Catch deps
-        uses: actions/cache@v4
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-      - name: install dependencies
-        run: |
-          yarn install
+          path: |
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+      - name: Cache npm dependencies
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: run lint app
         run: yarn lint:app
@@ -199,14 +239,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Catch deps
-        uses: actions/cache@v4
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-      - name: install dependencies
-        run: |
-          yarn install
+          path: |
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+      - name: Cache npm dependencies
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: run lint pages
         run: yarn lint:pages
@@ -220,14 +265,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Catch deps
-        uses: actions/cache@v4
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-      - name: install dependencies
-        run: |
-          yarn install
+          path: |
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+      - name: Cache npm dependencies
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: run lint widgets
         run: yarn lint:widgets
@@ -241,15 +291,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Catch deps
-        uses: actions/cache@v4
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-      - name: install dependencies
-        run: |
-          yarn install
-
+          path: |
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+      - name: Cache npm dependencies
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
       - name: run lint features
         run: yarn lint:features
       - name: run tests features
@@ -260,16 +314,19 @@ jobs:
     if: ${{ needs.paths-filter.outputs.packages-entities-changed == 'true' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Catch deps
-        uses: actions/cache@v4
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-      - name: install dependencies
-        run: |
-          yarn install
+          path: |
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+      - name: Cache npm dependencies
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: run lint entities
         run: yarn lint:entities
@@ -283,14 +340,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Catch deps
-        uses: actions/cache@v4
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-      - name: install dependencies
-        run: |
-          yarn install
+          path: |
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+      - run: yarn install --frozen-lockfile
+      - name: Cache npm dependencies
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: run lint shared
         run: yarn lint:shared
