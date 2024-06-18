@@ -8,6 +8,5 @@ export interface TaskAcceptanceDto {
     freelancerCurrencyId: number;
     taskId: number;
     paymentMethodType: PaymentMethodType;
-
     receiverPaymentMethodProps: PaymentMethodProps;
 }

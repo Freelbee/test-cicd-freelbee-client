@@ -5,7 +5,7 @@ export const DocumentsPage = () => {
   return (
     <PageContainer>
         <PageTitle text='Documents' />
-        <div>Documents page</div>
+        <div>Documents page </div>
     </PageContainer>
   )
 }
