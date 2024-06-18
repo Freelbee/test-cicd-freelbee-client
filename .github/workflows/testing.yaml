@@ -62,7 +62,7 @@ jobs:
   tests-admin:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.admin-changed == 'true' }}
-    uses: ./.github/workflows/reusable-tests.yml
+    uses: ./.github/workflows/reusable-tests.yaml
     with:
       app_name: admin
       lint_command: yarn lint:admin
@@ -72,7 +72,7 @@ jobs:
   tests-company:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.company-changed == 'true' }}
-    uses: ./.github/workflows/reusable-tests.yml
+    uses: ./.github/workflows/reusable-tests.yaml
     with:
       app_name: company
       lint_command: yarn lint:company
@@ -82,7 +82,7 @@ jobs:
   tests-freelancer:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.freelancer-changed == 'true' }}
-    uses: ./.github/workflows/reusable-tests.yml
+    uses: ./.github/workflows/reusable-tests.yaml
     with:
       app_name: freelancer
       lint_command: yarn lint:freelancer
@@ -100,7 +100,7 @@ jobs:
         echo '  NEXT_PUBLIC_FREELANCER_URL=${{ vars.TEST_NEXT_PUBLIC_FREELANCER_URL }}'
       } >> apps/landing/.env
       cat apps/landing/.env
-    uses: ./.github/workflows/reusable-tests.yml
+    uses: ./.github/workflows/reusable-tests.yaml
     with:
       app_name: landing
       lint_command: yarn lint:landing
@@ -110,7 +110,7 @@ jobs:
   tests-packages-app:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.packages-apps-changed == 'true' }}
-    uses: ./.github/workflows/reusable-tests.yml
+    uses: ./.github/workflows/reusable-tests.yaml
     with:
       app_name: app
       lint_command: yarn lint:app
@@ -120,7 +120,7 @@ jobs:
   tests-packages-pages:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.packages-pages-changed == 'true' }}
-    uses: ./.github/workflows/reusable-tests.yml
+    uses: ./.github/workflows/reusable-tests.yaml
     with:
       app_name: pages
       lint_command: yarn lint:pages
@@ -130,7 +130,7 @@ jobs:
   tests-packages-widgets:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.packages-widgets-changed == 'true' }}
-    uses: ./.github/workflows/reusable-tests.yml
+    uses: ./.github/workflows/reusable-tests.yaml
     with:
       app_name: widgets
       lint_command: yarn lint:widgets
@@ -140,7 +140,7 @@ jobs:
   tests-packages-features:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.packages-features-changed == 'true' }}
-    uses: ./.github/workflows/reusable-tests.yml
+    uses: ./.github/workflows/reusable-tests.yaml
     with:
       app_name: features
       lint_command: yarn lint:features
@@ -150,7 +150,7 @@ jobs:
   tests-packages-entities:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.packages-entities-changed == 'true' }}
-    uses: ./.github/workflows/reusable-tests.yml
+    uses: ./.github/workflows/reusable-tests.yaml
     with:
       app_name: entities
       lint_command: yarn lint:entities
@@ -160,7 +160,7 @@ jobs:
   tests-packages-shared:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.packages-shared-changed == 'true' }}
-    uses: ./.github/workflows/reusable-tests.yml
+    uses: ./.github/workflows/reusable-tests.yaml
     with:
       app_name: shared
       lint_command: yarn lint:shared
