@@ -1,0 +1,57 @@
+name: Base Tests
+
+on:
+  workflow_call:
+    inputs:
+      app_name:
+        description: 'Name of the app to test'
+        required: true
+      lint_command:
+        description: 'Lint command to run'
+        required: true
+      test_command:
+        description: 'Test command to run'
+        required: true
+      build_command:
+        description: 'Build command to run'
+        required: false
+    secrets:
+      GITHUB_TOKEN:
+        required: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Restore cached npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - run: yarn install --frozen-lockfile
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ github.run_id }}
+
+      - name: Run lint
+        run: ${{ inputs.lint_command }}
+
+      - name: Run tests
+        run: ${{ inputs.test_command }}
+
+      - name: Run build
+        if: ${{ inputs.build_command != '' }}
+        run: ${{ inputs.build_command }}
