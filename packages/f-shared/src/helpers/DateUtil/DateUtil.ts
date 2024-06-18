@@ -23,7 +23,6 @@ export class DateUtil {
     public static getDayDiff (leftDate: Date, rightDate: Date): number {
         const one_day = 1000 * 60 * 60 * 24;
         const difference_ms = leftDate.getTime() - rightDate.getTime();
-
         return Math.round(difference_ms / one_day);
     }
 }
