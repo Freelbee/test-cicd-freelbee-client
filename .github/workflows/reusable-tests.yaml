@@ -6,15 +6,19 @@ on:
       app_name:
         description: 'Name of the app to test'
         required: true
+        type: string
       lint_command:
         description: 'Lint command to run'
         required: true
+        type: string
       test_command:
         description: 'Test command to run'
         required: true
+        type: string
       build_command:
         description: 'Build command to run'
         required: false
+        type: string
 
 jobs:
   test:
