@@ -1,8 +1,11 @@
 name: Testing
 on:
+  push:
+    branches:
+      - master
   pull_request:
     branches:
-      - main
+      - master
       - develop
 env:
   INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
