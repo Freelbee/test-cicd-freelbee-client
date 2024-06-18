@@ -1,0 +1,68 @@
+name: Reusable tests
+
+on:
+  workflow_call:
+    inputs:
+      app_name:
+        description: 'Name of the app to test'
+        required: true
+        type: string
+      lint_command:
+        description: 'Lint command to run'
+        required: true
+        type: string
+      test_command:
+        description: 'Test command to run'
+        required: true
+        type: string
+      build_command:
+        description: 'Build command to run'
+        required: false
+        type: string
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Restore cached npm dependencies
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - run: yarn install --frozen-lockfile
+
+      - name: Cache npm dependencies
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ github.run_id }}
+
+      - name: Run lint
+        run: ${{ inputs.lint_command }}
+
+      - name: Create .env file
+        run: |
+          {
+            echo '  NEXT_PUBLIC_BOT_TOKEN=${{ secrets.NEXT_PUBLIC_BOT_TOKEN }}'
+            echo '  NEXT_PUBLIC_TG_CHANNEL_ID=${{ vars.TEST_NEXT_PUBLIC_TG_CHANNEL_ID }}'
+            echo '  NEXT_PUBLIC_COMPANY_URL=${{ vars.TEST_NEXT_PUBLIC_COMPANY_URL }}'
+            echo '  NEXT_PUBLIC_FREELANCER_URL=${{ vars.TEST_NEXT_PUBLIC_FREELANCER_URL }}'
+          } >> apps/${{ inputs.app_name }}/.env
+          cat apps/${{ inputs.app_name }}/.env
+
+      - name: Run tests
+        run: ${{ inputs.test_command }}
+
+      - name: Run build
+        if: ${{ inputs.build_command != '' }}
+        run: ${{ inputs.build_command }}

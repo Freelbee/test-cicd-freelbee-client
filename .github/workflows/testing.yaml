@@ -8,7 +8,8 @@ on:
       - master
       - develop
 env:
-  INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
 permissions:
   contents: read
   pull-requests: read
@@ -61,303 +62,99 @@ jobs:
   tests-admin:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.admin-changed == 'true' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Restore cached npm dependencies
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            node_modules
-            ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
-      - name: Cache npm dependencies
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            node_modules
-            ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
-      - name: run lint admin
-        run: yarn lint:admin
-      - name: run tests admin
-        run: yarn test:admin
-      - name: run build admin
-        run: yarn build:admin
+    uses: ./.github/workflows/reusable-tests.yaml
+    with:
+      app_name: admin
+      lint_command: yarn lint:admin
+      test_command: yarn test:admin
+      build_command: yarn build:admin
 
   tests-company:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.company-changed == 'true' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Restore cached npm dependencies
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            node_modules
-            ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
-      - name: Cache npm dependencies
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            node_modules
-            ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
-      - name: run lint company
-        run: yarn lint:company
-      - name: run tests company
-        run: yarn test:company
-      - name: run build company
-        run: yarn build:company
+    uses: ./.github/workflows/reusable-tests.yaml
+    with:
+      app_name: company
+      lint_command: yarn lint:company
+      test_command: yarn test:company
+      build_command: yarn build:company
 
   tests-freelancer:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.freelancer-changed == 'true' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Restore cached npm dependencies
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            node_modules
-            ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
-      - name: Cache npm dependencies
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            node_modules
-            ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
-      - name: run lint freelancer
-        run: yarn lint:freelancer
-      - name: run tests freelancer
-        run: yarn test:freelancer
-      - name: run build freelancer
-        run: yarn build:freelancer
+    uses: ./.github/workflows/reusable-tests.yaml
+    with:
+      app_name: freelancer
+      lint_command: yarn lint:freelancer
+      test_command: yarn test:freelancer
+      build_command: yarn build:freelancer
 
   tests-landing:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.landing-changed == 'true' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      # - name: Get yarn cache directory path
-      #   id: yarn-cache-dir-path
-      #   run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-
-      # - name: Cache yarn dependencies
-      #   uses: actions/cache@v4
-      #   id: yarn-cache
-      #   with:
-      #     path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-yarn-
-
-      # - name: install dependencies
-      #   run: |
-      #     yarn install --frozen-lockfile 
-      #     npx cypress install
-
-      - name: Restore cached npm dependencies
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            node_modules
-            ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
-      - name: Cache npm dependencies
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            node_modules
-            ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Create env file
-        run: |
-          {
-            echo '  NEXT_PUBLIC_BOT_TOKEN=${{ secrets.NEXT_PUBLIC_BOT_TOKEN }}'
-            echo '  NEXT_PUBLIC_TG_CHANNEL_ID=${{ vars.TEST_NEXT_PUBLIC_TG_CHANNEL_ID }}'
-            echo '  NEXT_PUBLIC_COMPANY_URL=${{ vars.TEST_NEXT_PUBLIC_COMPANY_URL }}'
-            echo '  NEXT_PUBLIC_FREELANCER_URL=${{ vars.TEST_NEXT_PUBLIC_FREELANCER_URL }}'
-          } >> apps/landing/.env
-          cat apps/landing/.env
-
-      - name: run lint landing
-        run: yarn lint:landing
-      - name: run tests landing
-        run: yarn test:landing
-      - name: run build landing
-        run: yarn build:landing
+    uses: ./.github/workflows/reusable-tests.yaml
+    with:
+      app_name: landing
+      lint_command: yarn lint:landing
+      test_command: yarn test:landing
+      build_command: yarn build:landing
 
   tests-packages-app:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.packages-apps-changed == 'true' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Restore cached npm dependencies
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
-      - name: Cache npm dependencies
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
-      - name: run lint app
-        run: yarn lint:app
-      - name: run tests app
-        run: yarn test:app
+    uses: ./.github/workflows/reusable-tests.yaml
+    with:
+      app_name: app
+      lint_command: yarn lint:app
+      test_command: yarn test:app
+      build_command: ''
 
   tests-packages-pages:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.packages-pages-changed == 'true' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Restore cached npm dependencies
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
-      - name: Cache npm dependencies
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
-      - name: run lint pages
-        run: yarn lint:pages
-      - name: run tests pages
-        run: yarn test:pages
+    uses: ./.github/workflows/reusable-tests.yaml
+    with:
+      app_name: pages
+      lint_command: yarn lint:pages
+      test_command: yarn test:pages
+      build_command: ''
 
   tests-packages-widgets:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.packages-widgets-changed == 'true' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Restore cached npm dependencies
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
-      - name: Cache npm dependencies
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
-      - name: run lint widgets
-        run: yarn lint:widgets
-      - name: run tests widgets
-        run: yarn test:widgets
+    uses: ./.github/workflows/reusable-tests.yaml
+    with:
+      app_name: widgets
+      lint_command: yarn lint:widgets
+      test_command: yarn test:widgets
+      build_command: ''
 
   tests-packages-features:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.packages-features-changed == 'true' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Restore cached npm dependencies
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
-      - name: Cache npm dependencies
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      - name: run lint features
-        run: yarn lint:features
-      - name: run tests features
-        run: yarn test:features
+    uses: ./.github/workflows/reusable-tests.yaml
+    with:
+      app_name: features
+      lint_command: yarn lint:features
+      test_command: yarn test:features
+      build_command: ''
 
   tests-packages-entities:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.packages-entities-changed == 'true' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Restore cached npm dependencies
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
-      - name: Cache npm dependencies
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
-      - name: run lint entities
-        run: yarn lint:entities
-      - name: run tests entities
-        run: yarn test:entities
+    uses: ./.github/workflows/reusable-tests.yaml
+    with:
+      app_name: entities
+      lint_command: yarn lint:entities
+      test_command: yarn test:entities
+      build_command: ''
 
   tests-packages-shared:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.packages-shared-changed == 'true' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Restore cached npm dependencies
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      - run: yarn install --frozen-lockfile
-      - name: Cache npm dependencies
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
-      - name: run lint shared
-        run: yarn lint:shared
-      - name: run tests shared
-        run: yarn test:shared
+    uses: ./.github/workflows/reusable-tests.yaml
+    with:
+      app_name: shared
+      lint_command: yarn lint:shared
+      test_command: yarn test:shared
+      build_command: ''
