@@ -9,4 +9,5 @@ export interface TaskAcceptanceDto {
     taskId: number;
     paymentMethodType: PaymentMethodType;
     receiverPaymentMethodProps: PaymentMethodProps;
+    
 }

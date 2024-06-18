@@ -1,11 +1,8 @@
 name: Testing
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches:
-      - master
+      - main
       - develop
 env:
   INPUT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -72,14 +69,17 @@ jobs:
             node_modules
             ~/.cache/Cypress
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - run: yarn install --frozen-lockfile
+
       - name: Cache npm dependencies
         uses: actions/cache/save@v4
         with:
           path: |
             node_modules
             ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ github.run_id }}
 
       - name: run lint admin
         run: yarn lint:admin
@@ -103,14 +103,17 @@ jobs:
             node_modules
             ~/.cache/Cypress
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - run: yarn install --frozen-lockfile
+
       - name: Cache npm dependencies
         uses: actions/cache/save@v4
         with:
           path: |
             node_modules
             ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ github.run_id }}
 
       - name: run lint company
         run: yarn lint:company
@@ -134,14 +137,17 @@ jobs:
             node_modules
             ~/.cache/Cypress
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - run: yarn install --frozen-lockfile
+
       - name: Cache npm dependencies
         uses: actions/cache/save@v4
         with:
           path: |
             node_modules
             ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ github.run_id }}
 
       - name: run lint freelancer
         run: yarn lint:freelancer
@@ -158,24 +164,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # - name: Get yarn cache directory path
-      #   id: yarn-cache-dir-path
-      #   run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-
-      # - name: Cache yarn dependencies
-      #   uses: actions/cache@v4
-      #   id: yarn-cache
-      #   with:
-      #     path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-yarn-
-
-      # - name: install dependencies
-      #   run: |
-      #     yarn install --frozen-lockfile 
-      #     npx cypress install
-
       - name: Restore cached npm dependencies
         uses: actions/cache/restore@v4
         with:
@@ -183,14 +171,17 @@ jobs:
             node_modules
             ~/.cache/Cypress
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - run: yarn install --frozen-lockfile
+
       - name: Cache npm dependencies
         uses: actions/cache/save@v4
         with:
           path: |
             node_modules
             ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ github.run_id }}
 
       - name: Create env file
         run: |
@@ -222,13 +213,16 @@ jobs:
           path: |
             node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - run: yarn install --frozen-lockfile
+
       - name: Cache npm dependencies
         uses: actions/cache/save@v4
         with:
           path: |
             node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ github.run_id }}
 
       - name: run lint app
         run: yarn lint:app
@@ -248,13 +242,16 @@ jobs:
           path: |
             node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - run: yarn install --frozen-lockfile
+
       - name: Cache npm dependencies
         uses: actions/cache/save@v4
         with:
           path: |
             node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ github.run_id }}
 
       - name: run lint pages
         run: yarn lint:pages
@@ -274,13 +271,16 @@ jobs:
           path: |
             node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - run: yarn install --frozen-lockfile
+
       - name: Cache npm dependencies
         uses: actions/cache/save@v4
         with:
           path: |
             node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ github.run_id }}
 
       - name: run lint widgets
         run: yarn lint:widgets
@@ -300,13 +300,16 @@ jobs:
           path: |
             node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - run: yarn install --frozen-lockfile
+
       - name: Cache npm dependencies
         uses: actions/cache/save@v4
         with:
           path: |
             node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ github.run_id }}
       - name: run lint features
         run: yarn lint:features
       - name: run tests features
@@ -323,13 +326,16 @@ jobs:
           path: |
             node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - run: yarn install --frozen-lockfile
+
       - name: Cache npm dependencies
         uses: actions/cache/save@v4
         with:
           path: |
             node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ github.run_id }}
 
       - name: run lint entities
         run: yarn lint:entities
@@ -349,13 +355,16 @@ jobs:
           path: |
             node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - run: yarn install --frozen-lockfile
+
       - name: Cache npm dependencies
         uses: actions/cache/save@v4
         with:
           path: |
             node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ github.run_id }}
 
       - name: run lint shared
         run: yarn lint:shared
