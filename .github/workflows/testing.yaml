@@ -62,7 +62,7 @@ jobs:
   tests-admin:
     needs: paths-filter
     if: ${{ needs.paths-filter.outputs.admin-changed == 'true' }}
-    uses: ./.github/workflows/reusable-tests.yaml
+    uses: ./reusable-tests.yaml
     with:
       app_name: admin
       lint_command: yarn lint:admin
